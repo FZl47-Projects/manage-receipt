@@ -6,30 +6,31 @@ from core import utils
 
 User = get_user_model()
 
-def upload_receipt_pic_src(instance,path):
+
+def upload_receipt_pic_src(instance, path):
     """
-        return like this => images/test@gmail.com
+        return like this => images/09130009999/...format
     """
     frmt = str(path).split('.')[::-1]
     td = utils.get_time()
-    phonnumber = instance.user.get_raw_phonenumber()
-    return f'images/{phonnumber}/{td}/{utils.random_str(8)}.{frmt}'
+    phone_number = instance.user.get_raw_phonenumber()
+    return f'images/{phone_number}/{td}/{utils.random_str(8)}.{frmt}'
 
 
 class Building(BaseModel):
     name = models.CharField(max_length=200)
     address = models.TextField()
-    description = models.TextField(null=True,blank=True)
+    description = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.name
-    
+
 
 class Receipt(BaseModel):
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
-    building = models.ForeignKey(Building,on_delete=models.CASCADE)
-    name = models.CharField(max_length=50,null=True,blank=True)
-    description = models.TextField(null=True,blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    building = models.ForeignKey(Building, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
     amount = models.PositiveBigIntegerField()
     picture = models.ImageField(upload_to=upload_receipt_pic_src)
     is_checked = models.BooleanField(default=False)
@@ -37,13 +38,6 @@ class Receipt(BaseModel):
 
     def __str__(self):
         return self.name or f'#{self.id}'
-    
+
     def get_score(self):
         raise NotImplementedError
-    
-
-
-
-
-
-    
