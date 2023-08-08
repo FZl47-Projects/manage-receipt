@@ -1,0 +1,60 @@
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+    {% block Title %}
+
+    {% endblock %}
+    </title>
+
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <!-- FONTS -->
+    <link href="https://db.onlinewebfonts.com/c/c56ea8aca8b3b1f84bcb7365c6ae4af0?family=Kalameh+Bold" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vazir-font/28.0.0/font-face.css" />
+    
+    <style>
+        @font-face{
+            font-family:'KalamehBlack';
+            src: url('/static/fonts/Kalameh_Black.woff')
+        }
+
+        body{
+            font-family:'Vazir';
+        }
+    
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    
+        ::placeholder{
+            font-family:'Vazir';
+            font-size:80%
+        }
+
+    </style>
+
+    {% block Link %}
+    {% endblock %}
+
+    {% block Style %}
+    {% endblock %}
+       
+</head>
+<body>
+    {% block Content %}
+
+    {% endblock %}
+
+    {% block Script %}
+    {% endblock %}
+
+    {% block Js %}
+    {% endblock %}
+</body>
+
+</html>
