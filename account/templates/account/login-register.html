@@ -1,281 +1,320 @@
 {% extends 'base/base_template.html' %}
 
 {% block Title %}
-ورود و ثبت نام 
+    ورود و ثبت نام
 {% endblock %}
 
 {% block Style %}
-    
-<style>
-      
-    .container{
-        height: 100vh;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: #eee;
-        column-gap: 30px;
-    }
-    .form{
-        position: absolute;
-        max-width: 430px;
-        width: 100%;
-        padding: 30px;
-        border-radius: 6px;
-        background: #FFF;
-        box-shadow:0 4px 15px #ddd
-    }
-    .form.signup{
-        opacity: 0;
-        pointer-events: none;
-    }
-    .forms.show-signup .form.signup{
-        opacity: 1;
-        pointer-events: auto;
-    }
-    .forms.show-signup .form.login{
-        opacity: 0;
-        pointer-events: none;
-    }
-    header{
-        font-family:"KalamehBlack";
-        font-size: 39px;
-        font-weight: 600;
-        color: #232836;
-        text-align: center;
-    }
-    form{
-        margin-top: 30px;
-    }
-    .form .field{
-        position: relative;
-        height: 50px;
-        width: 100%;
-        margin-top: 20px;
-        border-radius: 6px;
-    }
-    .field input,
-    .field button{
-        height: 100%;
-        width: 100%;
-        border: none;
-        font-size: 16px;
-        font-weight: 400;
-        border-radius: 6px;
-    }
-    .field input{
-        text-align:right;
-        outline: none;
-        padding: 0 15px;
-        border: 1px solid#CACACA;
-    }
-    .field input:focus{
-        border-bottom-width: 2px;
-    }
-    .eye-icon{
-        position: absolute;
-        top: 50%;
-        left: 10px;
-        transform: translateY(-50%);
-        font-size: 18px;
-        color: #8b8b8b;
-        cursor: pointer;
-        padding: 5px;
-    }
-    .field button{
-        color: #fff;
-        background-color: #FF512F;
-        transition: all 0.3s ease;
-        cursor: pointer;
-        font-family:'Vazir'
-    }
-    .field button:hover{
-        background-color: #ff4b28;
-    }
-    .form-link{
-        text-align: center;
-        margin-top: 10px;
-    }
-    .form-link span,
-    .form-link a{
-        font-size: 14px;
-        font-weight: 400;
-        color: #232836;
-    }
-    .form a{
-        color: #0171d3;
-        text-decoration: none;
-    }
-    .form-content a:hover{
-        text-decoration: underline;
-    }
-    .line{
-        position: relative;
-        height: 1px;
-        width: 100%;
-        margin: 36px 0;
-        background-color: #d4d4d4;
-    }
-    .line::before{
-        content: 'Or';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: #FFF;
-        color: #8b8b8b;
-        padding: 0 15px;
-    }
-    .media-options a{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    a.facebook{
-        color: #fff;
-        background-color: #4267b2;
-    }
-    a.facebook .facebook-icon{
-        height: 28px;
-        width: 28px;
-        color: #0171d3;
-        font-size: 20px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: #fff;
-    }
-    .facebook-icon,
-    img.google-img{
-        position: absolute;
-        top: 50%;
-        left: 15px;
-        transform: translateY(-50%);
-    }
-    img.google-img{
-        height: 20px;
-        width: 20px;
-        object-fit: cover;
-    }
-    a.google{
-        border: 1px solid #CACACA;
-    }
-    a.google span{
-        font-weight: 500;
-        opacity: 0.6;
-        color: #232836;
-    }
 
-    .forgot-pass{
-        font-size:70%!important;
-        text-align:left;
-        display:block;
-    }
+    <style>
 
-    @media screen and (max-width: 400px) {
-        .form{
-            padding: 20px 10px;
+        .container {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #eee;
+            column-gap: 30px;
         }
-        
-    }    
-</style>
-                
+
+        .form {
+            position: absolute;
+            max-width: 430px;
+            width: 100%;
+            padding: 30px;
+            border-radius: 6px;
+            background: #FFF;
+            box-shadow: 0 4px 15px #ddd
+        }
+
+        .form.signup {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .forms.show-signup .form.signup {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .forms.show-signup .form.login {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        header {
+            font-family: "KalamehBlack";
+            font-size: 39px;
+            font-weight: 600;
+            color: #232836;
+            text-align: center;
+        }
+
+        form {
+            margin-top: 30px;
+        }
+
+        .form .field {
+            position: relative;
+            height: 50px;
+            width: 100%;
+            margin-top: 20px;
+            border-radius: 6px;
+        }
+
+        .field input,
+        .field button {
+            height: 100%;
+            width: 100%;
+            border: none;
+            font-size: 16px;
+            font-weight: 400;
+            border-radius: 6px;
+        }
+
+        .field input {
+            text-align: right;
+            outline: none;
+            padding: 0 15px;
+            border: 1px solid #CACACA;
+        }
+
+        .field input:focus {
+            border-bottom-width: 2px;
+        }
+
+        .eye-icon {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            font-size: 18px;
+            color: #8b8b8b;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .field button {
+            color: #fff;
+            background-color: #0171d3;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-family: 'Vazir'
+        }
+
+        .field button:hover {
+            background-color: #0063b9;
+        }
+
+        .form-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .form-link span,
+        .form-link a {
+            font-size: 14px;
+            font-weight: 400;
+            color: #232836;
+        }
+
+        .form a {
+            color: #0171d3;
+            text-decoration: none;
+        }
+
+        .form-content a:hover {
+            text-decoration: underline;
+        }
+
+        .line {
+            position: relative;
+            height: 1px;
+            width: 100%;
+            margin: 36px 0;
+            background-color: #d4d4d4;
+        }
+
+        .line::before {
+            content: 'Or';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #FFF;
+            color: #8b8b8b;
+            padding: 0 15px;
+        }
+
+        .media-options a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        a.facebook {
+            color: #fff;
+            background-color: #4267b2;
+        }
+
+        a.facebook .facebook-icon {
+            height: 28px;
+            width: 28px;
+            color: #0171d3;
+            font-size: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
+        }
+
+        .facebook-icon,
+        img.google-img {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+        }
+
+        img.google-img {
+            height: 20px;
+            width: 20px;
+            object-fit: cover;
+        }
+
+        a.google {
+            border: 1px solid #CACACA;
+        }
+
+        a.google span {
+            font-weight: 500;
+            opacity: 0.6;
+            color: #232836;
+        }
+
+        .forgot-pass {
+            font-size: 70% !important;
+            text-align: left;
+            display: block;
+        }
+
+        @media screen and (max-width: 400px) {
+            .form {
+                padding: 20px 10px;
+            }
+
+        }
+    </style>
+
 {% endblock %}
 
 {% block Content %}
-<section class="container forms">
-    <div class="form login">
-        <div class="form-content">
-            <header>ورود</header>
-            <form action="#">
-                <div class="field input-field">
-                    <input type="tel" placeholder="شماره همراه" class="input" maxlength="11">
-                </div>
+    <section class="container forms">
+        <div class="form login">
+            <div class="form-content">
+                <header>ورود</header>
+                <form action="{% url 'account:login_register' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="type-page" value="login">
+                    <div class="field input-field">
+                        <input type="tel" placeholder="شماره همراه" class="input" maxlength="14" name="phonenumber">
+                    </div>
 
-                <div class="field input-field">
-                    <input type="password" placeholder="رمز عبور" class="password">
-                    <i class='bx bx-hide eye-icon'></i>
-                </div>
+                    <div class="field input-field">
+                        <input type="password" placeholder="رمز عبور" class="password" name="password">
+                        <i class='bx bx-hide eye-icon'></i>
+                    </div>
+
+                    <div class="form-link">
+                        <a href="#" class="forgot-pass">رمز خودرا فراموش کرده اید ؟</a>
+                    </div>
+
+                    <div class="field button-field">
+                        <button>Login</button>
+                    </div>
+                </form>
 
                 <div class="form-link">
-                    <a href="#" class="forgot-pass">رمز خودرا فراموش کرده اید ؟</a>
+                    <span>حسابی ندارید ؟ <a href="#" class="link signup-link">ایجاد حساب</a></span>
                 </div>
-
-                <div class="field button-field">
-                    <button>Login</button>
-                </div>
-            </form>
-
-            <div class="form-link">
-                <span>حسابی ندارید ؟ <a href="#" class="link signup-link">ایجاد حساب</a></span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Signup Form -->
-
-    <div class="form signup">
-        <div class="form-content">
-            <header>ثبت نام</header>
-            <form action="#">
-                <div class="field input-field">
-                    <input type="tel" placeholder="شماره همراه" class="input">
-                </div>
-
-                <div class="field input-field">
-                    <input type="password" placeholder="رمز عبور" class="password">
-                </div>
-
-                <div class="field input-field">
-                    <input type="password" placeholder="تایید رمز عبور" class="password">
-                    <i class='bx bx-hide eye-icon'></i>
-                </div>
-
-                <div class="field button-field">
-                    <button>Signup</button>
-                </div>
-            </form>
-
-            <div class="form-link">
-                <span>حسابی دارید ؟ <a href="#" class="link login-link">وارد شوید</a></span>
             </div>
         </div>
 
+        <!-- Signup Form -->
 
-    </div>
-</section>
+        <div class="form signup">
+            <div class="form-content">
+                <header>ثبت نام</header>
+                <form action="{% url 'account:login_register' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="type-page" value="register">
+                    <div class="field input-field">
+                        <input type="tel" placeholder="شماره همراه" class="input" name="phonenumber">
+                    </div>
+
+                    <div class="field input-field">
+                        <input type="password" placeholder="رمز عبور" class="password" name="password">
+                    </div>
+
+                    <div class="field input-field">
+                        <input type="password" placeholder="تایید رمز عبور" class="password" name="password2">
+                        <i class='bx bx-hide eye-icon'></i>
+                    </div>
+
+                    <div class="field button-field">
+                        <button>Signup</button>
+                    </div>
+                </form>
+
+                <div class="form-link">
+                    <span>حسابی دارید ؟ <a href="#" class="link login-link">وارد شوید</a></span>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
 {% endblock %}
 
 {% block Script %}
-<script>
-    const forms = document.querySelector(".forms"),
-    pwShowHide = document.querySelectorAll(".eye-icon"),
-    links = document.querySelectorAll(".link");
+    <script>
+        {% for message in messages %}
+            createNotify({
+                title: '{{ message.tags }}',
+                message: '{{ message }}',
+                theme: '{{ message.tags }}'
+            })
+        {% endfor %}
+    </script>
+    <script>
+        const forms = document.querySelector(".forms"),
+            pwShowHide = document.querySelectorAll(".eye-icon"),
+            links = document.querySelectorAll(".link");
 
-pwShowHide.forEach(eyeIcon => {
-  eyeIcon.addEventListener("click", () => {
-      let pwFields = eyeIcon.parentElement.parentElement.querySelectorAll(".password");
-      
-      pwFields.forEach(password => {
-          if(password.type === "password"){
-              password.type = "text";
-              eyeIcon.classList.replace("bx-hide", "bx-show");
-              return;
-          }
-          password.type = "password";
-          eyeIcon.classList.replace("bx-show", "bx-hide");
-      })
-      
-  })
-})      
+        pwShowHide.forEach(eyeIcon => {
+            eyeIcon.addEventListener("click", () => {
+                let pwFields = eyeIcon.parentElement.parentElement.querySelectorAll(".password");
 
-links.forEach(link => {
-  link.addEventListener("click", e => {
-     e.preventDefault(); //preventing form submit
-     forms.classList.toggle("show-signup");
-  })
-})
-</script>
+                pwFields.forEach(password => {
+                    if (password.type === "password") {
+                        password.type = "text";
+                        eyeIcon.classList.replace("bx-hide", "bx-show");
+                        return;
+                    }
+                    password.type = "password";
+                    eyeIcon.classList.replace("bx-show", "bx-hide");
+                })
+
+            })
+        })
+
+        links.forEach(link => {
+            link.addEventListener("click", e => {
+                e.preventDefault(); //preventing form submit
+                forms.classList.toggle("show-signup");
+            })
+        })
+    </script>
 {% endblock %}
