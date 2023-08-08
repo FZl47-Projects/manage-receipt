@@ -25,7 +25,11 @@ def login_register(request):
 
     def register_perform(request, data):
         f = forms.RegisterUserForm(data=data)
-        # TODO: should be (set validation and message when user is exists)
+        # TODO: should (set validation and message when user is exists) => DONE
+        # TODO: should (check register view)
+        if f.is_bound is False:
+            messages.error(request, 'لطفا فیلد هارا به درستی وارد نمایید')
+            return redirect('account:login_register')
         if f.is_valid():
             # create user
             user = f.save()
@@ -34,7 +38,7 @@ def login_register(request):
             messages.success(request, 'حساب شما با موفقیت ایجاد شد')
             return redirect('public:home')
         else:
-            messages.error(request, 'لطفا فیلد هارا به درستی وارد نمایید')
+            messages.error(request, 'کاربری با این شماره از قبل ثبت شده است')
         return redirect('account:login_register')
 
     if request.method == 'GET':
