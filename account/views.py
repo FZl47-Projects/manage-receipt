@@ -26,6 +26,10 @@ def login_register(request):
     def register_perform(request, data):
         f = forms.RegisterUserForm(data=data)
         if f.is_valid():
+            # create user
+            user = f.save()
+            # login
+            login(request, user)
             messages.success(request, 'حساب شما با موفقیت ایجاد شد')
             return redirect('public:home')
         else:
