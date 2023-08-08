@@ -20,7 +20,8 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path('u/',include('account.urls')),
+    path('',include('public.urls',namespace='public')),
+    path('u/',include('account.urls',namespace='account')),
     path('admin/', admin.site.urls),
 ]
 
@@ -28,15 +29,3 @@ if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) 
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
 
-
-# 
-from django.http import HttpResponse
-from core.utils import send_email
-
-def test(request):
-    send_email('wwwfazel88@gmail.com','Test email')
-    return HttpResponse('Test')
-
-urlpatterns.append(
-    path('',test)
-)
