@@ -46,3 +46,7 @@ def login_register(request):
             return login_perform(request, data)
         elif type_page == 'register':
             return register_perform(request, data)
+
+
+def reset_password(request):
+    pass
