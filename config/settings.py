@@ -164,6 +164,6 @@ Q_CLUSTER = {
 MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
 
 REDIS_CONFIG = {
-    'host':'localhost',
-    'port':'6379'
+    'HOST': 'localhost',
+    'PORT': '6379'
 }

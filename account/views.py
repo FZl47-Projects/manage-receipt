@@ -25,6 +25,7 @@ def login_register(request):
 
     def register_perform(request, data):
         f = forms.RegisterUserForm(data=data)
+        # TODO: should be (set validation and message when user is exists)
         if f.is_valid():
             # create user
             user = f.save()
