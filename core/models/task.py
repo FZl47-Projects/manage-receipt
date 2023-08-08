@@ -14,8 +14,9 @@ class TaskAdmin(models.Model):
     )
 
     # admin user    
-    user_admin = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_admin = models.ForeignKey(User, on_delete=models.CASCADE,related_name='user_admin')
     # superuser should be accepted or reject admins task
+    user_super_admin = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True,related_name='user_super_admin')
     # when status changed to checked then perform function is called
     status = models.CharField(max_length=15, choices=STATUS_OPTIONS, default='pending')
     description_task = models.TextField(null=True, blank=True)
@@ -36,3 +37,4 @@ class TaskAdmin(models.Model):
     def perform_rejected(self):
         # must implement by subclasses
         pass
+
