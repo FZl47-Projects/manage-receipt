@@ -1,6 +1,6 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from receipt.models.task import ReceiptTask
+from receipt.models import ReceiptTask
 
 
 @receiver(post_save,sender=ReceiptTask)
