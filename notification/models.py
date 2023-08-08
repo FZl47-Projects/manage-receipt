@@ -17,6 +17,9 @@ class Notification(BaseModel):
 
     def __str__(self):
         return self.title
+    
+    def get_content(self):
+        return self.description
 
 
 class NotificationUser(Notification):
@@ -24,6 +27,10 @@ class NotificationUser(Notification):
         notification for user
     """
     to_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    is_active = None
 
     def __str__(self):
         return f'notification for {self.to_user}'
+    
+
+    
