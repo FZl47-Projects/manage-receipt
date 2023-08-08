@@ -1,0 +1,120 @@
+@font-face {
+    font-family: 'KalamehBlack';
+    src: url('/static/fonts/Kalameh_Black.woff')
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+::placeholder {
+    font-family: 'Vazir';
+    font-size: 80%
+}
+
+body {
+    font-family: 'Vazir';
+}
+
+
+.container-not-found-base {
+    text-align: center;
+    margin: 20px auto;
+}
+
+.container-not-found-base img {
+    width: 200px;
+    height: 100%;
+}
+
+.container-not-found-base p {
+    font-size: 160%;
+    color: rgb(255, 45, 45);
+}
+
+.loading-element-parent {
+    position: relative;
+}
+
+.loading-element {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    z-index: 99999;
+    border-radius: 50%;
+    animation: loading-circle-animation 1s linear infinite;
+}
+
+.loading-blur-element {
+    /*backdrop-filter: blur(2px);*/
+    backdrop-filter: brightness(50%);
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    inset: 0;
+    z-index: 99998;
+    border-radius: inherit;
+}
+
+.loading-blur-element.fill {
+    backdrop-filter: none !important;
+}
+
+.loading-blur-element.fill:before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    left: 100%;
+    inset: 0;
+    z-index: 99997;
+    background: inherit;
+    border-radius: inherit;
+}
+
+.loading-circle-big {
+    border: 6px solid transparent;
+    border-top-width: 6px;
+    border-top-style: solid;
+    border-right-width: 6px;
+    border-right-style: solid;
+    width: 75px;
+    height: 75px;
+}
+
+.loading-circle-normal {
+    border: 4px solid transparent;
+    border-top-width: 4px;
+    border-top-style: solid;
+    border-right-width: 4px;
+    border-right-style: solid;
+    width: 50px;
+    height: 50px;
+}
+
+
+.loading-circle-small {
+    border: 3px solid transparent;
+    border-top-width: 3px;
+    border-top-style: solid;
+    border-right-width: 3px;
+    border-right-style: solid;
+    width: 25px;
+    height: 25px;
+}
+
+@keyframes loading-circle-animation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
