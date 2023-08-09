@@ -6,34 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>
-    {% block Title %}
+        {% block Title %}
 
-    {% endblock %}
+        {% endblock %}
     </title>
     <link rel="stylesheet" href="{% static 'styles/base.css' %}">
     <link rel="stylesheet" href="{% static 'styles/notify.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vazir-font/28.0.0/font-face.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vazir-font/28.0.0/font-face.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 
     {% block Link %}
     {% endblock %}
 
     {% block Style %}
     {% endblock %}
-       
+
 </head>
 <body>
-    {% block Content %}
+{% block Content %}
 
-    {% endblock %}
+{% endblock %}
 
-    <script src="{% static 'scripts/base.js' %}"></script>
-    <script src="{% static 'scripts/notify.js' %}"></script>
+<script src="{% static 'scripts/urls.js' %}"></script>
+<script src="{% static 'scripts/notify.js' %}"></script>
+<script src="{% static 'scripts/base.js' %}"></script>
 
-    {% block Script %}
-    {% endblock %}
+{% block Script %}
+{% endblock %}
 
-    {% block Js %}
-    {% endblock %}
+{% block Js %}
+{% endblock %}
 </body>
 
 </html>
