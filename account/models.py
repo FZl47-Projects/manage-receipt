@@ -75,7 +75,7 @@ class User(AbstractUser):
     super_user = SuperUserManager()
 
     def __str__(self):
-        return self.email
+        return f'user - {self.phonenumber}'
 
     def get_raw_phonenumber(self):
         p = str(self.phonenumber).replace('+98', '')
