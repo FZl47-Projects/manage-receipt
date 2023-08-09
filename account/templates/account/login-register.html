@@ -1,7 +1,12 @@
 {% extends 'base/base_template.html' %}
+{% load static %}
 
 {% block Title %}
     ورود و ثبت نام
+{% endblock %}
+
+{% block Link %}
+    <link rel="stylesheet" href="{% static 'styles/form.css' %}">
 {% endblock %}
 
 {% block Style %}
@@ -51,82 +56,6 @@
             text-align: center;
         }
 
-        form {
-            margin-top: 30px;
-        }
-
-        .form .field {
-            position: relative;
-            height: 50px;
-            width: 100%;
-            margin-top: 20px;
-            border-radius: 6px;
-        }
-
-        .field input,
-        .field button {
-            height: 100%;
-            width: 100%;
-            border: none;
-            font-size: 16px;
-            font-weight: 400;
-            border-radius: 6px;
-        }
-
-        .field input {
-            text-align: right;
-            outline: none;
-            padding: 0 15px;
-            border: 1px solid #CACACA;
-        }
-
-        .field input:focus {
-            border-bottom-width: 2px;
-        }
-
-        .eye-icon {
-            position: absolute;
-            top: 50%;
-            left: 10px;
-            transform: translateY(-50%);
-            font-size: 18px;
-            color: #8b8b8b;
-            cursor: pointer;
-            padding: 5px;
-        }
-
-        .field button {
-            color: #fff;
-            background-color: #0171d3;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            font-family: 'Vazir'
-        }
-
-        .field button:hover {
-            background-color: #0063b9;
-        }
-
-        .form-link {
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        .form-link span,
-        .form-link a {
-            font-size: 14px;
-            font-weight: 400;
-            color: #232836;
-        }
-
-        .form a {
-            color: #0171d3;
-            text-decoration: none;
-        }
-
-        .form-content a:hover {
-            text-decoration: underline;
-        }
 
         .line {
             position: relative;
@@ -200,19 +129,14 @@
             display: block;
         }
 
-        @media screen and (max-width: 400px) {
-            .form {
-                padding: 20px 10px;
-            }
 
-        }
     </style>
 
 {% endblock %}
 
 {% block Content %}
     <section class="container forms">
-        <div class="form login">
+        <div class="form form-effect login">
             <div class="form-content">
                 <header>ورود</header>
                 <form action="{% url 'account:login_register' %}" method="post">
@@ -228,7 +152,7 @@
                     </div>
 
                     <div class="form-link">
-                        <a href="#" class="forgot-pass">رمز خودرا فراموش کرده اید ؟</a>
+                        <a href="{% url 'account:reset_password' %}" class="forgot-pass">رمز خودرا فراموش کرده اید ؟</a>
                     </div>
 
                     <div class="field button-field">
@@ -244,7 +168,7 @@
 
         <!-- Signup Form -->
 
-        <div class="form signup">
+        <div class="form form-effect signup">
             <div class="form-content">
                 <header>ثبت نام</header>
                 <form action="{% url 'account:login_register' %}" method="post">
