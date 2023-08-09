@@ -167,3 +167,9 @@ REDIS_CONFIG = {
     'HOST': 'localhost',
     'PORT': '6379'
 }
+
+RESET_PASSWORD_CONFIG = {
+    'TIMEOUT': 300,  # by sec
+    'CODE_LENGTH': 6,
+    'STORE_BY': 'reset_password_phonenumber_{}'
+}
