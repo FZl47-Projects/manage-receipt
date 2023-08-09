@@ -18,6 +18,10 @@ body {
     font-family: 'Vazir';
 }
 
+.d-none{
+    display: none;
+}
+
 
 .container-not-found-base {
     text-align: center;
@@ -50,8 +54,8 @@ body {
 }
 
 .loading-blur-element {
-    /*backdrop-filter: blur(2px);*/
-    backdrop-filter: brightness(50%);
+    backdrop-filter: blur(2px);
+    /*backdrop-filter: brightness(50%);*/
     content: "";
     display: block;
     position: absolute;
