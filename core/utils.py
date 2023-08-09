@@ -6,7 +6,7 @@ from django.conf import settings
 from django_q.tasks import async_task
 
 
-def random_str(size=15, chars=string.ascii_uppercase + string.digits):
+def random_str(size=15, chars=string.ascii_lowercase + string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
 
 
@@ -21,7 +21,7 @@ def send_sms(phonenumber, content, **kwargs):
     def handle(phonenumber, content, **kwargs):
         pass
 
-    async_task(handle)
+    # async_task(handle)
 
 
 def send_email(email, content, **kwargs):
