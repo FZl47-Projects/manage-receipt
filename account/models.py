@@ -60,9 +60,9 @@ class User(AbstractUser):
         ('super_user', 'super_user'),
     )
 
-    first_name = models.CharField("first name", max_length=150, blank=True,default="Unknown")
+    first_name = models.CharField("first name", max_length=150, blank=True,default="بدون نام")
     username = None
-    email = models.EmailField("email address", null=True, blank=True)
+    email = models.EmailField("email address", null=True, blank=True,unique=True)
     phonenumber = PhoneNumberField(region='IR', unique=True)
     # type users|roles
     role = models.CharField(max_length=20, choices=ROLE_USER_OPTIONS, default='normal_user')
@@ -75,6 +75,9 @@ class User(AbstractUser):
     financial_user = FinancialUserManager()
     super_user = SuperUserManager()
 
+    class Meta:
+        ordering = '-id',
+
     def __str__(self):
         return f'user - {self.phonenumber}'
 
@@ -83,4 +86,5 @@ class User(AbstractUser):
         return p
 
     def get_full_name(self):
-        return f'{self.first_name} {self.last_name}'
+        fl = f'{self.first_name} {self.last_name}'.strip()
+        return fl
