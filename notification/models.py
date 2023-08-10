@@ -28,6 +28,8 @@ class NotificationUser(Notification):
     """
     to_user = models.ForeignKey(User, on_delete=models.CASCADE)
     is_active = None
+    # show for user or not
+    is_showing = models.BooleanField(default=True)
 
     def __str__(self):
         return f'notification for {self.to_user}'
