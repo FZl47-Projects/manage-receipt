@@ -149,6 +149,17 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 AUTH_USER_MODEL = 'account.User'  # custom user model
+LOGIN_URL = '/u/login-register'
+
+ADMIN_USER_ROLES = [
+    'financial_user',
+    'super_user'
+]
+
+USER_ROLES = [
+    *ADMIN_USER_ROLES,
+    'normal_user',
+]
 
 IMAGE_FORMATS = [
     'jpg',
@@ -173,3 +184,4 @@ RESET_PASSWORD_CONFIG = {
     'CODE_LENGTH': 6,
     'STORE_BY': 'reset_password_phonenumber_{}'
 }
+
