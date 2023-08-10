@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from . import views, operations
 
 
 app_name = 'account'
@@ -13,5 +13,7 @@ urlpatterns = [
     path('reset-password/check-code',views.reset_password_check,name='reset_password_check_code'),
     path('reset-password/set',views.reset_password_set,name='reset_password_set'),
     # dashboard
-    path('dashboard',views.dashboard),
+    path('dashboard',views.dashboard,name='dashboard'),
+    # dashboard operations
+    path('dashboard/register-user-by-admin',operations.register_user_by_admin,name='register_user_by_admin')
 ]
