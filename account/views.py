@@ -14,6 +14,7 @@ from . import forms
 User = get_user_model()
 RESET_PASSWORD_CONFIG = settings.RESET_PASSWORD_CONFIG
 
+
 def login_register(request):
     def login_perform(request, data):
         phonenumber = data.get('phonenumber', None)
@@ -63,7 +64,8 @@ def login_register(request):
             return login_perform(request, data)
         elif type_page == 'register':
             return register_perform(request, data)
-        
+
+
 def logout(request):
     logout_handler(request)
     return redirect('public:home')
@@ -94,7 +96,7 @@ def reset_password_send(request):
         # code is already set
         return HttpResponse(status=409)
     # set code
-    set_value_expire(key,code,RESET_PASSWORD_CONFIG['TIMEOUT'])
+    set_value_expire(key, code, RESET_PASSWORD_CONFIG['TIMEOUT'])
     # send code
     NotificationUser.objects.create(
         to_user=user,
@@ -174,11 +176,31 @@ def reset_password_set(request):
 
 @login_required
 def dashboard(request):
-    # TODO: should return dashboard for any user
-    # super user => .
-    # financial user => ..
-    # and ...
-    context = {
-        'users':User.normal_user.all()
-    }
-    return render(request,'account/dashboard/index.html',context)
+    def dashboard_super_user():
+        context = {
+            'users': User.normal_user.all()
+        }
+        return render(request, 'account/dashboard/super-user/index.html', context)
+
+    def dashboard_financial_user():
+        context = {
+            'users': User.normal_user.all()
+        }
+        return render(request, 'account/dashboard/financial-user/index.html', context)
+
+    def dashboard_user():
+        context = {
+            'users': User.normal_user.all()
+        }
+        return render(request, 'account/dashboard/user/index.html', context)
+
+    def dashboard_handler():
+        user_role = request.user.role
+        if user_role == 'normal_user':
+            return dashboard_user()
+        elif user_role == 'financial_user':
+            return dashboard_financial_user()
+        elif user_role == 'super_user':
+            return dashboard_super_user()
+
+    return dashboard_handler()
