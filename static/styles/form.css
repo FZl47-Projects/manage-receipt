@@ -1,7 +1,11 @@
 
-form {
-    margin-top: 30px;
+::placeholder {
+    font-family: 'Vazir';
+    font-size: 80%;
+    color: #aaa;
 }
+
+
 
 label {
     font-size: 80%;
@@ -17,12 +21,12 @@ label {
     box-shadow: 0 4px 15px #ddd
 }
 
-.form-effect{
+.form-effect {
     position: relative;
     z-index: 1;
 }
 
-.form-effect::before{
+.form-effect::before {
     content: "";
     position: absolute;
     inset: 0;
@@ -33,7 +37,7 @@ label {
     border-radius: inherit;
 }
 
-.form-effect::after{
+.form-effect::after {
     content: "";
     position: absolute;
     inset: 0;
@@ -55,19 +59,25 @@ label {
 
 .field input,
 .field button {
-    height: 100%;
-    width: 100%;
+    /*height: 100%;*/
+    /*width: 100%;*/
     border: none;
     font-size: 16px;
     font-weight: 400;
     border-radius: 6px;
 }
 
+.field button {
+    padding: 6px 19px;
+}
+
 .field input {
+    width: 300px;
     text-align: right;
     outline: none;
-    padding: 0 15px;
-    border: 1px solid #CACACA;
+    padding: 8px 9px;
+    margin: 6px 0;
+    border: 1px solid #e5e5e5;
 }
 
 .field input:focus {
@@ -97,7 +107,7 @@ label {
     background-color: #0063b9;
 }
 
-.field-outline button{
+.field-outline button {
     color: rgba(1, 113, 211, 0.4);
     background-color: #fff;
     border: 1px solid rgba(1, 113, 211, 0.4);
@@ -106,7 +116,7 @@ label {
 .field-outline button:hover {
     color: rgba(1, 113, 211, 0.8);
     border: 1px solid rgba(1, 113, 211, 0.8);
-    background: #fff ;
+    background: #fff;
 }
 
 .form-link {
@@ -128,6 +138,14 @@ label {
 
 .form-content a:hover {
     text-decoration: underline;
+}
+
+.field-required{
+    color: #ef4141;
+}
+
+.form-control{
+    margin-bottom: 8px;
 }
 
 @media screen and (max-width: 400px) {
