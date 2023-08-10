@@ -122,3 +122,61 @@ body {
         transform: rotate(360deg);
     }
 }
+
+.list-row{
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    font-size: 80%;
+    text-align: right;
+}
+
+.title-list-row{
+    border-radius: 10px 10px 0 0;
+    padding: 10px;
+    background: #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.title-list-row > div{
+    display: inline-block;
+    margin: 0 5px;
+    color: #555;
+    font-size: 80%;
+}
+
+
+.detail-row{
+    font-size: 90%;
+    color: #444;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* margin: 10px 0; */
+    /* margin-bottom: 10px; */
+    padding: 12px 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+.detail-row:last-of-type{
+    border-bottom: none;
+}
+
+.detail-row > div{
+    display: inline-block;
+    margin: 0 5px;
+}
+
+.font-80{
+    font-size: 80%;
+}
+
+.font-70{
+    font-size: 70%;
+}
+
+.font-60{
+    font-size: 60%;
+}

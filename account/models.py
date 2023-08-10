@@ -60,6 +60,7 @@ class User(AbstractUser):
         ('super_user', 'super_user'),
     )
 
+    first_name = models.CharField("first name", max_length=150, blank=True,default="Unknown")
     username = None
     email = models.EmailField("email address", null=True, blank=True)
     phonenumber = PhoneNumberField(region='IR', unique=True)
@@ -80,3 +81,6 @@ class User(AbstractUser):
     def get_raw_phonenumber(self):
         p = str(self.phonenumber).replace('+98', '')
         return p
+
+    def get_full_name(self):
+        return f'{self.first_name} {self.last_name}'

@@ -4,7 +4,8 @@ from django.conf import settings
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponseBadRequest, Http404, HttpResponse
 from django.views.decorators.http import require_POST
-from django.contrib.auth import authenticate, login, get_user_model
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, get_user_model, logout as logout_handler
 from core.utils import add_prefix_phonenum, random_str
 from core.redis_py import set_value_expire, remove_key, get_value
 from notification.models import NotificationUser
@@ -62,6 +63,10 @@ def login_register(request):
             return login_perform(request, data)
         elif type_page == 'register':
             return register_perform(request, data)
+        
+def logout(request):
+    logout_handler(request)
+    return redirect('public:home')
 
 
 def reset_password(request):
@@ -165,3 +170,15 @@ def reset_password_set(request):
         send_notify=True
     )
     return JsonResponse({})
+
+
+@login_required
+def dashboard(request):
+    # TODO: should return dashboard for any user
+    # super user => .
+    # financial user => ..
+    # and ...
+    context = {
+        'users':User.normal_user.all()
+    }
+    return render(request,'account/dashboard/index.html',context)
