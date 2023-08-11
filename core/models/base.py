@@ -13,6 +13,9 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
 
+    def get_created_at(self):
+        return self.created_at.strftime('%Y-%m-%d %H:%M:%S')
+
 
 class File(BaseModel):
     file = models.FileField(upload_to=upload_file_src)

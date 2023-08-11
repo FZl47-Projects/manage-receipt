@@ -53,7 +53,7 @@
     {% include 'account/dashboard/components/base/header.html' %}
     
     <div id="container-users" class="d-none">
-        {% include 'account/dashboard/components/user/list.html' with users=users %}
+        {% include 'account/dashboard/components/../base/user/list.html' with users=users %}
     </div>
 
     <div id="container-index" class="d-none">
@@ -503,7 +503,7 @@
             </div>
             </div>
             <div class="col-xl-6">
-            <div class="single_social_media d-flex align-items-center">
+            <div class="single_social_media d-flex align-items- center">
             <div class="icon_media insta_bg">
             <i class="fab fa-instagram"></i>
             </div>
@@ -773,36 +773,7 @@
 <script src="{% static 'scripts/dashboard/kelly.js' %}"></script>
 <script src="{% static 'scripts/dashboard/custom.js' %}"></script>
 
-<script>
-    let cnt_hash_route = {
-        '':document.querySelector('#container-index'),
-        '#users/list': document.querySelector('#container-users')
-    }
 
-    function dispatcher_cnt_show(hash){
-        hideAllCnt()
-        try{
-            let cnt = cnt_hash_route[hash]
-            cnt.classList.remove('d-none')
-        }catch(e){
-            throw 'container not found with this url hash. add container and hash in "cnt_hash_route"'
-        }
-    }
-
-    function hideAllCnt(){
-        for (let [key, val] of Object.entries(cnt_hash_route)){
-            cnt = val
-            cnt.classList.add('d-none')
-        }
-    }
-
-    
-    dispatcher_cnt_show(window.location.hash)
-
-    window.addEventListener('locationchange', function () {
-        dispatcher_cnt_show(window.location.hash)
-    });
-</script>
 
 {% endblock %}
 

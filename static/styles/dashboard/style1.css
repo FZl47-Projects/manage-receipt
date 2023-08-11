@@ -1911,6 +1911,10 @@ p a:hover {
     font-size: 10px !important;
 }
 
+.font-size-7{
+    font-size: 7px !important;
+}
+
 .text-primary {
     color: #5664d2 !important;
 }
@@ -3778,12 +3782,13 @@ table.dataTable {
 }
 
 .sidebar #sidebar_menu > li ul li a {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
     font-size: 14px;
     color: #8890b5;
     font-weight: 400;
-    padding: 0;
     white-space: nowrap;
-    padding: 0;
     padding: 10px 0 10px 8px !important;
     margin-top: 0;
     margin-left: 0;
@@ -3796,6 +3801,10 @@ table.dataTable {
 
 .sidebar #sidebar_menu > li ul li a.active {
     color: #2f3862;
+}
+
+.sidebar #sidebar_menu > li ul li a i{
+    font-size: 90%;
 }
 
 .sidebar #sidebar_menu > li ul li ul {

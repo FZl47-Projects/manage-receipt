@@ -42,7 +42,7 @@ class Migration(migrations.Migration):
                 ('is_checked', models.BooleanField(default=False)),
                 ('submited_at', models.DateTimeField(auto_now_add=True)),
                 ('building', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='receipt.building')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('normal_user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'abstract': False,

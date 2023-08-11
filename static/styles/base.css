@@ -27,7 +27,7 @@ body {
 
 .container-not-found-base {
     text-align: center;
-    margin: 20px auto;
+    margin: 30px auto;
 }
 
 .container-not-found-base img {
@@ -129,7 +129,7 @@ body {
     border: 1px solid #dcdcdc;
     border-radius: 10px;
     font-size: 80%;
-    text-align: right;
+    text-align: center;
 }
 
 .title-list-row {
@@ -156,6 +156,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    text-align: center;
     /* margin: 10px 0; */
     /* margin-bottom: 10px; */
     padding: 12px 5px;
@@ -182,3 +183,4 @@ body {
 .font-60 {
     font-size: 60%;
 }
+

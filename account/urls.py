@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views, operations
+from . import views
 
 
 app_name = 'account'
@@ -12,8 +12,20 @@ urlpatterns = [
     path('reset-password/send-code',views.reset_password_send,name='reset_password_send_code'),
     path('reset-password/check-code',views.reset_password_check,name='reset_password_check_code'),
     path('reset-password/set',views.reset_password_set,name='reset_password_set'),
+
     # dashboard
     path('dashboard',views.dashboard,name='dashboard'),
     # dashboard operations
-    path('dashboard/register-user-by-admin',operations.register_user_by_admin,name='register_user_by_admin')
+    # --- user
+    path('dashboard/user/add',views.UserAdd.as_view(),name='user_add'),
+    path('dashboard/user/list',views.UserList.as_view(),name='user_list'),
+    path('dashboard/user/financial/add',views.UserFinancialAdd.as_view(),name='user_financial_add'),
+    path('dashboard/user/financial/list',views.UserFinancialList.as_view(),name='user_financial_list'),
+    # --- receipt and building
+    path('dashboard/building/add',views.BuildingAdd.as_view(),name='building_add'),
+    path('dashboard/building/list',views.BuildingList.as_view(),name='building_list'),
+    # --- notification
+    path('dashboard/notification/add',views.NotificationAdd.as_view(),name='notification_add'),
+    path('dashboard/notification/list',views.NotificationList.as_view(),name='notification_list'),
+
 ]

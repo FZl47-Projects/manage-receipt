@@ -20,7 +20,7 @@
     });
 })();
 
-function redirect(url){
+function redirect(url) {
     window.location.href = url
 }
 
@@ -152,4 +152,16 @@ function removeLoading(element) {
     } catch (e) {
 
     }
+}
+
+
+let all_datetime_convert = document.querySelectorAll('.datetime-convert')
+for (let dt_el of all_datetime_convert) {
+    let dt = dt_el.innerHTML
+    dt_el.setAttribute('datetime', dt)
+    let dt_persian = new Date(dt).toLocaleDateString('fa-IR', {
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+    dt_el.innerHTML = dt_persian
 }

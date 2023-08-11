@@ -8,7 +8,7 @@ class CustomBaseUserManager(BaseUserManager):
 
     def create_user(self, phonenumber, password, email=None, **extra_fields):
         """
-        Create and save a user with the given phonenumber and password.
+        Create and save a normal_user with the given phonenumber and password.
         """
         if not phonenumber:
             raise ValueError("The phonenumber must be set")
@@ -79,7 +79,7 @@ class User(AbstractUser):
         ordering = '-id',
 
     def __str__(self):
-        return f'user - {self.phonenumber}'
+        return f'{self.role} - {self.phonenumber}'
 
     def get_raw_phonenumber(self):
         p = str(self.phonenumber).replace('+98', '')

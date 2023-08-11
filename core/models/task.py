@@ -13,7 +13,7 @@ class TaskAdmin(models.Model):
         ('rejected', 'rejected')
     )
 
-    # admin user    
+    # admin normal_user
     user_admin = models.ForeignKey(User, on_delete=models.CASCADE,related_name='user_admin')
     # superuser should be accepted or reject admins task
     user_super_admin = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True,related_name='user_super_admin')

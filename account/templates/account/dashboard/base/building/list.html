@@ -1,7 +1,7 @@
 {% extends 'account/dashboard/components/base/base_template.html' %}
 
 {% block Title %}
-    لیست کاربران
+    لیست ساختمان ها
 {% endblock %}
 
 
@@ -17,7 +17,7 @@
                         <div class="white_card_header">
                             <div class="box_header m-0">
                                 <div class="main-title">
-                                    <h3 class="m-0">لیست کاربران</h3>
+                                    <h3 class="m-0">لیست ساختمان ها</h3>
                                 </div>
                             </div>
                         </div>
@@ -26,38 +26,32 @@
                                 <div class="list-row">
                                     <div class="title-list-row">
                                         <div class="col-3">
-                                            نام و نام خانوادگی
+                                            نام
+                                        </div>
+                                        <div class="col-6">
+                                            ادرس
                                         </div>
                                         <div class="col-3">
-                                            شماره همراه
-                                        </div>
-                                        <div class="col-3">
-                                            ایمیل
-                                        </div>
-                                        <div class="col-3">
-                                            اخرین بازدید
+                                            توضیحات
                                         </div>
                                     </div>
-                                    {% for user in users %}
+                                    {% for building in buildings %}
                                         <div class="detail-row">
                                             <div class="col-3">
                                                 <a href="#">
-                                                    {{ user.get_full_name|default:'بدون نام' }}
+                                                    {{ building.name }}
                                                 </a>
                                             </div>
+                                            <div class="col-6">
+                                                {{ building.address|truncatechars:30 }}
+                                            </div>
                                             <div class="col-3">
-                                                {{ user.get_raw_phonenumber }}
-                                            </div>
-                                            <div class="col-3 font-80">
-                                                {{ user.email|default:'-' }}
-                                            </div>
-                                            <div class="col-3 font-70">
-                                                {{ user.last_login|default:'-' }}
+                                                {{ building.description|default:'بدون توضیحات'|truncatechars:20 }}
                                             </div>
                                         </div>
                                     {% empty %}
                                         <div class="container-not-found-base">
-                                            <p>کاربری یافت نشد</p>
+                                            <p>ساختمانی یافت نشد</p>
                                         </div>
                                     {% endfor %}
                                 </div>

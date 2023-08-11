@@ -24,6 +24,9 @@ class Building(BaseModel):
     address = models.TextField()
     description = models.TextField(null=True, blank=True)
 
+    class Meta:
+        ordering = '-id',
+
     def __str__(self):
         return self.name
 
@@ -45,9 +48,8 @@ class Receipt(BaseModel):
         raise NotImplementedError
 
 
+class ReceiptTask(TaskAdmin, Receipt):
 
-class ReceiptTask(TaskAdmin,Receipt):
-    
     def perform_checked(self):
         Receipt.objects.create(
             user=self.user,
@@ -59,7 +61,7 @@ class ReceiptTask(TaskAdmin,Receipt):
             is_checked=self.is_checked,
             submited_at=self.submited_at
         )
-    
+
     def perform_rejected(self):
         NotificationUser(
             to_user=self.user_admin,
@@ -68,5 +70,3 @@ class ReceiptTask(TaskAdmin,Receipt):
                 درخواست ثبت فیش رد شد
             """
         )
-        
-    

@@ -1,0 +1,139 @@
+{% load static %}
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>
+        {% block Title %}
+
+        {% endblock %}
+    </title>
+    <link rel="stylesheet" href="{% static 'styles/base.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/notify.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vazir-font/28.0.0/font-face.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    {#    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css"/>#}
+
+
+    <link rel="stylesheet" href="{% static 'styles/dashboard/bootstrap1.min.css' %}"/>
+
+    <link rel="stylesheet" href="{% static 'vendors/themefy_icon/themify-icons.css' %}"/>
+
+    <link rel="stylesheet" href="{% static 'vendors/niceselect/css/nice-select.css' %}"/>
+
+    <link rel="stylesheet" href="{% static 'vendors/owl_carousel/css/owl.carousel.css' %}"/>
+
+    <link rel="stylesheet" href="{% static 'vendors/gijgo/gijgo.min.css' %}"/>
+
+    <link rel="stylesheet" href="{% static 'vendors/font_awesome/css/all.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendors/tagsinput/tagsinput.css' %}"/>
+
+    <link rel="stylesheet" href="{% static 'vendors/datepicker/date-picker.css' %}"/>
+
+    <link rel="stylesheet" href="{% static 'vendors/scroll/scrollable.css' %}"/>
+
+    <link rel="stylesheet" href="{% static 'vendors/datatable/css/jquery.datatables.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendors/datatable/css/responsive.datatables.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendors/datatable/css/buttons.datatables.min.css' %}"/>
+
+    <link rel="stylesheet" href="{% static 'vendors/text_editor/summernote-bs4.css' %}"/>
+
+    <link rel="stylesheet" href="{% static 'vendors/morris/morris.css' %}">
+
+    <link rel="stylesheet" href="{% static 'vendors/material_icon/material-icons.css' %}"/>
+
+    <link rel="stylesheet" href="{% static 'styles/dashboard/metismenu.css' %}">
+
+    <link rel="stylesheet" href="{% static 'styles/dashboard/style1.css' %}"/>
+
+    <link rel="stylesheet" href="{% static 'styles/form.css' %}"/>
+
+    {% block Link %}
+    {% endblock %}
+
+    {% block Style %}
+    {% endblock %}
+
+</head>
+<body>
+{% block Content %}
+
+{% endblock %}
+
+<div id="back-top" style="display: none;">
+    <a title="Go to Top" href="#">
+        <i class="ti-angle-up"></i>
+    </a>
+</div>
+
+<script src="{% static 'scripts/urls.js' %}"></script>
+<script src="{% static 'scripts/notify.js' %}"></script>
+<script src="{% static 'scripts/base.js' %}"></script>
+
+
+<script src="{% static 'scripts/dashboard/jquery1-3.4.1.min.js' %}"></script>
+
+<script src="{% static 'scripts/dashboard/popper1.min.js' %}"></script>
+
+<script src="{% static 'scripts/dashboard/bootstrap1.min.js' %}"></script>
+
+<script src="{% static 'scripts/dashboard/metismenu.js' %}"></script>
+
+<script src="{% static 'vendors\count_up\jquery.waypoints.min.js' %}"></script>
+
+<script src="{% static 'vendors\count_up\jquery.counterup.min.js' %}"></script>
+
+<script src="{% static 'vendors\count_up\jquery.counterup.min.js' %}"></script>
+
+<script src="{% static 'vendors\niceselect\js\jquery.nice-select.min.js' %}"></script>
+
+<script src="{% static 'vendors\owl_carousel\js\owl.carousel.min.js' %}"></script>
+
+<script src="{% static 'vendors\datatable\js\jquery.datatables.min.js' %}"></script>
+<script src="{% static 'vendors\datatable\js\datatables.responsive.min.js' %}"></script>
+<script src="{% static 'vendors\datatable\js\datatables.buttons.min.js' %}"></script>
+<script src="{% static 'vendors\datatable\js\buttons.flash.min.js' %}"></script>
+<script src="{% static 'vendors\datatable\js\jszip.min.js' %}"></script>
+<script src="{% static 'vendors\datatable\js\pdfmake.min.js' %}"></script>
+<script src="{% static 'vendors\datatable\js\vfs_fonts.js' %}"></script>
+<script src="{% static 'vendors\datatable\js\buttons.html5.min.js' %}"></script>
+<script src="{% static 'vendors\datatable\js\buttons.print.min.js' %}"></script>
+<script src="{% static 'scripts/dashboard/chart.min.js' %}"></script>
+
+<script src="{% static 'vendors\progressbar\jquery.barfiller.js' %}"></script>
+
+<script src="{% static 'vendors\tagsinput\tagsinput.js' %}"></script>
+
+<script src="{% static 'vendors\text_editor\summernote-bs4.js' %}"></script>
+<script src="{% static 'vendors\am_chart\amcharts.js' %}"></script>
+
+<script src="{% static 'vendors\scroll\perfect-scrollbar.min.js' %}"></script>
+<script src="{% static 'vendors\scroll\scrollable-custom.js' %}"></script>
+<script src="{% static 'vendors\chart_am\core.js' %}"></script>
+<script src="{% static 'vendors\chart_am\charts.js' %}"></script>
+<script src="{% static 'vendors\chart_am\animated.js' %}"></script>
+<script src="{% static 'scripts/dashboard/kelly.js' %}"></script>
+<script src="{% static 'scripts/dashboard/custom.js' %}"></script>
+
+<script>
+    {% for message in messages %}
+        createNotify({
+            title: '{{ message.tags }}',
+            message: '{{ message }}',
+            theme: '{{ message.tags }}'
+        })
+    {% endfor %}
+</script>
+
+{% block Script %}
+{% endblock %}
+
+{% block Js %}
+{% endblock %}
+
+
+</body>
+
+</html>

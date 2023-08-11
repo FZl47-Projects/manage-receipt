@@ -56,7 +56,7 @@ class RegisterUserFullForm(forms.ModelForm):
         return p2
 
 
-class ResetPasswordSet(forms.Form):
+class ResetPasswordSetForm(forms.Form):
     phonenumber = PhoneNumberField(region='IR')
     code = forms.CharField()
     password = forms.CharField(max_length=64, min_length=8, required=True, widget=forms.PasswordInput())
@@ -68,3 +68,4 @@ class ResetPasswordSet(forms.Form):
         if p1 != p2:
             raise forms.ValidationError('passwords is not same')
         return p2
+

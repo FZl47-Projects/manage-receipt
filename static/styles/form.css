@@ -10,7 +10,7 @@
 label {
     font-size: 80%;
     text-align: right;
-    color: #888;
+    color: #444;
     display: block;
 }
 
@@ -19,6 +19,13 @@ label {
     border-radius: 6px;
     background: #FFF;
     box-shadow: 0 4px 15px #ddd
+}
+
+.label-detail{
+    color: #aaa;
+    font-size: 80%;
+    margin-top: 3px;
+    margin-right: 15px;
 }
 
 .form-effect {
