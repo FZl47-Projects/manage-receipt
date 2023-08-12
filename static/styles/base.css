@@ -37,6 +37,7 @@ body {
 
 .container-not-found-base p {
     font-size: 160%;
+    font-family: KalamehBlack;
     color: rgb(229, 122, 122);
 }
 
@@ -185,3 +186,42 @@ body {
     font-size: 60%!important;
 }
 
+.pagination{
+    direction: ltr;
+    display: block!important;
+    text-align: left;
+    margin: 15px 0;
+}
+
+.pagination .step-links{
+    background: #f0f0f0;
+    border: 1px solid #d2d2d2;
+    display: inline-block;
+    border-radius: 7px;
+}
+
+.pagination .step-links a{
+    padding: 5px 11px;
+    margin: 0;
+    /*width: 40px;*/
+    font-size: 80%;
+    background: #f6f6f6;
+    text-align: center;
+    display: inline-block;
+}
+
+.pagination-previous a:first-of-type{
+    border-radius: 7px 0 0 7px ;
+    border-right: 1px solid #d2d2d2;
+}
+
+.pagination-next a:last-of-type{
+    border-radius: 0 7px 7px 0;
+    border-left: 1px solid #d2d2d2;
+}
+
+.pagination .current{
+    font-size: 65%;
+    padding: 0 3px;
+    color: #888;
+}
