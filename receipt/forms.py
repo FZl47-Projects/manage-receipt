@@ -5,4 +5,4 @@ from . import models
 class BuildingForm(forms.ModelForm):
     class Meta:
         model = models.Building
-        fields = '__all__'
+        exclude = ('is_active',)
