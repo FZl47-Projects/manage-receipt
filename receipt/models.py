@@ -23,6 +23,7 @@ class Building(BaseModel):
     name = models.CharField(max_length=200)
     address = models.TextField()
     description = models.TextField(null=True, blank=True)
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         ordering = '-id',
