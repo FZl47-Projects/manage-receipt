@@ -25,28 +25,40 @@
                             <div class="card-body">
                                 <div class="list-row">
                                     <div class="title-list-row">
-                                        <div class="col-3">
+                                        <div class="col-2">
                                             نام
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-5">
                                             ادرس
                                         </div>
                                         <div class="col-3">
                                             توضیحات
                                         </div>
+                                        <div class="col-2">
+                                            وضعیت
+                                        </div>
                                     </div>
                                     {% for building in buildings %}
                                         <div class="detail-row">
-                                            <div class="col-3">
+                                            <div class="col-2">
                                                 <a href="#">
-                                                    {{ building.name }}
+                                                    {{ building.name|truncatechars:30 }}
                                                 </a>
                                             </div>
-                                            <div class="col-6">
+                                            <div class="col-5">
                                                 {{ building.address|truncatechars:30 }}
                                             </div>
-                                            <div class="col-3">
+                                            <div class="col-2">
                                                 {{ building.description|default:'بدون توضیحات'|truncatechars:20 }}
+                                            </div>
+                                            <div class="col-2">
+                                                {% if building.is_active %}
+                                                    فعال
+                                                    <i class="fa fa-check-circle font-size-10 text-success"></i>
+                                                {% else %}
+                                                    غیر فعال
+                                                    <i class="fa fa-minus-circle font-size-10 text-danger"></i>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     {% empty %}

@@ -51,8 +51,8 @@
                                             <div class="col-3 font-80">
                                                 {{ user.email|default:'-' }}
                                             </div>
-                                            <div class="col-3 font-70">
-                                                {{ user.last_login|default:'-' }}
+                                            <div class="col-3 font-70 datetime-convert">
+                                                {{ user.get_last_login|default:'-' }}
                                             </div>
                                         </div>
                                     {% empty %}
