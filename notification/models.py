@@ -17,13 +17,12 @@ class Notification(BaseModel):
     """
     title = models.CharField(max_length=150)
     description = models.TextField(null=True, blank=True)
-    # attach = models.ManyToManyField('core.File')
-    image = models.ImageField(upload_to=upload_notification_src, null=True, blank=True,max_length=1000)
+    image = models.ImageField(upload_to=upload_notification_src, null=True, blank=True, max_length=1000)
     send_notify = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 
     class Meta:
-        ordering = '-is_active','-id'
+        ordering = '-is_active', '-id'
 
     def __str__(self):
         return self.title or 'notification'
@@ -35,12 +34,15 @@ class Notification(BaseModel):
         return self.description
 
 
-class NotificationUser(Notification):
+class NotificationUser(BaseModel):
     """
         notification for user
     """
+    title = models.CharField(max_length=150)
+    description = models.TextField(null=True, blank=True)
+    image = models.ImageField(upload_to=upload_notification_src, null=True, blank=True, max_length=1000)
+    send_notify = models.BooleanField(default=False)
     to_user = models.ForeignKey(User, on_delete=models.CASCADE)
-    is_active = None
     # show for user or not
     is_showing = models.BooleanField(default=True)
 
@@ -49,3 +51,9 @@ class NotificationUser(Notification):
 
     def __str__(self):
         return f'notification for {self.to_user}'
+
+    def get_title(self):
+        return self.title or 'notification'
+
+    def get_content(self):
+        return self.description
