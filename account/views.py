@@ -4,14 +4,13 @@ from django.conf import settings
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponseBadRequest, Http404, HttpResponse
 from django.views.decorators.http import require_POST
+from django.core.paginator import Paginator
 from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, get_user_model, logout as logout_handler
-from core.utils import add_prefix_phonenum, random_str
-from core.utils import form_validate_err
+from core.utils import add_prefix_phonenum, random_str, form_validate_err
 from core.auth.decorators import admin_required, admin_required_cbv
 from core.redis_py import set_value_expire, remove_key, get_value
-from notification.models import NotificationUser
 
 from receipt.forms import BuildingForm
 from receipt.models import Building
@@ -51,7 +50,7 @@ def login_register(request):
         if User.objects.filter(phonenumber=phonenumber).exists():
             messages.error(request, 'کاربری با این شماره از قبل ثبت شده است')
             return redirect('account:login_register')
-        # create normal_user
+        # create user
         password = f.cleaned_data['password2']
         user = User(
             phonenumber=phonenumber,
@@ -92,7 +91,7 @@ def reset_password_send(request):
     # validate data
     if not phonenumber:
         return HttpResponseBadRequest()
-    # check normal_user is exists
+    # check user is exists
     try:
         phonenumber = add_prefix_phonenum(phonenumber)
         user = User.objects.get(phonenumber=phonenumber)
@@ -154,7 +153,7 @@ def reset_password_set(request):
     phonenumber = data['phonenumber']
     code = clean_data['code']
     password = clean_data['password2']
-    # check normal_user is exists
+    # check user is exists
     try:
         phonenumber = add_prefix_phonenum(phonenumber)
         user = User.objects.get(phonenumber=phonenumber)
@@ -185,6 +184,7 @@ def reset_password_set(request):
 
 @login_required
 def dashboard(request):
+    # TODO: should refactor and use one dashboard and ..
     def dashboard_super_user():
         context = {
             'users': User.normal_user.all(),
@@ -206,7 +206,6 @@ def dashboard(request):
 
     def dashboard_handler():
         user_role = request.user.role
-        print(user_role)
         if user_role == 'normal_user':
             return dashboard_user()
         elif user_role == 'financial_user':
@@ -234,8 +233,8 @@ class UserAdd(View):
         user = f.save()
         # create notif for admin
         NotificationUser.objects.create(
-            title='ایجاد کاربر توسط ادمین',
             to_user=request.user,
+            title='ایجاد کاربر توسط ادمین',
             description=f"""
                     کاربر {user.phonenumber}
                     ایجاد شد
@@ -338,8 +337,14 @@ class NotificationList(View):
 
     @admin_required_cbv()
     def get(self, request):
+        page_num = request.GET.get('page', 1)
+        notifications = Notification.objects.all()
+        pagination = Paginator(notifications, 40)
+        pagination = pagination.get_page(page_num)
+        notifications = pagination.object_list
         context = {
-            'notifications': Notification.objects.all()
+            'notifications': notifications,
+            'pagination': pagination
         }
         return render(request, self.template_name, context)
 
@@ -351,22 +356,40 @@ class NotificationList(View):
 class NotificationUserAdd(View):
     template_name = 'account/dashboard/base/notification/add-user.html'
 
-    def get(self,request):
+    @admin_required_cbv()
+    def get(self, request):
         context = {
-            'users':User.objects.all()
+            'users': User.objects.all()
         }
-        return render(request,self.template_name,context)
+        return render(request, self.template_name, context)
 
-    def post(self,request):
-        pass
+    @admin_required_cbv()
+    def post(self, request):
+        data = request.POST
+        f = NotificationUserForm(data, request.FILES)
+        if form_validate_err(request, f) is False:
+            return render(request, self.template_name)
+        f.save()
+        messages.success(request, 'اعلان با موفقیت ایجاد شد')
+        return redirect('account:notification_user_add')
 
 
 class NotificationUserList(View):
     template_name = 'account/dashboard/base/notification/list-user.html'
 
-    def get(self,request):
-        return render(request,self.template_name)
+    @admin_required_cbv()
+    def get(self, request):
+        page_num = request.GET.get('page', 1)
+        notifications = NotificationUser.objects.filter(is_showing=True)
+        pagination = Paginator(notifications, 40)
+        pagination = pagination.get_page(page_num)
+        notifications = pagination.object_list
+        context = {
+            'notifications': notifications,
+            'pagination': pagination
+        }
+        return render(request, self.template_name, context)
 
-    def post(self,request):
+    @admin_required_cbv()
+    def post(self, request):
         pass
-
