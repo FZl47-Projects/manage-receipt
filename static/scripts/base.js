@@ -163,5 +163,7 @@ for (let dt_el of all_datetime_convert) {
         hour: '2-digit',
         minute: '2-digit'
     });
-    dt_el.innerHTML = dt_persian
+    if (dt_persian != 'Invalid Date'){
+       dt_el.innerHTML = dt_persian
+    }
 }
