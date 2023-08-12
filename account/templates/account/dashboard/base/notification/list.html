@@ -1,7 +1,7 @@
 {% extends 'account/dashboard/components/base/base_template.html' %}
 
 {% block Title %}
-    لیست اعلان ها
+   لیست اعلان های عمومی
 {% endblock %}
 
 
@@ -16,7 +16,7 @@
                         <div class="white_card_header">
                             <div class="box_header m-0">
                                 <div class="main-title">
-                                    <h3 class="m-0">لیست اعلان ها</h3>
+                                    <h3 class="m-0">لیست اعلان های عمومی</h3>
                                 </div>
                             </div>
                         </div>
@@ -65,6 +65,26 @@
                                             <p>اعلانی یافت نشد</p>
                                         </div>
                                     {% endfor %}
+                                </div>
+                                <div class="pagination">
+                                    <div class="step-links">
+                                        {% if pagination.has_previous %}
+                                            <span class="pagination-previous">
+                                                <a href="?page=1">اول</a><a
+                                                    href="?page={{ pagination.previous_page_number }}">قبلی</a>
+                                            </span>
+                                        {% endif %}
+                                        <span class="current">
+                                        صفحه  {{ pagination.number }} از {{ pagination.paginator.num_pages }}
+                                        </span>
+
+                                        {% if pagination.has_next %}
+                                            <span class="pagination-next">
+                                                <a href="?page={{ pagination.next_page_number }}">بعدی</a><a
+                                                    href="?page={{ pagination.paginator.num_pages }}">اخر</a>
+                                            </span>
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
