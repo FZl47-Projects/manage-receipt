@@ -165,6 +165,7 @@ body {
 
 .detail-row:last-of-type {
     border-bottom: none;
+    border-radius: 0 0 10px 10px ;
 }
 
 .detail-row > div {
@@ -173,14 +174,14 @@ body {
 }
 
 .font-80 {
-    font-size: 80%;
+    font-size: 80%!important;
 }
 
 .font-70 {
-    font-size: 70%;
+    font-size: 70%!important;
 }
 
 .font-60 {
-    font-size: 60%;
+    font-size: 60%!important;
 }
 
