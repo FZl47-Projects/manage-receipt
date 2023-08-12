@@ -346,3 +346,27 @@ class NotificationList(View):
     @admin_required_cbv()
     def post(self, request):
         pass
+
+
+class NotificationUserAdd(View):
+    template_name = 'account/dashboard/base/notification/add-user.html'
+
+    def get(self,request):
+        context = {
+            'users':User.objects.all()
+        }
+        return render(request,self.template_name,context)
+
+    def post(self,request):
+        pass
+
+
+class NotificationUserList(View):
+    template_name = 'account/dashboard/base/notification/list-user.html'
+
+    def get(self,request):
+        return render(request,self.template_name)
+
+    def post(self,request):
+        pass
+
