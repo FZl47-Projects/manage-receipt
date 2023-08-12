@@ -11,4 +11,4 @@ class NotificationForm(forms.ModelForm):
 class NotificationUserForm(forms.ModelForm):
     class Meta:
         model = models.NotificationUser
-        exclude = ('is_active',)
+        exclude = ('is_showing',)
