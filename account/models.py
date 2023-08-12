@@ -86,5 +86,11 @@ class User(AbstractUser):
         return p
 
     def get_full_name(self):
-        fl = f'{self.first_name} {self.last_name}'.strip()
+        fl = f'{self.first_name} {self.last_name}'.strip() or 'بدون نام'
         return fl
+    
+    def get_email(self):
+        return self.email or '-'
+
+    def get_last_login(self):
+        return self.last_login.strftime('%Y-%m-%d %H:%M:%S')
