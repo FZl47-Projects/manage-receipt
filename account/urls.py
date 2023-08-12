@@ -27,5 +27,7 @@ urlpatterns = [
     # --- notification
     path('dashboard/notification/add',views.NotificationAdd.as_view(),name='notification_add'),
     path('dashboard/notification/list',views.NotificationList.as_view(),name='notification_list'),
+    path('dashboard/notification/user/add',views.NotificationUserAdd.as_view(),name='notification_user_add'),
+    path('dashboard/notification/user/list',views.NotificationUserList.as_view(),name='notification_user_list'),
 
 ]
