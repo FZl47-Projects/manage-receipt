@@ -93,4 +93,6 @@ class User(AbstractUser):
         return self.email or '-'
 
     def get_last_login(self):
-        return self.last_login.strftime('%Y-%m-%d %H:%M:%S')
+        if self.last_login:
+            return self.last_login.strftime('%Y-%m-%d %H:%M:%S')
+        return '-'
