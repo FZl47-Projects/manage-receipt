@@ -29,5 +29,7 @@ urlpatterns = [
     path('dashboard/notification/list',views.NotificationList.as_view(),name='notification_list'),
     path('dashboard/notification/user/add',views.NotificationUserAdd.as_view(),name='notification_user_add'),
     path('dashboard/notification/user/list',views.NotificationUserList.as_view(),name='notification_user_list'),
-
+    # --- support
+    path('dashboard/support/ticket/add',views.TicketAdd.as_view(),name='support_ticket_add'),
+    path('dashboard/support/ticket/list',views.TicketListNew.as_view(),name='support_ticket_list_new'),
 ]
