@@ -7,6 +7,22 @@
         </div>
     </div>
     <ul id="sidebar_menu">
+
+        <li>
+            <a class="active d-flex justify-content-between" href="{% url 'account:dashboard' %}">
+                داشبورد
+                <i class="fa fa-tachometer-alt p-2"></i>
+            </a>
+        </li>
+
+        <li>
+            <a class="active d-flex justify-content-between" href="/">
+                خانه
+                <i class="fa fa-home p-2"></i>
+            </a>
+        </li>
+        
+
         <li>
             <a class="has-arrow" href="#" aria-expanded="false">
                 <div class="icon_menu">
@@ -16,7 +32,7 @@
             </a>
             <ul>
                 <li>
-                    <a href="{% url 'account:building_add' %}">
+                    <a href="{% url 'receipt:building_dashboard_add' %}">
                         افزودن ساختمان
                         <div>
                             <i class="fa fa-plus font-size-7 m-0"></i>
@@ -25,7 +41,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'account:building_list' %}">
+                    <a href="{% url 'receipt:building_dashboard_list' %}">
                         لیست ساختمان ها
                         <i class="fa fa-building"></i>
                     </a>
@@ -105,7 +121,7 @@
             </a>
             <ul>
                 <li>
-                    <a href="{% url 'account:notification_add' %}">
+                    <a href="{% url 'notification:notification_dashboard_add' %}">
                         ایجاد اعلان عمومی
                         <div>
                             <i class="fa fa-plus m-0 font-size-7"></i>
@@ -114,7 +130,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'account:notification_user_add' %}">
+                    <a href="{% url 'notification:notification_dashboard_user_add' %}">
                         ایجاد اعلان برای کاربر
                         <div>
                             <i class="fa fa-user m-0 font-size-7"></i>
@@ -123,7 +139,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'account:notification_list' %}">
+                    <a href="{% url 'notification:notification_dashboard_list' %}">
                         لیست اعلان های عمومی
                         <div>
                             <i class="fa fa-bell m-0 font-size-7"></i>
@@ -132,7 +148,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'account:notification_user_list' %}">
+                    <a href="{% url 'notification:notification_dashboard_user_list' %}">
                         لیست اعلان های کاربران
                         <div>
                             <i class="fa fa-user m-0 font-size-7"></i>
@@ -152,7 +168,7 @@
             </a>
             <ul>
                 <li>
-                    <a href="{% url 'account:support_ticket_add' %}">
+                    <a href="{% url 'support:support_dashboard_ticket_add' %}">
                         ایجاد تیکت
                         <div>
                             <i class="fa fa-plus m-0 font-size-7"></i>
@@ -161,7 +177,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'account:support_ticket_list_new' %}">
+                    <a href="{% url 'support:support_dashboard_ticket_list_new' %}">
                         تیکت های جدید
                         <div>
                             <i class="fa fa-reply m-0 font-size-7"></i>
@@ -178,8 +194,5 @@
             </ul>
         </li>
 
-
-
-        <li><a class="active" href="/">خانه</a></li>
     </ul>
 </nav>

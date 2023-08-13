@@ -21,15 +21,4 @@ urlpatterns = [
     path('dashboard/user/list',views.UserList.as_view(),name='user_list'),
     path('dashboard/user/financial/add',views.UserFinancialAdd.as_view(),name='user_financial_add'),
     path('dashboard/user/financial/list',views.UserFinancialList.as_view(),name='user_financial_list'),
-    # --- receipt and building
-    path('dashboard/building/add',views.BuildingAdd.as_view(),name='building_add'),
-    path('dashboard/building/list',views.BuildingList.as_view(),name='building_list'),
-    # --- notification
-    path('dashboard/notification/add',views.NotificationAdd.as_view(),name='notification_add'),
-    path('dashboard/notification/list',views.NotificationList.as_view(),name='notification_list'),
-    path('dashboard/notification/user/add',views.NotificationUserAdd.as_view(),name='notification_user_add'),
-    path('dashboard/notification/user/list',views.NotificationUserList.as_view(),name='notification_user_list'),
-    # --- support
-    path('dashboard/support/ticket/add',views.TicketAdd.as_view(),name='support_ticket_add'),
-    path('dashboard/support/ticket/list',views.TicketListNew.as_view(),name='support_ticket_list_new'),
 ]

@@ -17,7 +17,7 @@ class Notification(BaseModel):
     """
     title = models.CharField(max_length=150)
     description = models.TextField(null=True, blank=True)
-    image = models.ImageField(upload_to=upload_notification_src, null=True, blank=True, max_length=1000)
+    image = models.ImageField(upload_to=upload_notification_src, null=True, blank=True, max_length=400)
     send_notify = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 
@@ -40,7 +40,7 @@ class NotificationUser(BaseModel):
     """
     title = models.CharField(max_length=150)
     description = models.TextField(null=True, blank=True)
-    image = models.ImageField(upload_to=upload_notification_src, null=True, blank=True, max_length=1000)
+    image = models.ImageField(upload_to=upload_notification_src, null=True, blank=True, max_length=400)
     send_notify = models.BooleanField(default=False)
     to_user = models.ForeignKey(User, on_delete=models.CASCADE)
     # show for user or not

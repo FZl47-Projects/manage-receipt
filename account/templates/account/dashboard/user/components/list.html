@@ -12,7 +12,6 @@
             <div class="white_card_body">
                 <p class="font-70">برای انتخاب کاربر بر روی کاربر مورد نظر کلیک کنید</p>
                 <div class="card-body">
-
                     <div class="list-row">
                         <div class="title-list-row">
                             <div class="col-4">نام و نام خانوادگی</div>
@@ -34,10 +33,10 @@
                         {% empty %}
                             <div class="container-not-found-base">
                                 <p>کاربری یافت نشد</p>
-                                <a href="{% url 'account:user_add' %}" class="btn btn-success">اضافه کردن کاربر</a>
                             </div>
                         {% endfor %}
                     </div>
+                    <a href="{% url 'account:user_add' %}" class="btn btn-success mt-4 font-70 d-block py-2">اضافه کردن کاربر</a>
                 </div>
             </div>
         </div>

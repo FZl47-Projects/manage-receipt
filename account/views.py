@@ -12,13 +12,7 @@ from core.utils import add_prefix_phonenum, random_str, form_validate_err
 from core.auth.decorators import admin_required, admin_required_cbv
 from core.redis_py import set_value_expire, remove_key, get_value
 
-from receipt.forms import BuildingForm
-from receipt.models import Building
-from notification.forms import NotificationForm, NotificationUserForm
-from notification.models import Notification, NotificationUser
-from support.models import Ticket
-from support.forms import TicketForm
-
+from notification.models import NotificationUser
 from . import forms
 
 User = get_user_model()
@@ -186,40 +180,25 @@ def reset_password_set(request):
 
 @login_required
 def dashboard(request):
-    # TODO: should refactor and use one dashboard and ..
-    def dashboard_super_user():
+
+    context = {}
+    # get context by role user
+    user_role = request.user.role
+    if user_role == 'normal_user':
+        pass
+    elif user_role == 'financial_user':
+        pass
+    elif user_role == 'super_user':
         context = {
             'users': User.normal_user.all(),
             'financials': User.financial_user.all()
         }
-        return render(request, 'account/dashboard/super-user/index.html', context)
 
-    def dashboard_financial_user():
-        context = {
-            'users': User.normal_user.all()
-        }
-        return render(request, 'account/dashboard/financial-user/index.html', context)
-
-    def dashboard_user():
-        context = {
-            'users': User.normal_user.all()
-        }
-        return render(request, 'account/dashboard/normal_user/index.html', context)
-
-    def dashboard_handler():
-        user_role = request.user.role
-        if user_role == 'normal_user':
-            return dashboard_user()
-        elif user_role == 'financial_user':
-            return dashboard_financial_user()
-        elif user_role == 'super_user':
-            return dashboard_super_user()
-
-    return dashboard_handler()
+    return render(request, 'account/dashboard/index.html', context)
 
 
 class UserAdd(View):
-    template_name = 'account/dashboard/base/user/add.html'
+    template_name = 'account/dashboard/user/add.html'
 
     @admin_required_cbv()
     def get(self, request):
@@ -248,7 +227,7 @@ class UserAdd(View):
 
 
 class UserList(View):
-    template_name = 'account/dashboard/base/user/list.html'
+    template_name = 'account/dashboard/user/list.html'
 
     @admin_required_cbv()
     def get(self, request):
@@ -259,7 +238,7 @@ class UserList(View):
 
 
 class UserFinancialAdd(View):
-    template_name = 'account/dashboard/base/admin/add.html'
+    template_name = 'account/dashboard/admin/add.html'
 
     @admin_required_cbv()
     def get(self, request):
@@ -273,7 +252,7 @@ class UserFinancialAdd(View):
 
 
 class UserFinancialList(View):
-    template_name = 'account/dashboard/base/admin/list.html'
+    template_name = 'account/dashboard/admin/list.html'
 
     @admin_required_cbv()
     def get(self, request):
@@ -281,165 +260,3 @@ class UserFinancialList(View):
             'users': User.financial_user.all()
         }
         return render(request, self.template_name, context)
-
-
-class BuildingAdd(View):
-    template_name = 'account/dashboard/base/building/add.html'
-
-    @admin_required_cbv(['super_user'])
-    def get(self, request):
-        return render(request, self.template_name)
-
-    @admin_required_cbv(['super_user'])
-    def post(self, request):
-        data = request.POST
-        f = BuildingForm(data=data)
-        if form_validate_err(request, f) is False:
-            return render(request, self.template_name)
-        f.save()
-        messages.success(request, 'ساختمان با موفقیت ایجاد شد')
-        return redirect('account:building_add')
-
-
-class BuildingList(View):
-    template_name = 'account/dashboard/base/building/list.html'
-
-    @admin_required_cbv(['super_user'])
-    def get(self, request):
-        context = {
-            'buildings': Building.objects.all()
-        }
-        return render(request, self.template_name, context)
-
-    @admin_required_cbv(['super_user'])
-    def post(self, request):
-        pass
-
-
-class NotificationAdd(View):
-    template_name = 'account/dashboard/base/notification/add.html'
-
-    @admin_required_cbv()
-    def get(self, request):
-        return render(request, self.template_name)
-
-    @admin_required_cbv()
-    def post(self, request):
-        data = request.POST
-        f = NotificationForm(data, request.FILES)
-        if form_validate_err(request, f) is False:
-            return render(request, self.template_name)
-        f.save()
-        messages.success(request, 'اعلان با موفقیت ایجاد شد')
-        return redirect('account:notification_add')
-
-
-class NotificationList(View):
-    template_name = 'account/dashboard/base/notification/list.html'
-
-    @admin_required_cbv()
-    def get(self, request):
-        page_num = request.GET.get('page', 1)
-        notifications = Notification.objects.all()
-        pagination = Paginator(notifications, 40)
-        pagination = pagination.get_page(page_num)
-        notifications = pagination.object_list
-        context = {
-            'notifications': notifications,
-            'pagination': pagination
-        }
-        return render(request, self.template_name, context)
-
-    @admin_required_cbv()
-    def post(self, request):
-        pass
-
-
-class NotificationUserAdd(View):
-    template_name = 'account/dashboard/base/notification/add-user.html'
-
-    @admin_required_cbv()
-    def get(self, request):
-        context = {
-            'users': User.objects.all()
-        }
-        return render(request, self.template_name, context)
-
-    @admin_required_cbv()
-    def post(self, request):
-        data = request.POST
-        f = NotificationUserForm(data, request.FILES)
-        if form_validate_err(request, f) is False:
-            return render(request, self.template_name)
-        f.save()
-        messages.success(request, 'اعلان با موفقیت ایجاد شد')
-        return redirect('account:notification_user_add')
-
-
-class NotificationUserList(View):
-    template_name = 'account/dashboard/base/notification/list-user.html'
-
-    @admin_required_cbv()
-    def get(self, request):
-        page_num = request.GET.get('page', 1)
-        notifications = NotificationUser.objects.filter(is_showing=True)
-        pagination = Paginator(notifications, 40)
-        pagination = pagination.get_page(page_num)
-        notifications = pagination.object_list
-        context = {
-            'notifications': notifications,
-            'pagination': pagination
-        }
-        return render(request, self.template_name, context)
-
-    @admin_required_cbv()
-    def post(self, request):
-        pass
-
-
-class TicketAdd(View):
-    template_name = 'account/dashboard/base/support/ticket/add.html'
-
-    @admin_required_cbv()
-    def get(self,request):
-        context = {
-            'degrees_of_importance': Ticket.DEGREE_OF_IMPORTANCE_OPTIONS,
-            'users': User.objects.all()
-        }
-        return render(request,self.template_name,context)
-    
-    @admin_required_cbv()
-    def post(self,request):
-        data = request.POST.copy()
-        # add this admin for who created ticket
-        data['from_user'] = request.user
-        f = TicketForm(data,request.FILES)
-        if form_validate_err(request,f) is False:
-            return render(request,self.template_name)
-        f.save()
-        messages.success(request,'تیکت پشتیبانی با موفقیت ایجاد شد')
-        return redirect('account:support_ticket_add')
-
-
-class TicketListNew(View):
-    template_name = 'account/dashboard/base/support/ticket/list-new.html'
-
-    @admin_required_cbv()
-    def get(self,request):
-        page_num = request.GET.get('page', 1)
-        tickets = Ticket.objects.filter(is_open=True)
-        pagination = Paginator(tickets, 40)
-        pagination = pagination.get_page(page_num)
-        tickets = pagination.object_list
-        # order tickets
-        order_by = ['high','medium','low']
-        tickets = sorted(tickets, key=lambda x: order_by.index(x.degree_of_importance))
-        context = {
-            'tickets': tickets,
-            'pagination': pagination
-        }
-        return render(request,self.template_name,context)
-    
-    @admin_required_cbv()
-    def post(self,request):
-        pass
