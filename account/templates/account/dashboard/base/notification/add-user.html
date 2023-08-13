@@ -4,25 +4,6 @@
     افزودن اعلان برای کاربر
 {% endblock %}
 
-{% block Style %}
-    <style>
-        .user-select {
-            cursor: pointer;
-            transition: all .2s;
-        }
-
-        .user-select:hover {
-            background: #eee;
-        }
-
-        .user-select[selected='true'] {
-            background: #2fbd75 !important;
-            border: 1px solid #08a673 !important;
-            color: #fff;
-        }
-
-    </style>
-{% endblock %}
 
 {% block Content %}
     {% include 'account/dashboard/components/base/nav.html' %}
@@ -128,7 +109,7 @@
     </section>
 
 
-    <div id="container-users" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    {% comment %} <div id="container-users" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg col-lg-12">
             <div class="modal-content white_card mb_30">
                 <div class="white_card_header">
@@ -172,7 +153,8 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> {% endcomment %}
+    {% include 'account/dashboard/base/user/components/list.html' with users=users %}
 {% endblock %}
 
 
