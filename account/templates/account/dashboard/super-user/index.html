@@ -14,23 +14,7 @@
         {% include 'account/dashboard/components/base/header.html' %}
         <div class="main_content_iner">
             <div class="container-fluid p-0 ">
-                <div id="container-users" class="d-none">
-                    {% include 'account/dashboard/components/../base/user/list.html' with users=users %}
-                </div>
-
-                <div id="container-user-add" class="d-none">
-                    {% include 'account/dashboard/components/../base/user/add.html' %}
-                </div>
-
-                <div id="container-admin-financials" class="d-none">
-                    {% include 'account/dashboard/components/../base/admin/list.html' with users=financials %}
-                </div>
-
-                <div id="container-admin-financial-add" class="d-none">
-                    {% include 'account/dashboard/components/../base/admin/add.html' %}
-                </div>
-
-                <div id="container-index" class="d-none">
+                <div id="container-index">
                     <div class="row ">
                         <div class="col-lg-12">
                             <div class="single_element">
