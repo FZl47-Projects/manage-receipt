@@ -225,3 +225,19 @@ body {
     padding: 0 3px;
     color: #888;
 }
+
+
+.user-select {
+    cursor: pointer;
+    transition: all .2s;
+}
+
+.user-select:hover {
+    background: #eee;
+}
+
+.user-select[selected='true'] {
+    background: #2fbd75 !important;
+    border: 1px solid #08a673 !important;
+    color: #fff;
+}
