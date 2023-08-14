@@ -241,3 +241,37 @@ body {
     border: 1px solid #08a673 !important;
     color: #fff;
 }
+
+.filters-radio .container{
+    margin-top: 10px;
+}
+
+.filters-radio .title{
+    color: #aaa;
+    font-size: 80%;
+}
+
+.filters-radio .container > div{
+    display: inline-block;
+    margin: 2px;
+}
+
+.filters-radio a{
+    font-size: 75%;
+    color: #0886a6;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 50px;
+    padding: 7px 15px;
+    transition: all .3s;
+}
+
+.filters-radio a:hover{
+    background: #0886a6;
+    color: #fff;
+}
+
+.filters-radio a.active{
+    background: #0886a6;
+    color: #fff;
+}

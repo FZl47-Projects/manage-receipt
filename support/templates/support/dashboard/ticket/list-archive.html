@@ -1,7 +1,7 @@
 {% extends 'account/dashboard/components/base/base_template.html' %}
 
 {% block Title %}
-   لیست تیکت های جدید
+   لیست تیکت های ارشیو شده
 {% endblock %}
 
 
@@ -16,7 +16,7 @@
                         <div class="white_card_header">
                             <div class="box_header m-0">
                                 <div class="main-title">
-                                    <h3 class="m-0">لیست تیکت های جدید</h3>
+                                    <h3 class="m-0">لیست تیکت های ارشیو شده</h3>
                                 </div>
                             </div>
                         </div>
@@ -26,17 +26,12 @@
                             </div>
                             <div class="container">
                                 <div>
-                                    <a class="{% if not request.GET.sort_by %}active{% endif %}" href="{% url 'support:support_dashboard_ticket_list_new' %}?sort_by=importance">
-                                        درجه اهمیت
-                                    </a>
-                                </div>
-                                <div>
-                                    <a class="{% if request.GET.sort_by == 'latest' %}active{% endif %}" href="{% url 'support:support_dashboard_ticket_list_new' %}?sort_by=latest">
+                                    <a class="{% if request.GET.sort_by == 'latest' %}active{% endif %}" href="{% url 'support:support_dashboard_ticket_list_archive' %}?sort_by=latest">
                                         جدید ترین ها
                                     </a>
                                 </div>
                                 <div>
-                                    <a class="{% if request.GET.sort_by == 'oldest' %}active{% endif %}" href="{% url 'support:support_dashboard_ticket_list_new' %}?sort_by=oldest">
+                                    <a class="{% if request.GET.sort_by == 'oldest' %}active{% endif %}" href="{% url 'support:support_dashboard_ticket_list_archive' %}?sort_by=oldest">
                                         قدیمی ها
                                     </a>
                                 </div>
@@ -53,7 +48,7 @@
                                             اهمیت
                                         </div>
                                         <div class="col-3">
-                                            وضعیت
+                                            کاربر
                                         </div>
                                         <div class="col-3">
                                             زمان ایجاد
@@ -70,21 +65,18 @@
                                                 {{ ticket.get_degree_of_importance_label }}
                                             </div>
                                             <div class="col-3">
-                                                {% if ticket.is_open %}
-                                                    باز
-                                                    <i class="fa fa-check-circle font-size-10 text-success"></i>
-                                                {% else %}
-                                                    بسته 
-                                                    <i class="fa fa-minus-circle font-size-10 text-danger"></i>
-                                                {% endif %}
+                                                {{ ticket.to_user.get_raw_phonenumber }}
+                                                <span class="font-60 text-muted">
+                                                    {{ ticket.to_user.get_full_name }}
+                                                </span>
                                             </div>
-                                            <div class="col-3">
-                                                {{ ticket.get_created_at_timepast }}
+                                            <div class="col-3 datetime-convert font-60">
+                                                {{ ticket.created_at }}
                                             </div>
                                         </div>
                                     {% empty %}
                                         <div class="container-not-found-base">
-                                            <p>تیکت جدیدی یافت نشد</p>
+                                            <p>تیکتی یافت نشد</p>
                                         </div>
                                     {% endfor %}
                                 </div>

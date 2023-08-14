@@ -42,12 +42,51 @@ class TicketListNew(View):
     def get(self, request):
         page_num = request.GET.get('page', 1)
         tickets = Ticket.objects.filter(is_open=True)
+        # order by time created
+        sort_by = request.GET.get('sort_by','importance')
+        if sort_by and sort_by != 'importance':
+            if sort_by == 'latest':
+                tickets = tickets.order_by('-created_at')
+            elif sort_by == 'oldest':
+                tickets = tickets.order_by('created_at')
         pagination = Paginator(tickets, 40)
         pagination = pagination.get_page(page_num)
         tickets = pagination.object_list
-        # order tickets
-        order_by = ['high', 'medium', 'low']
-        tickets = sorted(tickets, key=lambda x: order_by.index(x.degree_of_importance))
+        if sort_by == 'importance':
+            # default order
+            # order tickets by importance
+            order_by = ['high', 'medium', 'low']
+            tickets = sorted(tickets, key=lambda x: order_by.index(x.degree_of_importance))
+        context = {
+            'tickets': tickets,
+            'pagination': pagination
+        }
+        return render(request, self.template_name, context)
+
+    @admin_required_cbv()
+    def post(self, request):
+        pass
+
+
+
+class TicketListArchive(View):
+    template_name = 'support/dashboard/ticket/list-archive.html'
+
+    @admin_required_cbv()
+    def get(self, request):
+        page_num = request.GET.get('page', 1)
+        tickets = Ticket.objects.filter(is_open=False)
+        # order by time created
+        sort_by = request.GET.get('sort_by',None)
+        if sort_by:
+            if sort_by == 'latest':
+                tickets = tickets.order_by('-created_at')
+            elif sort_by == 'oldest':
+                tickets = tickets.order_by('created_at')
+        pagination = Paginator(tickets, 40)
+        pagination = pagination.get_page(page_num)
+        tickets = pagination.object_list
+        
         context = {
             'tickets': tickets,
             'pagination': pagination
