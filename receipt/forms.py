@@ -5,4 +5,4 @@ from . import models
 class BuildingForm(forms.ModelForm):
     class Meta:
         model = models.Building
-        exclude = ('is_active',)
+        exclude = ('is_active','progress_percentage')

@@ -2971,7 +2971,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child::befor
 
 .header_iner .header_right .header_notification_warp {
     margin-right: 50px;
-    margin-left: 40px;
+    margin-left: 10px;
 }
 
 .header_notification_warp i {

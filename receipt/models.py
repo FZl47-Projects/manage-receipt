@@ -11,7 +11,7 @@ User = get_user_model()
 
 def upload_receipt_pic_src(instance, path):
     """
-        return like this => images/09130009999/...format
+        return like this => images/09130009999/.. .format
     """
     frmt = str(path).split('.')[::-1]
     td = utils.get_time()
@@ -24,6 +24,7 @@ class Building(BaseModel):
     address = models.TextField()
     description = models.TextField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
+    progress_percentage = models.IntegerField(default=0)
 
     class Meta:
         ordering = '-id',
