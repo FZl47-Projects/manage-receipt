@@ -768,15 +768,7 @@
     <script src="{% static 'vendors\chart_am\animated.js' %}"></script>
     <script src="{% static 'scripts/dashboard/kelly.js' %}"></script>
     <script src="{% static 'scripts/dashboard/custom.js' %}"></script>
-    <script>
-        {% for message in messages %}
-            createNotify({
-                title: '{{ message.tags }}',
-                message: '{{ message }}',
-                theme: '{{ message.tags }}'
-            })
-        {% endfor %}
-    </script>
+
 {#    <script>#}
 {#        let cnt_hash_route = {#}
 {#            '': document.querySelector('#container-index'),#}

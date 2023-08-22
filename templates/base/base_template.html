@@ -28,12 +28,18 @@
 {% block Content %}
 
 {% endblock %}
-
+<script>
+    {% for message in messages %}
+        createNotify({
+            title: '{{ message.tags }}' == 'success' ? 'موفق' : 'ارور',
+            message: '{{ message }}',
+            theme: '{{ message.tags }}'
+        })
+    {% endfor %}
+</script>
 <script src="{% static 'scripts/urls.js' %}"></script>
 <script src="{% static 'scripts/notify.js' %}"></script>
 <script src="{% static 'scripts/base.js' %}"></script>
-
-
 
 {% block Script %}
 {% endblock %}
