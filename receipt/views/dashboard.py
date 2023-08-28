@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View
 from core.auth.decorators import admin_required_cbv
 from core.utils import form_validate_err
@@ -38,3 +38,15 @@ class BuildingList(View):
     @admin_required_cbv(['super_user'])
     def post(self, request):
         pass
+
+
+
+class BuildingDetail(View):
+    template_name = 'receipt/dashboard/building/detail.html'
+
+    @admin_required_cbv(['super_user'])    
+    def get(self,request,building_id):
+        context = {
+            'building': get_object_or_404(Building,id=building_id)
+        }
+        return render(request,self.template_name,context)

@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth import get_user_model
 from core.models import BaseModel
 from core import utils
@@ -31,6 +32,10 @@ class Building(BaseModel):
 
     def __str__(self):
         return self.name
+    
+    def get_dashboard_absolute_url(self):
+        return reverse('receipt:building_dashboard_detail',args=(self.id,))
+    
 
 
 class Receipt(BaseModel):
