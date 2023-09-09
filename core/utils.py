@@ -18,12 +18,13 @@ def get_time(frmt='%Y-%m-%d_%H:%M'):
         t = t.strftime(frmt)
     return t
 
+
 def get_timesince_persian(time):
     time_server = get_time(None)
 
     diff_time = datetime.datetime(time_server.year, time_server.month, time_server.day, time_server.hour,
-                                       time_server.minute) - datetime.datetime(time.year, time.month, time.day, time.hour,
-                                                                            time.minute)
+                                  time_server.minute) - datetime.datetime(time.year, time.month, time.day, time.hour,
+                                                                          time.minute)
 
     diff_time_sec = diff_time.total_seconds()
     # sec = diff_time_sec % 60
@@ -43,7 +44,6 @@ def get_timesince_persian(time):
         result = f'{day}  روز پیش'
 
     return result
-
 
 
 def send_sms(phonenumber, content, **kwargs):
@@ -71,11 +71,12 @@ def form_validate_err(request, form):
     if form.is_valid() is False:
         errors = form.errors.as_data()
         if errors:
-            errors = list(errors.values())
-            err = str(errors[0][0])
-            err = err.replace('[', '').replace(']', '')
-            err = err.replace("'", '')
-            messages.error(request, err)
+            for field, err in errors.items():
+                err = str(err[0])
+                err = err.replace('[', '').replace(']', '')
+                err = err.replace("'", '').replace('This', '')
+                err = f'{field} {err}'
+                messages.error(request, err)
         else:
             messages.error(request, 'دیتای ورودی نامعتبر است')
         return False
