@@ -8,12 +8,12 @@ User = get_user_model()
 
 class TaskAdmin(models.Model):
     STATUS_OPTIONS = (
-        ('checked', 'checked'),
-        ('pending', 'pending'),
-        ('rejected', 'rejected')
+        ('accepted', 'بررسی شده'),
+        ('pending', 'نیاز به بررسی'),
+        ('rejected', 'رد شده')
     )
 
-    # admin normal_user
+    # admin user
     user_admin = models.ForeignKey(User, on_delete=models.CASCADE,related_name='user_admin')
     # superuser should be accepted or reject admins task
     user_super_admin = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True,related_name='user_super_admin')
@@ -31,10 +31,10 @@ class TaskAdmin(models.Model):
     @abstractmethod
     def perform_checked(self):
         # must implement by subclasses
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def perform_rejected(self):
         # must implement by subclasses
-        pass
+        raise NotImplementedError
 

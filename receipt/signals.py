@@ -3,14 +3,9 @@ from django.dispatch import receiver
 from receipt.models import ReceiptTask
 
 
-@receiver(post_save,sender=ReceiptTask)
-def handle_receipt_task(sender,instance,**kwargs):
-    if instance.status == 'checked':
+@receiver(post_save, sender=ReceiptTask)
+def handle_receipt_task(sender, instance, **kwargs):
+    if instance.status == 'accepted':
         instance.perform_checked()
     elif instance.status == 'rejected':
         instance.perform_rejected()
-    
-
-    
-        
-            

@@ -1,4 +1,5 @@
 {% extends 'account/dashboard/components/base/base_template.html' %}
+{% load render_partial %}
 
 {% block Title %}
     افزودن اعلان برای کاربر
@@ -107,7 +108,7 @@
         </div>
         {% include 'account/dashboard/components/base/footer.html' %}
     </section>
-    {% include 'account/dashboard/user/components/list.html' with users=users %}
+        {% render_partial 'account.views.UserListComponentPartial' %}
 {% endblock %}
 
 
@@ -130,7 +131,6 @@
                 user_select.removeAttribute('selected')
             }
         }
-
     </script>
 {% endblock %}
 

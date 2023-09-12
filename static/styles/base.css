@@ -9,19 +9,24 @@
     box-sizing: border-box;
 }
 
+input {
+    font-size: 85% !important;
+    color: #5e8591;
+}
+
 body {
     font-family: 'Vazir';
 }
 
-.text-left{
+.text-left {
     text-align: left;
 }
 
-.d-none{
+.d-none {
     display: none;
 }
 
-.border-1-gray{
+.border-1-gray {
     border: 1px solid #ddd;
 }
 
@@ -131,6 +136,8 @@ body {
     border-radius: 10px;
     font-size: 80%;
     text-align: center;
+    /*overflow-x: auto;*/
+    width: 100%;
 }
 
 .title-list-row {
@@ -141,6 +148,7 @@ body {
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #ddd;
+    width: 100%;
 }
 
 .title-list-row > div {
@@ -150,8 +158,8 @@ body {
     font-size: 80%;
 }
 
-
 .detail-row {
+    width: 100%;
     font-size: 90%;
     color: #444;
     display: flex;
@@ -166,7 +174,7 @@ body {
 
 .detail-row:last-of-type {
     border-bottom: none;
-    border-radius: 0 0 10px 10px ;
+    border-radius: 0 0 10px 10px;
 }
 
 .detail-row > div {
@@ -175,52 +183,57 @@ body {
 }
 
 .font-80 {
-    font-size: 80%!important;
+    font-size: 80% !important;
 }
 
 .font-70 {
-    font-size: 70%!important;
+    font-size: 70% !important;
 }
 
 .font-60 {
-    font-size: 60%!important;
+    font-size: 60% !important;
 }
 
-.pagination{
+.pagination {
     direction: ltr;
-    display: block!important;
+    display: block !important;
     text-align: left;
     margin: 15px 0;
 }
 
-.pagination .step-links{
+.pagination .step-links {
     background: #f0f0f0;
     border: 1px solid #d2d2d2;
     display: inline-block;
     border-radius: 7px;
 }
 
-.pagination .step-links a{
+.pagination .step-links a {
     padding: 5px 11px;
     margin: 0;
     /*width: 40px;*/
-    font-size: 80%;
+    font-size: 70%;
     background: #f6f6f6;
+    color: #3955b7;
     text-align: center;
     display: inline-block;
 }
 
-.pagination-previous a:first-of-type{
-    border-radius: 7px 0 0 7px ;
+.pagination .step-links a:hover {
+    background: #ddd;
+}
+
+.pagination-previous a:first-of-type {
+    border-radius: 7px 0 0 7px;
     border-right: 1px solid #d2d2d2;
 }
 
-.pagination-next a:last-of-type{
+.pagination-next a:last-of-type {
     border-radius: 0 7px 7px 0;
     border-left: 1px solid #d2d2d2;
 }
 
-.pagination .current{
+.pagination .current {
     font-size: 65%;
     padding: 0 3px;
     color: #888;
@@ -242,36 +255,105 @@ body {
     color: #fff;
 }
 
-.filters-radio .container{
+.filters-radio .container {
     margin-top: 10px;
 }
 
-.filters-radio .title{
+.filters-radio .title {
     color: #aaa;
-    font-size: 80%;
+    font-size: 70%;
+    margin: 10px 15px;
 }
 
-.filters-radio .container > div{
+.filters-radio .container > div {
     display: inline-block;
     margin: 2px;
 }
 
-.filters-radio a{
+.filters-radio a {
     font-size: 75%;
     color: #0886a6;
     display: inline-block;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     border-radius: 50px;
     padding: 7px 15px;
     transition: all .3s;
 }
 
-.filters-radio a:hover{
-    background: #0886a6;
+.filters-radio a:hover {
+    background: #09ccb5;
     color: #fff;
 }
 
-.filters-radio a.active{
-    background: #0886a6;
+.filters-radio a.active {
+    background: #09ccb5;
     color: #fff;
+}
+
+.cnt-search {
+    margin: 10px auto;
+    padding: 0 10px;
+    max-width: 90%;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cnt-search input {
+    height: 38px;
+    width: 80%;
+    border-radius: inherit;
+    border: none;
+    outline: none;
+}
+
+.cnt-search > div {
+    /*width: 20%;*/
+    text-align: left;
+    border-radius: inherit;
+}
+
+.cnt-search button {
+    border: none;
+    outline: none;
+    background: none;
+    padding: 5px;
+    color: #9aaeb9;
+}
+
+.title {
+    color: #aaa;
+    font-size: 70%;
+    margin: 10px 15px;
+}
+
+
+.text-mute {
+    color: #a4aeb9;
+}
+
+.pending {
+    color: #ffa328;
+}
+
+.accepted {
+    color: #59b48a;
+}
+
+.checked {
+    color: #59b48a;
+}
+
+.rejected {
+    color: #ed4654;
+}
+
+
+@media screen and (max-width: 760px) {
+    .filters-radio .container {
+        text-align: center;
+    }
 }

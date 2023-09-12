@@ -2,7 +2,31 @@ from django import forms
 from . import models
 
 
-class BuildingForm(forms.ModelForm):
+class BuildingAddForm(forms.ModelForm):
     class Meta:
         model = models.Building
-        exclude = ('is_active','progress_percentage')
+        exclude = ('is_active', 'progress_percentage')
+
+
+class ReceiptTaskAddForm(forms.ModelForm):
+    class Meta:
+        model = models.ReceiptTask
+        exclude = ('user_super_admin', 'status', 'description_task')
+
+
+class ReceiptAddForm(forms.ModelForm):
+    class Meta:
+        model = models.Receipt
+        fields = '__all__'
+
+
+class ReceiptAcceptForm(forms.ModelForm):
+    class Meta:
+        model = models.Receipt
+        fields = ('amount', 'note')
+
+
+class ReceiptRejectForm(forms.ModelForm):
+    class Meta:
+        model = models.Receipt
+        fields = ('note',)

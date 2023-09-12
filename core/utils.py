@@ -1,6 +1,8 @@
 import string
 import random
 import datetime
+import requests
+import json
 from django.utils import timezone
 from django.core.mail import send_mail as _send_email_django
 from django.conf import settings
@@ -46,11 +48,24 @@ def get_timesince_persian(time):
     return result
 
 
-def send_sms(phonenumber, content, **kwargs):
-    def handle(phonenumber, content, **kwargs):
-        pass
-
-    # async_task(handle)
+def send_sms(phonenumber,pattern_code,values):
+    phonenumber = str(phonenumber).replace('+', '')
+    payload = json.dumps({
+        "pattern_code": pattern_code,
+        "originator": settings.SMS_CONFIG['ORIGINATOR'],
+        "recipient": phonenumber,
+        "values": values
+    })
+    headers = {
+        'Authorization': f"AccessKey {settings.SMS_CONFIG['API_KEY']}",
+        'Content-Type': 'application/json'
+    }
+    async_task(requests.request,
+               'POST',
+               settings.SMS_CONFIG['API_URL'],
+               headers=headers,
+               data=payload
+               )
 
 
 def send_email(email, content, **kwargs):
@@ -64,6 +79,7 @@ def send_email(email, content, **kwargs):
 
 
 def add_prefix_phonenum(phonenumber):
+    phonenumber = str(phonenumber).replace('+98', '')
     return f'+98{phonenumber}'
 
 

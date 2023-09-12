@@ -29,6 +29,7 @@
 
 {% endblock %}
 <script>
+    window.CSRF_TOKEN = '{{ csrf_token }}'
     {% for message in messages %}
         createNotify({
             title: '{{ message.tags }}' == 'success' ? 'موفق' : 'ارور',

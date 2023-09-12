@@ -14,7 +14,7 @@ urlpatterns = [
     path('reset-password/set',views.reset_password_set,name='reset_password_set'),
 
     # dashboard
-    path('dashboard',views.dashboard,name='dashboard'),
+    path('dashboard',views.Dashboard.as_view(),name='dashboard'),
     # dashboard operations
     # --- user
     path('dashboard/user/add',views.UserAdd.as_view(),name='user_add'),

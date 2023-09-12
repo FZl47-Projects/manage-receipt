@@ -38,10 +38,11 @@ class NotificationUser(BaseModel):
     """
         notification for user
     """
+    type = models.CharField(max_length=100)
     title = models.CharField(max_length=150)
     description = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to=upload_notification_src, null=True, blank=True, max_length=400)
-    send_notify = models.BooleanField(default=False)
+    send_notify = models.BooleanField(default=True)
     to_user = models.ForeignKey(User, on_delete=models.CASCADE)
     # show for user or not
     is_showing = models.BooleanField(default=True)
@@ -57,3 +58,7 @@ class NotificationUser(BaseModel):
 
     def get_content(self):
         return self.description
+
+    def get_absolute_url(self):
+        # TODO: should be completed
+        return 'codevar.ir'

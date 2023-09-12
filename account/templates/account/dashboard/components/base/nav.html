@@ -95,7 +95,7 @@
             </a>
             <ul>
                 <li>
-                    <a href="#">
+                    <a href="{% url 'receipt:receipt_dashboard_add' %}">
                         ثبت رسید
                         <div>
                             <i class="fa fa-plus m-0 font-size-7"></i>
@@ -104,9 +104,16 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{% url 'receipt:receipt_dashboard_list' %}">
                         لیست رسید ها
                         <i class="fa fa-receipt"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'receipt:receipt_dashboard_list_financial_user' %}">
+                        لیست رسید های مدیر مالی
+                        <i class="fa fa-user m-0 font-size-7"></i>
+                        <i class="fa fa-receipt m-0"></i>
                     </a>
                 </li>
             </ul>

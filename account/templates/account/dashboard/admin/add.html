@@ -23,7 +23,7 @@
                         </div>
                         <div class="white_card_body">
                             <div class="card-body">
-                                <form action="{% url 'account:user_add' %}" method="post">
+                                <form action="{% url 'account:user_financial_add' %}" method="post">
                                     {% csrf_token %}
                                     <input type="hidden" name="role" value="financial_user">
                                     <div class="row mb-3">

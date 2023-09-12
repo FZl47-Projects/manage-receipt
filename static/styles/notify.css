@@ -43,11 +43,11 @@
     padding: 30px;
     width: 300px;
     border-radius: 3px 3px 3px 3px;
-    box-shadow: 0 0 12px #999;
+    box-shadow: 0 0 12px #bbb;
     color: #000;
-    opacity: .9;
-    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=90);
-    filter: alpha(opacity=90);
+    /*opacity: .9;*/
+    /*-ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=97);*/
+    /*filter: alpha(opacity=97);*/
     background-position: 15px !important;
     background-repeat: no-repeat !important;
     -webkit-user-select: none;
@@ -73,12 +73,13 @@
 
 .ncf-container .ncf .nfc-message {
     margin: 0;
+    font-size: 100%;
     text-align: right;
     word-wrap: break-word
 }
 
 .ncf-container .success {
-    background: #4dc074;
+    background: #5fe9bc;
     color: #fff;
     padding: 15px 15px 15px 50px;
     background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADsSURBVEhLY2AYBfQMgf///3P8+/evAIgvA/FsIF+BavYDDWMBGroaSMMBiE8VC7AZDrIFaMFnii3AZTjUgsUUWUDA8OdAH6iQbQEhw4HyGsPEcKBXBIC4ARhex4G4BsjmweU1soIFaGg/WtoFZRIZdEvIMhxkCCjXIVsATV6gFGACs4Rsw0EGgIIH3QJYJgHSARQZDrWAB+jawzgs+Q2UO49D7jnRSRGoEFRILcdmEMWGI0cm0JJ2QpYA1RDvcmzJEWhABhD/pqrL0S0CWuABKgnRki9lLseS7g2AlqwHWQSKH4oKLrILpRGhEQCw2LiRUIa4lwAAAABJRU5ErkJggg==")

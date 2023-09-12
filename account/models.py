@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 from phonenumber_field.modelfields import PhoneNumberField
 
 
@@ -60,9 +61,9 @@ class User(AbstractUser):
         ('super_user', 'super_user'),
     )
 
-    first_name = models.CharField("first name", max_length=150, blank=True,default="بدون نام")
+    first_name = models.CharField("first name", max_length=150, blank=True, default="بدون نام")
     username = None
-    email = models.EmailField("email address", null=True, blank=True,unique=True)
+    email = models.EmailField("email address", null=True, blank=True, unique=True)
     phonenumber = PhoneNumberField(region='IR', unique=True)
     # type users|roles
     role = models.CharField(max_length=20, choices=ROLE_USER_OPTIONS, default='normal_user')
@@ -78,6 +79,14 @@ class User(AbstractUser):
     class Meta:
         ordering = '-id',
 
+    @property
+    def is_admin(self):
+        return True if self.role in settings.ADMIN_USER_ROLES else False
+
+    @property
+    def is_super_admin(self):
+        return True if self.role in settings.SUPER_ADMIN_ROLES else False
+
     def __str__(self):
         return f'{self.role} - {self.phonenumber}'
 
@@ -88,10 +97,10 @@ class User(AbstractUser):
     def get_full_name(self):
         fl = f'{self.first_name} {self.last_name}'.strip() or 'بدون نام'
         return fl
-    
+
     def get_email(self):
         return self.email or '-'
-    
+
     def get_image_url(self):
         # TODO: should be complete
         return '/static/images/dashboard/client_img.png'
@@ -100,3 +109,6 @@ class User(AbstractUser):
         if self.last_login:
             return self.last_login.strftime('%Y-%m-%d %H:%M:%S')
         return '-'
+
+    def get_receipts(self):
+        return self.receipt_set.all()

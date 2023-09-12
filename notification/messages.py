@@ -1,8 +1,15 @@
 # task messages
 TASK_REJECTED = """
-    عملیات شما رد شد
+    درخواست شما رد شد
 """
 
+TASK_ACCEPTED = """
+    درخواست شما تایید شد
+"""
+
+RECEIPT_ACCEPTED = """
+    فیش شما تایید شد
+"""
 
 RECEIPT_PERFORMED_SUCCESSFULLY = """
     با سلام
@@ -13,6 +20,6 @@ RECEIPT_PERFORMED_SUCCESSFULLY = """
 RECEIPT_PERFORMED_FAILD = """
     با سلام
     جناب/سرکار {}
-    فیش ارسالی شما تایید نشد
-    برای اطلاعات بیشتر به سامانه {} مراجعه نمایید
+    فیش ارسالی شما رد نشد
+    برای اطلاعات بیشتر به لینک روبه رو {} مراجعه نمایید
 """

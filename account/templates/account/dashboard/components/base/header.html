@@ -2,43 +2,45 @@
 <header>
     <div class="container-fluid g-0">
         <div class="row">
-        <div class="col-lg-12 p-0 ">
-        <div class="header_iner d-flex justify-content-between align-items-center">
-        <div class="sidebar_icon d-lg-none">
-        <i class="ti-menu"></i>
+            <div class="col-lg-12 p-0 ">
+                <div class="header_iner d-flex justify-content-between align-items-center">
+                    <div class="sidebar_icon d-lg-none">
+                        <i class="ti-menu"></i>
+                    </div>
+                    <div class="serach_field-area d-flex align-items-center">
+                        <div class="search_inner">
+                            <form action="#">
+                                <div class="search_field">
+                                    <input type="text" placeholder="جستجو...">
+                                    <p>{{ user.role }}</p>
+                                </div>
+                                <button type="submit"><img
+                                        src="{% static 'images/dashboard/icon/icon_search.svg.xml' %}" alt></button>
+                            </form>
+                        </div>
+                        <span class="f_s_14 f_w_400 ml_25 white_text text_white">Apps</span>
+                    </div>
+                    <div class="header_right d-flex justify-content-between align-items-center">
+                        <div class="header_notification_warp d-flex align-items-center">
+                            <li>
+                                <i class="fa fa-bell"></i>
+                            </li>
+                            <li>
+                                <a href="{% url 'account:logout' %}">
+                                    <i class="fa fa-sign-out-alt"></i>
+                                </a>
+                            </li>
+                        </div>
+                        <div class="profile_info text-center mx-4">
+                            <img src="{{ user.get_image_url }}" alt="{{ user.get_full_name }}">
+                            <p class="font-60 text-center text-white">
+                                {{ user.get_full_name|truncatechars:30 }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="serach_field-area d-flex align-items-center">
-        <div class="search_inner">
-        <form action="#">
-        <div class="search_field">
-        <input type="text" placeholder="جستجو...">
-        </div>
-        <button type="submit"> <img src="{% static 'images/dashboard/icon/icon_search.svg.xml' %}" alt> </button>
-        </form>
-        </div>
-        <span class="f_s_14 f_w_400 ml_25 white_text text_white">Apps</span>
-        </div>
-        <div class="header_right d-flex justify-content-between align-items-center">
-        <div class="header_notification_warp d-flex align-items-center">
-        <li>
-            <i class="fa fa-bell"></i>
-        </li>
-        <li>
-            <a href="{% url 'account:logout' %}">
-                <i class="fa fa-sign-out-alt"></i>
-            </a>
-        </li>
-        </div>
-        <div class="profile_info text-center mx-4">
-            <img src="{{ user.get_image_url }}" alt="{{ user.get_full_name }}">
-            <p class="font-60 text-center text-white">
-                {{ user.get_full_name|truncatechars:30 }}
-            </p>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
+    </div>
     </div>
 </header>

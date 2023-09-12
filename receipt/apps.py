@@ -5,5 +5,5 @@ class ReceiptConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'receipt'
 
-    def read(self):
-        import signals
+    def ready(self):
+        from . import signals

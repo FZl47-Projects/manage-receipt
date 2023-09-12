@@ -7,7 +7,7 @@ body {
     font-family: Vazir;
     padding: 0;
     margin: 0;
-    font-size: 18px;
+    font-size: 20px;
     background: #fff;
 }
 
@@ -169,7 +169,7 @@ p {
     line-height: 24px;
     font-size: 20px;
     margin-bottom: 0;
-    color: #828bb2;
+    /*color: #828bb2;*/
     font-family: Vazir;
     font-weight: 300;
 }
@@ -1911,7 +1911,7 @@ p a:hover {
     font-size: 10px !important;
 }
 
-.font-size-7{
+.font-size-7 {
     font-size: 7px !important;
 }
 
@@ -3803,7 +3803,7 @@ table.dataTable {
     color: #2f3862;
 }
 
-.sidebar #sidebar_menu > li ul li a i{
+.sidebar #sidebar_menu > li ul li a i {
     font-size: 90%;
 }
 
@@ -3980,9 +3980,23 @@ body::-webkit-scrollbar {
 .main-title h3 {
     font-family: KalamehBlack;
     font-weight: 700;
-    font-size: 20px;
-    color: #8890b5;
+    font-size: 22px;
+    color: #7983af;
     line-height: 1.2;
+}
+
+.container-title {
+    font-family: KalamehBlack;
+    font-weight: 700;
+    font-size: 19px;
+    color: #b3b6cc;
+    line-height: 1.2;
+    margin-bottom: 12px;
+    margin-top: 12px;
+}
+
+.container-title p {
+    font-family: inherit;
 }
 
 .main-title span {
@@ -5023,7 +5037,7 @@ body::-webkit-scrollbar {
 }
 
 .footer_part {
-    background: #fafafa!important;
+    background: #fafafa !important;
     text-align: center;
     /*padding-bottom: 40px;*/
     padding-top: 6px;

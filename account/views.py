@@ -4,9 +4,8 @@ from django.conf import settings
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponseBadRequest, Http404, HttpResponse
 from django.views.decorators.http import require_POST
-from django.core.paginator import Paginator
 from django.views.generic import View
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login, get_user_model, logout as logout_handler
 from core.utils import add_prefix_phonenum, random_str, form_validate_err
 from core.auth.decorators import admin_required, admin_required_cbv
@@ -31,7 +30,7 @@ def login_register(request):
                 return redirect('account:login_register')
             login(request, user)
             messages.success(request, 'خوش امدید')
-            return redirect('public:home')
+            return redirect('account:dashboard')
         else:
             messages.error(request, 'لطفا فیلد هارا به درستی وارد نمایید')
         return redirect('account:login_register')
@@ -178,23 +177,26 @@ def reset_password_set(request):
     return JsonResponse({})
 
 
-@login_required
-def dashboard(request):
+class Dashboard(LoginRequiredMixin, View):
 
-    context = {}
-    # get context by role user
-    user_role = request.user.role
-    if user_role == 'normal_user':
-        pass
-    elif user_role == 'financial_user':
-        pass
-    elif user_role == 'super_user':
-        context = {
-            'users': User.normal_user.all(),
-            'financials': User.financial_user.all()
-        }
+    def get_context(self, request):
+        # get context by role user
+        user_role = request.user.role
+        context = {}
+        if user_role == 'normal_user':
+            pass
+        elif user_role == 'financial_user':
+            pass
+        elif user_role == 'super_user':
+            context = {
+                'users': User.normal_user.all(),
+                'financials': User.financial_user.all()
+            }
+        return context
 
-    return render(request, 'account/dashboard/index.html', context)
+    def get(self, request):
+        context = self.get_context(request)
+        return render(request, 'account/dashboard/index.html', context)
 
 
 class UserAdd(View):
@@ -212,6 +214,9 @@ class UserAdd(View):
             return render(request, self.template_name)
         # create user
         user = f.save()
+        user.is_active = True
+        user.set_password(f.cleaned_data['password2'])
+        user.save()
         # create notif for admin
         NotificationUser.objects.create(
             to_user=request.user,
@@ -237,6 +242,17 @@ class UserList(View):
         return render(request, self.template_name, context)
 
 
+class UserListComponentPartial(View):
+    template_name = 'account/dashboard/user/components/list.html'
+
+    @admin_required_cbv()
+    def get(self, request):
+        context = {
+            'users': User.normal_user.all()
+        }
+        return render(request, self.template_name, context)
+
+
 class UserFinancialAdd(View):
     template_name = 'account/dashboard/admin/add.html'
 
@@ -244,11 +260,29 @@ class UserFinancialAdd(View):
     def get(self, request):
         return render(request, self.template_name)
 
+    @admin_required_cbv(['super_user'])
     def post(self, request):
-        """
-            use UserAdd post view
-        """
-        pass
+        data = request.POST
+        f = forms.RegisterUserFullForm(data=data)
+        if form_validate_err(request, f) is False:
+            return render(request, self.template_name)
+        # create user
+        user = f.save()
+        user.is_active = True
+        user.set_password(f.cleaned_data['password2'])
+        user.save()
+        # create notif for admin
+        NotificationUser.objects.create(
+            to_user=request.user,
+            title='ایجاد کاربر توسط ادمین',
+            description=f"""
+                        کاربر {user.phonenumber}
+                        ایجاد شد
+                    """,
+            is_showing=False
+        )
+        messages.success(request, 'حساب کاربر با موفقیت ایجاد شد')
+        return redirect('account:user_add')
 
 
 class UserFinancialList(View):

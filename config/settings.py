@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Third-party
+    'django_render_partial',
     'phonenumber_field',
     'django_q',
     # Apps
@@ -156,6 +157,10 @@ ADMIN_USER_ROLES = [
     'super_user'
 ]
 
+SUPER_ADMIN_ROLES = [
+    'super_user'
+]
+
 USER_ROLES = [
     *ADMIN_USER_ROLES,
     'normal_user',
@@ -185,3 +190,8 @@ RESET_PASSWORD_CONFIG = {
     'STORE_BY': 'reset_password_phonenumber_{}'
 }
 
+SMS_CONFIG = {
+    'API_KEY': os.environ.get('SMS_API_KEY'),
+    'API_URL': 'http://rest.ippanel.com/v1/messages/patterns/send',
+    'ORIGINATOR': '983000505'
+}

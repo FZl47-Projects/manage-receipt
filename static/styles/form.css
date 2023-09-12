@@ -6,11 +6,10 @@
 }
 
 
-
 label {
     font-size: 80%;
     text-align: right;
-    color: #444;
+    color: #aaa;
     display: block;
 }
 
@@ -21,7 +20,7 @@ label {
     box-shadow: 0 4px 15px #ddd
 }
 
-.label-detail{
+.label-detail {
     color: #aaa;
     font-size: 80%;
     margin-top: 3px;
@@ -147,12 +146,20 @@ label {
     text-decoration: underline;
 }
 
-.field-required{
+.field-required {
     color: #ef4141;
 }
 
-.form-control{
+.form-control {
     margin-bottom: 8px;
+}
+
+.field-container {
+    position: relative;
+    padding: 8px;
+    margin-top: 10px;
+    border-radius: 6px;
+    border: 1px solid #bbc1c9;
 }
 
 @media screen and (max-width: 400px) {

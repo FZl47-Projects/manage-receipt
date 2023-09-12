@@ -43,7 +43,7 @@ class TicketListNew(View):
         page_num = request.GET.get('page', 1)
         tickets = Ticket.objects.filter(is_open=True)
         # order by time created
-        sort_by = request.GET.get('sort_by','importance')
+        sort_by = request.GET.get('sort_by', 'importance')
         if sort_by and sort_by != 'importance':
             if sort_by == 'latest':
                 tickets = tickets.order_by('-created_at')
@@ -68,7 +68,6 @@ class TicketListNew(View):
         pass
 
 
-
 class TicketListArchive(View):
     template_name = 'support/dashboard/ticket/list-archive.html'
 
@@ -77,7 +76,7 @@ class TicketListArchive(View):
         page_num = request.GET.get('page', 1)
         tickets = Ticket.objects.filter(is_open=False)
         # order by time created
-        sort_by = request.GET.get('sort_by',None)
+        sort_by = request.GET.get('sort_by', None)
         if sort_by:
             if sort_by == 'latest':
                 tickets = tickets.order_by('-created_at')
@@ -86,7 +85,7 @@ class TicketListArchive(View):
         pagination = Paginator(tickets, 40)
         pagination = pagination.get_page(page_num)
         tickets = pagination.object_list
-        
+
         context = {
             'tickets': tickets,
             'pagination': pagination

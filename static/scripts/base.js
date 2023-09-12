@@ -1,5 +1,3 @@
-
-
 function redirect(url) {
     window.location.href = url
 }
@@ -143,7 +141,26 @@ for (let dt_el of all_datetime_convert) {
         hour: '2-digit',
         minute: '2-digit'
     });
-    if (dt_persian != 'Invalid Date'){
-       dt_el.innerHTML = dt_persian
+    if (dt_persian != 'Invalid Date') {
+        dt_el.innerHTML = dt_persian
     }
 }
+
+// price elements
+document.querySelectorAll('.price-el').forEach((el) => {
+    let p = el.innerText
+    el.setAttribute('price-val', p)
+    el.innerHTML = numberWithCommas(p)
+})
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+
+// full size element
+document.querySelectorAll('.click-full-size').forEach(function (el){
+    el.addEventListener('click',function (){
+        this.requestFullscreen()
+    })
+})
