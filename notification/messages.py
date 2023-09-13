@@ -11,6 +11,10 @@ RECEIPT_ACCEPTED = """
     فیش شما تایید شد
 """
 
+RECEIPT_REJECTED = """
+    فیش شما رد شد
+"""
+
 RECEIPT_PERFORMED_SUCCESSFULLY = """
     با سلام
     جناب/سرکار {}

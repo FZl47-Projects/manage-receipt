@@ -68,6 +68,13 @@ def send_sms(phonenumber,pattern_code,values):
                )
 
 
+    # r = requests.request(
+    #            'POST',
+    #            settings.SMS_CONFIG['API_URL'],
+    #            headers=headers,
+    #            data=payload)
+
+
 def send_email(email, content, **kwargs):
     # send email in background 
     async_task(_send_email_django,

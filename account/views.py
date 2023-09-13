@@ -42,13 +42,17 @@ def login_register(request):
             return redirect('account:login_register')
         # check for exists normal_user
         phonenumber = f.cleaned_data['phonenumber']
+        email = f.cleaned_data['email']
         if User.objects.filter(phonenumber=phonenumber).exists():
+            messages.error(request, 'کاربری با این شماره از قبل ثبت شده است')
+        if User.objects.filter(email=email).exists():
             messages.error(request, 'کاربری با این شماره از قبل ثبت شده است')
             return redirect('account:login_register')
         # create user
         password = f.cleaned_data['password2']
         user = User(
             phonenumber=phonenumber,
+            email=email
         )
         user.set_password(password)
         user.save()
@@ -102,6 +106,7 @@ def reset_password_send(request):
     set_value_expire(key, code, RESET_PASSWORD_CONFIG['TIMEOUT'])
     # send code
     NotificationUser.objects.create(
+        type='RESET_PASSWORD_CODE_SENT',
         to_user=user,
         title='بازیابی رمز عبور',
         description=f"""
@@ -167,6 +172,7 @@ def reset_password_set(request):
     user.save()
     remove_key(key)
     NotificationUser.objects.create(
+        type='PASSWORD_CHANGED_SUCCESSFULLY',
         to_user=user,
         title='رمز عبور شما تغییر کرد',
         description="""

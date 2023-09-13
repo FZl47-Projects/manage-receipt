@@ -38,7 +38,7 @@ class ReceiptAbstract(BaseModel):
         ('pending', 'در صف'),
         ('rejected', 'رد شده')
     )
-    status = models.CharField(max_length=15, choices=STATUS_OPTIONS,default='pending')
+    status = models.CharField(max_length=15, choices=STATUS_OPTIONS, default='pending')
     user = models.ForeignKey('account.User', on_delete=models.CASCADE)
     building = models.ForeignKey(Building, on_delete=models.CASCADE)
     description = models.TextField(null=True, blank=True)  # by user
@@ -71,33 +71,27 @@ class Receipt(ReceiptAbstract):
     def get_absolute_url(self):
         return reverse('receipt:receipt_dashboard_detail', args=(self.id,))
 
+    def get_status(self):
+        return self.status
+
 
 class ReceiptTask(TaskAdmin):
-    STATUS_OPTIONS = (
+    RECEIPT_STATUS_OPTIONS = (
         ('accepted', 'تایید شده'),
         ('rejected', 'رد شده')
     )
-    receipt_status = models.CharField(max_length=15, choices=STATUS_OPTIONS)
+    receipt_status = models.CharField(max_length=15, choices=RECEIPT_STATUS_OPTIONS, default='accepted')
     receipt = models.OneToOneField('Receipt', on_delete=models.CASCADE)
 
     def perform_checked(self):
         self.receipt.status = self.receipt_status
         self.receipt.save()
-        # create for financial user and normal user
         NotificationUser.objects.create(
             type='TASK_ACCEPTED',
             to_user=self.user_admin,
             title=messages.TASK_ACCEPTED,
             description="""
                     درخواست ثبت فیش تایید شد
-            """
-        )
-        NotificationUser.objects.create(
-            type='RECEIPT_ACCEPTED',
-            to_user=self.receipt.user,
-            title=messages.RECEIPT_ACCEPTED,
-            description="""
-                    فیش شما تایید شد
             """
         )
 

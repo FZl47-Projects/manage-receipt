@@ -1,0 +1,189 @@
+{% extends 'account/dashboard/components/base/base_template.html' %}
+
+{% block Title %}
+    لیست رسید های ثبت شده توسط ادمین ها
+{% endblock %}
+
+
+{% block Content %}
+    {% include 'account/dashboard/components/base/nav.html' %}
+
+    <section class="main_content dashboard_part large_header_bg">
+        {% include 'account/dashboard/components/base/header.html' %}
+        <div class="main_content_iner">
+            <div class="container-fluid p-0 ">
+                <div class="col-lg-12">
+                    <div class="white_card mb_30">
+                        <div class="white_card_header">
+                            <div class="box_header m-0">
+                                <div class="main-title">
+                                    <h3 class="m-0">لیست رسید های ثبت شده ادمین ها</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="filters-radio">
+                                <div class="title">
+                                    مرتب بر اساس :
+                                </div>
+                                <div class="container">
+                                    <div>
+                                        <a class="{% if not request.GET.sort_by or request.GET.sort_by == 'latest' %}active{% endif %}"
+                                           href="{% url 'receipt:receipt_dashboard_list_financial_user' %}?sort_by=latest&search={{ request.GET.search }}">
+                                            جدید ترین
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a class="{% if request.GET.sort_by == 'oldest' %}active{% endif %}"
+                                           href="{% url 'receipt:receipt_dashboard_list_financial_user' %}?sort_by=oldest&search={{ request.GET.search }}">
+                                            قدیمی ترین
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a class="{% if request.GET.sort_by == 'need_to_check' %}active{% endif %}"
+                                           href="{% url 'receipt:receipt_dashboard_list_financial_user' %}?sort_by=need_to_check&search={{ request.GET.search }}">
+                                            نیاز به بررسی
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a class="{% if request.GET.sort_by == 'highest_amount' %}active{% endif %}"
+                                           href="{% url 'receipt:receipt_dashboard_list_financial_user' %}?sort_by=highest_amount&search={{ request.GET.search }}">
+                                            بیشترین مبلغ
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a class="{% if request.GET.sort_by == 'lowset_amount' %}active{% endif %}"
+                                           href="{% url 'receipt:receipt_dashboard_list_financial_user' %}?sort_by=lowset_amount&search={{ request.GET.search }}">
+                                            کمترین مبلغ
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <form action="{% url 'receipt:receipt_dashboard_list_financial_user' %}">
+                                    <input type="hidden" name="sort_by" value="{{ request.GET.sort_by }}">
+                                    <p class="title">جست و جو :</p>
+                                    <div class="cnt-search col-11 col-md-7">
+                                        <input type="text" name="search"
+                                               placeholder="نام ساختمان ، مبلغ ، نام ادمین و .."
+                                               value="{{ request.GET.search }}">
+                                        <div>
+                                            {% if request.GET.search %}
+                                                <a class="text-danger font-80" style="margin-left: 8px;"
+                                                   href="{% url 'receipt:receipt_dashboard_list_financial_user' %}">
+                                                    <i class="fa fa-times"></i>
+                                                </a>
+                                            {% endif %}
+                                            <button>
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="white_card_body">
+                            <div class="card-body">
+                                <div class="list-row">
+                                    <div class="title-list-row">
+                                        <div class="col-2">
+                                            نام ساختمان
+                                        </div>
+                                        <div class="col-2">
+                                            ادمین
+                                        </div>
+                                        <div class="col-2">
+                                            مبلغ
+                                        </div>
+                                        <div class="col-2">
+                                            وضعیت
+                                        </div>
+                                        <div class="col-2">
+                                            جزئیات
+                                        </div>
+                                    </div>
+                                    {% for receipt_task in receipts %}
+                                        <div class="detail-row">
+                                            <div class="col-2">
+                                                <a href="{{ receipt_task.receipt.building.get_dashboard_absolute_url }}">
+                                                    {{ receipt_task.receipt.building.name|truncatechars:30 }}
+                                                </a>
+                                            </div>
+                                            <div class="col-2">
+                                                <a href="{{ receipt_task.user_admin.get_absolute_url }}">
+                                                    {{ receipt_task.user_admin.get_full_name|truncatechars:10 }}
+                                                    {{ receipt_task.user_admin.get_raw_phonenumber }}
+                                                </a>
+                                            </div>
+                                            <div class="col-2">
+                                                <span class="price-el">{{ receipt_task.receipt.amount }}</span>
+                                            </div>
+                                            <div class="col-2">
+                                                {% if receipt_task.status == 'accepted' %}
+                                                    بررسی شده
+                                                    <i class="fa fa-check-circle font-size-10 text-success"></i>
+                                                {% elif receipt_task.status == 'rejected' %}
+                                                    رد شده
+                                                    <i class="fa fa-times-circle font-size-10 text-danger"></i>
+                                                {% else %}
+                                                    نیاز به بررسی
+                                                    <i class="fa fa-exclamation-triangle font-size-10 text-warning"></i>
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-2">
+                                                <a href="{{ receipt_task.get_absolute_url }}">
+                                                    مشاهده
+                                                    <i class="far fa-arrow-alt-circle-left"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    {% empty %}
+                                        <div class="container-not-found-base">
+                                            <p>رسیدی یافت نشد</p>
+                                            {% if request.GET.sort_by or request.GET.search %}
+                                                <a href="{% url 'receipt:receipt_dashboard_list_financial_user' %}"
+                                                   class="font-80 mt-4 d-block text-warning">
+                                                    <i class="fa fa-times"></i>
+                                                    حذف فیلتر و جست و جو
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="pagination">
+                                    <div class="step-links">
+                                        {% if pagination.has_previous %}
+                                            <span class="pagination-previous">
+                                                <a href="?page=1">اول</a><a
+                                                    href="?page={{ pagination.previous_page_number }}">قبلی</a>
+                                            </span>
+                                        {% endif %}
+                                        <span class="current">
+                                        صفحه  {{ pagination.number }} از {{ pagination.paginator.num_pages }}
+                                        </span>
+
+                                        {% if pagination.has_next %}
+                                            <span class="pagination-next">
+                                                <a href="?page={{ pagination.next_page_number }}">بعدی</a><a
+                                                    href="?page={{ pagination.paginator.num_pages }}">اخر</a>
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include 'account/dashboard/components/base/footer.html' %}
+    </section>
+{% endblock %}
+
+
+
+
+
+
+
+

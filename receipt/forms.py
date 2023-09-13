@@ -23,10 +23,10 @@ class ReceiptAddForm(forms.ModelForm):
 class ReceiptAcceptForm(forms.ModelForm):
     class Meta:
         model = models.Receipt
-        fields = ('amount', 'note')
+        fields = ('amount', 'note','status')
 
 
 class ReceiptRejectForm(forms.ModelForm):
     class Meta:
         model = models.Receipt
-        fields = ('note',)
+        fields = ('note','status')

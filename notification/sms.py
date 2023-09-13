@@ -27,4 +27,6 @@ PATTERN_HANDLERS = {
     'TASK_REJECTED': handler_task_rejected,
     'TASK_ACCEPTED': handler_task_accepted,
     'RECEIPT_ACCEPTED': handler_receipt_accepted,
+    'PASSWORD_CHANGED_SUCCESSFULLY':'',
+    'RESET_PASSWORD_CODE_SENT':'',
 }

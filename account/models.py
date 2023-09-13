@@ -84,6 +84,10 @@ class User(AbstractUser):
         return True if self.role in settings.ADMIN_USER_ROLES else False
 
     @property
+    def is_common_admin(self):
+        return True if self.role in settings.COMMON_ADMIN_USER_ROLES else False
+
+    @property
     def is_super_admin(self):
         return True if self.role in settings.SUPER_ADMIN_ROLES else False
 
@@ -112,3 +116,6 @@ class User(AbstractUser):
 
     def get_receipts(self):
         return self.receipt_set.all()
+
+    def get_accepted_receipts(self):
+        return self.get_receipts().filter(status='accepted')

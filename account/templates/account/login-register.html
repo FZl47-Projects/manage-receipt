@@ -13,11 +13,12 @@
 
     <style>
 
-        body{
+        body {
             overflow-x: hidden;
         }
 
         .container {
+            font-size: 120%;
             height: 100vh;
             width: 100%;
             display: flex;
@@ -29,7 +30,7 @@
 
         .form {
             position: absolute;
-            max-width: 430px;
+            max-width: 480px;
             width: 95%;
             margin: auto;
             padding: 30px;
@@ -151,11 +152,10 @@
             border: 1px solid #CACACA;
         }
 
-        .field button{
+        .field button {
             margin-top: 12px;
             margin-bottom: 10px;
         }
-
 
 
     </style>
@@ -171,11 +171,11 @@
                     {% csrf_token %}
                     <input type="hidden" name="type-page" value="login">
                     <div class="field input-field">
-                        <input type="tel" placeholder="شماره همراه" class="input" maxlength="14" name="phonenumber">
+                        <input type="tel" placeholder="شماره همراه" class="input" maxlength="14" name="phonenumber" required>
                     </div>
 
                     <div class="field input-field">
-                        <input type="password" placeholder="رمز عبور" class="password" name="password">
+                        <input type="password" placeholder="رمز عبور" class="password" name="password" required>
                         <i class='bx bx-hide eye-icon'></i>
                     </div>
 
@@ -203,15 +203,17 @@
                     {% csrf_token %}
                     <input type="hidden" name="type-page" value="register">
                     <div class="field input-field">
-                        <input type="tel" placeholder="شماره همراه" class="input" name="phonenumber">
+                        <input type="tel" placeholder="شماره همراه" class="input" name="phonenumber" required>
+                    </div>
+                    <div class="field input-field">
+                        <input type="email" placeholder="ایمیل" class="input" name="email" required>
+                    </div>
+                    <div class="field input-field">
+                        <input type="password" placeholder="رمز عبور" class="password" name="password" required>
                     </div>
 
                     <div class="field input-field">
-                        <input type="password" placeholder="رمز عبور" class="password" name="password">
-                    </div>
-
-                    <div class="field input-field">
-                        <input type="password" placeholder="تایید رمز عبور" class="password" name="password2">
+                        <input type="password" placeholder="تایید رمز عبور" class="password" name="password2" required>
                         <i class='bx bx-hide eye-icon'></i>
                     </div>
 

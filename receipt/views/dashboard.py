@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View
 from django.http import Http404
+from django.conf import settings
 from django.core.paginator import Paginator
 from django.db.models import Q, Value, Case, When
 from django.db.models.functions import Concat
@@ -136,7 +137,7 @@ class ReceiptList(LoginRequiredMixin, View):
     def get_context(self, request):
         user = request.user
         if user.is_admin:
-            receipts = models.Receipt.objects.all()
+            receipts = models.Receipt.objects.filter(receipttask=None)
         else:
             receipts = user.get_receipts()
 
@@ -155,7 +156,7 @@ class ReceiptList(LoginRequiredMixin, View):
         return render(request, 'receipt/dashboard/receipt/list.html', context)
 
 
-class ReceiptFinancialUserList(LoginRequiredMixin, View):
+class ReceiptTaskList(View):
 
     def sort(self, request, objects):
         sort_by = request.GET.get('sort_by', 'latest')
@@ -164,9 +165,9 @@ class ReceiptFinancialUserList(LoginRequiredMixin, View):
         elif sort_by == 'oldest':
             objects = objects.order_by('id')
         elif sort_by == 'highest_amount':
-            objects = objects.order_by('-amount')
+            objects = objects.order_by('-receipt__amount')
         elif sort_by == 'lowset_amount':
-            objects = objects.order_by('amount')
+            objects = objects.order_by('receipt__amount')
         elif sort_by == 'need_to_check':
             objects = objects.order_by(Case(
                 When(status="pending", then=Value(1)),
@@ -209,7 +210,7 @@ class ReceiptFinancialUserList(LoginRequiredMixin, View):
     @admin_required_cbv(['super_user'])
     def get(self, request):
         context = self.get_context(request)
-        return render(request, 'receipt/dashboard/receipt/financial/list.html', context)
+        return render(request, 'receipt/dashboard/receipt/task/list.html', context)
 
 
 class ReceiptDetail(LoginRequiredMixin, View):
@@ -232,11 +233,26 @@ class ReceiptDetailAccept(View):
     def perform_by_user_role(self, request, receipt):
         user = request.user
         role = user.role
-        data = request.POST
-        if role == 'super_user':
-            print(data)
-        elif role == 'financial_user':
-            pass
+        data = request.POST.copy()
+        # accept receipt
+        data['status'] = 'pending'
+        if role in settings.SUPER_ADMIN_ROLES:
+            data['status'] = 'accepted'
+        f = forms.ReceiptAcceptForm(instance=receipt, data=data)
+        if form_validate_err(request, f) is False:
+            return redirect(receipt.get_absolute_url())
+        receipt = f.save()
+        if role == 'financial_user':
+            # create receipt task
+            data['receipt'] = receipt
+            data['receipt_status'] = 'accepted'
+            data['user_admin'] = user
+            f = forms.ReceiptTaskAddForm(data=data)
+            if form_validate_err(request, f) is False:
+                return redirect(receipt.get_absolute_url())
+            f.save()
+        messages.success(request, 'رسید با موفقیت تایید شد')
+        return redirect(receipt.get_absolute_url())
 
     @admin_required_cbv()
     def post(self, request, receipt_id):
@@ -244,20 +260,52 @@ class ReceiptDetailAccept(View):
         if receipt.status == 'accepted':
             messages.warning(request, 'عملیات قبلا انجام شده است')
             return redirect(receipt.get_absolute_url())
-        self.perform_by_user_role(request, receipt)
-        return redirect(receipt.get_absolute_url())
+        return self.perform_by_user_role(request, receipt)
 
 
 class ReceiptDetailReject(View):
 
+    def perform_by_user_role(self, request, receipt):
+        user = request.user
+        role = user.role
+        data = request.POST.copy()
+        # reject receipt
+        data['status'] = 'pending'
+        if role in settings.SUPER_ADMIN_ROLES:
+            data['status'] = 'rejected'
+        f = forms.ReceiptRejectForm(instance=receipt, data=data)
+        if form_validate_err(request, f) is False:
+            return redirect(receipt.get_absolute_url())
+        f.save()
+        if role == 'financial_user':
+            # create receipt task
+            data['receipt'] = receipt
+            data['receipt_status'] = 'rejected'
+            data['user_admin'] = user
+            f = forms.ReceiptTaskAddForm(data=data)
+            if form_validate_err(request, f) is False:
+                return redirect(receipt.get_absolute_url())
+            f.save()
+        messages.success(request, 'رسید با موفقیت رد شد')
+        return redirect(receipt.get_absolute_url())
+
     @admin_required_cbv()
     def post(self, request, receipt_id):
-        user = request.user
         receipt = get_object_or_404(models.Receipt, id=receipt_id)
-        # only own user and admin can access
-        if receipt.user != user and user.is_admin is False:
-            raise Http404
-        return redirect(receipt.get_absolute_url())
+        if receipt.status == 'rejected':
+            messages.warning(request, 'عملیات قبلا انجام شده است')
+            return redirect(receipt.get_absolute_url())
+        return self.perform_by_user_role(request, receipt)
+
+
+class ReceiptDetailDelete(View):
+
+    @admin_required_cbv(['super_user'])
+    def get(self, request, receipt_id):
+        receipt = get_object_or_404(models.Receipt, id=receipt_id)
+        receipt.delete()
+        messages.success(request, 'رسید با موفقیت حذف شد')
+        return redirect('receipt:receipt_dashboard_list')
 
 
 class ReceiptTaskDetail(View):
@@ -268,7 +316,7 @@ class ReceiptTaskDetail(View):
         context = {
             'receipt_task': receipt_task
         }
-        return render(request, 'receipt/dashboard/receipt/financial/detail.html', context)
+        return render(request, 'receipt/dashboard/receipt/task/detail.html', context)
 
 
 class ReceiptTaskDetailAccept(View):

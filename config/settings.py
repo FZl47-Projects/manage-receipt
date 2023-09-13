@@ -152,14 +152,19 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 AUTH_USER_MODEL = 'account.User'  # custom normal_user model
 LOGIN_URL = '/u/login-register'
 
-ADMIN_USER_ROLES = [
-    'financial_user',
-    'super_user'
+COMMON_ADMIN_USER_ROLES = [
+    'financial_user'
 ]
 
 SUPER_ADMIN_ROLES = [
     'super_user'
 ]
+
+ADMIN_USER_ROLES = [
+    *COMMON_ADMIN_USER_ROLES,
+    *SUPER_ADMIN_ROLES
+]
+
 
 USER_ROLES = [
     *ADMIN_USER_ROLES,
@@ -193,5 +198,5 @@ RESET_PASSWORD_CONFIG = {
 SMS_CONFIG = {
     'API_KEY': os.environ.get('SMS_API_KEY'),
     'API_URL': 'http://rest.ippanel.com/v1/messages/patterns/send',
-    'ORIGINATOR': '983000505'
+    'ORIGINATOR': '9890000145'
 }

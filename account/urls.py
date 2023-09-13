@@ -19,6 +19,6 @@ urlpatterns = [
     # --- user
     path('dashboard/user/add',views.UserAdd.as_view(),name='user_add'),
     path('dashboard/user/list',views.UserList.as_view(),name='user_list'),
-    path('dashboard/user/financial/add',views.UserFinancialAdd.as_view(),name='user_financial_add'),
-    path('dashboard/user/financial/list',views.UserFinancialList.as_view(),name='user_financial_list'),
+    path('dashboard/user/task/add',views.UserFinancialAdd.as_view(),name='user_financial_add'),
+    path('dashboard/user/task/list',views.UserFinancialList.as_view(),name='user_financial_list'),
 ]
