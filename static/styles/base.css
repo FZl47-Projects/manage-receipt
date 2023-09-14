@@ -246,7 +246,7 @@ body {
 }
 
 .user-select:hover {
-    background: #eee;
+    background: #f8f8f8;
 }
 
 .user-select[selected='true'] {
@@ -349,6 +349,39 @@ body {
 
 .rejected {
     color: #ed4654;
+}
+
+.icon-percentage-badge{
+    background: #f1f1f1;
+    padding: 3px 5px;
+    border-radius: 15px;
+    font-size: 73%;
+}
+
+.icon-percentage-badge[percentage-label='half']{
+    background: #ffbc2f;
+}
+
+
+.icon-percentage-badge[percentage-label='below_half']{
+    background: #e1426a;
+    color: #fff;
+}
+
+.icon-percentage-badge[percentage-label='above_half']{
+    background: #0a9d75;
+    color: #fff;
+}
+
+
+@media screen and (max-width: 992px) {
+    #container-users .title-list-row > div:last-of-type {
+        display: none;
+    }
+
+    #container-users .user-select > div:last-of-type {
+        display: none;
+    }
 }
 
 

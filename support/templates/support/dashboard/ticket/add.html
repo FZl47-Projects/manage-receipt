@@ -1,4 +1,5 @@
 {% extends 'account/dashboard/components/base/base_template.html' %}
+{% load render_partial %}
 
 {% block Title %}
     ایجاد تیکت پشتیبانی
@@ -53,56 +54,60 @@
                                                       maxlength="400" minlength="2" placeholder="توضیحات"></textarea>
                                         </div>
                                     </div>
-                                    <div class="row mb-3">
-                                        <div class="col-md-12">
-                                            <label class="form-label" for="sendNotify">
-                                                ارسال اعلان
-                                            </label>
-                                            <div class="form-control d-flex justify-content-between align-center p-2">
-                                                <label for="sendNotify">
-                                                    <div>
-                                                        ارسال اعلان از طریق پیامک و ایمیل به کاربر 
-                                                    </div>
+                                    {% if user.is_admin %}
+                                        <div class="row mb-3">
+                                            <div class="col-md-12">
+                                                <label class="form-label" for="sendNotify">
+                                                    ارسال اعلان
                                                 </label>
-                                                <div class="px-2 mb-1">
-                                                    <input type="checkbox" id="sendNotify" checked
-                                                           class="form-check-input" name="send_notify" style="transform: scale(1.3)">
+                                                <div class="form-control d-flex justify-content-between align-center p-2">
+                                                    <label for="sendNotify">
+                                                        <div>
+                                                            ارسال اعلان از طریق پیامک و ایمیل به کاربر
+                                                        </div>
+                                                    </label>
+                                                    <div class="px-2 mb-1">
+                                                        <input type="checkbox" id="sendNotify" checked
+                                                               class="form-check-input" name="send_notify"
+                                                               style="transform: scale(1.3)">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-md-12">
-                                            <label class="form-label" for="btnSelectUser">
-                                                کاربر
-                                            </label>
-                                            <div class="form-control d-flex justify-content-between align-center p-2">
-                                                <label for="btnSelectUser">
-                                                    <div>
-                                                        کاربر مورد نظر خود را انتخاب کنید
-                                                    </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-12">
+                                                <label class="form-label" for="btnSelectUser">
+                                                    کاربر
                                                 </label>
-                                                <div class="px-2">
-                                                    <input type="hidden" name="to_user" value="0">
-                                                    <button class="btn btn-success font-70" selected="false"
-                                                            type="button" data-bs-toggle="modal"
-                                                            data-bs-target="#container-users"
-                                                            id="btnSelectUser">
-                                                        انتخاب کاربر
-                                                    </button>
+                                                <div class="form-control d-flex justify-content-between align-center p-2">
+                                                    <label for="btnSelectUser">
+                                                        <div>
+                                                            کاربر مورد نظر خود را انتخاب کنید
+                                                        </div>
+                                                    </label>
+                                                    <div class="px-2">
+                                                        <input type="hidden" name="to_user" value="0">
+                                                        <button class="btn btn-success font-70" selected="false"
+                                                                type="button" data-bs-toggle="modal"
+                                                                data-bs-target="#container-users"
+                                                                id="btnSelectUser">
+                                                            انتخاب کاربر
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    {% endif %}
                                     <div class="row mb-3">
                                         <div class="col-md-12">
                                             <label class="form-label" for="btnSelectUser">
                                                 درجه اهمیت
                                             </label>
-                                            <div >
+                                            <div>
                                                 <select class="form-control form-select" name='degree_of_importance'>
                                                     {% for degree in degrees_of_importance %}
-                                                        <option value="{{ degree.0 }}" {% if forloop.first %}selected{% endif %}>
+                                                        <option value="{{ degree.0 }}"
+                                                                {% if forloop.first %}selected{% endif %}>
                                                             {{ degree.1 }}
                                                         </option>
                                                     {% endfor %}
@@ -123,7 +128,9 @@
         {% include 'account/dashboard/components/base/footer.html' %}
     </section>
 
-    {% include 'account/dashboard/base/../../../../../account/templates/account/dashboard/user/components/list.html' with users=users %}
+    {% if user.is_admin %}
+        {% render_partial 'account.views.UserListComponentPartial' %}
+    {% endif %}
 {% endblock %}
 
 

@@ -1,6 +1,5 @@
 from django.db import models
 from core.models import BaseModel, File
-from django.contrib.auth import get_user_model
 from core.utils import get_time, random_str
 
 
@@ -10,9 +9,6 @@ def upload_file_src(instance, path):
     return f'files/{tm}/{random_str()}.{frmt}'
 
 
-User = get_user_model()
-
-
 class Ticket(BaseModel):
     DEGREE_OF_IMPORTANCE_OPTIONS = (
         ('low', 'کم'),
@@ -20,8 +16,8 @@ class Ticket(BaseModel):
         ('high', 'زیاد'),
     )
 
-    from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='from_user')
-    to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='to_user')
+    from_user = models.ForeignKey('account.User', on_delete=models.CASCADE, related_name='ticket_from_user')
+    to_user = models.ForeignKey('account.User', on_delete=models.CASCADE, null=True, related_name='ticket_to_user')
     title = models.CharField(max_length=150)
     description = models.TextField()
     send_notify = models.BooleanField(default=True)
@@ -34,6 +30,9 @@ class Ticket(BaseModel):
 
     def get_degree_of_importance_label(self):
         return self.get_degree_of_importance_display()
+
+    def get_absolute_url(self):
+        return '#'
 
 
 class TicketReplay(Ticket):

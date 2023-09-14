@@ -62,7 +62,7 @@
                                     {% for ticket in tickets %}
                                         <div class="detail-row">
                                             <div class="col-3">
-                                                <a href="#">
+                                                <a href="{{ ticket.get_absolute_url }}">
                                                     {{ ticket.title|truncatechars:20 }}
                                                 </a>
                                             </div>

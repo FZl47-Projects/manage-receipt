@@ -23,6 +23,10 @@
                         </div>
                         <div class="white_card_body">
                             <div class="card-body">
+                                <div class="text-right mb-3">
+                                    <a href="{% url 'account:user_add' %}" class="btn btn-outline-success font-70">افزودن
+                                        کاربر</a>
+                                </div>
                                 <div class="list-row">
                                     <div class="title-list-row">
                                         <div class="col-3">
@@ -41,7 +45,7 @@
                                     {% for user in users %}
                                         <div class="detail-row">
                                             <div class="col-3">
-                                                <a href="#">
+                                                <a href="{{ user.get_absolute_url }}">
                                                     {{ user.get_full_name|default:'بدون نام' }}
                                                 </a>
                                             </div>
@@ -60,6 +64,26 @@
                                             <p>کاربری یافت نشد</p>
                                         </div>
                                     {% endfor %}
+                                </div>
+                                <div class="pagination">
+                                    <div class="step-links">
+                                        {% if pagination.has_previous %}
+                                            <span class="pagination-previous">
+                                                <a href="?page=1">اول</a><a
+                                                    href="?page={{ pagination.previous_page_number }}">قبلی</a>
+                                            </span>
+                                        {% endif %}
+                                        <span class="current">
+                                        صفحه  {{ pagination.number }} از {{ pagination.paginator.num_pages }}
+                                        </span>
+
+                                        {% if pagination.has_next %}
+                                            <span class="pagination-next">
+                                                <a href="?page={{ pagination.next_page_number }}">بعدی</a><a
+                                                    href="?page={{ pagination.paginator.num_pages }}">اخر</a>
+                                            </span>
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
                         </div>

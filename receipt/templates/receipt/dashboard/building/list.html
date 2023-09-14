@@ -23,50 +23,114 @@
                         </div>
                         <div class="white_card_body">
                             <div class="card-body">
-                                <div class="list-row">
-                                    <div class="title-list-row">
-                                        <div class="col-2">
-                                            نام
+                                {% if user.is_admin %}
+                                    <div class="list-row">
+                                        <div class="title-list-row">
+                                            <div class="col-2">
+                                                نام
+                                            </div>
+                                            <div class="col-3">
+                                                ادرس
+                                            </div>
+                                            <div class="col-2">
+                                                توضیحات
+                                            </div>
+                                            <div class="col-2">
+                                                درصد پیشرفت
+                                            </div>
+                                            <div class="col-2">
+                                                وضعیت
+                                            </div>
                                         </div>
-                                        <div class="col-4">
-                                            ادرس
-                                        </div>
-                                        <div class="col-3">
-                                            توضیحات
-                                        </div>
-                                        <div class="col-2">
-                                            وضعیت
-                                        </div>
+                                        {% for building in buildings %}
+                                            <div class="detail-row">
+                                                <div class="col-2">
+                                                    <a href="{{ building.get_dashboard_absolute_url }}">
+                                                        {{ building.name|truncatechars:30 }}
+                                                    </a>
+                                                </div>
+                                                <div class="col-3">
+                                                    {{ building.address|truncatechars:30 }}
+                                                </div>
+                                                <div class="col-2">
+                                                    {{ building.description|default:'بدون توضیحات'|truncatechars:20 }}
+                                                </div>
+                                                <div class="col-2">
+                                                    {{ building.progress_percentage }}
+                                                    <i class="fa fa-percentage icon-percentage-badge"
+                                                       percentage-label="{{ building.progress_percentage_label }}"></i>
+                                                </div>
+                                                <div class="col-2">
+                                                    {% if building.is_active %}
+                                                        فعال
+                                                        <i class="fa fa-check-circle font-size-10 text-success"></i>
+                                                    {% else %}
+                                                        غیر فعال
+                                                        <i class="fa fa-minus-circle font-size-10 text-danger"></i>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        {% empty %}
+                                            <div class="container-not-found-base">
+                                                <p>ساختمانی یافت نشد</p>
+                                            </div>
+                                        {% endfor %}
                                     </div>
-                                    {% for building in buildings %}
-                                        <div class="detail-row">
+                                {% else %}
+                                    <div class="list-row">
+                                        <div class="title-list-row">
                                             <div class="col-2">
-                                                <a href="{{ building.get_dashboard_absolute_url }}">
-                                                    {{ building.name|truncatechars:30 }}
-                                                </a>
-                                            </div>
-                                            <div class="col-4">
-                                                {{ building.address|truncatechars:30 }}
+                                                نام
                                             </div>
                                             <div class="col-2">
-                                                {{ building.description|default:'بدون توضیحات'|truncatechars:20 }}
+                                                درصد پیشرفت
                                             </div>
                                             <div class="col-2">
-                                                {% if building.is_active %}
-                                                    فعال
-                                                    <i class="fa fa-check-circle font-size-10 text-success"></i>
-                                                {% else %}
-                                                    غیر فعال
-                                                    <i class="fa fa-minus-circle font-size-10 text-danger"></i>
-                                                {% endif %}
+                                                توضیحات
+                                            </div>
+                                            <div class="col-2">
+                                                مبالغ پرداخت شده
+                                            </div>
+                                            <div class="col-2">
+                                                وضعیت
                                             </div>
                                         </div>
-                                    {% empty %}
-                                        <div class="container-not-found-base">
-                                            <p>ساختمانی یافت نشد</p>
-                                        </div>
-                                    {% endfor %}
-                                </div>
+                                        {% for building in buildings %}
+                                            <div class="detail-row">
+                                                <div class="col-2">
+                                                    <a href="{{ building.get_dashboard_absolute_url }}">
+                                                        {{ building.name|truncatechars:30 }}
+                                                    </a>
+                                                </div>
+                                                <div class="col-2">
+                                                    {{ building.progress_percentage }}
+                                                    <i class="fa fa-percentage icon-percentage-badge"
+                                                       percentage-label="{{ building.progress_percentage_label }}"></i>
+                                                </div>
+                                                <div class="col-2">
+                                                    {{ building.description|default:'بدون توضیحات'|truncatechars:20 }}
+                                                </div>
+                                                <div class="col-2">
+                                                    <span class="price-el">{{ building.payments }}</span>
+                                                    <span>تومان</span>
+                                                </div>
+                                                <div class="col-2">
+                                                    {% if building.is_active %}
+                                                        فعال
+                                                        <i class="fa fa-check-circle font-size-10 text-success"></i>
+                                                    {% else %}
+                                                        غیر فعال
+                                                        <i class="fa fa-minus-circle font-size-10 text-danger"></i>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        {% empty %}
+                                            <div class="container-not-found-base">
+                                                <p>ساختمانی یافت نشد</p>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

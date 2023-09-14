@@ -15,8 +15,10 @@ urlpatterns = [
 
     # dashboard
     path('dashboard',views.Dashboard.as_view(),name='dashboard'),
+    path('dashboard/info/detail',views.DashboardInfoDetail.as_view(),name='info_detail'),
     # dashboard operations
     # --- user
+    path('dashboard/user/update',views.UserUpdate.as_view(),name='user_update'),
     path('dashboard/user/add',views.UserAdd.as_view(),name='user_add'),
     path('dashboard/user/list',views.UserList.as_view(),name='user_list'),
     path('dashboard/user/task/add',views.UserFinancialAdd.as_view(),name='user_financial_add'),

@@ -1,7 +1,7 @@
 {% extends 'account/dashboard/components/base/base_template.html' %}
 
 {% block Title %}
-   لیست تیکت های ارشیو شده
+    لیست تیکت های ارشیو شده
 {% endblock %}
 
 
@@ -26,12 +26,14 @@
                             </div>
                             <div class="container">
                                 <div>
-                                    <a class="{% if request.GET.sort_by == 'latest' %}active{% endif %}" href="{% url 'support:support_dashboard_ticket_list_archive' %}?sort_by=latest">
+                                    <a class="{% if request.GET.sort_by == 'latest' %}active{% endif %}"
+                                       href="{% url 'support:support_dashboard_ticket_list_archive' %}?sort_by=latest">
                                         جدید ترین ها
                                     </a>
                                 </div>
                                 <div>
-                                    <a class="{% if request.GET.sort_by == 'oldest' %}active{% endif %}" href="{% url 'support:support_dashboard_ticket_list_archive' %}?sort_by=oldest">
+                                    <a class="{% if request.GET.sort_by == 'oldest' %}active{% endif %}"
+                                       href="{% url 'support:support_dashboard_ticket_list_archive' %}?sort_by=oldest">
                                         قدیمی ها
                                     </a>
                                 </div>
@@ -47,9 +49,11 @@
                                         <div class="col-3">
                                             اهمیت
                                         </div>
-                                        <div class="col-3">
-                                            کاربر
-                                        </div>
+                                        {% if user.is_admin %}
+                                            <div class="col-3">
+                                                کاربر
+                                            </div>
+                                        {% endif %}
                                         <div class="col-3">
                                             زمان ایجاد
                                         </div>
@@ -57,21 +61,25 @@
                                     {% for ticket in tickets %}
                                         <div class="detail-row">
                                             <div class="col-3">
-                                                <a href="#">
+                                                <a href="{{ ticket.get_absolute_url }}">
                                                     {{ ticket.title|truncatechars:20 }}
                                                 </a>
                                             </div>
                                             <div class="col-3">
                                                 {{ ticket.get_degree_of_importance_label }}
                                             </div>
-                                            <div class="col-3">
-                                                {{ ticket.to_user.get_raw_phonenumber }}
-                                                <span class="font-60 text-muted">
+                                            {% if user.is_admin %}
+                                                <div class="col-3">
+                                                    <a href="{{ ticket.to_user.get_absolute_url }}">
+                                                        {{ ticket.to_user.get_raw_phonenumber }}
+                                                        <span class="font-60 text-muted">
                                                     {{ ticket.to_user.get_full_name }}
                                                 </span>
-                                            </div>
-                                            <div class="col-3 datetime-convert font-60">
-                                                {{ ticket.created_at }}
+                                                    </a>
+                                                </div>
+                                            {% endif %}
+                                            <div class="col-3 datetime-convert font-60 datetime-convert">
+                                                {{ ticket.get_created_at }}
                                             </div>
                                         </div>
                                     {% empty %}

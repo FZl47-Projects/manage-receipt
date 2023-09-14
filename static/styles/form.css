@@ -86,6 +86,10 @@ label {
     border: 1px solid #e5e5e5;
 }
 
+input[disabled]{
+    color: #888;
+}
+
 .field input:focus {
     border-bottom-width: 2px;
 }
@@ -114,14 +118,14 @@ label {
 }
 
 .field-outline button {
-    color: rgba(1, 113, 211, 0.4);
+    color: rgba(32, 92, 145, 0.7);
     background-color: #fff;
-    border: 1px solid rgba(1, 113, 211, 0.4);
+    border: 1px solid rgba(32, 92, 145, 0.7)!important;
 }
 
 .field-outline button:hover {
-    color: rgba(1, 113, 211, 0.8);
-    border: 1px solid rgba(1, 113, 211, 0.8);
+    color: rgba(9, 68, 115, 0.8);
+    border: 1px solid rgba(9, 68, 115, 0.8)!important;
     background: #fff;
 }
 

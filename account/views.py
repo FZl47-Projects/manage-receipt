@@ -5,10 +5,11 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponseBadRequest, Http404, HttpResponse
 from django.views.decorators.http import require_POST
 from django.views.generic import View
+from django.core.paginator import Paginator
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login, get_user_model, logout as logout_handler
-from core.utils import add_prefix_phonenum, random_str, form_validate_err
-from core.auth.decorators import admin_required, admin_required_cbv
+from core.utils import add_prefix_phonenum, random_num, form_validate_err
+from core.auth.decorators import admin_required_cbv
 from core.redis_py import set_value_expire, remove_key, get_value
 
 from notification.models import NotificationUser
@@ -19,7 +20,7 @@ RESET_PASSWORD_CONFIG = settings.RESET_PASSWORD_CONFIG
 
 
 def login_register(request):
-    def login_perform(request, data):
+    def login_perform(data):
         phonenumber = data.get('phonenumber', None)
         password = data.get('password', None)
         if phonenumber and password:
@@ -35,7 +36,7 @@ def login_register(request):
             messages.error(request, 'لطفا فیلد هارا به درستی وارد نمایید')
         return redirect('account:login_register')
 
-    def register_perform(request, data):
+    def register_perform(data):
         f = forms.RegisterUserForm(data=data)
         if f.is_valid() is False:
             messages.error(request, 'لطفا فیلد هارا به درستی وارد نمایید')
@@ -68,9 +69,9 @@ def login_register(request):
         data = request.POST
         type_page = data.get('type-page', 'login')
         if type_page == 'login':
-            return login_perform(request, data)
+            return login_perform(data)
         elif type_page == 'register':
-            return register_perform(request, data)
+            return register_perform(data)
 
 
 def logout(request):
@@ -96,7 +97,7 @@ def reset_password_send(request):
         user = User.objects.get(phonenumber=phonenumber)
     except:
         raise Http404
-    code = random_str(RESET_PASSWORD_CONFIG['CODE_LENGTH'])
+    code = random_num(RESET_PASSWORD_CONFIG['CODE_LENGTH'])
     key = RESET_PASSWORD_CONFIG['STORE_BY'].format(phonenumber)
     # check code state set
     if get_value(key) is not None:
@@ -107,6 +108,9 @@ def reset_password_send(request):
     # send code
     NotificationUser.objects.create(
         type='RESET_PASSWORD_CODE_SENT',
+        kwargs={
+            'code': code
+        },
         to_user=user,
         title='بازیابی رمز عبور',
         description=f"""
@@ -189,6 +193,7 @@ class Dashboard(LoginRequiredMixin, View):
         # get context by role user
         user_role = request.user.role
         context = {}
+        # TODO: should be completed
         if user_role == 'normal_user':
             pass
         elif user_role == 'financial_user':
@@ -203,6 +208,12 @@ class Dashboard(LoginRequiredMixin, View):
     def get(self, request):
         context = self.get_context(request)
         return render(request, 'account/dashboard/index.html', context)
+
+
+class DashboardInfoDetail(LoginRequiredMixin, View):
+
+    def get(self, request):
+        return render(request, 'account/dashboard/information/detail.html')
 
 
 class UserAdd(View):
@@ -225,6 +236,7 @@ class UserAdd(View):
         user.save()
         # create notif for admin
         NotificationUser.objects.create(
+            type='CREATE_USER_BY_ADMIN',
             to_user=request.user,
             title='ایجاد کاربر توسط ادمین',
             description=f"""
@@ -237,13 +249,31 @@ class UserAdd(View):
         return redirect('account:user_add')
 
 
+class UserUpdate(LoginRequiredMixin, View):
+
+    def post(self, request):
+        data = request.POST
+        f = forms.UpdateUserForm(instance=request.user, data=data)
+        if form_validate_err(request, f) is False:
+            return redirect('account:info_detail')
+        f.save()
+        messages.success(request, 'مشخصات شما با موفقیت اپدیت شد')
+        return redirect('account:info_detail')
+
+
 class UserList(View):
     template_name = 'account/dashboard/user/list.html'
 
     @admin_required_cbv()
     def get(self, request):
+        users = User.normal_user.all()
+        page_num = request.GET.get('page', 1)
+        pagination = Paginator(users, 20)
+        pagination = pagination.get_page(page_num)
+        users = pagination.object_list
         context = {
-            'users': User.normal_user.all()
+            'users': users,
+            'pagination': pagination
         }
         return render(request, self.template_name, context)
 
@@ -253,8 +283,14 @@ class UserListComponentPartial(View):
 
     @admin_required_cbv()
     def get(self, request):
+        users = User.normal_user.all()
+        page_num = request.GET.get('page', 1)
+        pagination = Paginator(users, 20)
+        pagination = pagination.get_page(page_num)
+        users = pagination.object_list
         context = {
-            'users': User.normal_user.all()
+            'users': users,
+            'pagination': pagination
         }
         return render(request, self.template_name, context)
 
@@ -279,10 +315,11 @@ class UserFinancialAdd(View):
         user.save()
         # create notif for admin
         NotificationUser.objects.create(
+            type='CREATE_USER_BY_SUPER_ADMIN',
             to_user=request.user,
-            title='ایجاد کاربر توسط ادمین',
+            title='ایجاد ادمین توسط مدیر',
             description=f"""
-                        کاربر {user.phonenumber}
+                        ادمین {user.phonenumber}
                         ایجاد شد
                     """,
             is_showing=False
@@ -296,7 +333,13 @@ class UserFinancialList(View):
 
     @admin_required_cbv()
     def get(self, request):
+        users = User.financial_user.all()
+        page_num = request.GET.get('page', 1)
+        pagination = Paginator(users, 20)
+        pagination = pagination.get_page(page_num)
+        users = pagination.object_list
         context = {
-            'users': User.financial_user.all()
+            'users': users,
+            'pagination': pagination
         }
         return render(request, self.template_name, context)

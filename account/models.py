@@ -3,6 +3,8 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from phonenumber_field.modelfields import PhoneNumberField
+from support.models import Ticket
+
 
 
 class CustomBaseUserManager(BaseUserManager):
@@ -119,3 +121,13 @@ class User(AbstractUser):
 
     def get_accepted_receipts(self):
         return self.get_receipts().filter(status='accepted')
+
+    def get_tickets(self):
+        return Ticket.objects.filter(to_user=self)
+
+    def get_archived_tickets(self):
+        return Ticket.objects.filter(to_user=self, is_open=False)
+
+    def get_notifications(self):
+        return self.notificationuser_set.all()
+

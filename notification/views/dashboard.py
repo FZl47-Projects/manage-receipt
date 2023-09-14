@@ -1,8 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404, Http404
 from django.views.generic import View
 from django.core.paginator import Paginator
+from django.contrib.auth.mixins import LoginRequiredMixin
 from core.auth.decorators import admin_required_cbv
 from core.utils import form_validate_err
 from notification.forms import NotificationForm, NotificationUserForm
@@ -36,7 +37,7 @@ class NotificationList(View):
     def get(self, request):
         page_num = request.GET.get('page', 1)
         notifications = Notification.objects.all()
-        pagination = Paginator(notifications, 40)
+        pagination = Paginator(notifications, 20)
         pagination = pagination.get_page(page_num)
         notifications = pagination.object_list
         context = {
@@ -44,10 +45,6 @@ class NotificationList(View):
             'pagination': pagination
         }
         return render(request, self.template_name, context)
-
-    @admin_required_cbv()
-    def post(self, request):
-        pass
 
 
 class NotificationUserAdd(View):
@@ -62,7 +59,8 @@ class NotificationUserAdd(View):
 
     @admin_required_cbv()
     def post(self, request):
-        data = request.POST
+        data = request.POST.copy()
+        data['type'] = 'CUSTOM_NOTIFICATION'
         f = NotificationUserForm(data, request.FILES)
         if form_validate_err(request, f) is False:
             return render(request, self.template_name)
@@ -78,7 +76,7 @@ class NotificationUserList(View):
     def get(self, request):
         page_num = request.GET.get('page', 1)
         notifications = NotificationUser.objects.filter(is_showing=True)
-        pagination = Paginator(notifications, 40)
+        pagination = Paginator(notifications, 20)
         pagination = pagination.get_page(page_num)
         notifications = pagination.object_list
         context = {
@@ -87,6 +85,33 @@ class NotificationUserList(View):
         }
         return render(request, self.template_name, context)
 
-    @admin_required_cbv()
-    def post(self, request):
-        pass
+
+class NotificationUserPersonalList(LoginRequiredMixin, View):
+    template_name = 'notification/dashboard/personal-list.html'
+
+    def get(self, request):
+        page_num = request.GET.get('page', 1)
+        notifications = request.user.get_notifications().filter(is_showing=True)
+        pagination = Paginator(notifications, 20)
+        pagination = pagination.get_page(page_num)
+        notifications = pagination.object_list
+        context = {
+            'notifications': notifications,
+            'pagination': pagination
+        }
+        return render(request, self.template_name, context)
+
+
+class NotificationDetail(LoginRequiredMixin, View):
+    template_name = 'notification/dashboard/detail.html'
+
+    def get(self, request, notification_id):
+        notification = get_object_or_404(NotificationUser, id=notification_id)
+        user = request.user
+        # only own user and admin can access
+        if notification.to_user != user and user.is_admin is False:
+            raise Http404
+        context = {
+            'notification': notification
+        }
+        return render(request, self.template_name, context)

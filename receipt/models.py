@@ -28,6 +28,16 @@ class Building(BaseModel):
     def __str__(self):
         return self.name
 
+    @property
+    def progress_percentage_label(self):
+        p = self.progress_percentage
+        if 35 < p < 65:
+            return 'half'
+        elif p < 50:
+            return 'below_half'
+        elif p > 50:
+            return 'above_half'
+
     def get_absolute_url(self):
         return reverse('receipt:building_dashboard_detail', args=(self.id,))
 

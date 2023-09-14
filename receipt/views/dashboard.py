@@ -4,7 +4,7 @@ from django.views.generic import View
 from django.http import Http404
 from django.conf import settings
 from django.core.paginator import Paginator
-from django.db.models import Q, Value, Case, When
+from django.db.models import Q, Value, Case, When, Sum
 from django.db.models.functions import Concat
 from django.contrib.auth.mixins import LoginRequiredMixin
 from core.auth.decorators import admin_required_cbv
@@ -30,19 +30,22 @@ class BuildingAdd(View):
         return redirect('receipt:building_dashboard_add')
 
 
-class BuildingList(View):
+class BuildingList(LoginRequiredMixin, View):
     template_name = 'receipt/dashboard/building/list.html'
 
-    @admin_required_cbv()
     def get(self, request):
+        user = request.user
+        if user.is_admin:
+            buildings = models.Building.objects.all()
+        else:
+            buildings = models.Building.objects.filter(receipt__user=user).distinct()
+            buildings = buildings.annotate(
+                payments=Sum('receipt__amount')
+            )
         context = {
-            'buildings': models.Building.objects.all()
+            'buildings': buildings
         }
         return render(request, self.template_name, context)
-
-    @admin_required_cbv(['super_user'])
-    def post(self, request):
-        pass
 
 
 class BuildingDetail(View):
@@ -242,7 +245,7 @@ class ReceiptDetailAccept(View):
         if form_validate_err(request, f) is False:
             return redirect(receipt.get_absolute_url())
         receipt = f.save()
-        if role == 'financial_user':
+        if role in settings.COMMON_ADMIN_USER_ROLES:
             # create receipt task
             data['receipt'] = receipt
             data['receipt_status'] = 'accepted'
@@ -277,7 +280,7 @@ class ReceiptDetailReject(View):
         if form_validate_err(request, f) is False:
             return redirect(receipt.get_absolute_url())
         f.save()
-        if role == 'financial_user':
+        if role in settings.COMMON_ADMIN_USER_ROLES:
             # create receipt task
             data['receipt'] = receipt
             data['receipt_status'] = 'rejected'
@@ -326,6 +329,7 @@ class ReceiptTaskDetailAccept(View):
         receipt_task = get_object_or_404(models.ReceiptTask, id=receipt_task_id)
         if receipt_task.status in ('pending', 'rejected'):
             receipt_task.status = 'accepted'
+            receipt_task.user_super_admin = request.user
             receipt_task.save()
             messages.success(request, 'رسید با موفقیت تایید شد')
         else:
@@ -340,6 +344,7 @@ class ReceiptTaskDetailReject(View):
         receipt_task = get_object_or_404(models.ReceiptTask, id=receipt_task_id)
         if receipt_task.status == 'pending':
             receipt_task.status = 'rejected'
+            receipt_task.user_super_admin = request.user
             receipt_task.save()
             messages.success(request, 'عملیات با موفقیت انجام شد')
         else:

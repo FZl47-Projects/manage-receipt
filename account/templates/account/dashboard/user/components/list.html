@@ -1,3 +1,4 @@
+
 <div id="container-users" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg col-lg-12">
         <div class="modal-content white_card mb_30">
@@ -11,7 +12,11 @@
             </div>
             <div class="white_card_body">
                 <p class="font-70">برای انتخاب کاربر بر روی کاربر مورد نظر کلیک کنید</p>
-                <div class="card-body">
+                <div class="card-body pt-0">
+                    <div class="text-right mb-3">
+                        <a href="{% url 'account:user_add' %}"
+                           class="btn btn-outline-success mt-4 font-70 d-inline-block py-2">اضافه کردن کاربر</a>
+                    </div>
                     <div class="list-row">
                         <div class="title-list-row">
                             <div class="col-4">نام و نام خانوادگی</div>
@@ -21,13 +26,13 @@
                         {% for user in users %}
                             <div class="user-select detail-row" user-id="{{ user.id }}">
                                 <div class="col-4">
-                                    {{ user.get_full_name }}
+                                    {{ user.get_full_name|truncatechars:20 }}
                                 </div>
                                 <div class="col-4">
                                     {{ user.get_raw_phonenumber }}
                                 </div>
                                 <div class="col-4">
-                                    {{ user.get_email }}
+                                    {{ user.get_email|truncatechars:20 }}
                                 </div>
                             </div>
                         {% empty %}
@@ -36,8 +41,25 @@
                             </div>
                         {% endfor %}
                     </div>
-                    <div class="text-left">
-                        <a href="{% url 'account:user_add' %}" class="btn btn-outline-success mt-4 font-70 d-inline-block py-2">اضافه کردن کاربر</a>
+                    <div class="pagination">
+                        <div class="step-links">
+                            {% if pagination.has_previous %}
+                                <span class="pagination-previous">
+                                                <a href="?page=1">اول</a><a
+                                        href="?page={{ pagination.previous_page_number }}">قبلی</a>
+                                            </span>
+                            {% endif %}
+                            <span class="current">
+                                        صفحه  {{ pagination.number }} از {{ pagination.paginator.num_pages }}
+                                        </span>
+
+                            {% if pagination.has_next %}
+                                <span class="pagination-next">
+                                                <a href="?page={{ pagination.next_page_number }}">بعدی</a><a
+                                        href="?page={{ pagination.paginator.num_pages }}">اخر</a>
+                                            </span>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>

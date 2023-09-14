@@ -16,6 +16,19 @@ class CustomUserChangeForm(UserChangeForm):
         fields = ('email', 'phonenumber')
 
 
+class UpdateUserForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email')
+        error_messages = {
+            'email': {
+                'invalid': 'ایمیل نامعتبر است',
+                'unique': 'این ایمیل توسط کاربر دیگه ای در حال استفاده است'
+            }
+        }
+
+
 class RegisterUserForm(forms.Form):
     email_error_messages = {
         'invalid': 'ایمیل نامعتبر است',

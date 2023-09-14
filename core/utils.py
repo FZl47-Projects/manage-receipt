@@ -14,6 +14,10 @@ def random_str(size=15, chars=string.ascii_lowercase + string.ascii_uppercase + 
     return ''.join(random.choice(chars) for _ in range(size))
 
 
+def random_num(size=10, chars=string.digits):
+    return ''.join(random.choice(chars) for _ in range(size))
+
+
 def get_time(frmt='%Y-%m-%d_%H:%M'):
     t = timezone.now()
     if frmt is not None:
@@ -48,7 +52,7 @@ def get_timesince_persian(time):
     return result
 
 
-def send_sms(phonenumber,pattern_code,values):
+def send_sms(phonenumber, pattern_code, values={}):
     phonenumber = str(phonenumber).replace('+', '')
     payload = json.dumps({
         "pattern_code": pattern_code,
@@ -57,9 +61,10 @@ def send_sms(phonenumber,pattern_code,values):
         "values": values
     })
     headers = {
-        'Authorization': f"AccessKey {settings.SMS_CONFIG['API_KEY']}",
+        'Authorization': "AccessKey {}".format(settings.SMS_CONFIG['API_KEY']),
         'Content-Type': 'application/json'
     }
+
     async_task(requests.request,
                'POST',
                settings.SMS_CONFIG['API_URL'],
@@ -68,17 +73,10 @@ def send_sms(phonenumber,pattern_code,values):
                )
 
 
-    # r = requests.request(
-    #            'POST',
-    #            settings.SMS_CONFIG['API_URL'],
-    #            headers=headers,
-    #            data=payload)
-
-
-def send_email(email, content, **kwargs):
-    # send email in background 
+def send_email(email, subject, content, **kwargs):
+    # send email in background
     async_task(_send_email_django,
-               settings.EMAIL_SUBJECT,
+               subject,
                content,
                settings.EMAIL_HOST_USER,
                [email]

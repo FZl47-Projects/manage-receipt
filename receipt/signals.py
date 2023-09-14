@@ -20,6 +20,9 @@ def handle_receipt(sender, instance, **kwargs):
             type='RECEIPT_ACCEPTED',
             to_user=instance.user,
             title=messages.RECEIPT_ACCEPTED,
+            kwargs={
+                'link': instance.get_absolute_url()
+            },
             description="""
                             فیش شما تایید شد
             """
@@ -29,6 +32,9 @@ def handle_receipt(sender, instance, **kwargs):
             type='RECEIPT_REJECTED',
             to_user=instance.user,
             title=messages.RECEIPT_REJECTED,
+            kwargs={
+                'link': instance.get_absolute_url()
+            },
             description="""
                                     فیش شما رد شد
                     """
