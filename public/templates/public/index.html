@@ -1,0 +1,1194 @@
+{% extends 'base/base_template.html' %}
+{% load static %}
+
+{% block Title %}
+
+{% endblock %}
+
+{% block Link %}
+    <!--== bootstrap -->
+    <link href="{% static 'public/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css"/>
+
+    <!--== animate -->
+    <link href="{% static 'public/css/animate.css' %}" rel="stylesheet" type="text/css"/>
+
+    <!--== fontawesome -->
+    <link href="{% static 'public/css/fontawesome-all.css' %}" rel="stylesheet" type="text/css"/>
+
+    <!--== line-awesome -->
+    <link href="{% static 'public/css/line-awesome.min.css' %}" rel="stylesheet" type="text/css"/>
+
+    <!--== magnific-popup -->
+    <link href="{% static 'public/css/magnific-popup/magnific-popup.css' %}" rel="stylesheet" type="text/css"/>
+
+    <!--== owl-carousel -->
+    <link href="{% static 'public/css/owl-carousel/owl.carousel.css' %}" rel="stylesheet" type="text/css"/>
+
+    <!--== base -->
+    <link href="{% static 'public/css/base.css' %}" rel="stylesheet" type="text/css"/>
+
+    <!--== shortcodes -->
+    <link href="{% static 'public/css/shortcodes.css' %}" rel="stylesheet" type="text/css"/>
+
+    <!--== default-theme -->
+    <link href="{% static 'public/css/style.css' %}" rel="stylesheet" type="text/css"/>
+
+    <!--== responsive -->
+    <link href="{% static 'public/css/responsive.css' %}" rel="stylesheet" type="text/css"/>
+
+    <!--== color-customizer -->
+    <link href="#" data-style="styles" rel="stylesheet">
+    <link href="{% static 'public/css/color-customize/color-customizer.css' %}" rel="stylesheet" type="text/css"/>
+
+{% endblock %}
+
+
+{% block Content %}
+    <body>
+    <!-- page wrapper start -->
+
+    <div class="page-wrapper">
+
+        <!-- preloader start -->
+        <!--
+        <div id="ht-preloader">
+          <div class="loader clear-loader">
+            <div class="loader-box"></div>
+            <div class="loader-box"></div>
+            <div class="loader-box"></div>
+            <div class="loader-box"></div>
+            <div class="loader-wrap-text">
+              <div class="text"><span>س</span><span>ا</span><span>ف</span><span>ت</span><span>ی</span><span>ن</span><span>و</span>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- preloader end -->
+
+
+        <!--header start-->
+
+        <header id="site-header" class="header header-1">
+            <div class="container-fluid">
+                <div id="header-wrap" class="box-shadow">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <!-- Navbar -->
+                            <nav class="navbar navbar-expand-lg">
+
+                                {% if user.is_anonymous %}
+                                    <a class="btn btn-theme btn-sm" href="{% url 'account:login_register' %}" data-text="ورود">
+                                        <span>و</span><span>ر</span><span>و</span><span>د</span>
+                                    </a>
+                                {% else %}
+                                    <a class="btn btn-theme btn-sm" href="{% url 'account:dashboard' %}" data-text="پنل کاربری">
+                                        <span>ی</span><span>ر</span><span>ب</span><span>ر</span><span>ا</span><span>ک</span><span>ل</span><span>ن</span><span>پ</span>
+                                    </a>
+                                {% endif %}
+                                <a class="btn btn-theme btn-sm" href="{% url 'receipt:receipt_dashboard_add' %}"
+                                   data-text="بارگذاری فیش">
+                                    <span>ب</span><span>ا</span><span>ر</span><span>گ</span><span>ز</span><span>ا</span><span>ر</span><span>ی</span><span>ف</span><span>ی</span><span>ش</span>
+                                </a>
+                                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                        data-target="#navbarNavDropdown" aria-expanded="false"
+                                        aria-label="Toggle navigation"><span></span>
+                                    <span></span>
+                                    <span></span>
+                                </button>
+                                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                                    <!-- Left nav -->
+                                    <ul id="main-menu" class="nav navbar-nav ml-auto mr-auto">
+                                        <li class="nav-item"><a class="nav-link active" href="#">صفحه اصلی</a>
+                                            <ul>
+                                                <li><a href="index.html">صفحه اصلی 1</a>
+                                                </li>
+                                                <li><a href="index-2.html">صفحه اصلی 2</a>
+                                                </li>
+                                                <li><a href="index-3.html">صفحه اصلی 3</a>
+                                                </li>
+                                                <li><a href="index-4.html">صفحه اصلی 4</a>
+                                                </li>
+                                                <li><a href="index-5.html">صفحه اصلی 5</a>
+                                                </li>
+                                                <li><a href="index-6.html">صفحه اصلی 6</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="nav-item"><a class="nav-link" href="#">صفحات</a>
+                                            <ul>
+                                                <li><a href="team.html">تیم ما</a>
+                                                </li>
+                                                <li><a href="team-single.html">تیم جداگانه</a>
+                                                </li>
+                                                <li><a href="faq.html">سوالات متداول</a>
+                                                </li>
+                                                <li><a href="#">عناصر</a>
+                                                    <ul>
+                                                        <li><a href="shortcode-accordions.html">آکاردئون</a>
+                                                        </li>
+                                                        <li><a href="shortcode-blog-post.html">پست وبلاگ</a>
+                                                        </li>
+                                                        <li><a href="shortcode-counter.html">شمارنده</a>
+                                                        </li>
+                                                        <li><a href="shortcode-feature-box.html">جعبه امکانات</a>
+                                                        </li>
+                                                        <li><a href="shortcode-pricing.html">جدول قیمت گذاری</a>
+                                                        </li>
+                                                        <li><a href="shortcode-team.html">کد کوتاه تیم</a>
+                                                        </li>
+                                                        <li><a href="shortcode-testimonial.html">کد کوتاه
+                                                            مشتریان</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="coming-soon.html">نسخه به زودی</a>
+                                                </li>
+                                                <li><a href="error-404.html">خطای 404</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="nav-item"><a class="nav-link" href="#">درباره ما</a>
+                                            <ul>
+                                                <li><a href="about-us.html">درباره ما 1</a>
+                                                </li>
+                                                <li><a href="about-us-2.html">درباره ما 2</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="nav-item d-none"><a class="nav-link" href="#">خدمات</a>
+                                            <ul>
+                                                <li><a href="services.html">خدمات 1</a>
+                                                </li>
+                                                <li><a href="services-2.html">خدمات 2</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="nav-item"><a class="nav-link" href="#">وبلاگ</a>
+                                            <ul>
+                                                <li><a href="blog-grid-2.html">وبلاگ شبکه ای</a>
+                                                </li>
+                                                <li><a href="blog-left-sidebar.html">وبلاگ سایدبار 1</a>
+                                                </li>
+                                                <li><a href="blog-right-sidebar.html">وبلاگ سایدبار 2</a>
+                                                </li>
+                                                <li><a href="blog-single.html">وبلاگ جداگانه</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="nav-item"><a class="nav-link" href="#">تماس با ما</a>
+                                            <ul>
+                                                <li><a href="contact.html">تماس با ما 1</a>
+                                                </li>
+                                                <li><a href="contact-2.html">تماس با ما 2</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <a class="navbar-brand logo" href="index.html">
+                                    <img id="logo-img" class="img-center" src="{% static 'images/logo.png' %}" alt="">
+                                </a>
+
+
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!--header end-->
+
+
+        <!--hero section start-->
+
+        <section id="home" class="fullscreen-banner banner p-0 bg-contain bg-pos-lt" data-bg-img="{% static 'public/images/bg/01.png' %}">
+            <div class="spinner-eff">
+                <div class="spinner-circle circle-1"></div>
+                <div class="spinner-circle circle-2"></div>
+            </div>
+            <div class="align-center pt-0">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-7 col-md-12 order-lg-1">
+                            <img class="img-center wow jackInTheBox" data-wow-duration="3s" src="{% static 'public/images/banner/01.jpg' %}"
+                                 alt="">
+                        </div>
+                        <div class="col-lg-5 col-md-12 order-lg-1 md-mt-5">
+                            <h1 class="mb-4 wow fadeInUp" data-wow-duration="1.5s">شرکت ساختمانی</h1>
+                            <p class="lead mb-4 wow fadeInUp" data-wow-duration="2s" data-wow-delay="0.3s">لورم ایپسوم
+                                متن
+                                ساختگی با تولید سادگی نامفهوم از صنعت چاپ با استفاده از طراحان گرافیک است چاپگر ها و
+                                متون
+                                بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+                            <a class="btn btn-theme wow fadeInUp" data-wow-duration="3s" data-wow-delay="0.5s" href="#"
+                               data-text="شروع امروز"> <span>ش</span><span>ر</span><span>و</span><span>ع</span>
+                                <span> </span>
+                                <span> </span><span>ا</span><span>م</span><span>ر</span><span>و</span><span>ز</span>
+                            </a>
+                            <a class="btn btn-dark wow fadeInUp" data-wow-duration="3s" data-wow-delay="0.5s" href="#"
+                               data-text="بیشتر بدانید">
+                                <span>ب</span><span>ی</span><span>ش</span><span>ت</span><span>ر</span>
+                                <span> </span><span>ب</span><span>د</span><span>ا</span><span>ن</span><span>ی</span><span>د</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!--body content start-->
+
+        <div class="page-content">
+
+
+            <!--feature start-->
+
+            <section class="p-0 text-center wow fadeInUp" data-wow-duration="2s"
+                     style="visibility: visible; animation-duration: 2s; animation-name: fadeInUp;">
+                <div class="container">
+                    <div class="row custom-mt-10 z-index-1 md-mt-0">
+                        <div class="col-md-12">
+                            <div class="owl-carousel owl-theme owl-rtl owl-loaded owl-drag" data-dots="false"
+                                 data-items="4"
+                                 data-lg-items="3" data-md-items="2" data-sm-items="1" data-autoplay="true">
+                                <div class="owl-stage-outer">
+                                    <div class="owl-stage"
+                                         style="transform: translate3d(1995px, 0px, 0px); transition: all 0.25s ease 0s; width: 3705px;">
+                                        <div class="owl-item cloned" style="width: 285px;">
+                                            <div class="item">
+                                                <div class="featured-item style-2">
+                                                    <div class="featured-icon">
+                                                        <i class="flaticon-collaboration"></i>
+                                                        <span class="rotateme"></span>
+                                                    </div>
+                                                    <div class="featured-title">
+                                                        <h5>کاملا قابل برنامه ریزی</h5>
+                                                    </div>
+                                                    <div class="featured-desc">
+                                                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
+                                                            با
+                                                            استفاده از طراحان گرافیک است.</p>
+                                                        <a class="icon-btn mt-4" href="#"> <i
+                                                                class="la la-angle-left"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="owl-item cloned" style="width: 285px;">
+                                            <div class="item">
+                                                <div class="featured-item style-2">
+                                                    <div class="featured-icon">
+                                                        <i class="flaticon-market"></i>
+                                                        <span class="rotateme"></span>
+                                                    </div>
+                                                    <div class="featured-title">
+                                                        <h5>بازاریابی</h5>
+                                                    </div>
+                                                    <div class="featured-desc">
+                                                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
+                                                            با
+                                                            استفاده از طراحان گرافیک است.</p>
+                                                        <a class="icon-btn mt-4" href="#"> <i
+                                                                class="la la-angle-left"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="owl-item cloned" style="width: 285px;">
+                                            <div class="item">
+                                                <div class="featured-item style-2">
+                                                    <div class="featured-icon">
+                                                        <i class="flaticon-objective"></i>
+                                                        <span class="rotateme"></span>
+                                                    </div>
+                                                    <div class="featured-title">
+                                                        <h5>یکپارچه سازی برنامه</h5>
+                                                    </div>
+                                                    <div class="featured-desc">
+                                                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
+                                                            با
+                                                            استفاده از طراحان گرافیک است.</p>
+                                                        <a class="icon-btn mt-4" href="#"> <i
+                                                                class="la la-angle-left"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="owl-item cloned" style="width: 285px;">
+                                            <div class="item">
+                                                <div class="featured-item style-2">
+                                                    <div class="featured-icon">
+                                                        <i class="flaticon-analytics"></i>
+                                                        <span class="rotateme"></span>
+                                                    </div>
+                                                    <div class="featured-title">
+                                                        <h5>به راحتی برای استفاده</h5>
+                                                    </div>
+                                                    <div class="featured-desc">
+                                                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
+                                                            با
+                                                            استفاده از طراحان گرافیک است.</p>
+                                                        <a class="icon-btn mt-4" href="#"> <i
+                                                                class="la la-angle-left"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="owl-item" style="width: 285px;">
+                                            <div class="item">
+                                                <div class="featured-item style-2">
+                                                    <div class="featured-icon">
+                                                        <i class="flaticon-data"></i>
+                                                        <span class="rotateme"></span>
+                                                    </div>
+                                                    <div class="featured-title">
+                                                        <h5>ابزار حرفه ای</h5>
+                                                    </div>
+                                                    <div class="featured-desc">
+                                                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
+                                                            با
+                                                            استفاده از طراحان گرافیک است.</p>
+                                                        <a class="icon-btn mt-4" href="#"> <i
+                                                                class="la la-angle-left"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="owl-item" style="width: 285px;">
+                                            <div class="item">
+                                                <div class="featured-item style-2">
+                                                    <div class="featured-icon">
+                                                        <i class="flaticon-collaboration"></i>
+                                                        <span class="rotateme"></span>
+                                                    </div>
+                                                    <div class="featured-title">
+                                                        <h5>کاملا قابل برنامه ریزی</h5>
+                                                    </div>
+                                                    <div class="featured-desc">
+                                                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
+                                                            با
+                                                            استفاده از طراحان گرافیک است.</p>
+                                                        <a class="icon-btn mt-4" href="#"> <i
+                                                                class="la la-angle-left"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="owl-item" style="width: 285px;">
+                                            <div class="item">
+                                                <div class="featured-item style-2">
+                                                    <div class="featured-icon">
+                                                        <i class="flaticon-market"></i>
+                                                        <span class="rotateme"></span>
+                                                    </div>
+                                                    <div class="featured-title">
+                                                        <h5>بازاریابی</h5>
+                                                    </div>
+                                                    <div class="featured-desc">
+                                                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
+                                                            با
+                                                            استفاده از طراحان گرافیک است.</p>
+                                                        <a class="icon-btn mt-4" href="#"> <i
+                                                                class="la la-angle-left"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="owl-item active" style="width: 285px;">
+                                            <div class="item">
+                                                <div class="featured-item style-2">
+                                                    <div class="featured-icon">
+                                                        <i class="flaticon-objective"></i>
+                                                        <span class="rotateme"></span>
+                                                    </div>
+                                                    <div class="featured-title">
+                                                        <h5>یکپارچه سازی برنامه</h5>
+                                                    </div>
+                                                    <div class="featured-desc">
+                                                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
+                                                            با
+                                                            استفاده از طراحان گرافیک است.</p>
+                                                        <a class="icon-btn mt-4" href="#"> <i
+                                                                class="la la-angle-left"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="owl-item active" style="width: 285px;">
+                                            <div class="item">
+                                                <div class="featured-item style-2">
+                                                    <div class="featured-icon">
+                                                        <i class="flaticon-analytics"></i>
+                                                        <span class="rotateme"></span>
+                                                    </div>
+                                                    <div class="featured-title">
+                                                        <h5>به راحتی برای استفاده</h5>
+                                                    </div>
+                                                    <div class="featured-desc">
+                                                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
+                                                            با
+                                                            استفاده از طراحان گرافیک است.</p>
+                                                        <a class="icon-btn mt-4" href="#"> <i
+                                                                class="la la-angle-left"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="owl-item cloned active" style="width: 285px;">
+                                            <div class="item">
+                                                <div class="featured-item style-2">
+                                                    <div class="featured-icon">
+                                                        <i class="flaticon-data"></i>
+                                                        <span class="rotateme"></span>
+                                                    </div>
+                                                    <div class="featured-title">
+                                                        <h5>ابزار حرفه ای</h5>
+                                                    </div>
+                                                    <div class="featured-desc">
+                                                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
+                                                            با
+                                                            استفاده از طراحان گرافیک است.</p>
+                                                        <a class="icon-btn mt-4" href="#"> <i
+                                                                class="la la-angle-left"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="owl-item cloned active" style="width: 285px;">
+                                            <div class="item">
+                                                <div class="featured-item style-2">
+                                                    <div class="featured-icon">
+                                                        <i class="flaticon-collaboration"></i>
+                                                        <span class="rotateme"></span>
+                                                    </div>
+                                                    <div class="featured-title">
+                                                        <h5>کاملا قابل برنامه ریزی</h5>
+                                                    </div>
+                                                    <div class="featured-desc">
+                                                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
+                                                            با
+                                                            استفاده از طراحان گرافیک است.</p>
+                                                        <a class="icon-btn mt-4" href="#"> <i
+                                                                class="la la-angle-left"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="owl-item cloned" style="width: 285px;">
+                                            <div class="item">
+                                                <div class="featured-item style-2">
+                                                    <div class="featured-icon">
+                                                        <i class="flaticon-market"></i>
+                                                        <span class="rotateme"></span>
+                                                    </div>
+                                                    <div class="featured-title">
+                                                        <h5>بازاریابی</h5>
+                                                    </div>
+                                                    <div class="featured-desc">
+                                                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
+                                                            با
+                                                            استفاده از طراحان گرافیک است.</p>
+                                                        <a class="icon-btn mt-4" href="#"> <i
+                                                                class="la la-angle-left"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="owl-item cloned" style="width: 285px;">
+                                            <div class="item">
+                                                <div class="featured-item style-2">
+                                                    <div class="featured-icon">
+                                                        <i class="flaticon-objective"></i>
+                                                        <span class="rotateme"></span>
+                                                    </div>
+                                                    <div class="featured-title">
+                                                        <h5>یکپارچه سازی برنامه</h5>
+                                                    </div>
+                                                    <div class="featured-desc">
+                                                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
+                                                            با
+                                                            استفاده از طراحان گرافیک است.</p>
+                                                        <a class="icon-btn mt-4" href="#"> <i
+                                                                class="la la-angle-left"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="owl-nav disabled">
+                                    <button type="button" role="presentation" class="owl-prev"><span
+                                            class="fas fa-long-arrow-alt-right"><span></span></span></button>
+                                    <button type="button" role="presentation" class="owl-next"><span
+                                            class="fas fa-long-arrow-alt-left"></span></button>
+                                </div>
+                                <div class="owl-dots disabled"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!--feature end-->
+
+            <!--feature start-->
+
+            <section class="p-0 text-center wow fadeInUp" data-wow-duration="2s">
+                <div class="container">
+                    <div class="row custom-mt-10 z-index-1 md-mt-0">
+                        <div class="col-md-12">
+                            <div class="owl-carousel owl-theme" data-dots="false" data-items="4" data-lg-items="3"
+                                 data-md-items="2" data-sm-items="1" data-autoplay="true">
+                                <div class="item">
+                                    <div class="featured-item style-2">
+                                        <div class="featured-icon">
+                                            <i class="flaticon-data"></i>
+                                            <span class="rotateme"></span>
+                                        </div>
+                                        <div class="featured-title">
+                                            <h5>ابزار حرفه ای</h5>
+                                        </div>
+                                        <div class="featured-desc">
+                                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از
+                                                طراحان گرافیک است.</p>
+                                            <a class="icon-btn mt-4" href="#"> <i class="fa fa-heart"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="featured-item style-2">
+                                        <div class="featured-icon">
+                                            <i class="flaticon-collaboration"></i>
+                                            <span class="rotateme"></span>
+                                        </div>
+                                        <div class="featured-title">
+                                            <h5>کاملا قابل برنامه ریزی</h5>
+                                        </div>
+                                        <div class="featured-desc">
+                                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از
+                                                طراحان گرافیک است.</p>
+                                            <a class="icon-btn mt-4" href="#"> <i class="fa fa-heart"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="featured-item style-2">
+                                        <div class="featured-icon">
+                                            <i class="flaticon-market"></i>
+                                            <span class="rotateme"></span>
+                                        </div>
+                                        <div class="featured-title">
+                                            <h5>بازاریابی</h5>
+                                        </div>
+                                        <div class="featured-desc">
+                                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از
+                                                طراحان گرافیک است.</p>
+                                            <a class="icon-btn mt-4" href="#"> <i class="fa fa-heart"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="featured-item style-2">
+                                        <div class="featured-icon">
+                                            <i class="flaticon-objective"></i>
+                                            <span class="rotateme"></span>
+                                        </div>
+                                        <div class="featured-title">
+                                            <h5>یکپارچه سازی برنامه</h5>
+                                        </div>
+                                        <div class="featured-desc">
+                                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از
+                                                طراحان گرافیک است.</p>
+                                            <a class="icon-btn mt-4" href="#"> <i class="fa fa-heart"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="featured-item style-2">
+                                        <div class="featured-icon">
+                                            <i class="flaticon-analytics"></i>
+                                            <span class="rotateme"></span>
+                                        </div>
+                                        <div class="featured-title">
+                                            <h5>به راحتی برای استفاده</h5>
+                                        </div>
+                                        <div class="featured-desc">
+                                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از
+                                                طراحان گرافیک است.</p>
+                                            <a class="icon-btn mt-4" href="#"> <i class="fa fa-heart"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!--feature end-->
+
+
+            <!--about start-->
+
+            <section id="about" class="pos-r bg-contain bg-pos-r py-10" data-bg-img="{% static 'public/images/bg/02.png' %}">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-7 col-md-12 image-column p-0 pl-lg-5">
+                            <div class="img-box box-shadow">
+                                <div class="box-loader">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                                <img class="img-center" src="{% static 'public/images/banner/03.jpg' %}" alt="">
+                            </div>
+                        </div>
+                        <div class="col-lg-5 mr-auto col-md-12 md-mt-5">
+                            <div class="section-title mb-4">
+                                <div class="title-effect">
+                                    <div class="bar bar-top"></div>
+                                    <div class="bar bar-right"></div>
+                                    <div class="bar bar-bottom"></div>
+                                    <div class="bar bar-left"></div>
+                                </div>
+                                <h6>درباره ما</h6>
+                                <h2>ما در حال ساخت نرم افزارهای مدرن و عالی هستیم</h2>
+                            </div>
+                            <ul class="list-unstyled list-icon mb-4">
+                                <li class="mb-3"><i class="la la-check"></i> لورم ایپسوم متن ساختگی با تولید سادگی</li>
+                                <li class="mb-3"><i class="la la-check"></i> لورم ایپسوم متن ساختگی با تولید سادگی</li>
+                                <li><i class="la la-check"></i> لورم ایپسوم متن ساختگی با تولید سادگی</li>
+                            </ul>
+                            <a class="btn btn-border btn-circle" href="#" data-text="ببینید درباره">
+                                <span>ب</span><span>ب</span><span>ی</span><span>ن</span><span>ی</span><span>د</span><span> </span>
+                                <span>د</span><span>ر</span><span>ب</span><span>ا</span><span>ر</span><span>ه</span>
+                            </a>
+                            <a class="btn btn-theme btn-circle" href="#" data-text="بیشتر بدانید">
+                                <span>ب</span><span>ی</span><span>ش</span><span>ت</span><span>ر</span>
+                                <span> </span><span>ب</span><span>د</span><span>ا</span><span>ن</span><span>ی</span><span>د</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!--about end-->
+
+
+            <!--feature start-->
+
+            <section class="service position-relative bg-effect overflow-hidden">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-5 col-md-12 order-lg-12 image-column left">
+                            <div class="blink-img">
+                                <img class="img-fluid blinkblink" src="{% static 'public/images/pattern/04.png' %}" alt="">
+                            </div>
+                            <img class="img-fluid z-index-1 w-100" src="{% static 'public/images/svg/01.svg' %}" alt="">
+                        </div>
+                        <div class="col-lg-6 col-md-12 mt-5 mt-lg-0 order-lg-1">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="featured-item style-3">
+                                        <div class="featured-icon">
+                                            <i class="fa fa-heart"></i>
+                                        </div>
+                                        <div class="featured-title">
+                                            <h5>طراحی</h5>
+                                        </div>
+                                        <div class="featured-desc">
+                                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از
+                                                طراحان گرافیک است.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 mt-4">
+                                    <div class="featured-item style-3">
+                                        <div class="featured-icon">
+                                            <i class="fa fa-heart"></i>
+                                        </div>
+                                        <div class="featured-title">
+                                            <h5>کشیدن و انداختن</h5>
+                                        </div>
+                                        <div class="featured-desc">
+                                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از
+                                                طراحان گرافیک است.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 sm-mt-3">
+                                    <div class="featured-item style-3">
+                                        <div class="featured-icon">
+                                            <i class="fa fa-heart"></i>
+                                        </div>
+                                        <div class="featured-title">
+                                            <h5>کیفیت بالا</h5>
+                                        </div>
+                                        <div class="featured-desc">
+                                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از
+                                                طراحان گرافیک است.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 mt-4">
+                                    <div class="featured-item style-3">
+                                        <div class="featured-icon">
+                                            <i class="fa fa-heart"></i>
+                                        </div>
+                                        <div class="featured-title">
+                                            <h5>کمک به پشتیبانی</h5>
+                                        </div>
+                                        <div class="featured-desc">
+                                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از
+                                                طراحان گرافیک است.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!--feature end-->
+
+
+            <!--step start-->
+
+            <section class="pos-r o-hidden">
+                <div class="morph-wrap">
+                    <svg class="morph" width="1400" height="770" viewBox="0 0 1400 770">
+                        <path d="M 262.9,252.2 C 210.1,338.2 212.6,487.6 288.8,553.9 372.2,626.5 511.2,517.8 620.3,536.3 750.6,558.4 860.3,723 987.3,686.5 1089,657.3 1168,534.7 1173,429.2
+
+  1178,313.7 1096,189.1 995.1,130.7 852.1,47.07 658.8,78.95 498.1,119.2 410.7,141.1 322.6,154.8 262.9,252.2 Z"></path>
+                    </svg>
+                </div>
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-5 col-md-12 image-column">
+                            <img class="img-fluid" src="{% static 'public/images/about/03.png' %}" alt="">
+                        </div>
+                        <div class="col-lg-6 col-md-12 mr-auto md-mt-5">
+                            <div class="section-title">
+                                <div class="title-effect title-effect-2">
+                                    <div class="ellipse">
+
+                                    </div>
+                                    <i class="fa fa-heart"></i>
+                                </div>
+                                <h2 class="title">سه مرحله ساده برای شروع فرآیند کار</h2>
+                            </div>
+                            <div class="work-process style-2">
+                                <div class="step-num-box">
+                                    <div class="step-icon">
+            <span>
+              <i class="fa fa-heart"></i></span>
+                                    </div>
+                                    <div class="step-num">01</div>
+                                </div>
+                                <div class="step-desc">
+                                    <h4>پروژه تحقیقاتی</h4>
+                                    <p class="mb-0">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                                        استفاده
+                                        از طراحان گرافیک است</p>
+                                </div>
+                            </div>
+                            <div class="work-process style-2 mt-5">
+                                <div class="step-num-box">
+                                    <div class="step-icon">
+                                        <span><i class="fa fa-heart"></i></span>
+                                    </div>
+                                    <div class="step-num">02</div>
+                                </div>
+                                <div class="step-desc">
+                                    <h4>هدف گذاری</h4>
+                                    <p class="mb-0">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                                        استفاده
+                                        از طراحان گرافیک است</p></div>
+                            </div>
+                            <div class="work-process style-2 mt-5">
+                                <div class="step-num-box">
+                                    <div class="step-icon">
+                                        <span><i class="fa fa-heart"></i></span>
+                                    </div>
+                                    <div class="step-num">03</div>
+                                </div>
+                                <div class="step-desc">
+                                    <h4>نتیجه</h4>
+                                    <p class="mb-0">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                                        استفاده
+                                        از طراحان گرافیک است</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!--step end-->
+
+
+            <section class="pos-r">
+                <div class="hexagon-bg">
+                    <div class="hexagon"></div>
+                    <div class="hexagon"></div>
+                    <div class="hexagon"></div>
+                    <div class="hexagon"></div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6">
+                            <div class="counter">
+                                <div class="counter-icon">
+                                    <img class="img-center" src="{% static 'public/images/counter/01.png' %}" alt="">
+                                </div>
+                                <div class="counter-desc">
+                                    <span class="count-number" data-to="2304" data-speed="10000">2304</span>
+                                    <h5>پروژه انجام شده است</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 sm-mt-5">
+                            <div class="counter">
+                                <div class="counter-icon">
+                                    <img class="img-center" src="{% static 'public/images/counter/02.png' %}" alt="">
+                                </div>
+                                <div class="counter-desc">
+                                    <span class="count-number" data-to="3585" data-speed="10000">3585</span>
+                                    <h5>تعداد ساختمان ها</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 md-mt-5">
+                            <div class="counter">
+                                <div class="counter-icon">
+                                    <img class="img-center" src="{% static 'public/images/counter/03.png' %}" alt="">
+                                </div>
+                                <div class="counter-desc">
+                                    <span class="count-number" data-to="1365" data-speed="10000">1365</span>
+                                    <h5>جوایز</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 md-mt-5">
+                            <div class="counter">
+                                <div class="counter-icon">
+                                    <img class="img-center" src="{% static 'public/images/counter/04.png' %}" alt="">
+                                </div>
+                                <div class="counter-desc">
+                                    <span class="count-number" data-to="4328" data-speed="10000">4328</span>
+                                    <h5>مشتری خوشحال</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--testimonial end-->
+
+            <section class="position-relative custom-py-2">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-xl-6 col-lg-6 col-md-12 image-column left p-0">
+                            <div class="img-box box-shadow radius-1">
+                                <div class="box-loader"><span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                                <img class="img-center" src="{% static 'public/images/banner/04.jpg' %}" alt="">
+                            </div>
+                        </div>
+                        <div class="col-xl-5 col-lg-6 col-md-12 ml-auto md-mt-5">
+                            <div id="accordion" class="accordion style-1">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h6 class="mb-0">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"
+                                               aria-expanded="false" class="collapsed"><span></span>لورم ایپسوم متن
+                                                ساختگی
+                                                با تولید سادگی نامفهوم</a>
+                                        </h6>
+                                    </div>
+                                    <div id="collapse1" class="collapse" data-parent="#accordion" style="">
+                                        <div class="card-body">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ
+                                            و
+                                            با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون
+                                            و
+
+                                            سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h6 class="mb-0">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2"
+                                               class="collapsed" aria-expanded="false"><span></span>لورم ایپسوم متن
+                                                ساختگی
+                                                با تولید سادگی نامفهوم</a>
+                                        </h6>
+                                    </div>
+                                    <div id="collapse2" class="collapse" data-parent="#accordion" style="">
+                                        <div class="card-body">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ
+                                            و
+                                            با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون
+                                            و
+
+                                            سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h6 class="mb-0">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse3"
+                                               class="collapsed" aria-expanded="false"><span></span>لورم ایپسوم متن
+                                                ساختگی
+                                                با تولید سادگی نامفهوم</a>
+                                        </h6>
+                                    </div>
+                                    <div id="collapse3" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ
+                                            و
+                                            با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون
+                                            و
+
+                                            سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="footer footer-1 pos-r" data-bg-img="{% static 'public/images/bg/05.png' %}">
+                <div class="subscribe-box">
+                    <div class="container">
+                        <div class="row subscribe-inner align-items-center">
+                            <div class="col-md-6 col-sm-12">
+                                <h4>عضویت در خبرنامه ما</h4>
+                                <p class="lead mb-0">برای دریافت نسخه ازمایشی رایگان 1 ماهه بدون نیاز به خرید.</p>
+                            </div>
+                            <div class="col-md-6 col-sm-12 sm-mt-2">
+                                <div class="subscribe-form sm-mt-2">
+                                    <form id="mc-form" class="group">
+                                        <input type="email" value="" name="EMAIL" class="email" id="mc-email"
+                                               placeholder="آدرس ایمیل" required="">
+                                        <input class="btn btn-theme" type="submit" name="subscribe" value="مشترک شدن">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="primary-footer">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="footer-logo">
+                                    <img id="footer-logo-img" src="{% static 'images/logo.png' %}" class="img-center"
+                                         alt="">
+                                </div>
+                                <p class="mb-0">
+                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چا که لا در ارائه رای اساسا
+                                    مورد استفاده قرار گیرد.
+                                </p>
+                            </div>
+                            <div class="col-lg-4 col-md-6 pl-md-5 sm-mt-5 footer-list justify-content-between d-flex">
+                                <ul class="list-unstyled w-100">
+                                    <li><a href="about-us.html">لورم ایپسوم ..</a>
+                                    </li>
+                                    <li><a href="services.html">لورم ایپسوم ..</a>
+                                    </li>
+                                    <li><a href="team.html">لورم ایپسوم ..</a>
+                                    </li>
+                                    <li><a href="team-single.html">لورم ایپسوم ..</a>
+                                    </li>
+                                    <li><a href="contact.html">لورم ایپسوم ..</a>
+                                    </li>
+                                </ul>
+                                <ul class="list-unstyled w-100">
+                                    <li><a href="blog-right-sidebar.html">لورم ایپسوم ..</a>
+                                    </li>
+                                    <li><a href="faq.html">لورم ایپسوم ..</a>
+                                    </li>
+                                    <li><a href="error-404.html">لورم ایپسوم ..</a>
+                                    </li>
+                                    <li><a href="privacy-policy.html">لورم ایپسوم ..</a>
+                                    </li>
+                                    <li><a href="terms-and-conditions.html">لورم ایپسوم ..</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-4 col-md-12 md-mt-5">
+                                <ul class="media-icon list-unstyled">
+                                    <li>
+                                        <p class="mb-0">آدرس: <b>کرمان خیابان فلان</b>
+                                        </p>
+                                    </li>
+                                    <li>ایمیل: <a href="mailto:info@softino.com"><b>info@test.com</b></a>
+                                    </li>
+                                    <li>تلفن: <a href="tel_3a123456789-091"><b>123456789-091</b></a>
+                                    </li>
+                                    <li>فکس: <a href="tel_3a123456789-091"><b>123456789-091</b></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="secondary-footer">
+                    <div class="container">
+                        <div class="copyright">
+                            <div class="row align-items-center">
+                                <div class="col-lg-6 col-md-12"><span>کپی رایت 1402 © طراحی و توسعه توسط <u><a
+                                        href="http://fzlm.ir">Fazel Momeni</a></u> | تمامی حقوق محفوظ است.</span>
+                                </div>
+                                <div class="col-lg-6 col-md-12 text-lg-left md-mt-3">
+                                    <div class="footer-social">
+                                        <ul class="list-inline">
+                                            <li class="mr-2"><a href="#"><i class="fab fa-facebook-f"></i> فیسبوک</a>
+                                            </li>
+                                            <li class="mr-2"><a href="#"><i class="fab fa-twitter"></i> توییتر</a>
+                                            </li>
+                                            <li><a href="#"><i class="fab fa-google-plus-g"></i> گوگل پلاس</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+            <!--footer end-->
+
+
+        </div>
+
+        <!-- page wrapper end -->
+
+
+        <!--color-customizer start-->
+
+        <div class="color-customizer closed">
+            <div class="color-button">
+                <a class="opener" href="#"> <i class="fas fa-spinner fa-spin"></i>
+                </a>
+            </div>
+            <div class="clearfix color-chooser text-center">
+                <h4 class="text-theme font-w-8 mb-4">سافتینو با <span
+                        class="text-black font-w-5">رنگ های فوق العاده</span>
+                </h4>
+                <ul class="colorChange clearfix">
+                    <li class="theme-default selected" title="theme-default" data-style="color-1"></li>
+                    <li class="theme-2" title="theme-2" data-style="color-2"></li>
+                    <li class="theme-3" title="theme-3" data-style="color-3"></li>
+                    <li class="theme-4" title="theme-4" data-style="color-4"></li>
+                    <li class="theme-5" title="theme-5" data-style="color-5"></li>
+                    <li class="theme-6" title="theme-6" data-style="color-6"></li>
+                </ul>
+                <div class="text-center mt-4">
+                    <a class="btn btn-theme btn-circle" href="#" data-text="خرید قالب">
+                        <span>خ</span><span>ر</span><span>ی</span><span>د</span>
+                        <span> </span><span>ق</span><span>ا</span><span>ل</span><span>ب</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!--color-customizer end-->
+
+
+        <!--back-to-top start-->
+
+        <div class="scroll-top"><a class="smoothscroll" href="#top"><i class="fa fa-angle-up"></i></a></div>
+    </body>
+{% endblock %}
+
+{% block Script %}
+    <script>
+        const URL_BACKEND_SUPCHAT = 'http://127.0.0.1:8000';
+        const ROOT_URL_ASSETS_SUPCHAT = '/static/';
+        const AUTO_RUN_SUPCHAT = true // Default is true;
+    </script>
+    <script src="{% static 'supchat/js/mixins.js' %}"></script>
+    <script src="{% static 'supchat/js/easy_supchat.js' %}"></script>
+
+
+    <!--== jquery -->
+    <script src="{% static 'public/js/jquery.min.js' %}"></script>
+
+    <!--== popper -->
+    <script src="{% static 'public/js/popper.min.js' %}"></script>
+
+    <!--== bootstrap -->
+    <script src="{% static 'public/js/bootstrap.min.js' %}"></script>
+
+    <!--== appear -->
+    <script src="{% static 'public/js/jquery.appear.js' %}"></script>
+
+    <!--== modernizr -->
+    <script src="{% static 'public/js/modernizr.js' %}"></script>
+
+    <!--== easing -->
+    <script src="{% static 'public/js/jquery.easing.min.js' %}"></script>
+
+    <!--== menu -->
+    <script src="{% static 'public/js/menu/jquery.smartmenus.js' %}"></script>
+
+    <!--== owl-carousel -->
+    <script src="{% static 'public/js/owl-carousel/owl.carousel.min.js' %}"></script>
+
+    <!--== magnific-popup -->
+    <script src="{% static 'public/js/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+
+    <!--== counter -->
+    <script src="{% static 'public/js/counter/counter.js' %}"></script>
+
+    <!--== countdown -->
+    <script src="{% static 'public/js/countdown/jquery.countdown.min.js' %}"></script>
+
+    <!--== canvas -->
+    <script src="{% static 'public/js/canvas.js' %}"></script>
+
+    <!--== confetti -->
+    <script src="{% static 'public/js/confetti.js' %}"></script>
+
+    <!--== step animation -->
+    <script src="{% static 'public/js/snap.svg.js' %}"></script>
+    <script src="{% static 'public/js/step.js' %}"></script>
+
+    <!--== contact-form -->
+    <script src="{% static 'public/js/contact-form/contact-form.js' %}"></script>
+
+    <!--== wow -->
+    <script src="{% static 'public/js/wow.min.js' %}"></script>
+
+    <!--== color-customize -->
+    <script src="{% static 'public/js/color-customize/color-customizer.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,283 @@
+{% extends 'account/dashboard/components/base/base_template.html' %}
+{% load static %}
+{% load custom_tags %}
+
+{% block Title %}
+    کاربر -
+    {{ user_detail.get_full_name }}
+{% endblock %}
+
+{% block Style %}
+    <style>
+
+
+        .building-detail {
+            padding: 30px !important;
+        }
+
+        .building-detail .single_quick_activity {
+            border: 1px solid #f0f0f0;
+        }
+
+        .building-detail .count_content span {
+            font-size: 85%;
+        }
+
+        tr.active td:first-of-type {
+            border-radius: 0 10px 10px 0;
+        }
+
+        tr.active td:last-of-type {
+            border-radius: 10px 0 0 10px;
+        }
+
+        .btn-edit-outline {
+            background: #fff;
+            border: 1px solid #5791f3;
+            border-radius: 6px;
+            color: #5791f3;
+            width: 105px;
+            transition: all .2s !important;
+        }
+
+        .btn-edit-outline:hover {
+            background: #5791f3;
+            color: #fff;
+        }
+
+        .btn-edit {
+            border-radius: 6px;
+            background: #5791f3;
+            color: #fff;
+            width: 105px;
+            transition: all .2s !important;
+        }
+
+        .btn-edit:hover {
+            box-shadow: 0 2px 2px #2a4a81;
+        }
+
+        .btn-submit {
+            background: #0ae1a7;
+            color: #fff;
+        }
+
+        .btn-submit:hover {
+            box-shadow: 0 2px 2px #09b284;
+            color: #ffffff;
+        }
+
+
+
+    </style>
+{% endblock %}
+
+{% block Content %}
+
+    {% include 'account/dashboard/components/base/nav.html' %}
+
+    <section class="main_content dashboard_part large_header_bg">
+        {% include 'account/dashboard/components/base/header.html' %}
+        <div class="main_content_iner">
+            <div class="container-fluid p-0 ">
+                <div id="container-index">
+                    {% if user.is_super_admin %}
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="white_card mb-4">
+                                    <div class="white_card_header d-flex justify-content-between align-items-center">
+                                        <div class="main-title">
+                                            <h3 class="m-0">عملیات</h3>
+                                        </div>
+                                        <div class="">
+                                            <button class="btn btn-outline-danger" type="button" data-bs-toggle="modal"
+                                                    data-bs-target="#container-delete-user">
+                                                حذف ادمین
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="white_card card_height_100">
+                                <div class="white_card_header">
+                                    <div class="box_header m-0">
+                                        <div class="main-title">
+                                            <h3 class="m-0">مشخصات</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="white_card_body building-detail">
+                                    <div class="single_element">
+                                        <div class="quick_activity">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="quick_activity_wrap">
+
+                                                        <div class="single_quick_activity">
+                                                            <div class="count_content">
+                                                                <span class="mb-2 d-block text-mute">نام کاربر</span>
+                                                                <h3>
+                                                                    <span class="font-s-25 price-el">{{ user_detail.get_full_name }}</span>
+                                                                </h3>
+                                                            </div>
+                                                            <a href="#" class="notification_btn bg-dark">
+                                                                <i class="fa fa-user font-s-20 text-white"></i>
+                                                            </a>
+                                                        </div>
+
+                                                        <div class="single_quick_activity">
+                                                            <div class="count_content">
+                                                                <span class="mb-2 d-block text-mute">نوع کاربر</span>
+                                                                <h3>
+                                                                    <span class="font-s-25 price-el">{{ user_detail.get_role_label }}</span>
+                                                                </h3>
+                                                            </div>
+                                                            <a href="#" class="notification_btn bg-purple">
+                                                                <i class="fa fa-user-check font-s-20 text-white"></i>
+                                                            </a>
+                                                        </div>
+                                                        <div class="single_quick_activity">
+                                                            <div class="count_content">
+                                                                <span class="mb-2 d-block text-mute">شماره همراه</span>
+                                                                <h3>
+                                                                    <span class="font-s-30">{{ user_detail.get_raw_phonenumber }}</span>
+                                                                </h3>
+                                                            </div>
+                                                            <a href="#" class="notification_btn bg-primary">
+                                                                <i class="fa fa-phone-alt font-s-20 text-white"></i>
+                                                            </a>
+                                                        </div>
+
+                                                        <div class="single_quick_activity">
+                                                            <div class="count_content">
+                                                                <span class="mb-2 d-block text-mute">ایمیل</span>
+                                                                <h3>
+                                                                    <span class="font-s-30">{{ user_detail.get_email }}</span>
+                                                                </h3>
+                                                            </div>
+                                                            <a href="#" class="notification_btn bg-danger">
+                                                                <i class="fa fa-mail-bulk font-s-20 text-white"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="white_card mb_30 card_height_100">
+                                <div class="white_card_header">
+                                    <div class="box_header m-0">
+                                        <div class="main-title">
+                                            <h3 class="m-0"> مدیریت رسید ها</h3>
+                                        </div>
+                                        <div class="header_more_tool">
+                                            <div class="dropdown">
+                                                <a href="{% url 'receipt:receipt_dashboard_task_list' %}?search={{ user_detail.get_raw_phonenumber }}">
+                                                    <i class="fa fa-angle-left p-1"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="white_card_body">
+                                    <div class="table-responsive">
+                                        <table class="table bayer_table m-0">
+                                            <tbody>
+                                            {% for receipt_task in receipt_tasks|slice:':6' %}
+                                                <tr style="border: hidden;">
+                                                    <td>
+                                                        <div class="payment_gatway">
+                                                            <h5 class="byer_name f_s_16 f_w_600 color_theme">{{ receipt_task.receipt.building.name }}</h5>
+                                                            <p class="font-70 f_w_600 text-center p-0 bg-{{ receipt_task.receipt_status }}"
+                                                               style="width: 95px">عملیات {{ receipt_task.get_receipt_status_display }}</p>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="payment_gatway text-end">
+                                                            <h5 class="byer_name  f_s_16 f_w_600 color_theme price-el">
+                                                                {{ receipt_task.receipt.amount }}
+                                                            </h5>
+                                                            <p class="color_gray f_s_12 f_w_600 text-left font-80">
+                                                                تومان</p>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="payment_gatway">
+                                                            <a href="{{ receipt_task.get_absolute_url }}"
+                                                               class="font-size-14">
+                                                                مشاهده
+                                                                <i class="far fa-arrow-alt-circle-left"></i>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <a class="d-block text-center font-85 my-3" href="{% url 'receipt:receipt_dashboard_list' %}?search={{ user_detail.get_raw_phonenumber }}">
+                                        مشاهده همه
+                                        <i class="fa fa-angle-left"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include 'account/dashboard/components/base/footer.html' %}
+    </section>
+
+
+    <div id="container-delete-user" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg col-lg-12">
+            <div class="modal-content white_card mb_30">
+                <div class="white_card_header">
+                    <div class="modal-header box_header m-0">
+                        <h3 class="m-0">حذف ادمین</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="white_card_body">
+                    <form action="{% url 'account:user_detail_delete' user_id=user_detail.id %}"
+                          method="post" class="col-12">
+                        <div class="card-body">
+                            {% csrf_token %}
+                            <div>
+                                <p class="text- bg-danger-light">
+                                    توجه کنید با حذف ادمین تمامی محتوا و امور مربوط به ان حذف خواهد شد
+                                </p>
+                            </div>
+                            <div class="text-left mt-4">
+                                <button class="btn btn-danger">
+                                    متوجه ام، حذف ادمین
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+
+
+

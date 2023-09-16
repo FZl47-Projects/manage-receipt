@@ -17,7 +17,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 load_dotenv(BASE_DIR / '.env')
 
 # Quick-start development settings - unsuitable for production
@@ -29,7 +28,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
 ALLOWED_HOSTS = ['*']
+HOST_ADDRESS = 'http://127.0.0.1:8000'
 
 # Application definition
 
@@ -77,6 +78,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'custom_tags': 'public.templatetags.custom_tags'
+            }
         },
     },
 ]
@@ -140,7 +144,6 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 # Email
 EMAIL_SUBJECT = 'اعلان از طرف سامانه انصاری - {} '
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -165,7 +168,6 @@ ADMIN_USER_ROLES = [
     *COMMON_ADMIN_USER_ROLES,
     *SUPER_ADMIN_ROLES
 ]
-
 
 USER_ROLES = [
     *ADMIN_USER_ROLES,
@@ -195,7 +197,6 @@ RESET_PASSWORD_CONFIG = {
     'CODE_LENGTH': 6,
     'STORE_BY': 'reset_password_phonenumber_{}'
 }
-
 
 SMS_CONFIG = {
     'API_KEY': os.environ.get('SMS_API_KEY'),

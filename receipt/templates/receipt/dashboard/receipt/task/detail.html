@@ -80,7 +80,6 @@
             color: inherit;
         }
 
-
         .btn-accept {
             width: 120px;
             background: #0ae1a7;
@@ -120,7 +119,7 @@
                             <div class="box_header m-0">
                                 <div class="main-title">
                                     <h3 class="m-0">
-                                        عملیات ثبت
+                                        عملیات مدیریت
                                         رسید
                                         شماره
                                         {{ receipt_task.id }}
@@ -151,6 +150,7 @@
                                     <div class="receipt-task-status d-block d-md-flex justify-content-between">
                                         <div class="text-mute font-80">
                                             <span class="{{ receipt_task.status }}">
+
                                                 {{ receipt_task.get_status_display }}
                                             </span>
                                         </div>

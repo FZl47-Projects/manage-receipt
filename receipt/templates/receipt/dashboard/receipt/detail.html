@@ -161,19 +161,9 @@
                                     </div>
                                     <div class="receipt-task-status d-block d-md-flex justify-content-between">
                                         <div class="text-mute font-80">
-                                            {% if receipt.status == 'accepted' %}
-                                                <span class="accepted">
-                                               تایید شده
-                                                </span>
-                                            {% elif receipt.status == 'pending' %}
-                                                <span class="pending">
-                                                در صف
-                                                </span>
-                                            {% else %}
-                                                <span class="rejected">
-                                                رد شده
-                                                </span>
-                                            {% endif %}
+                                            <span class="{{ receipt.status }}">
+                                                {{ receipt.get_status_label }}
+                                            </span>
                                         </div>
                                         {% if user.is_super_admin %}
                                             <div>
@@ -196,7 +186,7 @@
                                             </div>
                                         {% elif user.is_common_admin %}
                                             <div>
-                                                {% if receipt.receipttask.receipt_status != 'accepted' %}
+                                                {% if receipt.receipttask.receipt_status != 'accepted' and receipt.receipttask.receipt_status %}
                                                     <button class="btn btn-accept" type="button"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#container-receipt-accept"
@@ -205,14 +195,16 @@
                                                         <i class="fa fa-check-circle"></i>
                                                     </button>
                                                 {% endif %}
-                                                {% if not receipt.receipttask or receipt.receipttask.receipt_status == 'pending' %}
-                                                    <button class="btn btn-reject" type="button"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#container-receipt-reject"
-                                                            id="btnReceiptReject">
-                                                        رد
-                                                        <i class="fa fa-times-circle"></i>
-                                                    </button>
+                                                {% if receipt.status != 'accepted' %}
+                                                    {% if receipt.receipttask or receipt.receipttask.receipt_status == 'pending' %}
+                                                        <button class="btn btn-reject" type="button"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#container-receipt-reject"
+                                                                id="btnReceiptReject">
+                                                            رد
+                                                            <i class="fa fa-times-circle"></i>
+                                                        </button>
+                                                    {% endif %}
                                                 {% endif %}
                                             </div>
                                         {% endif %}

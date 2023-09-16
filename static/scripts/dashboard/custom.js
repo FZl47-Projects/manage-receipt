@@ -11,3 +11,131 @@ $('.input-file').each(function(){var $input=$(this),$label=$input.next('.js-labe
 if($('.lms_table_active').length){$('.lms_table_active').DataTable({bLengthChange:false,"bDestroy":true,language:{search:"<i class='ti-search'></i>",searchPlaceholder:'Quick Search',paginate:{next:"<i class='ti-arrow-right'></i>",previous:"<i class='ti-arrow-left'></i>"}},columnDefs:[{visible:false}],responsive:true,searching:false,});}
 if($('.lms_table_active2').length){$('.lms_table_active2').DataTable({bLengthChange:false,"bDestroy":false,language:{search:"<i class='ti-search'></i>",searchPlaceholder:'Quick Search',paginate:{next:"<i class='ti-arrow-right'></i>",previous:"<i class='ti-arrow-left'></i>"}},columnDefs:[{visible:false}],responsive:true,searching:false,info:false,paging:false});}
 $('.layout_style').click(function(){if($(this).hasClass('layout_style_selected')){$(this).removeClass('layout_style_selected');}else{$('.layout_style.layout_style_selected').removeClass('layout_style_selected');$(this).addClass('layout_style_selected');}});$('.switcher_wrap li.Horizontal').click(function(){$('.sidebar').addClass('hide_vertical_menu');$('.main_content ').addClass('main_content_padding_hide');$('.horizontal_menu').addClass('horizontal_menu_active');$('.main_content_iner').addClass('main_content_iner_padding');$('.footer_part').addClass('pl-0');});$('.switcher_wrap li.vertical').click(function(){$('.sidebar').removeClass('hide_vertical_menu');$('.main_content ').removeClass('main_content_padding_hide');$('.horizontal_menu').removeClass('horizontal_menu_active');$('.main_content_iner').removeClass('main_content_iner_padding');$('.footer_part').removeClass('pl-0');});$('.switcher_wrap li').click(function(){$('li').removeClass("active");$(this).addClass("active");});$('.custom_lms_choose li').click(function(){$('li').removeClass("selected_lang");$(this).addClass("selected_lang");});$('.spin_icon_clicker').on('click',function(e){$('.switcher_slide_wrapper').toggleClass("swith_show");e.preventDefault();});$(document).ready(function(){$(function(){"use strict";$(".pCard_add").click(function(){$(".pCard_card").toggleClass("pCard_on");$(".pCard_add i").toggleClass("fa-minus");});});});}(jQuery));
+
+
+function getRandomColor() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+let chart_building_payment = document.getElementById("chart-building-payment-user")
+if (chart_building_payment) {
+    let building_names = JSON.parse(chart_building_payment.getAttribute('building-names'))
+    let building_payments = JSON.parse(chart_building_payment.getAttribute('building-payments'))
+
+    let bg_colors = []
+
+    for (let building of building_names){
+        bg_colors.push(getRandomColor())
+    }
+
+    const data = {
+        labels: building_names,
+        datasets: [
+            {
+                label: '',
+                data: building_payments,
+                borderRadius: '10',
+                backgroundColor: bg_colors,
+                stack: 'combined',
+                type: 'bar'
+            },
+        ]
+    };
+
+    const config = {
+        type: 'line',
+        data: data,
+        options: {
+            response: true,
+            plugins: {
+                title: {
+                    display: false,
+                    text: 'ساختمان ها / پرداختی ها'
+                },
+                legend: {
+                    display: false
+                },
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false,
+                    }
+                },
+                y: {
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        },
+    };
+    let ctx = chart_building_payment.getContext("2d");
+    new Chart(ctx, config)
+}
+
+
+
+
+let chart_building_payments = document.getElementById("chart-building-payments")
+if (chart_building_payments) {
+    let user_names = JSON.parse(chart_building_payments.getAttribute('user-names'))
+    let user_payments = JSON.parse(chart_building_payments.getAttribute('user-payments'))
+
+    let bg_colors = []
+
+    for (let user_name of user_names){
+        bg_colors.push(getRandomColor())
+    }
+
+    const data = {
+        labels: user_names,
+        datasets: [
+            {
+                label: '',
+                data: user_payments,
+                borderRadius: '10',
+                backgroundColor: bg_colors,
+                stack: 'combined',
+                type: 'bar'
+            },
+        ]
+    };
+
+    const config = {
+        type: 'line',
+        data: data,
+        options: {
+            response: true,
+            plugins: {
+                title: {
+                    display: false,
+                    text: 'کاربران / پرداختی ها'
+                },
+                legend: {
+                    display: false
+                },
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false,
+                    }
+                },
+                y: {
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        },
+    };
+    let ctx = chart_building_payments.getContext("2d");
+    new Chart(ctx, config)
+}
+

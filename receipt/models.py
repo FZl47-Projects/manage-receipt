@@ -1,4 +1,5 @@
 import datetime
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.urls import reverse
 from core.models import BaseModel
@@ -6,6 +7,7 @@ from core import utils
 from core.models import TaskAdmin
 from notification.models import NotificationUser
 from notification import messages
+from account.models import User
 
 
 def upload_receipt_pic_src(instance, path):
@@ -20,7 +22,7 @@ class Building(BaseModel):
     address = models.TextField()
     description = models.TextField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
-    progress_percentage = models.IntegerField(default=0)
+    progress_percentage = models.IntegerField(default=0,validators=[MinValueValidator(0), MaxValueValidator(100)])
 
     class Meta:
         ordering = '-id',
@@ -41,6 +43,35 @@ class Building(BaseModel):
     def get_absolute_url(self):
         return reverse('receipt:building_dashboard_detail', args=(self.id,))
 
+    def get_receipts(self):
+        return self.receipt_set.all()
+
+    def get_users(self):
+        return User.objects.filter(receipt__building=self).distinct()
+
+    def get_users_sort_by_score(self):
+        users = self.get_users()
+        for user in users:
+            user.score = user.get_score_by_building(self)
+        users = list(sorted(users, key=lambda i: i.score,reverse=True))
+        return users
+
+    def get_payments(self):
+        return self.receipt_set.filter(status='accepted').aggregate(payments=models.Sum('amount'))['payments'] or 0
+
+    def get_building_payments_user(self, user):
+        return self.receipt_set.filter(user=user, status='accepted').aggregate(payments=models.Sum('amount'))[
+            'payments'] or 0
+
+    def get_building_score_user(self, user):
+        receipts = self.receipt_set.filter(user=user, status='accepted')
+        score = sum(receipt.get_score() for receipt in receipts)
+        return score
+
+    @classmethod
+    def get_buildings_user(cls, user):
+        return Building.objects.filter(receipt__user=user).distinct()
+
 
 class ReceiptAbstract(BaseModel):
     STATUS_OPTIONS = (
@@ -59,6 +90,7 @@ class ReceiptAbstract(BaseModel):
 
     class Meta:
         abstract = True
+        ordering = '-id',
 
 
 class Receipt(ReceiptAbstract):
@@ -84,6 +116,9 @@ class Receipt(ReceiptAbstract):
     def get_status(self):
         return self.status
 
+    def get_status_label(self):
+        return self.get_status_display()
+
 
 class ReceiptTask(TaskAdmin):
     RECEIPT_STATUS_OPTIONS = (
@@ -100,9 +135,7 @@ class ReceiptTask(TaskAdmin):
             type='TASK_ACCEPTED',
             to_user=self.user_admin,
             title=messages.TASK_ACCEPTED,
-            description="""
-                    درخواست ثبت فیش تایید شد
-            """
+            description="""درخواست ثبت فیش تایید شد"""
         )
 
     def perform_rejected(self):
@@ -110,9 +143,7 @@ class ReceiptTask(TaskAdmin):
             type='TASK_REJECTED',
             to_user=self.user_admin,
             title=messages.TASK_REJECTED,
-            description="""
-                درخواست ثبت فیش رد شد
-            """
+            description="""درخواست ثبت فیش رد شد"""
         )
 
     def get_absolute_url(self):

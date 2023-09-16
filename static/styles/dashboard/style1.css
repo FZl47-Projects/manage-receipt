@@ -3056,8 +3056,10 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child::befor
 }
 
 .profile_info img {
+    background: #fff;
     max-width: 42px;
     max-height: 42px;
+    object-fit: cover;
     border-radius: 50%;
     cursor: pointer;
 }
@@ -3989,7 +3991,7 @@ body::-webkit-scrollbar {
     font-family: KalamehBlack;
     font-weight: 700;
     font-size: 22px;
-    color: #7983af;
+    color: #14256a;
     line-height: 1.2;
 }
 
@@ -4294,7 +4296,7 @@ body::-webkit-scrollbar {
 
 @media (max-width: 575.98px) {
     .single_element .quick_activity_wrap {
-        grid-template-columns: repeat(1, 1fr);
+        grid-template-columns: repeat(1, 1fr)!important;
         grid-gap: 15px;
         margin-bottom: 30px;
     }
@@ -4302,7 +4304,7 @@ body::-webkit-scrollbar {
 
 @media only screen and (min-width: 576px) and (max-width: 767px) {
     .single_element .quick_activity_wrap {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(1, 1fr)!important;
         grid-gap: 15px;
         margin-bottom: 30px;
     }
@@ -4318,14 +4320,14 @@ body::-webkit-scrollbar {
 
 @media (min-width: 992px) and (max-width: 1199.98px) {
     .single_element .quick_activity_wrap {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr)!important;
         margin-bottom: 30px;
     }
 }
 
 @media (min-width: 1200px) and (max-width: 1500px) {
     .single_element .quick_activity_wrap {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr)!important;
     }
 }
 
@@ -5464,7 +5466,8 @@ canvas#highlights {
 }
 
 .barfiller {
-    width: 100%;
+    width: 95%;
+    margin: auto;
     height: 6px;
     background: #f8f9ff;
     position: relative;
@@ -10542,3 +10545,40 @@ a.pswp__share--download:hover {
     margin: 0 15px 0 10px;
     font-size: 24px;
 }
+
+
+
+.detail-receipt img{
+    border-radius: 10px;
+    display: block;
+    margin: auto;
+    width: 280px;
+    max-width: 100%;
+    height: 200px;
+    object-fit: contain;
+}
+
+.detail-receipt .detail-label{
+    font-size: 80%;
+    color: #aaa;
+}
+
+.detail-receipt .detail-field a{
+    font-size: 80%;
+    background: #f6f7ff;
+    color: #4a99da;
+    padding: 5px 10px;
+    border-radius: 7px;
+}
+
+.bayer_table tr{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee!important;
+}
+
+.bayer_table td{
+    border: none;
+}
+

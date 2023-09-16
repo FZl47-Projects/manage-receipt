@@ -110,7 +110,7 @@
                                     {% for receipt in receipts %}
                                         <div class="detail-row">
                                             <div class="col-2">
-                                                <a href="{{ receipt.building.get_dashboard_absolute_url }}">
+                                                <a href="{{ receipt.building.get_absolute_url }}">
                                                     {{ receipt.building.name|truncatechars:30 }}
                                                 </a>
                                             </div>

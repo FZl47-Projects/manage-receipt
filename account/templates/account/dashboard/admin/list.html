@@ -45,7 +45,7 @@
                                     {% for user in users %}
                                         <div class="detail-row">
                                             <div class="col-3">
-                                                <a href="#">
+                                                <a href="{{ user.get_absolute_url }}">
                                                     {{ user.get_full_name|default:'بدون نام' }}
                                                 </a>
                                             </div>

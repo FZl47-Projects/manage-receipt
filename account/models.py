@@ -1,10 +1,10 @@
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from phonenumber_field.modelfields import PhoneNumberField
 from support.models import Ticket
-
 
 
 class CustomBaseUserManager(BaseUserManager):
@@ -58,9 +58,9 @@ class SuperUserManager(models.Manager):
 
 class User(AbstractUser):
     ROLE_USER_OPTIONS = (
-        ('normal_user', 'normal_user'),
-        ('financial_user', 'financial_user'),
-        ('super_user', 'super_user'),
+        ('normal_user', 'کاربر عادی'),
+        ('financial_user', 'ادمین مالی'),
+        ('super_user', 'ادمین وِیژه'),
     )
 
     first_name = models.CharField("first name", max_length=150, blank=True, default="بدون نام")
@@ -96,6 +96,9 @@ class User(AbstractUser):
     def __str__(self):
         return f'{self.role} - {self.phonenumber}'
 
+    def get_role_label(self):
+        return self.get_role_display()
+
     def get_raw_phonenumber(self):
         p = str(self.phonenumber).replace('+98', '')
         return p
@@ -108,7 +111,6 @@ class User(AbstractUser):
         return self.email or '-'
 
     def get_image_url(self):
-        # TODO: should be complete
         return '/static/images/dashboard/client_img.png'
 
     def get_last_login(self):
@@ -122,6 +124,9 @@ class User(AbstractUser):
     def get_accepted_receipts(self):
         return self.get_receipts().filter(status='accepted')
 
+    def get_last_receipt(self):
+        return self.get_receipts().first()
+
     def get_tickets(self):
         return Ticket.objects.filter(to_user=self)
 
@@ -131,3 +136,15 @@ class User(AbstractUser):
     def get_notifications(self):
         return self.notificationuser_set.all()
 
+    def get_score_by_building(self, building):
+        receipts = self.receipt_set.filter(building=building, status='accepted').distinct()
+        score = 0
+        for receipt in receipts:
+            score += receipt.get_score()
+        return score
+
+    def get_absolute_url(self):
+        return reverse('account:user_detail', args=(self.id,))
+
+    def get_payments(self):
+        return self.receipt_set.filter(status='accepted').aggregate(payments=models.Sum('amount'))['payments'] or 0

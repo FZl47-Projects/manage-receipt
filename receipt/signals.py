@@ -23,9 +23,7 @@ def handle_receipt(sender, instance, **kwargs):
             kwargs={
                 'link': instance.get_absolute_url()
             },
-            description="""
-                            فیش شما تایید شد
-            """
+            description="""فیش شما تایید شد"""
         )
     elif instance.status == 'rejected':
         NotificationUser.objects.create(
@@ -35,7 +33,5 @@ def handle_receipt(sender, instance, **kwargs):
             kwargs={
                 'link': instance.get_absolute_url()
             },
-            description="""
-                                    فیش شما رد شد
-                    """
+            description="""فیش شما رد شد"""
         )

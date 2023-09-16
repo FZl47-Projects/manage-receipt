@@ -1,3 +1,4 @@
+import json
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View
@@ -38,10 +39,11 @@ class BuildingList(LoginRequiredMixin, View):
         if user.is_admin:
             buildings = models.Building.objects.all()
         else:
-            buildings = models.Building.objects.filter(receipt__user=user).distinct()
+            buildings = models.Building.get_buildings_user(user)
             buildings = buildings.annotate(
                 payments=Sum('receipt__amount')
             )
+
         context = {
             'buildings': buildings
         }
@@ -52,10 +54,44 @@ class BuildingDetail(View):
     template_name = 'receipt/dashboard/building/detail.html'
 
     def get(self, request, building_id):
+        building = get_object_or_404(models.Building, id=building_id)
+        # chart data
+        user_names = []
+        user_payments = []
+        for user in building.get_users():
+            user_names.append(user.get_full_name())
+            user_payments.append(building.get_building_payments_user(user))
+
         context = {
-            'building': get_object_or_404(models.Building, id=building_id)
+            'building': building,
+            # chart data
+            'user_names': json.dumps(user_names),
+            'user_payments': json.dumps(user_payments)
         }
         return render(request, self.template_name, context)
+
+
+class BuildingDetailUpdate(View):
+    template_name = 'receipt/dashboard/building/detail.html'
+
+    @admin_required_cbv(['super_user'])
+    def post(self, request, building_id):
+        building = get_object_or_404(models.Building, id=building_id)
+        f = forms.BuildingEditForm(instance=building,data=request.POST)
+        if form_validate_err(request,f) is True:
+            f.save()
+            messages.success(request,'مشخصات ساختمان با موفقیت بروزرسانی شد')
+        return redirect(building.get_absolute_url())
+
+
+class BuildingDetailDelete(View):
+
+    @admin_required_cbv(['super_user'])
+    def post(self, request, building_id):
+        building = get_object_or_404(models.Building, id=building_id)
+        building.delete()
+        messages.success(request,'ساختمان با موفقیت حذف شد')
+        return redirect('receipt:building_dashboard_list')
 
 
 class ReceiptAdd(LoginRequiredMixin, View):
@@ -140,7 +176,8 @@ class ReceiptList(LoginRequiredMixin, View):
     def get_context(self, request):
         user = request.user
         if user.is_admin:
-            receipts = models.Receipt.objects.filter(receipttask=None)
+            receipts = models.Receipt.objects.exclude(receipttask__status='rejected').exclude(
+                receipttask__status='pending')
         else:
             receipts = user.get_receipts()
 
@@ -185,10 +222,10 @@ class ReceiptTaskList(View):
         s = request.GET.get('search')
         if not s:
             return objects
-        objects = objects.annotate(full_name=Concat('user__first_name', Value(' '), 'user__last_name'))
+        objects = objects.annotate(full_name=Concat('user_admin__first_name', Value(' '), 'user_admin__last_name'))
         amount = s if str(s).isdigit() else 0
-        lookup = Q(building__name__icontains=s) | Q(amount=amount) | Q(full_name__icontains=s) | Q(
-            user__phonenumber__icontains=s)
+        lookup = Q(receipt__building__name__icontains=s) | Q(receipt__amount=amount) | Q(full_name__icontains=s) | Q(
+            user_admin__phonenumber__icontains=s)
         return objects.filter(lookup)
 
     def get_pagination(self, request, objects):

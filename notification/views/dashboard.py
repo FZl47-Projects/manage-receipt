@@ -75,7 +75,7 @@ class NotificationUserList(View):
     @admin_required_cbv()
     def get(self, request):
         page_num = request.GET.get('page', 1)
-        notifications = NotificationUser.objects.filter(is_showing=True)
+        notifications = NotificationUser.objects.all()
         pagination = Paginator(notifications, 20)
         pagination = pagination.get_page(page_num)
         notifications = pagination.object_list
@@ -91,7 +91,7 @@ class NotificationUserPersonalList(LoginRequiredMixin, View):
 
     def get(self, request):
         page_num = request.GET.get('page', 1)
-        notifications = request.user.get_notifications().filter(is_showing=True)
+        notifications = request.user.get_notifications()
         pagination = Paginator(notifications, 20)
         pagination = pagination.get_page(page_num)
         notifications = pagination.object_list

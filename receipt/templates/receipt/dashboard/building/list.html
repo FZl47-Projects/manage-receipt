@@ -45,7 +45,7 @@
                                         {% for building in buildings %}
                                             <div class="detail-row">
                                                 <div class="col-2">
-                                                    <a href="{{ building.get_dashboard_absolute_url }}">
+                                                    <a href="{{ building.get_absolute_url }}">
                                                         {{ building.name|truncatechars:30 }}
                                                     </a>
                                                 </div>
@@ -98,7 +98,7 @@
                                         {% for building in buildings %}
                                             <div class="detail-row">
                                                 <div class="col-2">
-                                                    <a href="{{ building.get_dashboard_absolute_url }}">
+                                                    <a href="{{ building.get_absolute_url }}">
                                                         {{ building.name|truncatechars:30 }}
                                                     </a>
                                                 </div>

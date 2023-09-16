@@ -1,0 +1,52 @@
+.container-audio-simple {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    padding: 7px 10px;
+    width: 95%;
+    margin: auto;
+    max-width: 195px;
+    border-radius: 10px;
+    direction: ltr;
+}
+
+.container-audio-simple > * {
+    padding: 3px;
+    margin: 0 5px;
+}
+
+.progress-audio-simple {
+    width: 70%;
+    height: 5px;
+    padding: 0;
+}
+
+.btn-state-audio-simple {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.btn-state-audio-simple i {
+    display: none;
+    font-size: 110%;
+}
+
+.btn-state-audio-simple[state='play'] [play] {
+    display: block;
+    color: rgb(0, 241, 188);
+}
+
+.btn-state-audio-simple[state='pause'] [pause] {
+    display: block;
+    color: rgb(240, 134, 134);
+}
+
+.time-played-audio-simple,
+.time-total-audio-simple {
+    color: inherit;
+    font-size: 80% !important;
+    margin: 0;
+}

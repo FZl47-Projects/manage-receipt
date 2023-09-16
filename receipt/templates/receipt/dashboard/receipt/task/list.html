@@ -29,38 +29,38 @@
                                 <div class="container">
                                     <div>
                                         <a class="{% if not request.GET.sort_by or request.GET.sort_by == 'latest' %}active{% endif %}"
-                                           href="{% url 'receipt:receipt_dashboard_list_financial_user' %}?sort_by=latest&search={{ request.GET.search }}">
+                                           href="{% url 'receipt:receipt_dashboard_task_list' %}?sort_by=latest&search={{ request.GET.search }}">
                                             جدید ترین
                                         </a>
                                     </div>
                                     <div>
                                         <a class="{% if request.GET.sort_by == 'oldest' %}active{% endif %}"
-                                           href="{% url 'receipt:receipt_dashboard_list_financial_user' %}?sort_by=oldest&search={{ request.GET.search }}">
+                                           href="{% url 'receipt:receipt_dashboard_task_list' %}?sort_by=oldest&search={{ request.GET.search }}">
                                             قدیمی ترین
                                         </a>
                                     </div>
                                     <div>
                                         <a class="{% if request.GET.sort_by == 'need_to_check' %}active{% endif %}"
-                                           href="{% url 'receipt:receipt_dashboard_list_financial_user' %}?sort_by=need_to_check&search={{ request.GET.search }}">
+                                           href="{% url 'receipt:receipt_dashboard_task_list' %}?sort_by=need_to_check&search={{ request.GET.search }}">
                                             نیاز به بررسی
                                         </a>
                                     </div>
                                     <div>
                                         <a class="{% if request.GET.sort_by == 'highest_amount' %}active{% endif %}"
-                                           href="{% url 'receipt:receipt_dashboard_list_financial_user' %}?sort_by=highest_amount&search={{ request.GET.search }}">
+                                           href="{% url 'receipt:receipt_dashboard_task_list' %}?sort_by=highest_amount&search={{ request.GET.search }}">
                                             بیشترین مبلغ
                                         </a>
                                     </div>
                                     <div>
                                         <a class="{% if request.GET.sort_by == 'lowset_amount' %}active{% endif %}"
-                                           href="{% url 'receipt:receipt_dashboard_list_financial_user' %}?sort_by=lowset_amount&search={{ request.GET.search }}">
+                                           href="{% url 'receipt:receipt_dashboard_task_list' %}?sort_by=lowset_amount&search={{ request.GET.search }}">
                                             کمترین مبلغ
                                         </a>
                                     </div>
                                 </div>
                             </div>
                             <div>
-                                <form action="{% url 'receipt:receipt_dashboard_list_financial_user' %}">
+                                <form action="{% url 'receipt:receipt_dashboard_task_list' %}">
                                     <input type="hidden" name="sort_by" value="{{ request.GET.sort_by }}">
                                     <p class="title">جست و جو :</p>
                                     <div class="cnt-search col-11 col-md-7">
@@ -70,7 +70,7 @@
                                         <div>
                                             {% if request.GET.search %}
                                                 <a class="text-danger font-80" style="margin-left: 8px;"
-                                                   href="{% url 'receipt:receipt_dashboard_list_financial_user' %}">
+                                                   href="{% url 'receipt:receipt_dashboard_task_list' %}">
                                                     <i class="fa fa-times"></i>
                                                 </a>
                                             {% endif %}
@@ -141,7 +141,7 @@
                                         <div class="container-not-found-base">
                                             <p>رسیدی یافت نشد</p>
                                             {% if request.GET.sort_by or request.GET.search %}
-                                                <a href="{% url 'receipt:receipt_dashboard_list_financial_user' %}"
+                                                <a href="{% url 'receipt:receipt_dashboard_task_list' %}"
                                                    class="font-80 mt-4 d-block text-warning">
                                                     <i class="fa fa-times"></i>
                                                     حذف فیلتر و جست و جو
