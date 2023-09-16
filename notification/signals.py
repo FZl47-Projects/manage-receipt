@@ -38,7 +38,7 @@ def handler_notification_notify(instance):
         if phonenumber:
             sms.Notification.handler_custom_notification(phonenumber,instance,user)
         if email:
-            subject = settings.EMAIL_SUBJECT.format(instance.title)
+            subject = settings.EMAIL_SUBJECT.format(instance.title).strip()
             send_email(email, subject, instance.get_content())
 
 

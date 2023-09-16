@@ -109,7 +109,7 @@
         {% include 'account/dashboard/components/base/footer.html' %}
     </section>
     {% if user.is_admin %}
-        {% render_partial 'account.views.UserListComponentPartial' %}
+        {% render_partial 'account.views.dashboard.UserListComponentPartial' %}
     {% endif %}
 {% endblock %}
 
