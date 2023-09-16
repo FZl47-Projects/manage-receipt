@@ -102,3 +102,7 @@ def form_validate_err(request, form):
             messages.error(request, 'دیتای ورودی نامعتبر است')
         return False
     return True
+
+
+def get_host_url(url):
+    return settings.HOST_ADDRESS + url
