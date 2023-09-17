@@ -201,5 +201,5 @@ RESET_PASSWORD_CONFIG = {
 SMS_CONFIG = {
     'API_KEY': os.environ.get('SMS_API_KEY'),
     'API_URL': 'http://rest.ippanel.com/v1/messages/patterns/send',
-    'ORIGINATOR': '98500041500026'
+    'ORIGINATOR': '983000505'
 }
