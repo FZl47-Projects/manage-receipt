@@ -30,6 +30,9 @@ def login_register(request):
             if user is None:
                 messages.error(request, 'کاربری با این مشخصات یافت نشد')
                 return redirect('account:login_register')
+            if user.is_active is False:
+                messages.error(request, 'حساب شما غیر فعال میباشد')
+                return redirect('account:login_register')
             login(request, user)
             messages.success(request, 'خوش امدید')
             return redirect('account:dashboard')
@@ -44,6 +47,8 @@ def login_register(request):
             return redirect('account:login_register')
         # check for exists normal_user
         phonenumber = f.cleaned_data['phonenumber']
+        first_name = f.cleaned_data['first_name']
+        last_name = f.cleaned_data['last_name']
         email = f.cleaned_data['email']
         if User.objects.filter(phonenumber=phonenumber).exists():
             messages.error(request, 'کاربری با این شماره از قبل ثبت شده است')
@@ -54,13 +59,17 @@ def login_register(request):
         password = f.cleaned_data['password2']
         user = User(
             phonenumber=phonenumber,
-            email=email
+            email=email,
+            first_name=first_name,
+            last_name=last_name,
+            # user must check and active by admin
+            is_active=False
         )
         user.set_password(password)
         user.save()
         # login
-        login(request, user)
-        messages.success(request, 'حساب شما با موفقیت ایجاد شد')
+        # login(request, user)
+        messages.success(request, 'حساب شما با موفقیت ایجاد شد پس از بررسی حساب شما فعال میشود')
         return redirect('public:home')
 
     if request.method == 'GET':

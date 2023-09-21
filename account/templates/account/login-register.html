@@ -203,6 +203,12 @@
                     {% csrf_token %}
                     <input type="hidden" name="type-page" value="register">
                     <div class="field input-field">
+                        <input type="text" placeholder="نام" class="input" name="first_name" required>
+                    </div>
+                    <div class="field input-field">
+                        <input type="text" placeholder="نام خانوادگی" class="input" name="last_name" required>
+                    </div>
+                    <div class="field input-field">
                         <input type="tel" placeholder="شماره همراه" class="input" name="phonenumber" required>
                     </div>
                     <div class="field input-field">

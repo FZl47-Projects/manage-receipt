@@ -276,6 +276,7 @@
                                                     <span>امتیاز</span>
                                                     <p>
                                                         <span class="price-el">{{ receipt.get_score }}</span>
+                                                        <i class="fa fa-star text-warning"></i>
                                                     </p>
                                                 </div>
                                             {% endif %}
@@ -290,6 +291,12 @@
                                                 <span>توضیحات کاربر</span>
                                                 <p>
                                                     {{ receipt.description|default:'بدون توضیحات' }}
+                                                </p>
+                                            </div>
+                                            <div class="detail-field">
+                                                <span>توضیحات مدیر</span>
+                                                <p>
+                                                    {{ receipt.note|default:'بدون توضیحات' }}
                                                 </p>
                                             </div>
                                         </div>
