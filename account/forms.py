@@ -89,3 +89,10 @@ class ResetPasswordSetForm(forms.Form):
         if p1 != p2:
             raise forms.ValidationError('passwords is not same')
         return p2
+
+
+class UserUpdateByAdmin(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ('is_active',)

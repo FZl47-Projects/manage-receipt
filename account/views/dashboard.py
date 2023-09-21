@@ -420,3 +420,20 @@ class UserFinancialList(View):
             'pagination': pagination
         }
         return render(request, self.template_name, context)
+
+
+class UserDetailUpdateByAdmin(View):
+
+    @admin_required_cbv(['super_user'])
+    def post(self, request,user_id):
+        data = request.POST
+        user_obj = get_object_or_404(User,id=user_id)
+        f = forms.UserUpdateByAdmin(data=data,instance=user_obj)
+        if form_validate_err(request, f) is False:
+            return redirect(user_obj.get_absolute_url())
+        f.save()
+        messages.success(request,'کاربر با موفقیت بروزرسانی شد')
+        # TODO: send sms to user
+        ...
+
+        return redirect(user_obj.get_absolute_url())

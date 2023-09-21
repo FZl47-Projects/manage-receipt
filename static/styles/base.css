@@ -465,6 +465,8 @@ body {
     color: #f24444;
 }
 
+
+
 @media screen and (max-width: 992px) {
     #container-users .title-list-row > div:last-of-type {
         display: none;

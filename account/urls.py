@@ -24,4 +24,6 @@ urlpatterns = [
     path('dashboard/user/task/list', dashboard.UserFinancialList.as_view(), name='user_financial_list'),
     path('dashboard/user/<int:user_id>/detail', dashboard.UserDetail.as_view(), name='user_detail'),
     path('dashboard/user/<int:user_id>/detail/delete', dashboard.UserDetailDelete.as_view(), name='user_detail_delete'),
+
+    path('dashboard/user/<int:user_id>/detail/update/admin', dashboard.UserDetailUpdateByAdmin.as_view(), name='user_detail_update_admin'),
 ]

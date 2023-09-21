@@ -67,13 +67,18 @@
             color: #ffffff;
         }
 
-        .bg-danger-light{
+        .bg-danger-light {
             background: #fdf5f4;
             padding: 10px;
             border-radius: 10px;
             font-size: 95%;
             line-height: 33px;
             color: #f24444;
+        }
+
+        .btn-w {
+            border-radius: 6px;
+            width: 115px;
         }
 
 
@@ -98,7 +103,13 @@
                                             <h3 class="m-0">عملیات</h3>
                                         </div>
                                         <div class="">
-                                            <button class="btn btn-outline-danger" type="button" data-bs-toggle="modal"
+                                            <button class="btn btn-w btn-edit-outline m-1" type="button"
+                                                    data-bs-toggle="modal" data-bs-target="#container-edit-user">
+                                                تغییر
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-w btn-outline-danger m-1" type="button"
+                                                    data-bs-toggle="modal"
                                                     data-bs-target="#container-delete-user">
                                                 حذف کاربر
                                                 <i class="fa fa-trash"></i>
@@ -174,7 +185,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="quick_activity_wrap"
-                                                         style="grid-template-columns: repeat(2,1fr)">
+                                                         style="grid-template-columns: repeat(3,1fr)">
                                                         <div class="single_quick_activity">
                                                             <div class="count_content">
                                                                 <span class="mb-2 d-block text-mute">مبلغ پرداخت شده کل</span>
@@ -197,6 +208,29 @@
                                                             <a href="#" class="notification_btn bg-success">
                                                                 <i class="fa fa-file-alt font-s-20 text-white"></i>
                                                             </a>
+                                                        </div>
+                                                        <div class="single_quick_activity">
+                                                            {% if user_detail.is_active %}
+                                                                <div class="count_content">
+                                                                    <span class="mb-2 d-block text-mute">وضعیت فعالی</span>
+                                                                    <h3>
+                                                                        <span class="font-s-30 text-success">فعال</span>
+                                                                    </h3>
+                                                                </div>
+                                                                <a href="#" class="notification_btn bg-green">
+                                                                    <i class="fa fa-check font-s-20 text-white"></i>
+                                                                </a>
+                                                            {% else %}
+                                                                <div class="count_content">
+                                                                    <span class="mb-2 d-block text-mute">وضعیت فعالی</span>
+                                                                    <h3>
+                                                                        <span class="font-s-30 text-danger">غیر فعال</span>
+                                                                    </h3>
+                                                                </div>
+                                                                <a href="#" class="notification_btn bg-danger">
+                                                                    <i class="fa fa-times font-s-20 text-white"></i>
+                                                                </a>
+                                                            {% endif %}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -300,7 +334,8 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <a class="d-block text-center font-85 my-3" href="{% url 'receipt:receipt_dashboard_list' %}?search={{ user_detail.get_raw_phonenumber }}">
+                                    <a class="d-block text-center font-85 my-3"
+                                       href="{% url 'receipt:receipt_dashboard_list' %}?search={{ user_detail.get_raw_phonenumber }}">
                                         مشاهده همه
                                         <i class="fa fa-angle-left"></i>
                                     </a>
@@ -333,12 +368,85 @@
                             {% csrf_token %}
                             <div>
                                 <p class="text- bg-danger-light">
-                                    توجه کنید با حذف کاربر تمامی محتوا و امور مربوط به کاربر از جمله رسید ها حذف خواهد شد
+                                    توجه کنید با حذف کاربر تمامی محتوا و امور مربوط به کاربر از جمله رسید ها حذف خواهد
+                                    شد
                                 </p>
                             </div>
                             <div class="text-left mt-4">
                                 <button class="btn btn-danger">
                                     متوجه ام، حذف کاربر
+                                    <i class="fa fa-up"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="container-edit-user" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg col-lg-12">
+            <div class="modal-content white_card mb_30">
+                <div class="white_card_header">
+                    <div class="modal-header box_header m-0">
+                        <h3 class="m-0">تغییر کاربر</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="white_card_body">
+                    <form action="{% url 'account:user_detail_update_admin' user_id=user_detail.id %}"
+                          method="post" class="col-12">
+                        <div class="card-body">
+                            {% csrf_token %}
+
+                            <div class="col-md-12">
+                                <div>
+                                    <label class="form-label" for="inpNameUser">
+                                        نام
+                                        <span class="field-required">*</span>
+                                    </label>
+                                    <input type="text" required="" class="form-control" value="{{ user_detail.first_name }}"
+                                           id="inpNameUser" name="first_name" aria-required="" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div>
+                                    <label class="form-label" for="inpNameUser">
+                                        نام خانوادگی
+                                        <span class="field-required">*</span>
+                                    </label>
+                                    <input type="text" required="" class="form-control" value="{{ user_detail.last_name }}"
+                                           id="inpNameUser" name="last_name" aria-required="" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div>
+                                    <label class="form-label" for="inpAddressBuilding">
+                                        شماره همراه
+                                        <span class="field-required">*</span>
+                                    </label>
+                                    <input type="text" required="" class="form-control" value="{{ user_detail.get_raw_phonenumber }}"
+                                           id="inpAddressBuilding" name="address" aria-required="" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label">
+                                    وضعیت فعالی
+                                    <span class="field-required">*</span>
+                                </label>
+                                <select name="is_active" class="form-control" required>
+                                    <option value="true" {% if user_detail.is_active %}selected{% endif %}>فعال</option>
+                                    <option value="false" {% if user_detail.is_active == False %}selected{% endif %}>غیر
+                                        فعال
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="text-left mt-4">
+                                <button class="btn btn-submit">
+                                    ثبت و بروزرسانی
                                     <i class="fa fa-up"></i>
                                 </button>
                             </div>
