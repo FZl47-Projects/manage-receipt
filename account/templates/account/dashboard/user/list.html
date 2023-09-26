@@ -32,13 +32,16 @@
                                         <div class="col-3">
                                             نام و نام خانوادگی
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-2">
                                             شماره همراه
                                         </div>
                                         <div class="col-3">
                                             ایمیل
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-2">
+                                            امتیاز کل
+                                        </div>
+                                        <div class="col-1">
                                             اخرین بازدید
                                         </div>
                                     </div>
@@ -49,13 +52,16 @@
                                                     {{ user.get_full_name|default:'بدون نام' }}
                                                 </a>
                                             </div>
-                                            <div class="col-3">
+                                            <div class="col-2">
                                                 {{ user.get_raw_phonenumber }}
                                             </div>
                                             <div class="col-3 font-80">
-                                                {{ user.email|default:'-' }}
+                                                {{ user.email|truncatechars:15|default:'-' }}
                                             </div>
-                                            <div class="col-3 font-70 datetime-convert">
+                                             <div class="col-2 font-80">
+                                                {{ user.get_scores }}
+                                            </div>
+                                            <div class="col-1 font-70 datetime-convert">
                                                 {{ user.get_last_login|default:'-' }}
                                             </div>
                                         </div>

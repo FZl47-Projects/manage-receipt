@@ -62,7 +62,7 @@ body {
 }
 
 .loading-blur-element {
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur(3px);
     /*backdrop-filter: brightness(50%);*/
     content: "";
     display: block;

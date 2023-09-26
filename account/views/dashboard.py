@@ -1,10 +1,13 @@
 import json
 from django.contrib import messages
 from django.conf import settings
+from django.db.models import Value, Q
+from django.db.models.functions import Concat
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponseBadRequest, Http404, HttpResponse
 from django.views.decorators.http import require_POST
 from django.views.generic import View
+from django.core import serializers
 from django.core.paginator import Paginator
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login, get_user_model, logout as logout_handler
@@ -323,7 +326,7 @@ class UserDetailDelete(LoginRequiredMixin, View):
     def post(self, request, user_id):
         user = get_object_or_404(User, id=user_id)
         user.delete()
-        messages.success(request,'کاربر با موفقیت حذف شد')
+        messages.success(request, 'کاربر با موفقیت حذف شد')
         return redirect('account:user_list')
 
 
@@ -372,6 +375,27 @@ class UserListComponentPartial(View):
             'pagination': pagination
         }
         return render(request, self.template_name, context)
+
+    @admin_required_cbv()
+    def post(self, request):
+        data = json.loads(request.body)
+        def search(self, objects):
+            s = data.get('search')
+            if not s:
+                return objects
+            objects = objects.annotate(full_name=Concat('first_name', Value(' '), 'last_name'))
+            lookup = Q(phonenumber=s) | Q(full_name__icontains=s) | Q(
+                email__icontains=s)
+            return objects.filter(lookup)
+
+        # ajax view
+        if not request.headers.get('X_REQUESTED_WITH') == 'XMLHttpRequest':
+            raise Http404
+        users = User.normal_user.all()
+        users = search(request, users)
+        users_serialized = serializers.serialize('json', users,
+                                                 fields=('id', 'first_name', 'last_name', 'email', 'phonenumber'))
+        return JsonResponse(users_serialized, safe=False)
 
 
 class UserFinancialAdd(View):
@@ -425,15 +449,22 @@ class UserFinancialList(View):
 class UserDetailUpdateByAdmin(View):
 
     @admin_required_cbv(['super_user'])
-    def post(self, request,user_id):
+    def post(self, request, user_id):
         data = request.POST
-        user_obj = get_object_or_404(User,id=user_id)
-        f = forms.UserUpdateByAdmin(data=data,instance=user_obj)
+        user_obj = get_object_or_404(User, id=user_id)
+        f = forms.UserUpdateByAdmin(data=data, instance=user_obj)
         if form_validate_err(request, f) is False:
             return redirect(user_obj.get_absolute_url())
-        f.save()
-        messages.success(request,'کاربر با موفقیت بروزرسانی شد')
-        # TODO: send sms to user
-        ...
-
+        user_obj = f.save()
+        messages.success(request, 'کاربر با موفقیت بروزرسانی شد')
+        if user_obj.is_active:
+            # create notif for user
+            NotificationUser.objects.create(
+                type='USER_ACCOUNT_ACTIVATED',
+                to_user=user_obj,
+                title='حساب شما فعال شد',
+                description=f"""
+                         فعال شدن حساب کاربری
+                        """,
+            )
         return redirect(user_obj.get_absolute_url())

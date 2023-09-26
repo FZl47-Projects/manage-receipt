@@ -10,6 +10,10 @@ from notification import messages
 from account.models import User
 
 
+def random_str(l=10):
+    return utils.random_str(l)
+
+
 def upload_receipt_pic_src(instance, path):
     frmt = str(path).split('.')[-1]
     td = utils.get_time('%Y-%m-%d')
@@ -74,14 +78,19 @@ class Building(BaseModel):
 
 
 class ReceiptAbstract(BaseModel):
+
     STATUS_OPTIONS = (
         ('accepted', 'تایید شده'),
         ('pending', 'در صف'),
         ('rejected', 'رد شده')
     )
+    tracking_code = models.CharField(max_length=10,default=random_str)
     status = models.CharField(max_length=15, choices=STATUS_OPTIONS, default='pending')
     user = models.ForeignKey('account.User', on_delete=models.CASCADE)
     building = models.ForeignKey(Building, on_delete=models.CASCADE)
+    bank_name = models.CharField(max_length=100)
+    depositor_name = models.CharField(max_length=100)
+    deposit_datetime = models.DateTimeField()
     description = models.TextField(null=True, blank=True)  # by user
     note = models.TextField(null=True, blank=True)  # by admin
     amount = models.PositiveBigIntegerField()

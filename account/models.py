@@ -143,6 +143,13 @@ class User(AbstractUser):
             score += receipt.get_score()
         return score
 
+    def get_scores(self):
+        receipts = self.receipt_set.filter(status='accepted').distinct()
+        score = 0
+        for receipt in receipts:
+            score += receipt.get_score()
+        return score
+
     def get_absolute_url(self):
         return reverse('account:user_detail', args=(self.id,))
 

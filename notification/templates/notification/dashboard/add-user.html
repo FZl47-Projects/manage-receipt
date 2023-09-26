@@ -1,4 +1,5 @@
 {% extends 'account/dashboard/components/base/base_template.html' %}
+{% load static %}
 {% load render_partial %}
 
 {% block Title %}
@@ -114,24 +115,9 @@
 
 {% block Script %}
     <script>
-        let users_select = document.querySelectorAll('.user-select')
-        let input_select_user_notification = document.querySelector('input[name="to_user"]')
-
-        for (let user_select of users_select) {
-            user_select.addEventListener('click', function () {
-                unSelectUsers()
-                user_select.setAttribute('selected', 'true')
-                input_select_user_notification.value = user_select.getAttribute('user-id')
-            })
-        }
-
-        function unSelectUsers() {
-            input_select_user_notification.value = '0'
-            for (let user_select of users_select) {
-                user_select.removeAttribute('selected')
-            }
-        }
+        let input_select_user_component = document.querySelector('input[name="to_user"]')
     </script>
+    <script src="{% static 'scripts/user-list-component.js' %}"></script>
 {% endblock %}
 
 

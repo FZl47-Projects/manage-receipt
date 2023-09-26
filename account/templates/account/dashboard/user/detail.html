@@ -185,19 +185,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="quick_activity_wrap"
-                                                         style="grid-template-columns: repeat(3,1fr)">
-                                                        <div class="single_quick_activity">
-                                                            <div class="count_content">
-                                                                <span class="mb-2 d-block text-mute">مبلغ پرداخت شده کل</span>
-                                                                <h3>
-                                                                    <span class="font-s-30 price-el">{{ user_detail.get_payments }}</span>
-                                                                    <span>تومان</span>
-                                                                </h3>
-                                                            </div>
-                                                            <a href="#" class="notification_btn bg-pink">
-                                                                <i class="fa fa-dollar-sign font-s-20 text-white"></i>
-                                                            </a>
-                                                        </div>
+                                                         style="grid-template-columns: repeat(2,1fr)">
                                                         <div class="single_quick_activity">
                                                             <div class="count_content">
                                                                 <span class="mb-2 d-block text-mute">تعداد رسید ها</span>
@@ -231,6 +219,33 @@
                                                                     <i class="fa fa-times font-s-20 text-white"></i>
                                                                 </a>
                                                             {% endif %}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="quick_activity_wrap"
+                                                         style="grid-template-columns: repeat(2,1fr)">
+                                                        <div class="single_quick_activity">
+                                                            <div class="count_content">
+                                                                <span class="mb-2 d-block text-mute">مبلغ پرداخت شده کل</span>
+                                                                <h3>
+                                                                    <span class="font-s-30 price-el">{{ user_detail.get_payments }}</span>
+                                                                    <span>تومان</span>
+                                                                </h3>
+                                                            </div>
+                                                            <a href="#" class="notification_btn bg-pink">
+                                                                <i class="fa fa-dollar-sign font-s-20 text-white"></i>
+                                                            </a>
+                                                        </div>
+                                                        <div class="single_quick_activity">
+                                                            <div class="count_content">
+                                                                <span class="mb-2 d-block text-mute">امتیاز کل</span>
+                                                                <h3>
+                                                                    <span class="font-s-25 price-el">{{ user_detail.get_scores }}</span>
+                                                                </h3>
+                                                            </div>
+                                                            <a href="#" class="notification_btn bg-warning">
+                                                                <i class="fa fa-star font-s-20 text-white"></i>
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -408,7 +423,8 @@
                                         نام
                                         <span class="field-required">*</span>
                                     </label>
-                                    <input type="text" required="" class="form-control" value="{{ user_detail.first_name }}"
+                                    <input type="text" required="" class="form-control"
+                                           value="{{ user_detail.first_name }}"
                                            id="inpNameUser" name="first_name" aria-required="" disabled>
                                 </div>
                             </div>
@@ -418,7 +434,8 @@
                                         نام خانوادگی
                                         <span class="field-required">*</span>
                                     </label>
-                                    <input type="text" required="" class="form-control" value="{{ user_detail.last_name }}"
+                                    <input type="text" required="" class="form-control"
+                                           value="{{ user_detail.last_name }}"
                                            id="inpNameUser" name="last_name" aria-required="" disabled>
                                 </div>
                             </div>
@@ -428,7 +445,8 @@
                                         شماره همراه
                                         <span class="field-required">*</span>
                                     </label>
-                                    <input type="text" required="" class="form-control" value="{{ user_detail.get_raw_phonenumber }}"
+                                    <input type="text" required="" class="form-control"
+                                           value="{{ user_detail.get_raw_phonenumber }}"
                                            id="inpAddressBuilding" name="address" aria-required="" disabled>
                                 </div>
                             </div>

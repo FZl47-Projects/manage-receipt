@@ -21,7 +21,8 @@ def handle_receipt(sender, instance, **kwargs):
             to_user=instance.user,
             title=messages.RECEIPT_ACCEPTED,
             kwargs={
-                'link': instance.get_absolute_url()
+                'link': instance.get_absolute_url(),
+                'tracking_code': instance.tracking_code
             },
             description="""فیش شما تایید شد"""
         )
@@ -31,7 +32,8 @@ def handle_receipt(sender, instance, **kwargs):
             to_user=instance.user,
             title=messages.RECEIPT_REJECTED,
             kwargs={
-                'link': instance.get_absolute_url()
+                'link': instance.get_absolute_url(),
+                'tracking_code': instance.tracking_code
             },
             description="""فیش شما رد شد"""
         )

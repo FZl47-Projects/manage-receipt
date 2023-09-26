@@ -159,8 +159,30 @@ function numberWithCommas(x) {
 
 
 // full size element
-document.querySelectorAll('.click-full-size').forEach(function (el){
-    el.addEventListener('click',function (){
+document.querySelectorAll('.click-full-size').forEach(function (el) {
+    el.addEventListener('click', function () {
         this.requestFullscreen()
     })
 })
+
+
+function secToDateTime(secs) {
+    var t = new Date(1970, 0, 1);
+    t.setSeconds(secs);
+    return t;
+}
+
+function getFormattedDate(date) {
+    let str = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes()
+    return str
+}
+
+function getRawPhonenumber(phonenumber) {
+    return String(phonenumber).replace('+98', '')
+}
+
+function truncate(str, max) {
+  return str.length > max ? str.substr(0, max-1) + '…' : str;
+}
+
+

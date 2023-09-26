@@ -163,7 +163,7 @@ class ReceiptList(LoginRequiredMixin, View):
         objects = objects.annotate(full_name=Concat('user__first_name', Value(' '), 'user__last_name'))
         amount = s if str(s).isdigit() else 0
         lookup = Q(building__name__icontains=s) | Q(amount=amount) | Q(full_name__icontains=s) | Q(
-            user__phonenumber__icontains=s)
+            user__phonenumber__icontains=s) | Q(tracking_code=s)
         return objects.filter(lookup)
 
     def get_pagination(self, request, objects):
@@ -225,7 +225,7 @@ class ReceiptTaskList(View):
         objects = objects.annotate(full_name=Concat('user_admin__first_name', Value(' '), 'user_admin__last_name'))
         amount = s if str(s).isdigit() else 0
         lookup = Q(receipt__building__name__icontains=s) | Q(receipt__amount=amount) | Q(full_name__icontains=s) | Q(
-            user_admin__phonenumber__icontains=s)
+            user_admin__phonenumber__icontains=s) | Q(receipt__tracking_code=s)
         return objects.filter(lookup)
 
     def get_pagination(self, request, objects):

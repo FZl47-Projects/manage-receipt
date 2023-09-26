@@ -1,4 +1,5 @@
 {% extends 'account/dashboard/components/base/base_template.html' %}
+{% load static %}
 {% load render_partial %}
 
 {% block Title %}
@@ -71,7 +72,41 @@
                                         </div>
                                     {% endif %}
                                     <div class="row mb-3">
-                                        <div class="col-md-12">
+                                        <div class="col-12 col-md-6">
+                                            <div class="col-md-12">
+                                                <label class="form-label" for="inpDepositNameReceipt">
+                                                    نام واریز کننده
+                                                    <span class="field-required">*</span>
+                                                </label>
+                                                <input type="text" name="depositor_name" id="inpDepositNameReceipt"
+                                                       class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <div class="col-md-12">
+                                                <label class="form-label" for="inpDepositDateReceipt">
+                                                    تاریخ واریز
+                                                    <span class="field-required">*</span>
+                                                </label>
+                                                <input type="text" name="" id="inpDepositDateReceipt"
+                                                       class="form-control datetime-picker" set-on="deposit_inp"
+                                                       required>
+                                                <input id="deposit_inp" type="hidden" name="deposit_datetime" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-12 col-md-6">
+                                            <div class="col-md-12">
+                                                <label class="form-label" for="inpBankNameReceipt">
+                                                    نام بانک
+                                                    <span class="field-required">*</span>
+                                                </label>
+                                                <input type="text" name="bank_name" id="inpBankNameReceipt"
+                                                       class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6">
                                             <div class="col-md-12">
                                                 <label class="form-label" for="inpAmountReceipt">
                                                     مبلغ
@@ -93,7 +128,7 @@
                                             </label>
                                             <textarea type="text" name="description" class="form-control"
                                                       id="inputDescriptionBuilding"
-                                                      placeholder="توضیحات" minlength="2" maxlength="400"></textarea>
+                                                      minlength="2" maxlength="400"></textarea>
                                         </div>
                                     </div>
                                     <div class="field field-button text-left">
@@ -113,32 +148,17 @@
     {% endif %}
 {% endblock %}
 
-
 {% block Script %}
+
     <script>
-        let users_select = document.querySelectorAll('.user-select')
-        let input_select_user = document.querySelector('input[name="user"]')
-
-        for (let user_select of users_select) {
-            user_select.addEventListener('click', function () {
-                unSelectUsers()
-                user_select.setAttribute('selected', 'true')
-                input_select_user.value = user_select.getAttribute('user-id')
-            })
-        }
-
-        function unSelectUsers() {
-            input_select_user.value = null
-            for (let user_select of users_select) {
-                user_select.removeAttribute('selected')
-            }
-        }
-
+        let input_select_user_component = document.querySelector('input[name="user"]')
         // set amount value
         document.querySelector('#inpAmountReceipt').addEventListener('input', function () {
             document.querySelector('#amount-value').innerHTML = numberWithCommas(this.value) || 0
         })
     </script>
+    <script src="{% static 'scripts/user-list-component.js' %}"></script>
+
 {% endblock %}
 
 

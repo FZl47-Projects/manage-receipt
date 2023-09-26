@@ -23,7 +23,7 @@ class ReceiptTaskAddForm(forms.ModelForm):
 class ReceiptAddForm(forms.ModelForm):
     class Meta:
         model = models.Receipt
-        fields = '__all__'
+        exclude = ('tracking_code',)
 
 
 class ReceiptAcceptForm(forms.ModelForm):

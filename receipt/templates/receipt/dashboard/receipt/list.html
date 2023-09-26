@@ -65,7 +65,7 @@
                                     <p class="title">جست و جو :</p>
                                     <div class="cnt-search col-11 col-md-7">
                                         <input type="text" name="search"
-                                               placeholder="نام ساختمان ، مبلغ ، نام کاربر و .."
+                                               placeholder="کد رهگیری ، نام ساختمان ، مبلغ ، نام کاربر و .."
                                                value="{{ request.GET.search }}">
                                         <div>
                                             {% if request.GET.search %}
@@ -87,6 +87,9 @@
                                 <div class="list-row">
                                     <div class="title-list-row">
                                         <div class="col-2">
+                                            کد رهگیری
+                                        </div>
+                                        <div class="col-2">
                                             نام ساختمان
                                         </div>
                                         {% if user.is_admin %}
@@ -94,13 +97,13 @@
                                                 کاربر
                                             </div>
                                         {% endif %}
-                                        <div class="col-2">
+                                        <div class="col-1">
                                             مبلغ
                                         </div>
                                         <div class="col-1">
                                             امتیاز
                                         </div>
-                                        <div class="col-2">
+                                        <div class="col-1">
                                             وضعیت
                                         </div>
                                         <div class="col-2">
@@ -110,6 +113,9 @@
                                     {% for receipt in receipts %}
                                         <div class="detail-row">
                                             <div class="col-2">
+                                                {{ receipt.tracking_code }}
+                                            </div>
+                                            <div class="col-2">
                                                 <a href="{{ receipt.building.get_absolute_url }}">
                                                     {{ receipt.building.name|truncatechars:30 }}
                                                 </a>
@@ -118,17 +124,16 @@
                                                 <div class="col-2">
                                                     <a href="{{ receipt.user.get_absolute_url }}">
                                                         {{ receipt.user.get_full_name|truncatechars:10 }}
-                                                        {{ receipt.user.get_raw_phonenumber }}
                                                     </a>
                                                 </div>
                                             {% endif %}
-                                            <div class="col-2">
+                                            <div class="col-1">
                                                 <span class="price-el">{{ receipt.amount }}</span>
                                             </div>
                                             <div class="col-1">
                                                 {{ receipt.get_score }}
                                             </div>
-                                            <div class="col-2">
+                                            <div class="col-1">
                                                 {% if receipt.status == 'accepted' %}
                                                     تایید شده
                                                     <i class="fa fa-check-circle font-size-10 text-success"></i>
