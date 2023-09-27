@@ -24,8 +24,29 @@
                         <div class="white_card_body">
                             <div class="card-body">
                                 <div class="text-right mb-3">
-                                    <a href="{% url 'account:user_financial_add' %}" class="btn btn-outline-success font-70">افزودن
+                                    <a href="{% url 'account:user_financial_add' %}"
+                                       class="btn btn-outline-success font-70">افزودن
                                         مدیر مالی</a>
+                                </div>
+                                <div class="mt-4 mb-5">
+                                    <form action="{% url 'account:user_financial_list' %}">
+                                        <div class="cnt-search col-11 col-md-8">
+                                            <input type="text" name="search"
+                                                   placeholder="نام کاربر ، شماره همراه ، ایمیل و.."
+                                                   value="{{ request.GET.search }}">
+                                            <div>
+                                                {% if request.GET.search %}
+                                                    <a class="text-danger font-80" style="margin-left: 8px;"
+                                                       href="{% url 'account:user_financial_list' %}">
+                                                        <i class="fa fa-times"></i>
+                                                    </a>
+                                                {% endif %}
+                                                <button>
+                                                    <i class="fa fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                                 <div class="list-row">
                                     <div class="title-list-row">

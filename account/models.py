@@ -29,6 +29,7 @@ class CustomBaseUserManager(BaseUserManager):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
         extra_fields.setdefault("is_active", True)
+        extra_fields['is_phonenumber_confirmed'] = True
 
         if extra_fields.get("is_staff") is not True:
             raise ValueError("Superuser must have is_staff=True.")
@@ -67,6 +68,7 @@ class User(AbstractUser):
     username = None
     email = models.EmailField("email address", null=True, blank=True, unique=True)
     phonenumber = PhoneNumberField(region='IR', unique=True)
+    is_phonenumber_confirmed = models.BooleanField(default=False)
     # type users|roles
     role = models.CharField(max_length=20, choices=ROLE_USER_OPTIONS, default='normal_user')
 

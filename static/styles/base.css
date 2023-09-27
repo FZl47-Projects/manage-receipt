@@ -465,6 +465,13 @@ body {
     color: #f24444;
 }
 
+pre{
+    font-size: 110%!important;
+    color: #343b46!important;
+    white-space: normal;
+    font-family: "Vazirmatn RD FD"!important;
+    line-height: 34px;
+}
 
 
 @media screen and (max-width: 992px) {

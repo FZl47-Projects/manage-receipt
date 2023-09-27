@@ -1,0 +1,230 @@
+{% extends 'base/base_template.html' %}
+{% load static %}
+
+{% block Title %}
+    تایید شماره همراه
+{% endblock %}
+
+{% block Link %}
+    <link rel="stylesheet" href="{% static 'styles/form.css' %}">
+{% endblock %}
+
+{% block Style %}
+
+    <style>
+
+        .container {
+            font-size: 120%;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #eee;
+            column-gap: 30px;
+        }
+
+        .form {
+            position: absolute;
+            max-width: 480px;
+            width: 95%;
+            margin: auto;
+            padding: 30px;
+            border-radius: 6px;
+            background: #FFF;
+            box-shadow: 0 4px 15px #ddd
+        }
+
+        header {
+            font-family: "KalamehBlack";
+            font-size: 39px;
+            font-weight: 600;
+            color: #232836;
+            text-align: center;
+        }
+
+        .form-link {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .form-link a {
+            margin: 6px;
+            font-size: 80%;
+        }
+
+        .field {
+            height: auto !important;
+        }
+
+        .field input,
+        .field button {
+            height: 50px;
+            width: 100%;
+            border: none;
+            font-size: 16px;
+            font-weight: 400;
+            border-radius: 6px;
+        }
+
+        .field input {
+            text-align: right;
+            outline: none;
+            padding: 0 15px;
+            border: 1px solid #CACACA;
+        }
+
+        .field button {
+            margin-top: 3px;
+        }
+
+
+    </style>
+
+{% endblock %}
+
+{% block Content %}
+    <section class="container forms">
+        <div class="form form-effect" id="send-code">
+            <div class="form-content">
+                <header>تایید شماره همراه</header>
+                <form action="{% url 'account:confirm_phonenumber' %}">
+                    <!-- send with ajax -->
+                    <div class="field input-field">
+                        <label>
+                            شماره همراه
+                        </label>
+                        <input type="tel" placeholder="شماره همراه" class="input" value="{{ user.get_raw_phonenumber }}"
+                               disabled>
+                    </div>
+
+                    <div class="field button-field">
+                        <button type="button">ارسال کد</button>
+                    </div>
+                </form>
+
+                <div class="form-link">
+                    <a href="{% url 'account:login_register' %}">ثبت نام</a>
+                    <a href="{% url 'public:home' %}">خانه</a>
+                </div>
+            </div>
+        </div>
+        <div class="form d-none" id="check-code">
+            <div class="form-content">
+                <header>تایید شماره همراه</header>
+                <form action="{% url 'account:confirm_phonenumber_check_code' %}"
+                      dashboard-url="{% url 'account:dashboard' %}">
+                    <!-- send with ajax -->
+                    <label>
+                        لطفا کد ارسال شده را وارد نمایید
+                    </label>
+                    <div class="field input-field">
+                        <input type="text" placeholder="کد" class="input" name="code">
+                    </div>
+
+                    <div class="field button-field">
+                        <button type="button">بررسی کد</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block Script %}
+    <script>
+        let code_is_sent = '{{ code_is_sent }}'
+        let cnt_send = document.querySelector('#send-code')
+        let cnt_check = document.querySelector('#check-code')
+
+        let btn_send_code = cnt_send.querySelector('button')
+        let btn_check_code = cnt_check.querySelector('button')
+
+        let url_send_code = document.querySelector('#send-code form').getAttribute('action')
+        let url_check_code = document.querySelector('#check-code form').getAttribute('action')
+        if (code_is_sent === 'True') {
+            activeCntForm(cnt_check)
+        }
+        btn_send_code.addEventListener('click', function () {
+            createLoading(cnt_send)
+            sendAjax({
+                url: url_send_code,
+                success: function (response) {
+                    activeCntForm(cnt_check)
+                    removeLoading(cnt_send)
+                    createNotify({
+                        title: 'موفق',
+                        message: 'کد تایید ارسال شد',
+                        theme: 'success'
+                    })
+                },
+                error: function (response) {
+                    removeLoading(cnt_send)
+                    let status = response.status
+                    if (status == 409) {
+                        createNotify({
+                            title: 'ارور',
+                            message: 'کد تایید برای شما ارسال شده است',
+                            theme: 'error'
+                        })
+                        activeCntForm(cnt_check)
+                    }
+                }
+            })
+        })
+
+
+        btn_check_code.addEventListener('click', function () {
+            createLoading(cnt_check)
+            let code = document.querySelector('#check-code input[name="code"]').value
+            sendAjax({
+                url: url_check_code,
+                data: {
+                    'code': code
+                },
+                success: function (response) {
+                    // redirect to dashboard
+                    let dashboard_url = cnt_check.querySelector('form').getAttribute('dashboard-url')
+                    redirect(dashboard_url)
+                    removeLoading(cnt_check)
+                },
+                error: function (response) {
+                    removeLoading(cnt_check)
+                    let status = response.status
+                    if (status == 400) {
+                        createNotify({
+                            title: 'ارور',
+                            message: 'لطفا فیلد هارا به درستی پرنمایید',
+                            theme: 'error'
+                        })
+                    } else if (status == 410) {
+                        createNotify({
+                            title: 'ارور',
+                            message: 'کد منقضی شده است',
+                            theme: 'error'
+                        })
+                        activeCntForm(cnt_send)
+                    } else if (status == 409) {
+                        createNotify({
+                            title: 'ارور',
+                            message: 'کد وارد شده نامعتبر است',
+                            theme: 'error'
+                        })
+                    }
+                }
+            })
+        })
+
+        function activeCntForm(cnt) {
+            hideAllCntForm()
+            cnt.classList.remove('d-none')
+        }
+
+        function hideAllCntForm() {
+            cnt_send.classList.add('d-none')
+            cnt_check.classList.add('d-none')
+        }
+
+
+    </script>
+{% endblock %}

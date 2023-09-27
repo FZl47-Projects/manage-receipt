@@ -101,6 +101,9 @@ class ReceiptAbstract(BaseModel):
         abstract = True
         ordering = '-id',
 
+    def get_deposit_datetime(self):
+        return self.deposit_datetime.strftime('%Y-%m-%d %H:%M:%S')
+
 
 class Receipt(ReceiptAbstract):
 
@@ -113,7 +116,7 @@ class Receipt(ReceiptAbstract):
             amount = self.amount
             time_now = utils.get_time(None)
             amount_million = amount / 1_000_000
-            days = (time_now - self.submited_at).days or 1
+            days = (time_now - self.deposit_datetime).days or 1
             score = int(days * amount_million) or 1
         except ZeroDivisionError:
             pass

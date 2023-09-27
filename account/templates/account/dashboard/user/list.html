@@ -27,6 +27,25 @@
                                     <a href="{% url 'account:user_add' %}" class="btn btn-outline-success font-70">افزودن
                                         کاربر</a>
                                 </div>
+                                <div class="mt-4 mb-5">
+                                    <form action="{% url 'account:user_list' %}">
+                                        <div class="cnt-search col-11 col-md-8">
+                                            <input type="text" name="search"
+                                                   placeholder="نام کاربر ، شماره همراه ، ایمیل و.." value="{{ request.GET.search }}">
+                                            <div>
+                                                {% if request.GET.search %}
+                                                    <a class="text-danger font-80" style="margin-left: 8px;"
+                                                       href="{% url 'account:user_list' %}">
+                                                        <i class="fa fa-times"></i>
+                                                    </a>
+                                                {% endif %}
+                                                <button>
+                                                    <i class="fa fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
                                 <div class="list-row">
                                     <div class="title-list-row">
                                         <div class="col-3">
@@ -58,7 +77,7 @@
                                             <div class="col-3 font-80">
                                                 {{ user.email|truncatechars:15|default:'-' }}
                                             </div>
-                                             <div class="col-2 font-80">
+                                            <div class="col-2 font-80">
                                                 {{ user.get_scores }}
                                             </div>
                                             <div class="col-1 font-70 datetime-convert">

@@ -28,7 +28,6 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-
 ALLOWED_HOSTS = ['*']
 HOST_ADDRESS = 'http://127.0.0.1:8000'
 
@@ -182,7 +181,14 @@ IMAGE_FORMATS = [
 Q_CLUSTER = {
     'name': 'django-q',
     'timeout': 60,
-    'orm': 'default',
+    'redis': {
+        'host': 'localhost',
+        'port': 6379,
+        'db': 0,
+        'socket_timeout': None,
+        'charset': 'utf-8',
+        'errors': 'strict',
+    }
 }
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
@@ -193,9 +199,15 @@ REDIS_CONFIG = {
 }
 
 RESET_PASSWORD_CONFIG = {
-    'TIMEOUT': 60,  # by sec
+    'TIMEOUT': 300,  # by sec
     'CODE_LENGTH': 6,
     'STORE_BY': 'reset_password_phonenumber_{}'
+}
+
+CONFIRM_PHONENUMBER_CONFIG = {
+    'TIMEOUT': 300,  # by sec
+    'CODE_LENGTH': 6,
+    'STORE_BY': 'confirm_phonenumber_{}'
 }
 
 SMS_CONFIG = {

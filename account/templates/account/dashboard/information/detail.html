@@ -34,7 +34,8 @@
                                             </label>
                                             <input type="text" name="first_name" class="form-control"
                                                    id="inputNameUserRegister"
-                                                   placeholder="نام" minlength="2" maxlength="50" value="{{ user.first_name }}">
+                                                   placeholder="نام" minlength="2" maxlength="50"
+                                                   value="{{ user.first_name }}">
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label" for="inputLastNameUserRegister">نام
@@ -51,7 +52,8 @@
                                             </label>
                                             <input type="tel" name="phonenumber" class="form-control"
                                                    id="inputPhonenumberUserRegister"
-                                                   placeholder="شماره همراه" required minlength="11" maxlength="14" value="{{ user.get_raw_phonenumber }}" disabled autocomplete="off">
+                                                   placeholder="شماره همراه" required minlength="11" maxlength="14"
+                                                   value="{{ user.get_raw_phonenumber }}" disabled autocomplete="off">
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label" for="inputEmailUserRegister">
@@ -60,7 +62,26 @@
                                             </label>
                                             <input type="email" name="email" class="form-control"
                                                    id="inputEmailUserRegister" required placeholder="ایمیل"
-                                                   minlength="3" maxlength="64" value="{{ user.get_email }}" autocomplete="off">
+                                                   minlength="3" maxlength="64" value="{{ user.get_email }}"
+                                                   autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="">
+                                                وضعیت حساب کاربری
+                                            </label>
+                                            <input type="text" class="form-control" required
+                                                   value="{% if user.is_active %}فعال{% else %}غیر فعال{% endif %}"
+                                                   autocomplete="off" disabled>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="">
+                                                وضعیت شماره همراه
+                                            </label>
+                                            <input type="text" class="form-control" required
+                                                   value="{% if user.is_phonenumber_confirmed %}تایید شده{% else %}تایید نشده{% endif %}"
+                                                   autocomplete="off" disabled>
                                         </div>
                                     </div>
                                     <div class="field field-button text-left">

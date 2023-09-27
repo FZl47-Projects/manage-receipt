@@ -87,7 +87,7 @@ class ResetPasswordSetForm(forms.Form):
         p1 = self.cleaned_data.get('password')
         p2 = self.cleaned_data.get('password2')
         if p1 != p2:
-            raise forms.ValidationError('passwords is not same')
+            raise forms.ValidationError('رمز های عبور وارد شده با یکدیگر مغایرت دارند')
         return p2
 
 
@@ -95,4 +95,17 @@ class UserUpdateByAdmin(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('is_active',)
+        fields = ('is_active','is_phonenumber_confirmed')
+
+
+class UpdateUserPassword(forms.Form):
+    current_password = forms.CharField(max_length=64, min_length=8, required=True, widget=forms.PasswordInput())
+    new_password = forms.CharField(max_length=64, min_length=8, required=True, widget=forms.PasswordInput())
+    new_password2 = forms.CharField(max_length=64, min_length=8, required=True, widget=forms.PasswordInput())
+
+    def clean_new_password2(self):
+        p1 = self.cleaned_data.get('new_password')
+        p2 = self.cleaned_data.get('new_password2')
+        if p1 != p2:
+            raise forms.ValidationError('رمز های عبور وارد شده با یکدیگر مغایرت دارند')
+        return p2

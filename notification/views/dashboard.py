@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import render, redirect, get_object_or_404, Http404
 from django.views.generic import View
 from django.core.paginator import Paginator
-from django.contrib.auth.mixins import LoginRequiredMixin
+from core.auth.mixins import LoginRequiredMixinCustom
 from core.auth.decorators import admin_required_cbv
 from core.utils import form_validate_err
 from notification.forms import NotificationForm, NotificationUserForm
@@ -86,7 +86,7 @@ class NotificationUserList(View):
         return render(request, self.template_name, context)
 
 
-class NotificationUserPersonalList(LoginRequiredMixin, View):
+class NotificationUserPersonalList(LoginRequiredMixinCustom, View):
     template_name = 'notification/dashboard/personal-list.html'
 
     def get(self, request):
@@ -102,7 +102,7 @@ class NotificationUserPersonalList(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
 
-class NotificationDetail(LoginRequiredMixin, View):
+class NotificationDetail(LoginRequiredMixinCustom, View):
     template_name = 'notification/dashboard/detail.html'
 
     def get(self, request, notification_id):

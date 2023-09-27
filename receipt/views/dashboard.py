@@ -7,7 +7,7 @@ from django.conf import settings
 from django.core.paginator import Paginator
 from django.db.models import Q, Value, Case, When, Sum
 from django.db.models.functions import Concat
-from django.contrib.auth.mixins import LoginRequiredMixin
+from core.auth.mixins import LoginRequiredMixinCustom
 from core.auth.decorators import admin_required_cbv
 from core.utils import form_validate_err
 from receipt import forms, models
@@ -31,7 +31,7 @@ class BuildingAdd(View):
         return redirect('receipt:building_dashboard_add')
 
 
-class BuildingList(LoginRequiredMixin, View):
+class BuildingList(LoginRequiredMixinCustom, View):
     template_name = 'receipt/dashboard/building/list.html'
 
     def get(self, request):
@@ -94,7 +94,7 @@ class BuildingDetailDelete(View):
         return redirect('receipt:building_dashboard_list')
 
 
-class ReceiptAdd(LoginRequiredMixin, View):
+class ReceiptAdd(LoginRequiredMixinCustom, View):
     template_name = 'receipt/dashboard/receipt/add.html'
 
     def get_form_data(self, request):
@@ -134,7 +134,7 @@ class ReceiptAdd(LoginRequiredMixin, View):
         return redirect('receipt:receipt_dashboard_add')
 
 
-class ReceiptList(LoginRequiredMixin, View):
+class ReceiptList(LoginRequiredMixinCustom, View):
 
     def sort(self, request, objects):
         sort_by = request.GET.get('sort_by', 'latest')
@@ -253,7 +253,7 @@ class ReceiptTaskList(View):
         return render(request, 'receipt/dashboard/receipt/task/list.html', context)
 
 
-class ReceiptDetail(LoginRequiredMixin, View):
+class ReceiptDetail(LoginRequiredMixinCustom, View):
 
     def get(self, request, receipt_id):
         user = request.user

@@ -187,15 +187,27 @@
                                                     <div class="quick_activity_wrap"
                                                          style="grid-template-columns: repeat(2,1fr)">
                                                         <div class="single_quick_activity">
-                                                            <div class="count_content">
-                                                                <span class="mb-2 d-block text-mute">تعداد رسید ها</span>
-                                                                <h3>
-                                                                    <span class="font-s-25 price-el">{{ user_detail.get_receipts.count }}</span>
-                                                                </h3>
-                                                            </div>
-                                                            <a href="#" class="notification_btn bg-success">
-                                                                <i class="fa fa-file-alt font-s-20 text-white"></i>
-                                                            </a>
+                                                            {% if user_detail.is_phonenumber_confirmed %}
+                                                                <div class="count_content">
+                                                                    <span class="mb-2 d-block text-mute">وضعیت شماره همراه</span>
+                                                                    <h3>
+                                                                        <span class="font-s-30 text-success">تایید شده</span>
+                                                                    </h3>
+                                                                </div>
+                                                                <a href="#" class="notification_btn bg-green">
+                                                                    <i class="fa fa-check font-s-20 text-white"></i>
+                                                                </a>
+                                                            {% else %}
+                                                                <div class="count_content">
+                                                                    <span class="mb-2 d-block text-mute">وضعیت شماره همراه</span>
+                                                                    <h3>
+                                                                        <span class="font-s-30 text-danger">تایید نشده</span>
+                                                                    </h3>
+                                                                </div>
+                                                                <a href="#" class="notification_btn bg-danger">
+                                                                    <i class="fa fa-times font-s-20 text-white"></i>
+                                                                </a>
+                                                            {% endif %}
                                                         </div>
                                                         <div class="single_quick_activity">
                                                             {% if user_detail.is_active %}
@@ -226,14 +238,13 @@
                                                          style="grid-template-columns: repeat(2,1fr)">
                                                         <div class="single_quick_activity">
                                                             <div class="count_content">
-                                                                <span class="mb-2 d-block text-mute">مبلغ پرداخت شده کل</span>
+                                                                <span class="mb-2 d-block text-mute">تعداد رسید ها</span>
                                                                 <h3>
-                                                                    <span class="font-s-30 price-el">{{ user_detail.get_payments }}</span>
-                                                                    <span>تومان</span>
+                                                                    <span class="font-s-25 price-el">{{ user_detail.get_receipts.count }}</span>
                                                                 </h3>
                                                             </div>
-                                                            <a href="#" class="notification_btn bg-pink">
-                                                                <i class="fa fa-dollar-sign font-s-20 text-white"></i>
+                                                            <a href="#" class="notification_btn bg-success">
+                                                                <i class="fa fa-file-alt font-s-20 text-white"></i>
                                                             </a>
                                                         </div>
                                                         <div class="single_quick_activity">
@@ -245,6 +256,22 @@
                                                             </div>
                                                             <a href="#" class="notification_btn bg-warning">
                                                                 <i class="fa fa-star font-s-20 text-white"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+                                                     <div class="quick_activity_wrap"
+                                                         style="grid-template-columns: repeat(1,1fr)">
+                                                        <div class="single_quick_activity">
+                                                            <div class="count_content">
+                                                                <span class="mb-2 d-block text-mute">مبلغ پرداخت شده کل</span>
+                                                                <h3>
+                                                                    <span class="font-s-30 price-el">{{ user_detail.get_payments }}</span>
+                                                                    <span>تومان</span>
+                                                                </h3>
+                                                            </div>
+                                                            <a href="#" class="notification_btn bg-pink">
+                                                                <i class="fa fa-dollar-sign font-s-20 text-white"></i>
                                                             </a>
                                                         </div>
                                                     </div>
@@ -459,6 +486,18 @@
                                     <option value="true" {% if user_detail.is_active %}selected{% endif %}>فعال</option>
                                     <option value="false" {% if user_detail.is_active == False %}selected{% endif %}>غیر
                                         فعال
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label">
+                                    وضعیت تایید شماره همراه
+                                    <span class="field-required">*</span>
+                                </label>
+                                <select name="is_phonenumber_confirmed" class="form-control" required>
+                                    <option value="true" {% if user_detail.is_phonenumber_confirmed %}selected{% endif %}>تایید شده</option>
+                                    <option value="false" {% if user_detail.is_phonenumber_confirmed == False %}selected{% endif %}>
+                                        تایید نشده
                                     </option>
                                 </select>
                             </div>

@@ -10,38 +10,46 @@ from django.views.generic import View
 from django.core import serializers
 from django.core.paginator import Paginator
 from django.contrib.auth.mixins import LoginRequiredMixin
+from core.auth.mixins import LoginRequiredMixinCustom
 from django.contrib.auth import authenticate, login, get_user_model, logout as logout_handler
 from core.utils import add_prefix_phonenum, random_num, form_validate_err
 from core.auth.decorators import admin_required_cbv
 from core.redis_py import set_value_expire, remove_key, get_value
 from receipt.models import Building, Receipt, ReceiptTask
-
 from notification.models import NotificationUser
 from account import forms
 
 User = get_user_model()
 RESET_PASSWORD_CONFIG = settings.RESET_PASSWORD_CONFIG
+CONFIRM_PHONENUMBER_CONFIG = settings.CONFIRM_PHONENUMBER_CONFIG
 
 
 def login_register(request):
     def login_perform(data):
         phonenumber = data.get('phonenumber', None)
         password = data.get('password', None)
-        if phonenumber and password:
-            phonenumber = add_prefix_phonenum(phonenumber)
-            user = authenticate(request, username=phonenumber, password=password)
-            if user is None:
-                messages.error(request, 'کاربری با این مشخصات یافت نشد')
-                return redirect('account:login_register')
-            if user.is_active is False:
-                messages.error(request, 'حساب شما غیر فعال میباشد')
-                return redirect('account:login_register')
-            login(request, user)
-            messages.success(request, 'خوش امدید')
-            return redirect('account:dashboard')
-        else:
+        if not (phonenumber or password):
             messages.error(request, 'لطفا فیلد هارا به درستی وارد نمایید')
-        return redirect('account:login_register')
+            return redirect('account:login_register')
+        phonenumber = add_prefix_phonenum(phonenumber)
+        user = authenticate(request, username=phonenumber, password=password)
+        if user is None:
+            messages.error(request, 'کاربری با این مشخصات یافت نشد یا حساب غیر فعال میباشد')
+            return redirect('account:login_register')
+        if user.is_active is False:
+            messages.error(request, 'حساب شما غیر فعال میباشد')
+            return redirect('account:login_register')
+        login(request, user)
+        messages.success(request, 'خوش امدید')
+        # redirect to url or dashboard
+        next_url = request.GET.get('next')
+        try:
+            # maybe next url not valid
+            if next_url:
+                return redirect(next_url)
+        except:
+            pass
+        return redirect('account:dashboard')
 
     def register_perform(data):
         f = forms.RegisterUserForm(data=data)
@@ -72,8 +80,8 @@ def login_register(request):
         user.save()
         # login
         # login(request, user)
-        messages.success(request, 'حساب شما با موفقیت ایجاد شد پس از بررسی حساب شما فعال میشود')
-        return redirect('public:home')
+        messages.success(request, 'حساب شما با موفقیت ایجاد شد پس از تایید شماره همراه خود و بررسی حساب شما فعال میشود')
+        return redirect('account:confirm_phonenumber')
 
     if request.method == 'GET':
         return render(request, 'account/login-register.html')
@@ -195,7 +203,7 @@ def reset_password_set(request):
     return JsonResponse({})
 
 
-class Dashboard(LoginRequiredMixin, View):
+class Dashboard(LoginRequiredMixinCustom, View):
 
     def get_context(self, request):
         # get context by role user
@@ -255,10 +263,87 @@ class Dashboard(LoginRequiredMixin, View):
         return render(request, self.get_template(request), context)
 
 
-class DashboardInfoDetail(LoginRequiredMixin, View):
+class ConfirmPhonenumber(LoginRequiredMixin, View):
+    template_name = 'account/confirm-phonenumber.html'
+
+    def get(self, request):
+        user = request.user
+        if user.is_phonenumber_confirmed:
+            return redirect('account:dashboard')
+        key = CONFIRM_PHONENUMBER_CONFIG['STORE_BY'].format(user.get_raw_phonenumber())
+        context = {
+            'code_is_sent': bool(get_value(key))
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        # AJAX view
+        user = request.user
+        code = random_num(CONFIRM_PHONENUMBER_CONFIG['CODE_LENGTH'])
+        key = CONFIRM_PHONENUMBER_CONFIG['STORE_BY'].format(user.get_raw_phonenumber())
+        # check code state set
+        if get_value(key) is not None:
+            # code is already set
+            return HttpResponse(status=409)
+        # set code
+        set_value_expire(key, code, CONFIRM_PHONENUMBER_CONFIG['TIMEOUT'])
+        # send code
+        NotificationUser.objects.create(
+            type='CONFIRM_PHONENUMBER_CODE_SENT',
+            kwargs={
+                'code': code
+            },
+            to_user=user,
+            title='کد تایید شماره همراه',
+            description=f""" کد تایید شماره همراه : {code}""",
+            send_notify=True
+        )
+        return JsonResponse({})
+
+
+class ConfirmPhonenumberCheckCode(LoginRequiredMixin, View):
+
+    def post(self, request):
+        # AJAX view
+        data = json.loads(request.body)
+        code = data.get('code', None)
+        # validate data
+        if not code:
+            return HttpResponseBadRequest()
+        user = request.user
+        key = CONFIRM_PHONENUMBER_CONFIG['STORE_BY'].format(user.get_raw_phonenumber())
+        # check code
+        code_stored = get_value(key)
+        if code_stored is None:
+            # code is not seted or timeout
+            return HttpResponse(status=410)
+        if code_stored != code:
+            # code is wrong(not same)
+            return HttpResponse(status=409)
+        # confirm phonenumber
+        user.is_phonenumber_confirmed = True
+        user.save()
+        NotificationUser.objects.create(
+            type='PHONENUMBER_CONFIRMED',
+            to_user=user,
+            title='شماره همراه تایید شد',
+            description=f"شماره همراه کاربر با موفقیت تایید شد",
+            send_notify=True
+        )
+        messages.success(request, 'شماره همراه شما تایید شد')
+        return JsonResponse({})
+
+
+class DashboardInfoDetail(LoginRequiredMixinCustom, View):
 
     def get(self, request):
         return render(request, 'account/dashboard/information/detail.html')
+
+
+class DashboardInfoChangePassword(LoginRequiredMixinCustom, View):
+
+    def get(self, request):
+        return render(request, 'account/dashboard/information/change-password.html')
 
 
 class UserAdd(View):
@@ -291,10 +376,10 @@ class UserAdd(View):
             is_showing=False
         )
         messages.success(request, 'حساب کاربر با موفقیت ایجاد شد')
-        return redirect('account:user_add')
+        return redirect(user.get_absolute_url())
 
 
-class UserDetail(LoginRequiredMixin, View):
+class UserDetail(LoginRequiredMixinCustom, View):
 
     def get_template(self, user_obj):
         if user_obj.is_common_admin:
@@ -320,7 +405,7 @@ class UserDetail(LoginRequiredMixin, View):
         return render(request, self.get_template(user), context)
 
 
-class UserDetailDelete(LoginRequiredMixin, View):
+class UserDetailDelete(LoginRequiredMixinCustom, View):
 
     @admin_required_cbv(['super_user'])
     def post(self, request, user_id):
@@ -330,7 +415,7 @@ class UserDetailDelete(LoginRequiredMixin, View):
         return redirect('account:user_list')
 
 
-class UserUpdate(LoginRequiredMixin, View):
+class UserUpdate(LoginRequiredMixinCustom, View):
 
     def post(self, request):
         user = request.user
@@ -339,16 +424,44 @@ class UserUpdate(LoginRequiredMixin, View):
         if form_validate_err(request, f) is False:
             return redirect('account:info_detail')
         f.save()
-        messages.success(request, 'مشخصات شما با موفقیت اپدیت شد')
+        messages.success(request, 'مشخصات شما با موفقیت بروزرسانی شد')
         return redirect('account:info_detail')
+
+
+class UserUpdatePassword(LoginRequiredMixinCustom, View):
+
+    def post(self, request):
+        user = request.user
+        data = request.POST
+        f = forms.UpdateUserPassword(data=data)
+        if form_validate_err(request, f) is False:
+            return redirect('account:info_change_password')
+        data = f.cleaned_data
+        if not user.check_password(data['current_password']):
+            messages.error(request, 'رمز عبور فعلی نادرست است')
+            return redirect('account:info_change_password')
+        user.set_password(data['new_password'])
+        user.save()
+        messages.success(request, 'رمز عبور شما با موفقیت بروزرسانی شد')
+        return redirect('account:login_register')
 
 
 class UserList(View):
     template_name = 'account/dashboard/user/list.html'
 
+    def search(self, request, objects):
+        s = request.GET.get('search')
+        if not s:
+            return objects
+        objects = objects.annotate(full_name=Concat('first_name', Value(' '), 'last_name'))
+        lookup = Q(phonenumber__icontains=s) | Q(full_name__icontains=s) | Q(
+            email__icontains=s)
+        return objects.filter(lookup)
+
     @admin_required_cbv()
     def get(self, request):
         users = User.normal_user.all()
+        users = self.search(request, users)
         page_num = request.GET.get('page', 1)
         pagination = Paginator(users, 20)
         pagination = pagination.get_page(page_num)
@@ -379,12 +492,13 @@ class UserListComponentPartial(View):
     @admin_required_cbv()
     def post(self, request):
         data = json.loads(request.body)
+
         def search(self, objects):
             s = data.get('search')
             if not s:
                 return objects
             objects = objects.annotate(full_name=Concat('first_name', Value(' '), 'last_name'))
-            lookup = Q(phonenumber=s) | Q(full_name__icontains=s) | Q(
+            lookup = Q(phonenumber__icontains=s) | Q(full_name__icontains=s) | Q(
                 email__icontains=s)
             return objects.filter(lookup)
 
@@ -432,9 +546,19 @@ class UserFinancialAdd(View):
 class UserFinancialList(View):
     template_name = 'account/dashboard/admin/list.html'
 
+    def search(self, request, objects):
+        s = request.GET.get('search')
+        if not s:
+            return objects
+        objects = objects.annotate(full_name=Concat('first_name', Value(' '), 'last_name'))
+        lookup = Q(phonenumber__icontains=s) | Q(full_name__icontains=s) | Q(
+            email__icontains=s)
+        return objects.filter(lookup)
+
     @admin_required_cbv()
     def get(self, request):
         users = User.financial_user.all()
+        users = self.search(request, users)
         page_num = request.GET.get('page', 1)
         pagination = Paginator(users, 20)
         pagination = pagination.get_page(page_num)

@@ -167,7 +167,7 @@
         <div class="form form-effect login">
             <div class="form-content">
                 <header>ورود</header>
-                <form action="{% url 'account:login_register' %}" method="post">
+                <form action="{% url 'account:login_register' %}?next={{ request.GET.next }}" method="post">
                     {% csrf_token %}
                     <input type="hidden" name="type-page" value="login">
                     <div class="field input-field">
@@ -239,15 +239,6 @@
 {% endblock %}
 
 {% block Script %}
-    <script>
-        {% for message in messages %}
-            createNotify({
-                title: '{{ message.tags }}',
-                message: '{{ message }}',
-                theme: '{{ message.tags }}'
-            })
-        {% endfor %}
-    </script>
     <script>
         const forms = document.querySelector(".forms"),
             pwShowHide = document.querySelectorAll(".eye-icon"),

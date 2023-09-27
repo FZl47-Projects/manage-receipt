@@ -60,8 +60,21 @@ class NotificationUser:
 
     @classmethod
     def handler_user_account_activated(cls, notification, phonenumber):
-        # TODO: should be completed
-        pattern = '...'
+        pattern = 'i7mk35cir1agm6m'
+        send_sms(phonenumber, pattern, {
+            'user_name': notification.to_user.get_full_name()
+        })
+
+    @classmethod
+    def handler_confirm_phonenumber_code_sent(cls, notification, phonenumber):
+        pattern = '9mld0scmid2i2wl'
+        send_sms(phonenumber, pattern, {
+            'code': notification.kwargs['code']
+        })
+
+    @classmethod
+    def handler_phonenumber_confirmed(cls, notification, phonenumber):
+        pattern = 'to1j8k209iigm7f'
         send_sms(phonenumber, pattern, {
             'user_name': notification.to_user.get_full_name()
         })
@@ -87,5 +100,7 @@ NOTIFICATION_USER_HANDLERS = {
     'RECEIPT_REJECTED': NotificationUser.handler_receipt_rejected,
     'PASSWORD_CHANGED_SUCCESSFULLY': NotificationUser.handler_password_changed_successfully,
     'RESET_PASSWORD_CODE_SENT': NotificationUser.handler_reset_password_code_sent,
-    'USER_ACCOUNT_ACTIVATED': NotificationUser.handler_user_account_activated
+    'USER_ACCOUNT_ACTIVATED': NotificationUser.handler_user_account_activated,
+    'CONFIRM_PHONENUMBER_CODE_SENT':NotificationUser.handler_confirm_phonenumber_code_sent,
+    'PHONENUMBER_CONFIRMED':NotificationUser.handler_phonenumber_confirmed,
 }
