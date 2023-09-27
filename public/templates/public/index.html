@@ -107,19 +107,17 @@
                                         </li>
                                         <li class="nav-item"><a class="nav-link" href="#notifications">اعلانات</a>
                                         </li>
-                                        <li class="nav-item"><a class="nav-link" href="#">درباره ما</a>
+                                        <li class="nav-item"><a class="nav-link" href="#about-us">درباره ما</a>
                                         </li>
                                         <li class="nav-item"><a class="nav-link" href="#">وبلاگ</a>
                                         </li>
-                                        <li class="nav-item"><a class="nav-link" href="#">تماس با ما</a>
+                                        <li class="nav-item"><a class="nav-link" href="#contact-us">تماس با ما</a>
                                         </li>
                                     </ul>
                                 </div>
-                                <a class="navbar-brand logo" href="index.html">
+                                <a class="navbar-brand logo" href="{% url 'public:home' %}">
                                     <img id="logo-img" class="img-center" src="{% static 'images/logo.png' %}" alt="">
                                 </a>
-
-
                             </nav>
                         </div>
                     </div>
@@ -146,17 +144,37 @@
                                  src="{% static 'public/images/banner/01.jpg' %}"
                                  alt="">
                         </div>
-                        <div class="col-lg-5 col-md-12 order-lg-1 md-mt-5">
-                            <h1 class="mb-4 wow fadeInUp" data-wow-duration="1.5s">شرکت ساختمانی</h1>
+                        <div class="col-lg-5 col-md-12 order-lg-1 md-mt-5" id="about-us">
+                            <h1 class="mb-4 wow fadeInUp" data-wow-duration="1.5s">شرکت گواشیر سازه فرهیختگان مشرق زمین</h1>
                             <p class="lead mb-4 wow fadeInUp" data-wow-duration="2s" data-wow-delay="0.3s">لورم ایپسوم
                                 متن
                                 ساختگی با تولید سادگی نامفهوم از صنعت چاپ با استفاده از طراحان گرافیک است چاپگر ها و
                                 متون
                                 بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
-                            <a class="btn btn-theme wow fadeInUp" data-wow-duration="3s" data-wow-delay="0.5s" href="#"
-                               data-text="شروع امروز"> <span>ش</span><span>ر</span><span>و</span><span>ع</span>
-                                <span> </span>
-                                <span> </span><span>ا</span><span>م</span><span>ر</span><span>و</span><span>ز</span>
+                            <a class="btn btn-theme wow fadeInUp" data-wow-duration="3s" data-wow-delay="0.5s" href="{% url 'receipt:receipt_dashboard_add' %}"
+                               data-text="ثبت رسید">
+                                <span>
+                                    ث
+                                </span>
+                                <span>
+                                    ب
+                                </span>
+                                <span>
+                                    ت
+                                </span>
+                                <span></span>
+                                <span>
+                                    ر
+                                </span>
+                                <span>
+                                    س
+                                </span>
+                                <span>
+                                    ی
+                                </span>
+                                <span>
+                                    د
+                                </span>
                             </a>
                             <a class="btn btn-dark wow fadeInUp" data-wow-duration="3s" data-wow-delay="0.5s" href="#"
                                data-text="بیشتر بدانید">
@@ -894,7 +912,7 @@
             <footer class="footer footer-1 pos-r" data-bg-img="{% static 'public/images/bg/05.png' %}">
                 <div class="subscribe-box">
                     <div class="container">
-                        <div class="row subscribe-inner align-items-center">
+                        <div class="row subscribe-inner align-items-center d-none">
                             <div class="col-md-6 col-sm-12">
                                 <h4>عضویت در خبرنامه ما</h4>
                                 <p class="lead mb-0">برای دریافت نسخه ازمایشی رایگان 1 ماهه بدون نیاز به خرید.</p>
@@ -919,72 +937,64 @@
                                     <img id="footer-logo-img" src="{% static 'images/logo.png' %}" class="img-center"
                                          alt="">
                                 </div>
-                                <p class="mb-0">
-                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چا که لا در ارائه رای اساسا
-                                    مورد استفاده قرار گیرد.
+                                <p class="mb-0" style="font-family: KalamehBlack;font-size: 140%;text-shadow: 0 3px 1px #b5cade">
+                                    <b>شرکت گواشیر سازه فرهیختگان مشرق زمین</b>
                                 </p>
                             </div>
                             <div class="col-lg-4 col-md-6 pl-md-5 sm-mt-5 footer-list justify-content-between d-flex">
                                 <ul class="list-unstyled w-100">
-                                    <li><a href="about-us.html">لورم ایپسوم ..</a>
+                                    <li><a href="{% url 'public:home' %}#notifications">اعلانات</a>
                                     </li>
-                                    <li><a href="services.html">لورم ایپسوم ..</a>
+                                    <li><a href="#about-us">درباره ما</a>
                                     </li>
-                                    <li><a href="team.html">لورم ایپسوم ..</a>
+                                    <li><a href="#contact-us">تماس با ما</a>
                                     </li>
-                                    <li><a href="team-single.html">لورم ایپسوم ..</a>
-                                    </li>
-                                    <li><a href="contact.html">لورم ایپسوم ..</a>
+                                    <li><a href="#">وبلاگ</a>
                                     </li>
                                 </ul>
                                 <ul class="list-unstyled w-100">
-                                    <li><a href="blog-right-sidebar.html">لورم ایپسوم ..</a>
+                                    <li><a href="{% url 'receipt:building_dashboard_list' %}">لیست ساختمان ها</a>
                                     </li>
-                                    <li><a href="faq.html">لورم ایپسوم ..</a>
+                                    <li><a href="{% url 'receipt:receipt_dashboard_add' %}">ثبت رسید</a>
                                     </li>
-                                    <li><a href="error-404.html">لورم ایپسوم ..</a>
+                                    <li><a href="{% url 'account:login_register' %}">ورود و ثبت نام</a>
                                     </li>
-                                    <li><a href="privacy-policy.html">لورم ایپسوم ..</a>
-                                    </li>
-                                    <li><a href="terms-and-conditions.html">لورم ایپسوم ..</a>
+                                    <li><a href="{% url 'account:dashboard' %}">داشبورد</a>
                                     </li>
                                 </ul>
                             </div>
                             <div class="col-lg-4 col-md-12 md-mt-5">
-                                <ul class="media-icon list-unstyled">
+                                <ul class="media-icon list-unstyled" id="contact-us">
                                     <li>
-                                        <p class="mb-0">آدرس: <b>کرمان خیابان فلان</b>
+                                        <p class="mb-0">آدرس: <b>دفتر مرکزی - کرمان بلوار غدیر 1 ، کوچه یاس 7 ، مقابل تیر برق سوم ، طبقه دوم</b>
                                         </p>
                                     </li>
-                                    <li>ایمیل: <a href="mailto:info@softino.com"><b>info@test.com</b></a>
+                                    <li>تلفن: <a href="tel:09132430612">
+                                        <b>
+                                            09132430612
+                                            <span class="text-muted">(الیاس حسینخانی)</span>
+                                        </b>
+                                    </a>
                                     </li>
-                                    <li>تلفن: <a href="tel_3a123456789-091"><b>123456789-091</b></a>
-                                    </li>
-                                    <li>فکس: <a href="tel_3a123456789-091"><b>123456789-091</b></a>
+                                    <li>تلفن دوم: <a href="tel:09365042802">
+                                        <b>
+                                            09365042802
+                                            <span class="text-muted">(محمد محمدی)</span>
+                                        </b></a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
+                <br>
+                <br>
                 <div class="secondary-footer">
                     <div class="container">
                         <div class="copyright">
-                            <div class="row align-items-center">
-                                <div class="col-lg-6 col-md-12"><span>کپی رایت 1402 © طراحی و توسعه توسط <u><a
-                                        href="http://fzlm.ir">Fazel Momeni</a></u> | تمامی حقوق محفوظ است.</span>
-                                </div>
-                                <div class="col-lg-6 col-md-12 text-lg-left md-mt-3">
-                                    <div class="footer-social">
-                                        <ul class="list-inline">
-                                            <li class="mr-2"><a href="#"><i class="fab fa-facebook-f"></i> فیسبوک</a>
-                                            </li>
-                                            <li class="mr-2"><a href="#"><i class="fab fa-twitter"></i> توییتر</a>
-                                            </li>
-                                            <li><a href="#"><i class="fab fa-google-plus-g"></i> گوگل پلاس</a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                            <div class="text-center">
+                                <div class="col-lg-12 col-md-12 mx-auto"><span>کپی رایت 1402 © طراحی و توسعه توسط <u><a
+                                        href="https://smartenco.ir">Smarten Team</a></u> | تمامی حقوق محفوظ است.</span>
                                 </div>
                             </div>
                         </div>
