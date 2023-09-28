@@ -5,7 +5,7 @@ class NotificationUser:
 
     @classmethod
     def handler_custom_notification(cls, notification, phonenumber):
-        pattern = 'wqdr0q1prygkpw3'
+        pattern = 'ar0prdkncw4dk9l'
         send_sms(phonenumber, pattern, {
             'notification_url': get_host_url(notification.get_link()),
             'user_name': notification.to_user.get_full_name()
@@ -13,7 +13,7 @@ class NotificationUser:
 
     @classmethod
     def handler_task_rejected(cls, notification, phonenumber):
-        pattern = 'p9ngl2gh2r27nwi'
+        pattern = 'l3mss27nedv0uie'
         send_sms(phonenumber, pattern, {
             'notification_url': get_host_url(notification.get_link()),
             'user_name': notification.to_user.get_full_name()
@@ -21,7 +21,7 @@ class NotificationUser:
 
     @classmethod
     def handler_task_accepted(cls, notification, phonenumber):
-        pattern = '9yv5dvz8o621fd0'
+        pattern = 'eogp6f640vqyl4c'
         send_sms(phonenumber, pattern, {
             'notification_url': get_host_url(notification.get_link()),
             'user_name': notification.to_user.get_full_name()
@@ -29,7 +29,7 @@ class NotificationUser:
 
     @classmethod
     def handler_receipt_accepted(cls, notification, phonenumber):
-        pattern = 'wm3zd85p5zwv9o4'
+        pattern = 'f66pu45gjbi1z8n'
         send_sms(phonenumber, pattern, {
             'notification_url': get_host_url(notification.get_link()),
             'user_name': notification.to_user.get_full_name()
@@ -37,7 +37,7 @@ class NotificationUser:
 
     @classmethod
     def handler_receipt_rejected(cls, notification, phonenumber):
-        pattern = 'wkriosvfmlipo40'
+        pattern = '2fmfs2d5dlkt0aj'
         send_sms(phonenumber, pattern, {
             'notification_url': get_host_url(notification.get_link()),
             'user_name': notification.to_user.get_full_name()
@@ -45,7 +45,7 @@ class NotificationUser:
 
     @classmethod
     def handler_password_changed_successfully(cls, notification, phonenumber):
-        pattern = 'l10y99rssw7wowy'
+        pattern = 'b2pw4o745dqs1hs'
         send_sms(phonenumber, pattern, {
             'notification_url': get_host_url(notification.get_link()),
             'user_name': notification.to_user.get_full_name()
@@ -53,28 +53,28 @@ class NotificationUser:
 
     @classmethod
     def handler_reset_password_code_sent(cls, notification, phonenumber):
-        pattern = 'x0lxvu9yywd4ub4'
+        pattern = '0pcbtnsuif87g32'
         send_sms(phonenumber, pattern, {
             'code': notification.kwargs['code']
         })
 
     @classmethod
     def handler_user_account_activated(cls, notification, phonenumber):
-        pattern = 'i7mk35cir1agm6m'
+        pattern = 'teouuo7p8oy9fd7'
         send_sms(phonenumber, pattern, {
             'user_name': notification.to_user.get_full_name()
         })
 
     @classmethod
     def handler_confirm_phonenumber_code_sent(cls, notification, phonenumber):
-        pattern = '9mld0scmid2i2wl'
+        pattern = 'hx4h9y3wpxzt5gs'
         send_sms(phonenumber, pattern, {
             'code': notification.kwargs['code']
         })
 
     @classmethod
     def handler_phonenumber_confirmed(cls, notification, phonenumber):
-        pattern = 'to1j8k209iigm7f'
+        pattern = 'sk44rthuce0y29o'
         send_sms(phonenumber, pattern, {
             'user_name': notification.to_user.get_full_name()
         })
@@ -88,7 +88,7 @@ class Notification:
             'user_name': user.get_full_name(),
             'notification_url': get_host_url(instance.get_absolute_url())
         }
-        pattern = 'wqdr0q1prygkpw3'
+        pattern = 'bctaipldk4ywqqt'
         send_sms(phonenumber, pattern, values)
 
 
