@@ -163,7 +163,7 @@ class ReceiptList(LoginRequiredMixinCustom, View):
         objects = objects.annotate(full_name=Concat('user__first_name', Value(' '), 'user__last_name'))
         amount = s if str(s).isdigit() else 0
         lookup = Q(building__name__icontains=s) | Q(amount=amount) | Q(full_name__icontains=s) | Q(
-            user__phonenumber__icontains=s) | Q(tracking_code=s)
+            user__phonenumber__icontains=s) | Q(tracking_code__icontains=s)
         return objects.filter(lookup)
 
     def get_pagination(self, request, objects):
