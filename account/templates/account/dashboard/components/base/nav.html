@@ -207,43 +207,64 @@
                 {% endif %}
             </ul>
         </li>
+        {% if user.is_admin %}
+            <li>
+                <a class="has-arrow" href="#" aria-expanded="false">
+                    <div class="icon_menu">
+                        <img src="{% static 'images/dashboard/menu-icon/2.svg.xml' %}" alt>
+                    </div>
+                    <span>پشتیبانی</span>
+                </a>
 
-        <!-- TODO: should be completed in feature  -->
-        <li class="d-none">
-            <a class="has-arrow" href="#" aria-expanded="false">
-                <div class="icon_menu">
-                    <img src="{% static 'images/dashboard/menu-icon/2.svg.xml' %}" alt>
-                </div>
-                <span>پشتیبانی</span>
-            </a>
-            <ul>
-                <li>
-                    <a href="{% url 'support:support_dashboard_ticket_add' %}">
-                        ایجاد تیکت
-                        <div>
-                            <i class="fa fa-plus m-0 font-size-7"></i>
-                            <i class="fa fa-ticket-alt m-0"></i>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'support:support_dashboard_ticket_list_new' %}">
-                        تیکت های جدید
-                        <div>
-                            <i class="fa fa-reply m-0 font-size-7"></i>
-                            <i class="fa fa-ticket-alt m-0"></i>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'support:support_dashboard_ticket_list_archive' %}">
-                        تیکت های ارشیو شده
-                        <i class="fa fa-ticket-alt"></i>
-                    </a>
-                </li>
-            </ul>
-        </li>
+                <ul>
+                    <!-- TODO: should be completed in feature  -->
+                    <li class="d-none">
+                        <a href="{% url 'support:support_dashboard_ticket_add' %}">
+                            ایجاد تیکت
+                            <div>
+                                <i class="fa fa-plus m-0 font-size-7"></i>
+                                <i class="fa fa-ticket-alt m-0"></i>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="d-none">
+                        <a href="{% url 'support:support_dashboard_ticket_list_new' %}">
+                            تیکت های جدید
+                            <div>
+                                <i class="fa fa-reply m-0 font-size-7"></i>
+                                <i class="fa fa-ticket-alt m-0"></i>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="d-none">
+                        <a href="{% url 'support:support_dashboard_ticket_list_archive' %}">
+                            تیکت های ارشیو شده
+                            <i class="fa fa-ticket-alt"></i>
+                        </a>
+                    </li>
+                    <!-- end-feature -->
 
+                    <li>
+                        <a href="{% url 'support:support_dashboard_question_add' %}">
+                            ایجاد پرسش
+                            <div>
+                                <i class="fa fa-plus m-0 font-size-7"></i>
+                                <i class="fa fa-question m-0"></i>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'support:support_dashboard_question_list' %}">
+                            لیست پرسش ها
+                            <div>
+                                <i class="fa fa-list m-0 font-size-7"></i>
+                                <i class="fa fa-question m-0"></i>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        {% endif %}
         <li>
             <a class="has-arrow" href="#" aria-expanded="false">
                 <div class="icon_menu">

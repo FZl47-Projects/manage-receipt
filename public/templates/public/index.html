@@ -92,7 +92,7 @@
                                    data-text="بارگذاری فیش">
                                     <span>ب</span><span>ا</span><span>ر</span><span>گ</span><span>ز</span><span>ا</span><span>ر</span><span>ی</span><span>ف</span><span>ی</span><span>ش</span>
                                 </a>
-                                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                <button class="navbar-toggler mr-5" type="button" data-toggle="collapse"
                                         data-target="#navbarNavDropdown" aria-expanded="false"
                                         aria-label="Toggle navigation"><span></span>
                                     <span></span>
@@ -107,9 +107,11 @@
                                         </li>
                                         <li class="nav-item"><a class="nav-link" href="#notifications">اعلانات</a>
                                         </li>
-                                        <li class="nav-item"><a class="nav-link" href="#about-us">درباره ما</a>
+                                        <li class="nav-item"><a class="nav-link" href="#questions">پرسش ها</a>
                                         </li>
                                         <li class="nav-item"><a class="nav-link" href="#">وبلاگ</a>
+                                        </li>
+                                        <li class="nav-item"><a class="nav-link" href="#about-us">درباره ما</a>
                                         </li>
                                         <li class="nav-item"><a class="nav-link" href="#contact-us">تماس با ما</a>
                                         </li>
@@ -145,13 +147,15 @@
                                  alt="">
                         </div>
                         <div class="col-lg-5 col-md-12 order-lg-1 md-mt-5" id="about-us">
-                            <h1 class="mb-4 wow fadeInUp" data-wow-duration="1.5s">شرکت گواشیر سازه فرهیختگان مشرق زمین</h1>
+                            <h1 class="mb-4 wow fadeInUp" data-wow-duration="1.5s">شرکت گواشیر سازه فرهیختگان مشرق
+                                زمین</h1>
                             <p class="lead mb-4 wow fadeInUp" data-wow-duration="2s" data-wow-delay="0.3s">لورم ایپسوم
                                 متن
                                 ساختگی با تولید سادگی نامفهوم از صنعت چاپ با استفاده از طراحان گرافیک است چاپگر ها و
                                 متون
                                 بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
-                            <a class="btn btn-theme wow fadeInUp" data-wow-duration="3s" data-wow-delay="0.5s" href="{% url 'receipt:receipt_dashboard_add' %}"
+                            <a class="btn btn-theme wow fadeInUp" data-wow-duration="3s" data-wow-delay="0.5s"
+                               href="{% url 'receipt:receipt_dashboard_add' %}"
                                data-text="ثبت رسید">
                                 <span>
                                     ث
@@ -700,75 +704,6 @@
 
             <!--step start-->
 
-            <section class="pos-r o-hidden">
-                <div class="morph-wrap">
-                    <svg class="morph" width="1400" height="770" viewBox="0 0 1400 770">
-                        <path d="M 262.9,252.2 C 210.1,338.2 212.6,487.6 288.8,553.9 372.2,626.5 511.2,517.8 620.3,536.3 750.6,558.4 860.3,723 987.3,686.5 1089,657.3 1168,534.7 1173,429.2
-
-  1178,313.7 1096,189.1 995.1,130.7 852.1,47.07 658.8,78.95 498.1,119.2 410.7,141.1 322.6,154.8 262.9,252.2 Z"></path>
-                    </svg>
-                </div>
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-lg-5 col-md-12 image-column">
-                            <img class="img-fluid" src="{% static 'public/images/about/03.png' %}" alt="">
-                        </div>
-                        <div class="col-lg-6 col-md-12 mr-auto md-mt-5">
-                            <div class="section-title">
-                                <div class="title-effect title-effect-2">
-                                    <div class="ellipse">
-
-                                    </div>
-                                    <i class="fa fa-heart"></i>
-                                </div>
-                                <h2 class="title">سه مرحله ساده برای شروع فرآیند کار</h2>
-                            </div>
-                            <div class="work-process style-2">
-                                <div class="step-num-box">
-                                    <div class="step-icon">
-            <span>
-              <i class="fa fa-heart"></i></span>
-                                    </div>
-                                    <div class="step-num">01</div>
-                                </div>
-                                <div class="step-desc">
-                                    <h4>پروژه تحقیقاتی</h4>
-                                    <p class="mb-0">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-                                        استفاده
-                                        از طراحان گرافیک است</p>
-                                </div>
-                            </div>
-                            <div class="work-process style-2 mt-5">
-                                <div class="step-num-box">
-                                    <div class="step-icon">
-                                        <span><i class="fa fa-heart"></i></span>
-                                    </div>
-                                    <div class="step-num">02</div>
-                                </div>
-                                <div class="step-desc">
-                                    <h4>هدف گذاری</h4>
-                                    <p class="mb-0">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-                                        استفاده
-                                        از طراحان گرافیک است</p></div>
-                            </div>
-                            <div class="work-process style-2 mt-5">
-                                <div class="step-num-box">
-                                    <div class="step-icon">
-                                        <span><i class="fa fa-heart"></i></span>
-                                    </div>
-                                    <div class="step-num">03</div>
-                                </div>
-                                <div class="step-desc">
-                                    <h4>نتیجه</h4>
-                                    <p class="mb-0">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-                                        استفاده
-                                        از طراحان گرافیک است</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             <!--step end-->
 
@@ -831,10 +766,11 @@
             </section>
             <!--testimonial end-->
 
-            <section class="position-relative custom-py-2">
+            <section class="position-relative custom-py-2" id="questions">
                 <div class="container mb-5">
+                    <h3 class="mb-5">پرسش ها</h3>
                     <div class="row align-items-center">
-                        <div class="col-xl-6 col-lg-6 col-md-12 image-column left p-0">
+                        <div class="col-xl-4 col-md-12 image-column left p-0">
                             <div class="img-box box-shadow radius-1" style="box-shadow: none">
                                 <div class="box-loader"><span></span>
                                     <span></span>
@@ -843,65 +779,91 @@
                                 <img class="img-center" src="{% static 'public/images/svg/01.svg' %}" alt="">
                             </div>
                         </div>
-                        <div class="col-xl-5 col-lg-6 col-md-12 ml-auto md-mt-5">
+                        <div class="col-xl-8 col-md-12 ml-auto md-mt-5">
                             <div id="accordion" class="accordion style-1">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h6 class="mb-0">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"
-                                               aria-expanded="false" class="collapsed"><span></span>لورم ایپسوم متن
-                                                ساختگی
-                                                با تولید سادگی نامفهوم</a>
-                                        </h6>
-                                    </div>
-                                    <div id="collapse1" class="collapse" data-parent="#accordion" style="">
-                                        <div class="card-body">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ
-                                            و
-                                            با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون
-                                            و
-
-                                            سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی.
+                                {% for question in questions %}
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h6 class="mb-0">
+                                                <a data-toggle="collapse" data-parent="#accordion"
+                                                   href="#collapse-{{ forloop.counter }}"
+                                                   aria-expanded="false" class="collapsed"><span></span>
+                                                    {{ question.title|truncatechars:30 }}
+                                                </a>
+                                            </h6>
+                                        </div>
+                                        <div id="collapse-{{ forloop.counter }}" class="collapse border-radius-6"
+                                             data-parent="#accordion" style="border: 1px solid #ddd">
+                                            <div class="card-body">
+                                                <div>
+                                                    <h5>جزئیات و توضیحات</h5>
+                                                    <p>{{ question.title }}</p>
+                                                    <p>{{ question.description }}</p>
+                                                    {% if question.image %}
+                                                        <div class="text-center">
+                                                            <img src="{{ question.image.url }}"
+                                                                 alt="{{ question.title }}"
+                                                                 style="width: 300px">
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                                <br>
+                                                <div>
+                                                    <h5>گزینه ها</h5>
+                                                    <form action="{% url 'support:support_dashboard_answer_submit' question_id=question.id %}"
+                                                          method="post">
+                                                        {% csrf_token %}
+                                                        <div class="p-3 d-block d-md-flex justify-content-between align-items-center cnt-options">
+                                                            <div>
+                                                                <label for="inp-option-1-{{ question.id }}">
+                                                                    {{ question.option_1 }}
+                                                                </label>
+                                                                <input id="inp-option-1-{{ question.id }}" type="radio"
+                                                                       name="answer"
+                                                                       value="{{ question.option_1 }}" required>
+                                                            </div>
+                                                            <div>
+                                                                <label for="inp-option-2-{{ question.id }}">
+                                                                    {{ question.option_2 }}
+                                                                </label>
+                                                                <input id="inp-option-2-{{ question.id }}" type="radio"
+                                                                       name="answer"
+                                                                       value="{{ question.option_2 }}" required>
+                                                            </div>
+                                                            <div>
+                                                                <label for="inp-option-3-{{ question.id }}">
+                                                                    {{ question.option_3 }}
+                                                                </label>
+                                                                <input id="inp-option-3-{{ question.id }}" type="radio"
+                                                                       name="answer"
+                                                                       value="{{ question.option_3 }}" required>
+                                                            </div>
+                                                            <div>
+                                                                <label for="inp-option-4-{{ question.id }}">
+                                                                    {{ question.option_4 }}
+                                                                </label>
+                                                                <input id="inp-option-4-{{ question.id }}" type="radio"
+                                                                       name="answer"
+                                                                       value="{{ question.option_4 }}" required>
+                                                            </div>
+                                                        </div>
+                                                        {% if not user.is_anonymous %}
+                                                            <div class="text-left mt-4">
+                                                                <button class="btn col-12">ثبت پاسخ</button>
+                                                            </div>
+                                                        {% else %}
+                                                            <div class="text-center mt-4">
+                                                                <a href="{% url 'account:login_register' %}"
+                                                                   class="p-2 border-radius-6">برای ارسال پاسخ باید وارد
+                                                                    حساب کاربری خود شوید</a>
+                                                            </div>
+                                                        {% endif %}
+                                                    </form>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h6 class="mb-0">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2"
-                                               class="collapsed" aria-expanded="false"><span></span>لورم ایپسوم متن
-                                                ساختگی
-                                                با تولید سادگی نامفهوم</a>
-                                        </h6>
-                                    </div>
-                                    <div id="collapse2" class="collapse" data-parent="#accordion" style="">
-                                        <div class="card-body">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ
-                                            و
-                                            با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون
-                                            و
-
-                                            سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h6 class="mb-0">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse3"
-                                               class="collapsed" aria-expanded="false"><span></span>لورم ایپسوم متن
-                                                ساختگی
-                                                با تولید سادگی نامفهوم</a>
-                                        </h6>
-                                    </div>
-                                    <div id="collapse3" class="collapse" data-parent="#accordion">
-                                        <div class="card-body">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ
-                                            و
-                                            با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون
-                                            و
-
-                                            سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی.
-                                        </div>
-                                    </div>
-                                </div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -937,7 +899,8 @@
                                     <img id="footer-logo-img" src="{% static 'images/logo.png' %}" class="img-center"
                                          alt="">
                                 </div>
-                                <p class="mb-0" style="font-family: KalamehBlack;font-size: 140%;text-shadow: 0 3px 1px #b5cade">
+                                <p class="mb-0"
+                                   style="font-family: KalamehBlack;font-size: 140%;text-shadow: 0 3px 1px #b5cade">
                                     <b>شرکت گواشیر سازه فرهیختگان مشرق زمین</b>
                                 </p>
                             </div>
@@ -966,7 +929,8 @@
                             <div class="col-lg-4 col-md-12 md-mt-5">
                                 <ul class="media-icon list-unstyled" id="contact-us">
                                     <li>
-                                        <p class="mb-0">آدرس: <b>دفتر مرکزی - کرمان بلوار غدیر 1 ، کوچه یاس 7 ، مقابل تیر برق سوم ، طبقه دوم</b>
+                                        <p class="mb-0">آدرس: <b>دفتر مرکزی - کرمان بلوار غدیر 1 ، کوچه یاس 7 ، مقابل
+                                            تیر برق سوم ، طبقه دوم</b>
                                         </p>
                                     </li>
                                     <li>تلفن: <a href="tel:09132430612">
@@ -1077,4 +1041,15 @@
 
     <!--== color-customize -->
     <script src="{% static 'public/js/color-customize/color-customizer.js' %}"></script>
+
+    <script>
+        {% for message in messages %}
+            createNotify({
+                title: '{{ message.tags }}' == 'success' ? 'موفق' : 'ارور',
+                message: '{{ message }}',
+                theme: '{{ message.tags }}'
+            })
+        {% endfor %}
+    </script>
 {% endblock %}
+

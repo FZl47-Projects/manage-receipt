@@ -1608,3 +1608,20 @@ iframe {
     animation: heartbeat 0.5s cubic-bezier(0.245, 0.325, 0.51, 1.305) infinite alternate;
     opacity: 0.050;
 }
+
+
+.cnt-options > div{
+    padding: 5px;
+    margin: 13px 7px;
+    border-radius: 10px;
+    border: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cnt-options > div label{
+    padding: 5px;
+    margin: 0;
+    margin-left: 10px;
+}

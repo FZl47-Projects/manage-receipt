@@ -1,5 +1,6 @@
 from django.db import models
-from core.models import BaseModel, File
+from django.urls import reverse
+from core.models import BaseModel, Image
 from core.utils import get_time, random_str
 
 
@@ -40,3 +41,38 @@ class TicketReplay(Ticket):
 
     def __str__(self):
         return f'Replay {super().__str__()}'
+
+
+class Question(BaseModel, Image):
+    title = models.CharField(max_length=150)
+    description = models.TextField(null=True)
+    # static options
+    option_1 = models.CharField(max_length=100)
+    option_2 = models.CharField(max_length=100)
+    option_3 = models.CharField(max_length=100)
+    option_4 = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = '-id',
+
+    def __str__(self):
+        return self.title
+
+    def get_answers(self):
+        return self.answerquestion_set.all()
+
+    def get_absolute_url(self):
+        return reverse('support:support_dashboard_question_detail', args=(self.id,))
+
+
+class AnswerQuestion(BaseModel):
+    question = models.ForeignKey('Question', on_delete=models.CASCADE)
+    user = models.ForeignKey('account.User', on_delete=models.CASCADE)
+    answer = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f'answer - question - {self.question}'
+
+    def get_absolute_url(self):
+        return reverse('support:support_dashboard_answer_detail', args=(self.id,))
+

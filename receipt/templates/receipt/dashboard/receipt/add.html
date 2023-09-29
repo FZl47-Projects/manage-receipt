@@ -35,12 +35,15 @@
                                         <div class="row mb-3">
                                             <div class="col-md-12">
                                                 <div class="col-md-12">
-                                                    <label class="form-label" for="inputUserReceipt">
+                                                    <label class="form-label" for="btnSelectUserNotification">
                                                         کاربر
                                                         <span class="field-required">*</span>
                                                     </label>
                                                     <input type="hidden" name="user" required>
-                                                    <div class="field-container text-left">
+                                                    <div class="field-container text-left l d-flex justify-content-between align-items-center">
+                                                        <label class="text-mute font-60" for="btnSelectUserNotification">
+                                                            کاربر مورد نظر را انتخاب کنید
+                                                        </label>
                                                         <button class="btn btn-success font-70 " selected="false"
                                                                 type="button" data-bs-toggle="modal"
                                                                 data-bs-target="#container-users"
@@ -189,7 +192,7 @@
                         response = JSON.parse(response)
                         disableOptionsBuilding()
                         document.querySelector(`#inputNameBuilding`).selectedIndex = -1
-                        for(let building of response){
+                        for (let building of response) {
                             let building_id = building['pk']
                             let option = document.querySelector(`#inputNameBuilding option[value="${building_id}"]`)
                             option.removeAttribute('disabled')
@@ -207,10 +210,10 @@
             })
         }
 
-        function disableOptionsBuilding(){
+        function disableOptionsBuilding() {
             let options = document.querySelectorAll('#inputNameBuilding option')
-            for (let option of options){
-                option.setAttribute('disabled','')
+            for (let option of options) {
+                option.setAttribute('disabled', '')
                 option.removeAttribute('selected')
             }
         }
