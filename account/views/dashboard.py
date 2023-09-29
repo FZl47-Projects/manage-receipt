@@ -592,3 +592,29 @@ class UserDetailUpdateByAdmin(View):
                         """,
             )
         return redirect(user_obj.get_absolute_url())
+
+
+class UserBuildingAvailableSet(View):
+
+    @admin_required_cbv()
+    def post(self, request, user_id):
+        data = request.POST
+        user_obj = get_object_or_404(User, id=user_id)
+        buildings = data.getlist('buildings', [])
+        user_obj.buildingavailable.buildings.set(buildings)
+        messages.success(request,'تنظیم ساختمان برای کاربر با موفقیت انجام شد')
+        return redirect(user_obj.get_absolute_url())
+
+
+class UserBuildingAvailableList(View):
+
+    @admin_required_cbv()
+    def post(self, request):
+        # Ajax view
+        data = json.loads(request.body)
+        user_id = data.get('user_id')
+        if not user_id:
+            return HttpResponseBadRequest()
+        user_obj = get_object_or_404(User, id=user_id)
+        buildings_available = user_obj.get_available_buildings()
+        return JsonResponse(serializers.serialize('json', buildings_available, fields=['id', 'name']), safe=False)

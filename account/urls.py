@@ -8,7 +8,8 @@ urlpatterns = [
     path('logout', dashboard.logout, name='logout'),
     # confirm account
     path('confirm/phonenumber', dashboard.ConfirmPhonenumber.as_view(), name='confirm_phonenumber'),
-    path('confirm/phonenumber/check', dashboard.ConfirmPhonenumberCheckCode.as_view(), name='confirm_phonenumber_check_code'),
+    path('confirm/phonenumber/check', dashboard.ConfirmPhonenumberCheckCode.as_view(),
+         name='confirm_phonenumber_check_code'),
     # reset password
     path('reset-password', dashboard.reset_password, name='reset_password'),
     path('reset-password/send-code', dashboard.reset_password_send, name='reset_password_send_code'),
@@ -18,7 +19,8 @@ urlpatterns = [
     # dashboard
     path('dashboard', dashboard.Dashboard.as_view(), name='dashboard'),
     path('dashboard/info/detail', dashboard.DashboardInfoDetail.as_view(), name='info_detail'),
-    path('dashboard/info/change-password', dashboard.DashboardInfoChangePassword.as_view(), name='info_change_password'),
+    path('dashboard/info/change-password', dashboard.DashboardInfoChangePassword.as_view(),
+         name='info_change_password'),
     # dashboard operations
     # --- user
     path('dashboard/user/update/password', dashboard.UserUpdatePassword.as_view(), name='user_update_password'),
@@ -31,7 +33,11 @@ urlpatterns = [
     path('dashboard/user/task/list', dashboard.UserFinancialList.as_view(), name='user_financial_list'),
     path('dashboard/user/<int:user_id>/detail', dashboard.UserDetail.as_view(), name='user_detail'),
     path('dashboard/user/<int:user_id>/detail/delete', dashboard.UserDetailDelete.as_view(), name='user_detail_delete'),
-
     path('dashboard/user/<int:user_id>/detail/update/admin', dashboard.UserDetailUpdateByAdmin.as_view(),
          name='user_detail_update_admin'),
+
+    path('dashboard/user/<int:user_id>/building/available/set', dashboard.UserBuildingAvailableSet.as_view(),
+         name='user_building_available_set'),
+    path('dashboard/user/building/available/list', dashboard.UserBuildingAvailableList.as_view(),
+         name='user_building_available_list'),
 ]

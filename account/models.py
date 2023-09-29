@@ -157,3 +157,15 @@ class User(AbstractUser):
 
     def get_payments(self):
         return self.receipt_set.filter(status='accepted').aggregate(payments=models.Sum('amount'))['payments'] or 0
+
+    def get_available_buildings(self):
+        try:
+            return self.buildingavailable.buildings.all()
+        except:
+            return []
+
+    def get_available_building_ids(self):
+        try:
+            return self.buildingavailable.buildings.values_list('id',flat=True)
+        except:
+            return []

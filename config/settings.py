@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['manage-receipt','farhikhteganmes.ir']
+ALLOWED_HOSTS = ['manage-receipt','farhikhteganmes.ir','127.0.0.1']
 HOST_ADDRESS = 'https://farhikhteganmes.ir'
 CSRF_TRUSTED_ORIGINS = [
     "https://www.farhikhteganmes.ir",

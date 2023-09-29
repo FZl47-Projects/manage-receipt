@@ -77,6 +77,14 @@ class Building(BaseModel):
         return Building.objects.filter(receipt__user=user).distinct()
 
 
+class BuildingAvailable(BaseModel):
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    buildings = models.ManyToManyField('Building')
+
+    def __str__(self):
+        return f'building available - {self.user.get_full_name()}'
+
+
 class ReceiptAbstract(BaseModel):
 
     STATUS_OPTIONS = (
@@ -120,6 +128,8 @@ class Receipt(ReceiptAbstract):
             score = int(days * amount_million) or 1
         except ZeroDivisionError:
             pass
+        if score < 0:
+            score = 0
         return score
 
     def get_absolute_url(self):

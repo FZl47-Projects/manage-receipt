@@ -23,33 +23,14 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="p-4 pb-0 text-mute">
+                            <p class="font-70">لطفا توجه کنید فیلد هارا باید به ترتیب پر نمایید</p>
+                        </div>
                         <div class="white_card_body">
                             <div class="card-body">
                                 <form action="{% url 'receipt:receipt_dashboard_add' %}" method="post"
                                       enctype="multipart/form-data">
                                     {% csrf_token %}
-                                    <div class="row mb-3">
-                                        <div class="col-md-6">
-                                            <label class="form-label" for="inputNameBuilding">
-                                                ساختمان
-                                                <span class="field-required">*</span>
-                                            </label>
-                                            <select type="text" name="building" class="form-control form-select"
-                                                    id="inputNameBuilding" required>
-                                                {% for building in buildings %}
-                                                    <option value="{{ building.id }}">{{ building.name }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="form-label" for="inputImageReceipt">
-                                                عکس
-                                                <span class="field-required">*</span>
-                                            </label>
-                                            <input type="file" name="picture" accept="image/*" class="form-control"
-                                                   required>
-                                        </div>
-                                    </div>
                                     {% if user.is_admin %}
                                         <div class="row mb-3">
                                             <div class="col-md-12">
@@ -71,6 +52,39 @@
                                             </div>
                                         </div>
                                     {% endif %}
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="inputNameBuilding">
+                                                ساختمان
+                                                <span class="field-required">*</span>
+                                            </label>
+                                            {% if user.is_admin %}
+                                                <select type="text" name="building" class="form-control form-select"
+                                                        id="inputNameBuilding" required>
+                                                    {% for building in buildings %}
+                                                        <option value="{{ building.id }}" disabled
+                                                        >{{ building.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            {% else %}
+                                                <select type="text" name="building" class="form-control form-select"
+                                                        id="inputNameBuilding" required>
+                                                    {% for building in user.get_available_buildings %}
+                                                        <option value="{{ building.id }}"
+                                                        >{{ building.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="inputImageReceipt">
+                                                عکس
+                                                <span class="field-required">*</span>
+                                            </label>
+                                            <input type="file" name="picture" accept="image/*" class="form-control"
+                                                   required>
+                                        </div>
+                                    </div>
                                     <div class="row mb-3">
                                         <div class="col-12 col-md-6">
                                             <div class="col-md-12">
@@ -152,13 +166,56 @@
 
     <script>
         let input_select_user_component = document.querySelector('input[name="user"]')
+        let url_user_buildings_available = "{% url 'account:user_building_available_list' %} "
         // set amount value
         document.querySelector('#inpAmountReceipt').addEventListener('input', function () {
             document.querySelector('#amount-value').innerHTML = numberWithCommas(this.value) || 0
         })
     </script>
     <script src="{% static 'scripts/user-list-component.js' %}"></script>
+    <script>
+        let users_select = document.querySelectorAll('.user-select')
+        let cnt_building_inp = document.getElementById('inputNameBuilding').parentElement
+        for (let user of users_select) {
+            user.addEventListener('click', function () {
+                let user_id = input_select_user_component.value
+                createLoading(cnt_building_inp)
+                sendAjax({
+                    url: url_user_buildings_available,
+                    data: {
+                        'user_id': user_id
+                    },
+                    success: function (response) {
+                        response = JSON.parse(response)
+                        disableOptionsBuilding()
+                        document.querySelector(`#inputNameBuilding`).selectedIndex = -1
+                        for(let building of response){
+                            let building_id = building['pk']
+                            let option = document.querySelector(`#inputNameBuilding option[value="${building_id}"]`)
+                            option.removeAttribute('disabled')
+                        }
+                        removeLoading(cnt_building_inp)
+                    },
+                    error: function () {
+                        removeLoading(cnt_building_inp)
+                        createNotify({
+                            title: 'مشکلی پیش امده است',
+                            theme: 'error'
+                        })
+                    }
+                })
+            })
+        }
 
+        function disableOptionsBuilding(){
+            let options = document.querySelectorAll('#inputNameBuilding option')
+            for (let option of options){
+                option.setAttribute('disabled','')
+                option.removeAttribute('selected')
+            }
+        }
+
+    </script>
 {% endblock %}
 
 

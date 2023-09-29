@@ -474,6 +474,18 @@ pre{
 }
 
 
+option[disabled]{
+    color: #bbb!important;
+}
+
+.border-radius-6{
+    border-radius: 6px!important;
+}
+
+.border-radius-7{
+    border-radius: 7px!important;
+}
+
 @media screen and (max-width: 992px) {
     #container-users .title-list-row > div:last-of-type {
         display: none;
