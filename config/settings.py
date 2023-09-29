@@ -28,8 +28,17 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
-HOST_ADDRESS = 'http://127.0.0.1:8000'
+ALLOWED_HOSTS = ['manage-receipt','farhikhteganmes.ir']
+HOST_ADDRESS = 'https://farhikhteganmes.ir'
+CSRF_TRUSTED_ORIGINS = [
+    "https://www.farhikhteganmes.ir",
+    "https://farhikhteganmes.ir",
+    "http://farhikhteganmes.ir",
+    "http://127.0.0.1:8000",
+]
+CORS_ALLOW_ALL_ORIGINS = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 
 # Application definition
 
