@@ -39,8 +39,7 @@ class Notification(BaseModel):
         """
 
     def get_absolute_url(self):
-        # TODO: should be completed
-        return 'test.com'
+        return reverse('notification:notification_dashboard_detail',args=(self.id,))
 
 
 class NotificationUser(BaseModel):
@@ -75,7 +74,7 @@ class NotificationUser(BaseModel):
         """
 
     def get_absolute_url(self):
-        return reverse('notification:notification_dashboard_detail', args=(self.id,))
+        return reverse('notification:notification_dashboard_user_detail', args=(self.id,))
 
     def get_link(self):
         try:

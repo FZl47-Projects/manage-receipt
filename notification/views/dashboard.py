@@ -6,7 +6,7 @@ from django.core.paginator import Paginator
 from core.auth.mixins import LoginRequiredMixinCustom
 from core.auth.decorators import admin_required_cbv
 from core.utils import form_validate_err
-from notification.forms import NotificationForm, NotificationUserForm
+from notification.forms import NotificationForm, NotificationUserForm, NotificationUpdateForm
 from notification.models import Notification, NotificationUser
 
 User = get_user_model()
@@ -45,6 +45,41 @@ class NotificationList(View):
             'pagination': pagination
         }
         return render(request, self.template_name, context)
+
+
+class NotificationDetail(View):
+    template_name = 'notification/dashboard/detail.html'
+
+    @admin_required_cbv()
+    def get(self, request, notification_id):
+        notification = get_object_or_404(Notification, id=notification_id)
+        context = {
+            'notification': notification
+        }
+        return render(request, self.template_name, context)
+
+
+class NotificationDelete(View):
+
+    @admin_required_cbv()
+    def post(self, request, notification_id):
+        notification = get_object_or_404(Notification, id=notification_id)
+        notification.delete()
+        messages.success(request, 'اعلان با موفقیت حذف شد')
+        return redirect('notification:notification_dashboard_list')
+
+
+class NotificationUpdate(View):
+
+    @admin_required_cbv()
+    def post(self, request, notification_id):
+        notification = get_object_or_404(Notification, id=notification_id)
+        f = NotificationUpdateForm(request.POST, request.FILES,instance=notification)
+        if form_validate_err(request,f) is False:
+            return redirect(notification.get_absolute_url())
+        f.save()
+        messages.success(request, 'اعلان با موفقیت بروزرسانی شد')
+        return redirect(notification.get_absolute_url())
 
 
 class NotificationUserAdd(View):
@@ -102,8 +137,8 @@ class NotificationUserPersonalList(LoginRequiredMixinCustom, View):
         return render(request, self.template_name, context)
 
 
-class NotificationDetail(LoginRequiredMixinCustom, View):
-    template_name = 'notification/dashboard/detail.html'
+class NotificationUserDetail(LoginRequiredMixinCustom, View):
+    template_name = 'notification/dashboard/detail-user.html'
 
     def get(self, request, notification_id):
         notification = get_object_or_404(NotificationUser, id=notification_id)

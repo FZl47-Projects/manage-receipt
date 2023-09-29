@@ -8,6 +8,12 @@ class NotificationForm(forms.ModelForm):
         exclude = ('is_active',)
 
 
+class NotificationUpdateForm(forms.ModelForm):
+    class Meta:
+        model = models.Notification
+        fields = '__all__'
+
+
 class NotificationUserForm(forms.ModelForm):
     class Meta:
         model = models.NotificationUser

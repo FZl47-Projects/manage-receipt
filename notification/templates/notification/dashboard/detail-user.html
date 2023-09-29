@@ -1,0 +1,147 @@
+{% extends 'account/dashboard/components/base/base_template.html' %}
+
+{% block Title %}
+    اعلان{{ notification.id }}
+    -
+    {{ notification.title }}
+{% endblock %}
+
+{% block Style %}
+    <style>
+        .detail {
+            direction: rtl;
+            border: 1px solid #f0f0f0;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .detail-field {
+            margin: 10px 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            border-bottom: 1px solid #f2f2f2;
+        }
+
+        .detail-field:last-of-type {
+            margin-top: 12px;
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+
+        .detail-field > span {
+            font-size: 75%;
+            color: #889ba6;
+        }
+
+        .detail-field p {
+            margin: 0;
+            display: inline-block;
+            font-size: 75%;
+            color: #555;
+        }
+
+        .detail-field a {
+            font-size: 90%;
+            background: #eef3ff;
+            color: #3741e0;
+            padding: 4px 7px;
+            border-radius: 7px;
+        }
+
+        .detail-field p span {
+            color: inherit;
+        }
+
+        .card-body img {
+            width: 250px;
+            height: 250px;
+            border: 1px solid #eee;
+            border-radius: 15px;
+        }
+
+
+    </style>
+{% endblock %}
+
+{% block Content %}
+    {% include 'account/dashboard/components/base/nav.html' %}
+
+    <section class="main_content dashboard_part large_header_bg">
+        {% include 'account/dashboard/components/base/header.html' %}
+        <div class="main_content_iner">
+            <div class="container-fluid p-0 ">
+                <div class="col-lg-12">
+                    <div class="white_card mb_30">
+                        <div class="white_card_header">
+                            <div class="box_header m-0">
+                                <div class="main-title">
+                                    <h3 class="m-0">
+                                        اعلان
+                                        شماره
+                                        {{ notification.id }}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="white_card_body">
+                            <div class="card-body">
+                                <div class="container-title">
+                                    <p>
+                                        عنوان
+                                    </p>
+                                </div>
+                                <div class="text-center">
+                                    <p class="font-size-16 text-muted">{{ notification.title }}</p>
+                                </div>
+                                {% if notification.get_image %}
+                                    <div class="container-title">
+                                        <p>
+                                            پیوست
+                                        </p>
+                                    </div>
+                                    <div class="text-center">
+                                        <img src="{{ notification.get_image }}" alt="{{ notification.title }}"
+                                             class="click-full-size">
+                                    </div>
+                                {% endif %}
+                                <div class="container-title">
+                                    <p>
+                                        جزئیات
+                                    </p>
+                                </div>
+                                <div class="detail col-11 col-md-10 col-lg-8 mx-auto">
+                                    <div class="detail-field">
+                                        <span>توضیحات</span>
+                                        <p>{{ notification.description }}</p>
+                                    </div>
+                                    <div class="detail-field">
+                                        <span>تاریخ ایجاد</span>
+                                        <p>{{ notification.get_created_at_timepast }}</p>
+                                    </div>
+                                    {% if notification.kwargs.link %}
+                                        <div class="detail-field">
+                                            <span>لینک پیوست</span>
+                                            <p><a href="{{ notification.kwargs.link }}">مشاهده</a></p>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include 'account/dashboard/components/base/footer.html' %}
+    </section>
+{% endblock %}
+
+
+
+
+
+
+
+
+
