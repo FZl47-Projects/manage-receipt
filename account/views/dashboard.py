@@ -15,7 +15,7 @@ from django.contrib.auth import authenticate, login, get_user_model, logout as l
 from core.utils import add_prefix_phonenum, random_num, form_validate_err
 from core.auth.decorators import admin_required_cbv
 from core.redis_py import set_value_expire, remove_key, get_value
-from receipt.models import Building, Receipt, ReceiptTask
+from receipt.models import Building, BuildingAvailable, Receipt, ReceiptTask
 from notification.models import NotificationUser
 from account import forms
 
@@ -396,7 +396,8 @@ class UserDetail(LoginRequiredMixinCustom, View):
         context = {
             # name 'user_detail' for prevent conflict
             'user_detail': user,
-            'buildings': Building.get_buildings_user(user)
+            'buildings_user': Building.get_buildings_user(user),
+            'buildings': Building.objects.filter(is_active=True),
         }
 
         if user.is_common_admin:
@@ -601,8 +602,13 @@ class UserBuildingAvailableSet(View):
         data = request.POST
         user_obj = get_object_or_404(User, id=user_id)
         buildings = data.getlist('buildings', [])
-        user_obj.buildingavailable.buildings.set(buildings)
-        messages.success(request,'تنظیم ساختمان برای کاربر با موفقیت انجام شد')
+        try:
+            building_available_obj = user_obj.buildingavailable
+        except:
+            # Does not exist
+            building_available_obj = BuildingAvailable.objects.create(user=user_obj)
+        building_available_obj.buildings.set(buildings)
+        messages.success(request, 'تنظیم ساختمان برای کاربر با موفقیت انجام شد')
         return redirect(user_obj.get_absolute_url())
 
 
