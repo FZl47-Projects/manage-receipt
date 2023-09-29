@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['manage-receipt','farhikhteganmes.ir','127.0.0.1']
+ALLOWED_HOSTS = ['manage-receipt', 'farhikhteganmes.ir', '127.0.0.1']
 HOST_ADDRESS = 'https://farhikhteganmes.ir'
 CSRF_TRUSTED_ORIGINS = [
     "https://www.farhikhteganmes.ir",
@@ -38,7 +38,6 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 CORS_ALLOW_ALL_ORIGINS = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-
 
 # Application definition
 
@@ -126,7 +125,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "fa-ir"
 
 TIME_ZONE = 'Asia/Tehran'
 
