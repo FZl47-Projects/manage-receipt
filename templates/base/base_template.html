@@ -29,6 +29,11 @@
 {% block Content %}
 
 {% endblock %}
+
+<script src="{% static 'scripts/urls.js' %}"></script>
+<script src="{% static 'scripts/notify.js' %}"></script>
+<script src="{% static 'scripts/base.js' %}"></script>
+
 <script>
     window.CSRF_TOKEN = '{{ csrf_token }}'
     {% for message in messages %}
@@ -39,9 +44,6 @@
         })
     {% endfor %}
 </script>
-<script src="{% static 'scripts/urls.js' %}"></script>
-<script src="{% static 'scripts/notify.js' %}"></script>
-<script src="{% static 'scripts/base.js' %}"></script>
 
 {% block Script %}
 {% endblock %}
