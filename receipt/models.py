@@ -112,6 +112,9 @@ class ReceiptAbstract(BaseModel):
     def get_deposit_datetime(self):
         return self.deposit_datetime.strftime('%Y-%m-%d %H:%M:%S')
 
+    def get_deposit_timepast(self):
+        return utils.get_timesince_persian(self.deposit_datetime)
+
 
 class Receipt(ReceiptAbstract):
 

@@ -87,7 +87,7 @@
                                 <div class="list-row">
                                     <div class="title-list-row">
                                         <div class="col-2">
-                                            کد رهگیری
+                                            تاریخ واریز
                                         </div>
                                         <div class="col-2">
                                             نام ساختمان
@@ -112,8 +112,8 @@
                                     </div>
                                     {% for receipt in receipts %}
                                         <div class="detail-row">
-                                            <div class="col-2">
-                                                {{ receipt.tracking_code }}
+                                            <div class="col-2 datetime-convert font-75">
+                                                {{ receipt.get_deposit_datetime }}
                                             </div>
                                             <div class="col-2">
                                                 <a href="{{ receipt.building.get_absolute_url }}">
@@ -141,7 +141,7 @@
                                                     در صف
                                                     <i class="fa fa-spinner font-size-10 text-warning"></i>
                                                 {% elif receipt.status == 'rejected' %}
-                                                   رد شده
+                                                    رد شده
                                                     <i class="fa fa-times-circle font-size-10 text-danger"></i>
                                                 {% endif %}
                                             </div>
