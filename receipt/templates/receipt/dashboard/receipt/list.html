@@ -28,7 +28,13 @@
                                 </div>
                                 <div class="container">
                                     <div>
-                                        <a class="{% if not request.GET.sort_by or request.GET.sort_by == 'latest' %}active{% endif %}"
+                                        <a class="{% if not request.GET.sort_by or request.GET.sort_by == 'need_to_check' %}active{% endif %}"
+                                           href="{% url 'receipt:receipt_dashboard_list' %}?sort_by=need_to_check&search={{ request.GET.search }}">
+                                            نیاز به بررسی
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a class="{% if request.GET.sort_by == 'latest' %}active{% endif %}"
                                            href="{% url 'receipt:receipt_dashboard_list' %}?sort_by=latest&search={{ request.GET.search }}">
                                             جدید ترین
                                         </a>
@@ -37,12 +43,6 @@
                                         <a class="{% if request.GET.sort_by == 'oldest' %}active{% endif %}"
                                            href="{% url 'receipt:receipt_dashboard_list' %}?sort_by=oldest&search={{ request.GET.search }}">
                                             قدیمی ترین
-                                        </a>
-                                    </div>
-                                    <div>
-                                        <a class="{% if request.GET.sort_by == 'need_to_check' %}active{% endif %}"
-                                           href="{% url 'receipt:receipt_dashboard_list' %}?sort_by=need_to_check&search={{ request.GET.search }}">
-                                            نیاز به بررسی
                                         </a>
                                     </div>
                                     <div>

@@ -137,7 +137,7 @@ class ReceiptAdd(LoginRequiredMixinCustom, View):
 class ReceiptList(LoginRequiredMixinCustom, View):
 
     def sort(self, request, objects):
-        sort_by = request.GET.get('sort_by', 'latest')
+        sort_by = request.GET.get('sort_by', 'need_to_check')
         if sort_by == 'latest':
             objects = objects.order_by('-id')
         elif sort_by == 'oldest':
@@ -149,8 +149,8 @@ class ReceiptList(LoginRequiredMixinCustom, View):
         elif sort_by == 'need_to_check':
             objects = objects.order_by(Case(
                 When(status="pending", then=Value(1)),
-                When(status="accepted", then=Value(2)),
-                When(status="rejected", then=Value(3)),
+                When(status="rejected", then=Value(2)),
+                When(status="accepted", then=Value(3)),
                 default=Value(3)
             )
             )
