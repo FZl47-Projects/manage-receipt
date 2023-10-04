@@ -13,6 +13,10 @@ label {
     display: block;
 }
 
+[label-content-seted]{
+    color: #888;
+}
+
 .form {
     padding: 30px;
     border-radius: 6px;

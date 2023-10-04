@@ -103,19 +103,11 @@
         {% include 'account/dashboard/components/base/footer.html' %}
     </section>
 
-    {% if user.is_admin %}
-        {% render_partial 'account.views.dashboard.UserListComponentPartial' %}
-    {% endif %}
 {% endblock %}
 
 
-{% block Script %}
-    <script>
-        let input_select_user_component = document.querySelector('input[name="to_user"]')
-    </script>
-    <script src="{% static 'scripts/user-list-component.js' %}"></script>
 
-{% endblock %}
+
 
 
 

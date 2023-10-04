@@ -68,7 +68,6 @@
         }
 
 
-
     </style>
 {% endblock %}
 
@@ -90,7 +89,13 @@
                                             <h3 class="m-0">عملیات</h3>
                                         </div>
                                         <div class="">
-                                            <button class="btn btn-outline-danger" type="button" data-bs-toggle="modal"
+                                            <button class="btn btn-w btn-edit-outline m-1" type="button"
+                                                    data-bs-toggle="modal" data-bs-target="#container-edit-user">
+                                                تغییر
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-outline-danger border-radius-6" type="button"
+                                                    data-bs-toggle="modal"
                                                     data-bs-target="#container-delete-user">
                                                 حذف ادمین
                                                 <i class="fa fa-trash"></i>
@@ -200,7 +205,8 @@
                                                         <div class="payment_gatway">
                                                             <h5 class="byer_name f_s_16 f_w_600 color_theme">{{ receipt_task.receipt.building.name }}</h5>
                                                             <p class="font-70 f_w_600 text-center p-0 bg-{{ receipt_task.receipt_status }}"
-                                                               style="width: 95px">عملیات {{ receipt_task.get_receipt_status_display }}</p>
+                                                               style="width: 95px">
+                                                                عملیات {{ receipt_task.get_receipt_status_display }}</p>
                                                         </div>
                                                     </td>
                                                     <td>
@@ -226,7 +232,8 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <a class="d-block text-center font-85 my-3" href="{% url 'receipt:receipt_dashboard_task_list' %}?search={{ user_detail.get_raw_phonenumber }}">
+                                    <a class="d-block text-center font-85 my-3"
+                                       href="{% url 'receipt:receipt_dashboard_task_list' %}?search={{ user_detail.get_raw_phonenumber }}">
                                         مشاهده همه
                                         <i class="fa fa-angle-left"></i>
                                     </a>
@@ -239,6 +246,99 @@
         </div>
         {% include 'account/dashboard/components/base/footer.html' %}
     </section>
+
+
+
+
+    <div id="container-edit-user" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg col-lg-12">
+            <div class="modal-content white_card mb_30">
+                <div class="white_card_header">
+                    <div class="modal-header box_header m-0">
+                        <h3 class="m-0">تغییر کاربر</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="white_card_body">
+                    <form action="{% url 'account:user_detail_update_admin' user_id=user_detail.id %}"
+                          method="post" class="col-12">
+                        <div class="card-body">
+                            {% csrf_token %}
+
+                            <div class="col-md-12">
+                                <div>
+                                    <label class="form-label" for="inpNameUser">
+                                        نام
+                                        <span class="field-required">*</span>
+                                    </label>
+                                    <input type="text" required="" class="form-control"
+                                           value="{{ user_detail.first_name }}"
+                                           id="inpNameUser" name="first_name" aria-required="" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div>
+                                    <label class="form-label" for="inpNameUser">
+                                        نام خانوادگی
+                                        <span class="field-required">*</span>
+                                    </label>
+                                    <input type="text" required="" class="form-control"
+                                           value="{{ user_detail.last_name }}"
+                                           id="inpNameUser" name="last_name" aria-required="" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div>
+                                    <label class="form-label" for="inpAddressBuilding">
+                                        شماره همراه
+                                        <span class="field-required">*</span>
+                                    </label>
+                                    <input type="text" required="" class="form-control"
+                                           value="{{ user_detail.get_raw_phonenumber }}"
+                                           id="inpAddressBuilding" name="address" aria-required="" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label">
+                                    وضعیت حساب کاربری
+                                    <span class="field-required">*</span>
+                                </label>
+                                <select name="is_active" class="form-control" required>
+                                    <option value="true" {% if user_detail.is_active %}selected{% endif %}>فعال</option>
+                                    <option value="false" {% if user_detail.is_active == False %}selected{% endif %}>غیر
+                                        فعال
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label">
+                                    وضعیت تایید شماره همراه
+                                    <span class="field-required">*</span>
+                                </label>
+                                <select name="is_phonenumber_confirmed" class="form-control" required>
+                                    <option value="true"
+                                            {% if user_detail.is_phonenumber_confirmed %}selected{% endif %}>تایید شده
+                                    </option>
+                                    <option value="false"
+                                            {% if user_detail.is_phonenumber_confirmed == False %}selected{% endif %}>
+                                        تایید نشده
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="text-left mt-4">
+                                <button class="btn btn-submit">
+                                    ثبت و بروزرسانی
+                                    <i class="fa fa-up"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <div id="container-delete-user" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">

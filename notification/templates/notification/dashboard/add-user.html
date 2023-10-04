@@ -81,7 +81,7 @@
                                             </label>
                                             <div class="form-control d-flex justify-content-between align-center p-2">
                                                 <label for="btnSelectUserNotification">
-                                                    <div>
+                                                    <div class="input-select-label-name mt-1">
                                                         کاربر مورد نظر خود را انتخاب کنید
                                                     </div>
                                                 </label>
@@ -116,6 +116,7 @@
 {% block Script %}
     <script>
         let input_select_user_component = document.querySelector('input[name="to_user"]')
+        let input_select_user_component_name = document.querySelector('.input-select-label-name')
     </script>
     <script src="{% static 'scripts/user-list-component.js' %}"></script>
 {% endblock %}

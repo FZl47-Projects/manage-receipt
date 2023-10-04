@@ -8,6 +8,10 @@ function initUserSelect() {
             unSelectUsers()
             user_select.setAttribute('selected', 'true')
             input_select_user_component.value = user_select.getAttribute('user-id')
+            try{
+                input_select_user_component_name.innerText = user_select.querySelector('[full-name]').innerText
+                input_select_user_component_name.setAttribute('label-content-seted','')
+            }catch (e){}
             $('#container-users').modal('hide')
         })
     }
@@ -57,7 +61,7 @@ function clearContentUsersSelect() {
 function createUserComponentElement(user) {
     let user_el = `
         <div class="user-select detail-row" user-id="${user.pk}">
-            <div class="col-4">
+            <div class="col-4" full-name>
                 ${user.fields.first_name} ${user.fields.last_name}
             </div>
             <div class="col-4">
