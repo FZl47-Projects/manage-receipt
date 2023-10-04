@@ -82,11 +82,11 @@ input:hover, input:focus {
         padding: 70px 0;
     }
 
-    .white_card .white_card_body{
-        padding: 12px 7px!important;
+    .white_card .white_card_body {
+        padding: 12px 7px !important;
     }
 
-    .card-body{
+    .card-body {
         /*padding: 10px!important;*/
     }
 }
@@ -1913,6 +1913,10 @@ p a:hover {
 
 .btn-light {
     border: 1px solid #e8ecf4;
+}
+
+.font-size-12 {
+    font-size: 12px !important;
 }
 
 .font-size-10 {
@@ -4296,7 +4300,7 @@ body::-webkit-scrollbar {
 
 @media (max-width: 575.98px) {
     .single_element .quick_activity_wrap {
-        grid-template-columns: repeat(1, 1fr)!important;
+        grid-template-columns: repeat(1, 1fr) !important;
         grid-gap: 15px;
         margin-bottom: 30px;
     }
@@ -4304,7 +4308,7 @@ body::-webkit-scrollbar {
 
 @media only screen and (min-width: 576px) and (max-width: 767px) {
     .single_element .quick_activity_wrap {
-        grid-template-columns: repeat(1, 1fr)!important;
+        grid-template-columns: repeat(1, 1fr) !important;
         grid-gap: 15px;
         margin-bottom: 30px;
     }
@@ -4320,14 +4324,14 @@ body::-webkit-scrollbar {
 
 @media (min-width: 992px) and (max-width: 1199.98px) {
     .single_element .quick_activity_wrap {
-        grid-template-columns: repeat(2, 1fr)!important;
+        grid-template-columns: repeat(2, 1fr) !important;
         margin-bottom: 30px;
     }
 }
 
 @media (min-width: 1200px) and (max-width: 1500px) {
     .single_element .quick_activity_wrap {
-        grid-template-columns: repeat(2, 1fr)!important;
+        grid-template-columns: repeat(2, 1fr) !important;
     }
 }
 
@@ -10547,8 +10551,7 @@ a.pswp__share--download:hover {
 }
 
 
-
-.detail-receipt img{
+.detail-receipt img {
     border-radius: 10px;
     display: block;
     margin: auto;
@@ -10558,12 +10561,12 @@ a.pswp__share--download:hover {
     object-fit: contain;
 }
 
-.detail-receipt .detail-label{
+.detail-receipt .detail-label {
     font-size: 80%;
     color: #aaa;
 }
 
-.detail-receipt .detail-field a{
+.detail-receipt .detail-field a {
     font-size: 80%;
     background: #f6f7ff;
     color: #4a99da;
@@ -10571,14 +10574,14 @@ a.pswp__share--download:hover {
     border-radius: 7px;
 }
 
-.bayer_table tr{
+.bayer_table tr {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #eee!important;
+    border-bottom: 1px solid #eee !important;
 }
 
-.bayer_table td{
+.bayer_table td {
     border: none;
 }
 

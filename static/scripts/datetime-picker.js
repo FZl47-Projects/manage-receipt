@@ -4,7 +4,7 @@ for (let picker of datetime_pickers) {
     let picker_inp = picker
     $(picker).mpdatepicker({
         autoClose: true,
-        timePicker: true,
+        timePicker: false,
         onSelect: function (selected) {
             let set_on_field = picker_inp.getAttribute('set-on')
             if (!set_on_field) {
