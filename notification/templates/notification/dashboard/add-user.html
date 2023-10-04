@@ -22,6 +22,19 @@
                                     <h3 class="m-0">افزودن اعلان برای کاربر</h3>
                                 </div>
                             </div>
+                            <div class="breadcrumb">
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'account:dashboard' %}">داشبورد</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">اعلانات</a>
+                                    </li>
+                                    <li>
+                                        <a href="">افزودن اعلان برای کاربر</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="white_card_body">
                             <div class="card-body">
@@ -109,7 +122,7 @@
         </div>
         {% include 'account/dashboard/components/base/footer.html' %}
     </section>
-        {% render_partial 'account.views.dashboard.UserListComponentPartial' %}
+    {% render_partial 'account.views.dashboard.UserListComponentPartial' %}
 {% endblock %}
 
 

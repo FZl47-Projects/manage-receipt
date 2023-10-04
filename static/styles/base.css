@@ -490,6 +490,44 @@ option[disabled]{
     border-radius: 7px!important;
 }
 
+.breadcrumb{
+    margin-bottom: 0!important;
+    margin-top: 13px;
+}
+
+.breadcrumb ul{
+    direction: rtl;
+    width: 100%;
+    display: block;
+}
+
+.breadcrumb li{
+    font-size: 70%;
+    display: inline-block;
+    color: #b5b5b5;
+}
+
+.breadcrumb li:after{
+    content: "/";
+    margin: 0 3px;
+    font-size: 70%;
+    color: #ccc;
+}
+
+.breadcrumb li:last-of-type:after{
+    content: "";
+    margin: 0;
+}
+
+.breadcrumb li a{
+    color: inherit;
+}
+
+
+.breadcrumb a[href=""]{
+    color: #878787;
+}
+
 @media screen and (max-width: 992px) {
     #container-users .title-list-row > div:last-of-type {
         display: none;

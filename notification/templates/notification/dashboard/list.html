@@ -19,6 +19,19 @@
                                     <h3 class="m-0">لیست اعلان های عمومی</h3>
                                 </div>
                             </div>
+                            <div class="breadcrumb">
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'account:dashboard' %}">داشبورد</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">اعلانات</a>
+                                    </li>
+                                    <li>
+                                        <a href="">اعلانات عمومی</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="white_card_body">
                             <div class="card-body">
@@ -45,7 +58,7 @@
                                         <div class="detail-row">
                                             <div class="col-3">
                                                 <a href="{{ notification.get_absolute_url }}">
-                                                    {{ notification.get_title }}
+                                                    {{ notification.get_title|truncatechars:30 }}
                                                 </a>
                                             </div>
                                             <div class="col-3">

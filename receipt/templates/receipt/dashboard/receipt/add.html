@@ -22,6 +22,19 @@
                                     <h3 class="m-0">ثبت رسید</h3>
                                 </div>
                             </div>
+                            <div class="breadcrumb">
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'account:dashboard' %}">داشبورد</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'receipt:receipt_dashboard_list' %}">رسید ها</a>
+                                    </li>
+                                    <li>
+                                        <a href="">افزودن رسید</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="p-4 pb-0 text-mute">
                             <p class="font-70">لطفا توجه کنید فیلد هارا باید به ترتیب پر نمایید</p>
@@ -41,7 +54,8 @@
                                                     </label>
                                                     <input type="hidden" name="user" required>
                                                     <div class="field-container text-left l d-flex justify-content-between align-items-center">
-                                                        <label class="text-mute font-60 input-select-label-name" for="btnSelectUserNotification">
+                                                        <label class="text-mute font-60 input-select-label-name"
+                                                               for="btnSelectUserNotification">
                                                             کاربر مورد نظر را انتخاب کنید
                                                         </label>
                                                         <button class="btn btn-success font-70 " selected="false"

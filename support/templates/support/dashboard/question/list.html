@@ -1,7 +1,7 @@
 {% extends 'account/dashboard/components/base/base_template.html' %}
 
 {% block Title %}
-   لیست پرسش ها
+    لیست پرسش ها
 {% endblock %}
 
 
@@ -18,6 +18,16 @@
                                 <div class="main-title">
                                     <h3 class="m-0">لیست پرسش ها</h3>
                                 </div>
+                            </div>
+                            <div class="breadcrumb">
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'account:dashboard' %}">داشبورد</a>
+                                    </li>
+                                    <li>
+                                        <a href="">پرسش ها</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                         <div class="white_card_body">

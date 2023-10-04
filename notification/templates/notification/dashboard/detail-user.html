@@ -84,6 +84,26 @@
                                     </h3>
                                 </div>
                             </div>
+                            <div class="breadcrumb">
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'account:dashboard' %}">داشبورد</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">اعلانات</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'notification:notification_dashboard_user_list' %}">اعلانات کاربران</a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            اعلان
+                                            شماره
+                                            {{ notification.id }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="white_card_body">
                             <div class="card-body">

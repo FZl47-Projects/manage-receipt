@@ -20,6 +20,16 @@
                                     <h3 class="m-0">لیست کاربران</h3>
                                 </div>
                             </div>
+                            <div class="breadcrumb">
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'account:dashboard' %}">داشبورد</a>
+                                    </li>
+                                    <li>
+                                        <a href="">کاربران</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="white_card_body">
                             <div class="card-body">
@@ -31,7 +41,8 @@
                                     <form action="{% url 'account:user_list' %}">
                                         <div class="cnt-search col-11 col-md-8">
                                             <input type="text" name="search"
-                                                   placeholder="نام کاربر ، شماره همراه ، ایمیل و.." value="{{ request.GET.search }}">
+                                                   placeholder="نام کاربر ، شماره همراه ، ایمیل و.."
+                                                   value="{{ request.GET.search }}">
                                             <div>
                                                 {% if request.GET.search %}
                                                     <a class="text-danger font-80" style="margin-left: 8px;"

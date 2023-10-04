@@ -20,6 +20,19 @@
                                     <h3 class="m-0">اضافه کردن ساختمان</h3>
                                 </div>
                             </div>
+                            <div class="breadcrumb">
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'account:dashboard' %}">داشبورد</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'receipt:building_dashboard_list' %}">ساختمان ها</a>
+                                    </li>
+                                    <li>
+                                        <a href="">افزودن ساختمان</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="white_card_body">
                             <div class="card-body">
@@ -51,7 +64,7 @@
                                                 توضیحات
                                             </label>
                                             <textarea type="text" name="description" class="form-control"
-                                                   id="inputDescriptionBuilding"
+                                                      id="inputDescriptionBuilding"
                                                       placeholder="توضیحات" minlength="2" maxlength="400"></textarea>
                                         </div>
                                     </div>
