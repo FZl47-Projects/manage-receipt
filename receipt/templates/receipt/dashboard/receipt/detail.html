@@ -195,6 +195,7 @@
                                                         <i class="fa fa-check-circle"></i>
                                                     </button>
                                                 {% endif %}
+                                               
                                                 {% if receipt.status != 'accepted' %}
                                                     {% if receipt.receipttask or receipt.receipttask.receipt_status == 'pending' %}
                                                         <button class="btn btn-reject" type="button"
