@@ -56,7 +56,7 @@ class Building(BaseModel):
     def get_users_sort_by_score(self):
         users = self.get_users()
         for user in users:
-            user.score = user.get_score_by_building(self)
+            user.score = user.get_scores_by_building(self)
         users = list(sorted(users, key=lambda i: i.score,reverse=True))
         return users
 

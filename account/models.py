@@ -138,7 +138,7 @@ class User(AbstractUser):
     def get_notifications(self):
         return self.notificationuser_set.all()
 
-    def get_score_by_building(self, building):
+    def get_scores_by_building(self, building):
         receipts = self.receipt_set.filter(building=building, status='accepted').distinct()
         score = 0
         for receipt in receipts:
