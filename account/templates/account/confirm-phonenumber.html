@@ -88,7 +88,7 @@
         <div class="form form-effect" id="send-code">
             <div class="form-content">
                 <header>تایید شماره همراه</header>
-                <form action="{% url 'account:confirm_phonenumber' %}">
+                <form action="{% url 'account:confirm_phonenumber' %}" id="form-confirm-phonenumber">
                     <!-- send with ajax -->
                     <div class="field input-field">
                         <label>
@@ -114,7 +114,7 @@
             <div class="form-content">
                 <header>تایید شماره همراه</header>
                 <form action="{% url 'account:confirm_phonenumber_check_code' %}"
-                      dashboard-url="{% url 'account:dashboard' %}">
+                      dashboard-url="{% url 'account:dashboard' %}" id="form-check-phonenumber">
                     <!-- send with ajax -->
                     <label>
                         لطفا کد ارسال شده را وارد نمایید
@@ -127,6 +127,11 @@
                         <button type="button">بررسی کد</button>
                     </div>
                 </form>
+                <div class="form-link">
+                    <a href="{% url 'account:logout' %}">خروج</a>
+                    <a href="{% url 'account:login_register' %}">ثبت نام</a>
+                    <a href="{% url 'public:home' %}">خانه</a>
+                </div>
             </div>
         </div>
     </section>
@@ -225,6 +230,17 @@
             cnt_send.classList.add('d-none')
             cnt_check.classList.add('d-none')
         }
+
+        document.querySelector('#form-confirm-phonenumber').addEventListener('submit',function(e){
+            e.preventDefault()
+            btn_send_code.click()
+        })
+
+        
+        document.querySelector('#form-check-phonenumber').addEventListener('submit',function(e){
+            e.preventDefault()
+            btn_check_code.click()
+        })
 
 
     </script>
