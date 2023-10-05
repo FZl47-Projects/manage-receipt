@@ -278,6 +278,14 @@
                                                     <span>تومان</span>
                                                 </p>
                                             </div>
+                                            {% if user.is_admin %}
+                                                <div class="detail-field">
+                                                    <span>ضریب امتیاز</span>
+                                                    <p>
+                                                        <span class="font-size-14">{{ receipt.ratio_score }}</span>
+                                                    </p>
+                                                </div>
+                                            {% endif %}
                                             {% if receipt.status == 'accepted' %}
                                                 <div class="detail-field">
                                                     <span>امتیاز</span>
@@ -375,6 +383,21 @@
                                     </label>
                                     <input type="number" required class="form-control" value="{{ receipt.amount }}"
                                            id="inpAmountReceipt" name="amount">
+                                </div>
+                                <div class="text-left">
+                                    <span id="amount-value"
+                                          class="price-el text-muted font-size-10">{{ receipt.amount }}</span>
+                                    <span class="font-size-10">تومان</span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div>
+                                    <label class="form-label" for="inpRatioScoreReceipt">
+                                        ضریب امتیاز
+                                        <span class="field-required">*</span>
+                                    </label>
+                                    <input type="number" required class="form-control" value="{{ receipt.ratio_score }}"
+                                           id="inpRatioScoreReceipt" name="ratio_score" step="0.1">
                                 </div>
                                 <div class="text-left">
                                     <span id="amount-value"

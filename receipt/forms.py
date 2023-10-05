@@ -29,7 +29,7 @@ class ReceiptAddForm(forms.ModelForm):
 class ReceiptAcceptForm(forms.ModelForm):
     class Meta:
         model = models.Receipt
-        fields = ('amount', 'note', 'status')
+        fields = ('amount', 'note', 'status','ratio_score')
 
 
 class ReceiptRejectForm(forms.ModelForm):

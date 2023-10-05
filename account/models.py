@@ -169,3 +169,4 @@ class User(AbstractUser):
             return self.buildingavailable.buildings.values_list('id',flat=True)
         except:
             return []
+        

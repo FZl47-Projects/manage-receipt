@@ -2,6 +2,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
 from phonenumber_field.formfields import PhoneNumberField
 from .models import User
+from receipt.models import BuildingAvailable
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -109,3 +110,10 @@ class UpdateUserPassword(forms.Form):
         if p1 != p2:
             raise forms.ValidationError('رمز های عبور وارد شده با یکدیگر مغایرت دارند')
         return p2
+
+
+class SetBuildingAvailable(forms.ModelForm):
+
+    class Meta:
+        model = BuildingAvailable
+        fields = '__all__'

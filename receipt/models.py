@@ -83,6 +83,14 @@ class BuildingAvailable(BaseModel):
 
     def __str__(self):
         return f'building available - {self.user.get_full_name()}'
+    
+    @classmethod
+    def get_or_create_building_user(cls,user):
+        print(user)
+        buildingavailable = getattr(user,'buildingavailable',None)
+        if not buildingavailable:
+            buildingavailable = BuildingAvailable.objects.create(user=user)
+        return buildingavailable
 
 
 class ReceiptAbstract(BaseModel):
@@ -104,6 +112,7 @@ class ReceiptAbstract(BaseModel):
     amount = models.PositiveBigIntegerField()
     picture = models.ImageField(upload_to=upload_receipt_pic_src, max_length=3000)
     submited_at = models.DateTimeField(auto_now_add=True)
+    ratio_score = models.FloatField(default=1,validators=[MinValueValidator(0),MaxValueValidator(4)])
 
     class Meta:
         abstract = True
@@ -133,6 +142,8 @@ class Receipt(ReceiptAbstract):
             pass
         if score < 0:
             score = 0
+        # calc ratio score
+        score = score * self.ratio_score
         return score
 
     def get_absolute_url(self):

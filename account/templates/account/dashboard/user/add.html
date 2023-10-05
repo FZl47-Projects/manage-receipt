@@ -96,6 +96,19 @@
                                                    minlength="8" maxlength="64">
                                         </div>
                                     </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-12">
+                                            <label class="form-label" for="inputBuildingUserRegister">
+                                                تنظیم ساختمان
+                                                <span class="field-required">*</span>
+                                            </label>
+                                            <select required name='buildings' multiple class="form-control form-select">
+                                                {% for building in buildings %}
+                                                    <option value="{{ building.id }}">{{ building.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="field field-button text-left">
                                         <button type="submit">ثبت</button>
                                     </div>
