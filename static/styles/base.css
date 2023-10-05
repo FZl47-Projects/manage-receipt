@@ -544,3 +544,9 @@ option[disabled]{
         text-align: center;
     }
 }
+
+@media screen and (max-width: 380px){
+    .cnt-search input{
+        width: 67%;
+    }
+}
