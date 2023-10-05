@@ -295,13 +295,15 @@
                                                     </p>
                                                 </div>
                                             {% endif %}
-                                            <div class="detail-field">
-                                                <span>تاریخ ثبت</span>
-                                                <p>
-                                                    <span class="datetime-convert">{{ receipt.get_created_at }}</span>
-                                                    <span class="font-size-10">({{ receipt.get_created_at_timepast }})</span>
-                                                </p>
-                                            </div>
+                                            {% if user.is_super_admin %}
+                                                <div class="detail-field">
+                                                    <span>تاریخ ثبت</span>
+                                                    <p>
+                                                        <span class="datetime-convert">{{ receipt.get_created_at }}</span>
+                                                        <span class="font-size-10">({{ receipt.get_created_at_timepast }})</span>
+                                                    </p>
+                                                </div>
+                                            {% endif %}
                                             <div class="detail-field">
                                                 <span>تاریخ واریز</span>
                                                 <p>
