@@ -141,7 +141,9 @@
 
                                                 <div class="single_quick_activity">
                                                     <div class="count_content">
-                                                        <span class="mb-2 d-block text-mute">تعداد کاربران</span>
+                                                        <a href="{% url 'account:user_list' %}">
+                                                            <span class="mb-2 d-block text-mute">تعداد کاربران</span>
+                                                        </a>
                                                         <h3>
                                                             <span class="font-s-35 price-el">{{ users.count }}</span>
                                                         </h3>
@@ -153,7 +155,9 @@
 
                                                 <div class="single_quick_activity">
                                                     <div class="count_content">
-                                                        <span class="mb-2 d-block text-mute">تعداد ادمین ها</span>
+                                                        <a href="{% url 'account:user_financial_list' %}">
+                                                            <span class="mb-2 d-block text-mute">تعداد ادمین ها</span>
+                                                        </a>
                                                         <h3>
                                                             <span class="font-s-35 price-el">{{ admins.count }}</span>
                                                         </h3>
@@ -165,7 +169,9 @@
 
                                                 <div class="single_quick_activity">
                                                     <div class="count_content">
-                                                        <span class="mb-2 d-block text-mute">تعداد رسید ها</span>
+                                                        <a href="{% url 'receipt:receipt_dashboard_list' %}">
+                                                            <span class="mb-2 d-block text-mute">تعداد رسید ها</span>
+                                                        </a>
                                                         <h3>
                                                             <span class="font-s-35 price-el">{{ receipts.count }}</span>
                                                         </h3>
@@ -177,7 +183,9 @@
 
                                                 <div class="single_quick_activity">
                                                     <div class="count_content">
-                                                        <span class="mb-2 d-block text-mute">تعداد ساختمان ها</span>
+                                                        <a href="{% url 'receipt:building_dashboard_list' %}">
+                                                            <span class="mb-2 d-block text-mute">تعداد ساختمان ها</span>
+                                                        </a>
                                                         <h3>
                                                             <span class="font-s-35 price-el">{{ buildings.count }}</span>
                                                         </h3>
