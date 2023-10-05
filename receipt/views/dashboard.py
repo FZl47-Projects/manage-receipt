@@ -292,7 +292,8 @@ class ReceiptDetailAccept(View):
                 return redirect(receipt.get_absolute_url())
             f.save()
         messages.success(request, 'رسید با موفقیت تایید شد')
-        return redirect(receipt.get_absolute_url())
+        # return redirect(receipt.get_absolute_url())
+        return redirect('receipt:receipt_dashboard_list')
 
     @admin_required_cbv()
     def post(self, request, receipt_id):
@@ -327,7 +328,8 @@ class ReceiptDetailReject(View):
                 return redirect(receipt.get_absolute_url())
             f.save()
         messages.success(request, 'رسید با موفقیت رد شد')
-        return redirect(receipt.get_absolute_url())
+        # return redirect(receipt.get_absolute_url())
+        return redirect('receipt:receipt_dashboard_list')
 
     @admin_required_cbv()
     def post(self, request, receipt_id):
@@ -371,7 +373,8 @@ class ReceiptTaskDetailAccept(View):
             messages.success(request, 'رسید با موفقیت تایید شد')
         else:
             messages.warning(request, 'عملیات قبلا انجام شده است')
-        return redirect(receipt_task.get_absolute_url())
+        # return redirect(receipt_task.get_absolute_url())
+        return redirect('receipt:receipt_dashboard_task_list')
 
 
 class ReceiptTaskDetailReject(View):
@@ -386,4 +389,5 @@ class ReceiptTaskDetailReject(View):
             messages.success(request, 'عملیات با موفقیت انجام شد')
         else:
             messages.warning(request, 'عملیات قبلا انجام شده است')
-        return redirect(receipt_task.get_absolute_url())
+        # return redirect(receipt_task.get_absolute_url())
+        return redirect('receipt:receipt_dashboard_task_list')
