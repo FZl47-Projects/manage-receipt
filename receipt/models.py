@@ -86,7 +86,6 @@ class BuildingAvailable(BaseModel):
     
     @classmethod
     def get_or_create_building_user(cls,user):
-        print(user)
         buildingavailable = getattr(user,'buildingavailable',None)
         if not buildingavailable:
             buildingavailable = BuildingAvailable.objects.create(user=user)

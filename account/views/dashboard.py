@@ -398,7 +398,7 @@ class UserAdd(View):
         # create user
         f = forms.RegisterUserFullForm(data=data)
         if form_validate_err(request, f) is False:
-            return render(request, self.template_name)
+            return redirect('account:user_add')
         user = f.save()
         user.is_active = True
         user.set_password(f.cleaned_data['password2'])
@@ -407,9 +407,8 @@ class UserAdd(View):
         data['user'] = user
         building_available = BuildingAvailable.get_or_create_building_user(user)
         f = forms.SetBuildingAvailable(data=data,instance=building_available)
-        if form_validate_err(request, f) is False:
-            return render(request, self.template_name)
-        f.save()
+        if f.is_valid():
+            f.save()
         # create notif for admin
         NotificationUser.objects.create(
             type='CREATE_USER_BY_ADMIN',

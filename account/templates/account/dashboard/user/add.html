@@ -102,7 +102,7 @@
                                                 تنظیم ساختمان
                                                 <span class="field-required">*</span>
                                             </label>
-                                            <select required name='buildings' multiple class="form-control form-select">
+                                            <select name='buildings' multiple class="form-control form-select">
                                                 {% for building in buildings %}
                                                     <option value="{{ building.id }}">{{ building.name }}</option>
                                                 {% endfor %}
