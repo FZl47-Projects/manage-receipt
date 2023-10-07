@@ -134,6 +134,8 @@ function removeLoading(element) {
 
 
 let all_datetime_convert = document.querySelectorAll('.datetime-convert')
+let all_datetime_convert_inputs = document.querySelectorAll('.datetime-convert-inp')
+
 for (let dt_el of all_datetime_convert) {
     let dt = dt_el.innerHTML
     dt_el.setAttribute('datetime', dt)
@@ -145,6 +147,19 @@ for (let dt_el of all_datetime_convert) {
         dt_el.innerHTML = dt_persian
     }
 }
+
+for (let dt_el of all_datetime_convert_inputs) {
+    let dt = dt_el.value
+    dt_el.setAttribute('datetime', dt)
+    let dt_persian = new Date(dt).toLocaleDateString('fa-IR', {
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+    if (dt_persian != 'Invalid Date') {
+        dt_el.value = dt_persian
+    }
+}
+
 
 // price elements
 document.querySelectorAll('.price-el').forEach((el) => {
@@ -182,7 +197,7 @@ function getRawPhonenumber(phonenumber) {
 }
 
 function truncate(str, max) {
-  return str.length > max ? str.substr(0, max-1) + '…' : str;
+    return str.length > max ? str.substr(0, max - 1) + '…' : str;
 }
 
 

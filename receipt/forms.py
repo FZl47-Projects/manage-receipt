@@ -1,3 +1,4 @@
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django import forms
 from . import models
 
@@ -21,18 +22,33 @@ class ReceiptTaskAddForm(forms.ModelForm):
 
 
 class ReceiptAddForm(forms.ModelForm):
+    ratio_score = forms.FloatField(validators=[MinValueValidator(0), MaxValueValidator(4)],required=False)
+
     class Meta:
         model = models.Receipt
         exclude = ('tracking_code',)
 
 
 class ReceiptAcceptForm(forms.ModelForm):
+
     class Meta:
         model = models.Receipt
-        fields = ('amount', 'note', 'status','ratio_score')
+        fields = ('amount', 'note', 'status', 'ratio_score')
 
 
 class ReceiptRejectForm(forms.ModelForm):
     class Meta:
         model = models.Receipt
         fields = ('note', 'status')
+
+
+class ReceiptUpdateForm(forms.ModelForm):
+    class Meta:
+        model = models.Receipt
+        fields = ('status', 'note', 'amount', 'ratio_score', 'deposit_datetime', 'depositor_name', 'bank_name')
+
+
+class ReceiptTaskUpdateForm(forms.ModelForm):
+    class Meta:
+        model = models.ReceiptTask
+        fields = ('status', 'receipt_status')

@@ -14,9 +14,11 @@ input {
     color: #5e8591;
 }
 
+
 body {
     font-family: 'Vazir';
 }
+
 
 .text-left {
     text-align: left;
@@ -25,6 +27,7 @@ body {
 .d-none {
     display: none;
 }
+
 
 .border-1-gray {
     border: 1px solid #ddd;
@@ -469,64 +472,101 @@ body {
     color: #f24444;
 }
 
-pre{
-    font-size: 110%!important;
-    color: #343b46!important;
+pre {
+    font-size: 110% !important;
+    color: #343b46 !important;
     white-space: normal;
-    font-family: "Vazirmatn RD FD"!important;
+    font-family: "Vazirmatn RD FD" !important;
     line-height: 34px;
 }
 
 
-option[disabled]{
-    color: #bbb!important;
+option[disabled] {
+    color: #bbb !important;
 }
 
-.border-radius-6{
-    border-radius: 6px!important;
+.border-radius-6 {
+    border-radius: 6px !important;
 }
 
-.border-radius-7{
-    border-radius: 7px!important;
+.border-radius-7 {
+    border-radius: 7px !important;
 }
 
-.breadcrumb{
-    margin-bottom: 0!important;
+.breadcrumb {
+    margin-bottom: 0 !important;
     margin-top: 13px;
 }
 
-.breadcrumb ul{
+.breadcrumb ul {
     direction: rtl;
     width: 100%;
     display: block;
 }
 
-.breadcrumb li{
+.breadcrumb li {
     font-size: 70%;
     display: inline-block;
     color: #b5b5b5;
 }
 
-.breadcrumb li:after{
+.breadcrumb li:after {
     content: "/";
     margin: 0 3px;
     font-size: 70%;
     color: #ccc;
 }
 
-.breadcrumb li:last-of-type:after{
+.breadcrumb li:last-of-type:after {
     content: "";
     margin: 0;
 }
 
-.breadcrumb li a{
+.breadcrumb li a {
     color: inherit;
 }
 
 
-.breadcrumb a[href=""]{
+.breadcrumb a[href=""] {
     color: #878787;
 }
+
+.btn-edit-outline {
+    background: #fff;
+    border: 1px solid #5791f3;
+    border-radius: 6px;
+    color: #5791f3;
+    width: 105px;
+    transition: all .2s !important;
+}
+
+.btn-edit-outline:hover {
+    background: #5791f3;
+    color: #fff;
+}
+
+.btn-edit {
+    border-radius: 6px;
+    background: #5791f3;
+    color: #fff;
+    width: 105px;
+    transition: all .2s !important;
+}
+
+.btn-edit:hover {
+    box-shadow: 0 2px 2px #2a4a81;
+}
+
+.btn-submit {
+    background: #0ae1a7;
+    color: #fff;
+}
+
+.btn-submit:hover {
+    box-shadow: 0 2px 2px #09b284;
+    color: #ffffff;
+}
+
 
 @media screen and (max-width: 992px) {
     #container-users .title-list-row > div:last-of-type {
@@ -545,8 +585,8 @@ option[disabled]{
     }
 }
 
-@media screen and (max-width: 380px){
-    .cnt-search input{
+@media screen and (max-width: 380px) {
+    .cnt-search input {
         width: 67%;
     }
 }

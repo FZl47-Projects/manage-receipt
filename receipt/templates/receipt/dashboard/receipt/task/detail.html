@@ -190,18 +190,17 @@
                                                  alt="{{ receipt_task.receipt.id }}">
                                         </div>
                                         <div class="detail col-12 col-md-6">
+                                           <div class="detail-field">
+                                                <span>رسید</span>
+                                                <p>
+                                                    <a href="{{ receipt_task.receipt.get_absolute_url }}">{{ receipt_task.receipt.tracking_code }}</a>
+                                                </p>
+                                            </div>
                                             <div class="detail-field">
                                                 <span>ادمین</span>
                                                 <p>
                                                     <a href="{{ receipt_task.user_admin.get_absolute_url }}">{{ receipt_task.user_admin.get_full_name }}
                                                         - {{ receipt_task.user_admin.get_raw_phonenumber }}</a>
-                                                </p>
-                                            </div>
-                                            <div class="detail-field">
-                                                <span>کاربر</span>
-                                                <p>
-                                                    <a href="{{ receipt_task.receipt.user.get_absolute_url }}">{{ receipt_task.receipt.user.get_full_name }}
-                                                        - {{ receipt_task.receipt.user.get_raw_phonenumber }}</a>
                                                 </p>
                                             </div>
                                             <div class="detail-field">
@@ -219,23 +218,56 @@
                                                     <span>تومان</span>
                                                 </p>
                                             </div>
+                                            {% if receipt_task.receipt.status == 'accepted' %}
+                                                <div class="detail-field">
+                                                    <span>امتیاز</span>
+                                                    <p>
+                                                        <span class="price-el">{{ receipt_task.receipt.get_score }}</span>
+                                                        <i class="fa fa-star text-warning"></i>
+                                                    </p>
+                                                </div>
+                                            {% endif %}
                                             <div class="detail-field">
-                                                <span>تاریخ ثبت</span>
+                                                <span>ضریب امتیاز</span>
+                                                <p class="font-70">
+                                                   {{ receipt_task.receipt.ratio_score }}
+                                                </p>
+                                            </div>
+                                            <div class="detail-field">
+                                                <span>تاریخ ثبت عملیات</span>
                                                 <p>
                                                     <span class="datetime-convert">{{ receipt_task.receipt.get_created_at }}</span>
                                                     <span class="font-size-10">({{ receipt_task.receipt.get_created_at_timepast }})</span>
                                                 </p>
                                             </div>
                                             <div class="detail-field">
-                                                <span>توضیحات</span>
+                                                <span>تاریخ واریز رسید</span>
                                                 <p>
-                                                    {{ receipt_task.description|default:'بدون توضیحات' }}
+                                                    <span class="datetime-convert">{{ receipt_task.receipt.get_deposit_datetime }}</span>
                                                 </p>
                                             </div>
                                             <div class="detail-field">
-                                                <span>توضیحات عملیات</span>
+                                                <span>نام واریز کننده رسید</span>
                                                 <p>
-                                                    {{ receipt_task.description_task|default:'بدون توضیحات' }}
+                                                    {{ receipt_task.receipt.depositor_name }}
+                                                </p>
+                                            </div>
+                                            <div class="detail-field">
+                                                <span>نام بانک رسید</span>
+                                                <p>
+                                                    {{ receipt_task.receipt.bank_name }}
+                                                </p>
+                                            </div>
+                                              <div class="detail-field">
+                                                <span>توضیحات کاربر</span>
+                                                <p>
+                                                    {{ receipt_task.receipt.description|default:'بدون توضیحات' }}
+                                                </p>
+                                            </div>
+                                            <div class="detail-field">
+                                                <span>توضیحات ادمین</span>
+                                                <p>
+                                                    {{ receipt_task.receipt.note|default:'بدون توضیحات' }}
                                                 </p>
                                             </div>
                                         </div>

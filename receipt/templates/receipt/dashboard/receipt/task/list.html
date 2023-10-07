@@ -96,6 +96,9 @@
                             <div class="card-body">
                                 <div class="list-row">
                                     <div class="title-list-row">
+                                        <div class="col-1">
+                                            تاریخ واریز
+                                        </div>
                                         <div class="col-2">
                                             نام ساختمان
                                         </div>
@@ -114,6 +117,9 @@
                                     </div>
                                     {% for receipt_task in receipts %}
                                         <div class="detail-row">
+                                            <div class="col-1 datetime-convert font-75">
+                                                {{ receipt_task.receipt.get_deposit_datetime }}
+                                            </div>
                                             <div class="col-2">
                                                 <a href="{{ receipt_task.receipt.building.get_absolute_url }}">
                                                     {{ receipt_task.receipt.building.name|truncatechars:30 }}

@@ -106,11 +106,11 @@ class TicketListArchive(View):
 class QuestionAdd(View):
     template_name = 'support/dashboard/question/add.html'
 
-    @admin_required_cbv()
+    @admin_required_cbv(['super_user'])
     def get(self, request):
         return render(request, self.template_name)
 
-    @admin_required_cbv()
+    @admin_required_cbv(['super_user'])
     def post(self, request):
         data = request.POST
         f = QuestionAddForm(data, request.FILES)
@@ -150,6 +150,16 @@ class QuestionDetail(View):
         return render(request, self.template_name, context)
 
 
+class QuestionDelete(View):
+
+    @admin_required_cbv(['super_user'])
+    def post(self, request, question_id):
+        question = get_object_or_404(Question, id=question_id)
+        question.delete()
+        messages.success(request, 'پرسش با موفقیت حذف شد')
+        return redirect('support:support_dashboard_question_list')
+
+
 class AnswerDetail(View):
     template_name = 'support/dashboard/answer/detail.html'
 
@@ -169,12 +179,12 @@ class AnswerSubmit(LoginRequiredMixinCustom, View):
         question = get_object_or_404(Question, id=question_id)
         answer = request.POST.get('answer')
         if not answer:
-            messages.error(request,'لطفا پاسخ سوال را به درستی وارد نمایید')
+            messages.error(request, 'لطفا پاسخ سوال را به درستی وارد نمایید')
             return redirect('public:home')
         AnswerQuestion.objects.create(
             question=question,
             user=request.user,
             answer=answer,
         )
-        messages.success(request,'پاسخ شما با موفقیت ثبت شد')
+        messages.success(request, 'پاسخ شما با موفقیت ثبت شد')
         return redirect('public:home')

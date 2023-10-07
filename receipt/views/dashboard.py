@@ -77,10 +77,10 @@ class BuildingDetailUpdate(View):
     @admin_required_cbv(['super_user'])
     def post(self, request, building_id):
         building = get_object_or_404(models.Building, id=building_id)
-        f = forms.BuildingEditForm(instance=building,data=request.POST)
-        if form_validate_err(request,f) is True:
+        f = forms.BuildingEditForm(instance=building, data=request.POST)
+        if form_validate_err(request, f) is True:
             f.save()
-            messages.success(request,'مشخصات ساختمان با موفقیت بروزرسانی شد')
+            messages.success(request, 'مشخصات ساختمان با موفقیت بروزرسانی شد')
         return redirect(building.get_absolute_url())
 
 
@@ -90,7 +90,7 @@ class BuildingDetailDelete(View):
     def post(self, request, building_id):
         building = get_object_or_404(models.Building, id=building_id)
         building.delete()
-        messages.success(request,'ساختمان با موفقیت حذف شد')
+        messages.success(request, 'ساختمان با موفقیت حذف شد')
         return redirect('receipt:building_dashboard_list')
 
 
@@ -225,7 +225,7 @@ class ReceiptTaskList(View):
         objects = objects.annotate(full_name=Concat('user_admin__first_name', Value(' '), 'user_admin__last_name'))
         amount = s if str(s).isdigit() else 0
         lookup = Q(receipt__building__name__icontains=s) | Q(receipt__amount=amount) | Q(full_name__icontains=s) | Q(
-            user_admin__phonenumber__icontains=s) | Q(receipt__tracking_code=s)
+            user_admin__phonenumber__icontains=s) | Q(receipt__tracking_code__icontains=s)
         return objects.filter(lookup)
 
     def get_pagination(self, request, objects):
@@ -236,7 +236,12 @@ class ReceiptTaskList(View):
         return objects, pagination
 
     def get_context(self, request):
+        user = request.user
         receipts = models.ReceiptTask.objects.all()
+        if user.is_common_admin:
+            # get own receipt tasks
+            receipts = receipts.filter(user_admin=user)
+
         # filter and search
         receipts = self.search(request, receipts)
         receipts = self.sort(request, receipts)
@@ -247,10 +252,17 @@ class ReceiptTaskList(View):
         }
         return context
 
-    @admin_required_cbv(['super_user'])
+    def get_template(self, request):
+        user = request.user
+        if user.is_common_admin:
+            return 'receipt/dashboard/receipt/task/common_admin/list.html'
+        else:
+            return 'receipt/dashboard/receipt/task/list.html'
+
+    @admin_required_cbv()
     def get(self, request):
         context = self.get_context(request)
-        return render(request, 'receipt/dashboard/receipt/task/list.html', context)
+        return render(request, self.get_template(request), context)
 
 
 class ReceiptDetail(LoginRequiredMixinCustom, View):
@@ -268,21 +280,49 @@ class ReceiptDetail(LoginRequiredMixinCustom, View):
         return render(request, 'receipt/dashboard/receipt/detail.html', context)
 
 
+class ReceiptDetailUpdate(LoginRequiredMixinCustom, View):
+
+    def post(self, request, receipt_id):
+        data = request.POST.copy()
+        user = request.user
+        # set default values
+        # if user is super admin then status accepted else status is pending until super admin check that
+        data['status'] = 'accepted'
+        if user.is_common_admin:
+            data['status'] = 'pending'
+        receipt = get_object_or_404(models.Receipt, id=receipt_id)
+        f = forms.ReceiptUpdateForm(data=data, instance=receipt)
+        if form_validate_err(request, f) is False:
+            return redirect(receipt.get_absolute_url())
+        f.save()
+        # set status task receipt to need to check(if task receipt available and user is common admin)
+        task_receipt = getattr(receipt, 'receipttask', None)
+        if task_receipt and user.is_common_admin:
+            data_task = {
+                'status': 'pending',
+                'receipt_status': data.get('receipt_status', None)
+            }
+            f = forms.ReceiptTaskUpdateForm(data=data_task, instance=task_receipt)
+            if f.is_valid():
+                f.save()
+        messages.success(request, 'رسید با موفقیت تغییر کرد')
+        return redirect(receipt.get_absolute_url())
+
+
 class ReceiptDetailAccept(View):
 
     def perform_by_user_role(self, request, receipt):
         user = request.user
-        role = user.role
         data = request.POST.copy()
         # accept receipt
         data['status'] = 'pending'
-        if role in settings.SUPER_ADMIN_ROLES:
+        if user.is_super_admin:
             data['status'] = 'accepted'
         f = forms.ReceiptAcceptForm(instance=receipt, data=data)
         if form_validate_err(request, f) is False:
             return redirect(receipt.get_absolute_url())
         receipt = f.save()
-        if role in settings.COMMON_ADMIN_USER_ROLES:
+        if user.is_common_admin:
             # create receipt task
             data['receipt'] = receipt
             data['receipt_status'] = 'accepted'
@@ -308,17 +348,16 @@ class ReceiptDetailReject(View):
 
     def perform_by_user_role(self, request, receipt):
         user = request.user
-        role = user.role
         data = request.POST.copy()
         # reject receipt
         data['status'] = 'pending'
-        if role in settings.SUPER_ADMIN_ROLES:
+        if user.is_super_admin:
             data['status'] = 'rejected'
         f = forms.ReceiptRejectForm(instance=receipt, data=data)
         if form_validate_err(request, f) is False:
             return redirect(receipt.get_absolute_url())
         f.save()
-        if role in settings.COMMON_ADMIN_USER_ROLES:
+        if user.is_common_admin:
             # create receipt task
             data['receipt'] = receipt
             data['receipt_status'] = 'rejected'
@@ -352,13 +391,20 @@ class ReceiptDetailDelete(View):
 
 class ReceiptTaskDetail(View):
 
-    @admin_required_cbv(['super_user'])
+    def get_template(self, request):
+        user = request.user
+        if user.is_common_admin:
+            return 'receipt/dashboard/receipt/task/common_admin/detail.html'
+        else:
+            return 'receipt/dashboard/receipt/task/detail.html'
+
+    @admin_required_cbv()
     def get(self, request, receipt_task_id):
         receipt_task = get_object_or_404(models.ReceiptTask, id=receipt_task_id)
         context = {
             'receipt_task': receipt_task
         }
-        return render(request, 'receipt/dashboard/receipt/task/detail.html', context)
+        return render(request, self.get_template(request), context)
 
 
 class ReceiptTaskDetailAccept(View):

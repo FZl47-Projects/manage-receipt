@@ -108,20 +108,22 @@
                                     </h3>
                                 </div>
                             </div>
-                            <div class="text-center mt-3 mt-md-0">
-                                <button class="btn btn-edit-outline border-radius-6 m-1" type="button"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#container-edit">
-                                    تغییر
-                                    <i class="fa fa-edit"></i>
-                                </button>
-                                <button class="btn btn-outline-danger border-radius-6 m-1" type="button"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#container-delete">
-                                    حذف
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                            </div>
+                            {% if user.is_super_admin %}
+                                <div class="text-center mt-3 mt-md-0">
+                                    <button class="btn btn-edit-outline border-radius-6 m-1" type="button"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#container-edit">
+                                        تغییر
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-outline-danger border-radius-6 m-1" type="button"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#container-delete">
+                                        حذف
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </div>
+                            {% endif %}
                         </div>
                         <div class="white_card_body">
                             <div class="card-body">

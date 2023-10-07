@@ -15,11 +15,11 @@ User = get_user_model()
 class NotificationAdd(View):
     template_name = 'notification/dashboard/add.html'
 
-    @admin_required_cbv()
+    @admin_required_cbv(['super_user'])
     def get(self, request):
         return render(request, self.template_name)
 
-    @admin_required_cbv()
+    @admin_required_cbv(['super_user'])
     def post(self, request):
         data = request.POST
         f = NotificationForm(data, request.FILES)
@@ -61,7 +61,7 @@ class NotificationDetail(View):
 
 class NotificationDelete(View):
 
-    @admin_required_cbv()
+    @admin_required_cbv(['super_user'])
     def post(self, request, notification_id):
         notification = get_object_or_404(Notification, id=notification_id)
         notification.delete()
@@ -71,7 +71,7 @@ class NotificationDelete(View):
 
 class NotificationUpdate(View):
 
-    @admin_required_cbv()
+    @admin_required_cbv(['super_user'])
     def post(self, request, notification_id):
         notification = get_object_or_404(Notification, id=notification_id)
         f = NotificationUpdateForm(request.POST, request.FILES,instance=notification)

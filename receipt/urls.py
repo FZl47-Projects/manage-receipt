@@ -14,6 +14,7 @@ urlpatterns = [
     path('u/dashboard/receipt/list', dashboard.ReceiptList.as_view(), name='receipt_dashboard_list'),
 
     path('u/dashboard/receipt/<int:receipt_id>', dashboard.ReceiptDetail.as_view(), name='receipt_dashboard_detail'),
+    path('u/dashboard/receipt/<int:receipt_id>/update', dashboard.ReceiptDetailUpdate.as_view(), name='receipt_dashboard_detail_update'),
     path('u/dashboard/receipt/<int:receipt_id>/accept', dashboard.ReceiptDetailAccept.as_view(), name='receipt_dashboard_detail_accept'),
     path('u/dashboard/receipt/<int:receipt_id>/reject', dashboard.ReceiptDetailReject.as_view(), name='receipt_dashboard_detail_reject'),
     path('u/dashboard/receipt/<int:receipt_id>/delete', dashboard.ReceiptDetailDelete.as_view(), name='receipt_dashboard_detail_delete'),

@@ -35,10 +35,12 @@
                         </div>
                         <div class="white_card_body">
                             <div class="card-body">
-                                <div class="text-right mb-3">
-                                    <a href="{% url 'notification:notification_dashboard_add' %}"
-                                       class="btn btn-outline-success font-70">ایجاد اعلان عمومی</a>
-                                </div>
+                                {% if user.is_super_admin %}
+                                    <div class="text-right mb-3">
+                                        <a href="{% url 'notification:notification_dashboard_add' %}"
+                                           class="btn btn-outline-success font-70">ایجاد اعلان عمومی</a>
+                                    </div>
+                                {% endif %}
                                 <div class="list-row">
                                     <div class="title-list-row">
                                         <div class="col-3">

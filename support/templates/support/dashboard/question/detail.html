@@ -23,7 +23,7 @@
         <div class="main_content_iner">
             <div class="container-fluid p-0 ">
                 <div id="container-index">
-                    {% if user.is_admin %}
+                    {% if user.is_super_admin %}
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="single_element">
@@ -255,7 +255,8 @@
                     </div>
                 </div>
                 <div class="white_card_body">
-                    <form action="/u/dashboard/user/2/detail/delete" method="post" class="col-12">
+                    <form action="{% url 'support:support_dashboard_question_delete' question_id=question.id %}" method="post" class="col-12">
+                        {% csrf_token %}
                         <div class="card-body">
                             <div>
                                 <p class="text- bg-danger-light">

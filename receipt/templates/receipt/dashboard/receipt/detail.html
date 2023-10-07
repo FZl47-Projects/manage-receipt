@@ -127,6 +127,20 @@
             color: #fff;
         }
 
+        .btn-edit-outline {
+            background: #fff;
+            border: 1px solid #5791f3;
+            border-radius: 6px;
+            color: #5791f3;
+            width: 105px;
+            transition: all .2s !important;
+        }
+
+        .btn-edit-outline:hover {
+            background: #5791f3;
+            color: #fff;
+        }
+
 
     </style>
 {% endblock %}
@@ -137,6 +151,37 @@
     <section class="main_content dashboard_part large_header_bg">
         {% include 'account/dashboard/components/base/header.html' %}
         <div class="main_content_iner">
+            {% if user.is_admin %}
+                <div class="row">
+                    <div class="col-12">
+                        <div class="white_card mb-4">
+                            <div class="white_card_header d-block d-md-flex justify-content-between align-items-center">
+                                <div class="main-title">
+                                    <h3 class="m-0">عملیات</h3>
+                                </div>
+                                <div class="text-center mt-3 mt-md-0">
+                                    {% if receipt.get_status != 'pending' %}
+                                        <button class="btn btn-w btn-edit-outline m-1" type="button"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#container-edit">
+                                            تغییر
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                    {% endif %}
+                                    {% if user.is_super_admin %}
+                                        <button class="btn btn-w btn-outline-danger m-1 border-radius-6" type="button"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#container-delete">
+                                            حذف رسید
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
             <div class="container-fluid p-0 ">
                 <div class="col-lg-12">
                     <div class="white_card mb_30">
@@ -161,32 +206,13 @@
                                     </div>
                                     <div class="receipt-task-status d-block d-md-flex justify-content-between">
                                         <div class="text-mute font-80">
-                                            <span class="{{ receipt.status }}">
+                                            <span class="{{ receipt.get_status }}">
                                                 {{ receipt.get_status_label }}
                                             </span>
                                         </div>
                                         {% if user.is_super_admin %}
                                             <div>
                                                 {% if receipt.status != 'accepted' %}
-                                                    <button class="btn btn-accept" type="button" data-bs-toggle="modal"
-                                                            data-bs-target="#container-receipt-accept"
-                                                            id="btnReceiptAccept">
-                                                        تایید
-                                                        <i class="fa fa-check-circle"></i>
-                                                    </button>
-                                                {% endif %}
-                                                {% if receipt.status == 'pending' %}
-                                                    <button class="btn btn-reject" type="button" data-bs-toggle="modal"
-                                                            data-bs-target="#container-receipt-reject"
-                                                            id="btnReceiptReject">
-                                                        رد
-                                                        <i class="fa fa-times-circle"></i>
-                                                    </button>
-                                                {% endif %}
-                                            </div>
-                                        {% elif user.is_common_admin %}
-                                            <div>
-                                                {% if receipt.receipttask.receipt_status != 'accepted' and receipt.receipttask.receipt_status %}
                                                     <button class="btn btn-accept" type="button"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#container-receipt-accept"
@@ -195,9 +221,30 @@
                                                         <i class="fa fa-check-circle"></i>
                                                     </button>
                                                 {% endif %}
-                                               
+                                                {% if receipt.status == 'pending' %}
+                                                    <button class="btn btn-reject" type="button"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#container-receipt-reject"
+                                                            id="btnReceiptReject">
+                                                        رد
+                                                        <i class="fa fa-times-circle"></i>
+                                                    </button>
+                                                {% endif %}
+                                            </div>
+                                        {% elif user.is_common_admin and not receipt.receipttask %}
+                                            <div>
+                                                {% if receipt.receipttask.receipt_status != 'accepted' %}
+                                                    <button class="btn btn-accept" type="button"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#container-receipt-accept"
+                                                            id="btnReceiptAccept">
+                                                        تایید
+                                                        <i class="fa fa-check-circle"></i>
+                                                    </button>
+                                                {% endif %}
+
                                                 {% if receipt.status != 'accepted' %}
-                                                    {% if receipt.receipttask or receipt.receipttask.receipt_status == 'pending' %}
+                                                    {% if receipt.receipttask or receipt.get_status == 'pending' %}
                                                         <button class="btn btn-reject" type="button"
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#container-receipt-reject"
@@ -220,17 +267,16 @@
                                             <div class="text-mute font-80">
                                                 {% if receipt.receipttask.status == 'accepted' %}
                                                     <span class="accepted">
-                                               تایید شده
-                                                </span>
+                                                   تایید شده
+                                                    </span>
                                                 {% elif receipt.receipttask.status == 'rejected' %}
                                                     <span class="rejected">
-                                                رد شده
-                                                </span>
+                                                    رد شده
+                                                    </span>
                                                 {% else %}
-
                                                     <span class="pending">
-                                                در انتظار تایید مدیر
-                                                </span>
+                                                        در انتظار تایید مدیر
+                                                    </span>
                                                 {% endif %}
                                             </div>
                                         </div>
@@ -278,20 +324,20 @@
                                                     <span>تومان</span>
                                                 </p>
                                             </div>
-                                            {% if user.is_admin %}
-                                                <div class="detail-field">
-                                                    <span>ضریب امتیاز</span>
-                                                    <p>
-                                                        <span class="font-size-14">{{ receipt.ratio_score }}</span>
-                                                    </p>
-                                                </div>
-                                            {% endif %}
                                             {% if receipt.status == 'accepted' %}
                                                 <div class="detail-field">
                                                     <span>امتیاز</span>
                                                     <p>
                                                         <span class="price-el">{{ receipt.get_score }}</span>
                                                         <i class="fa fa-star text-warning"></i>
+                                                    </p>
+                                                </div>
+                                            {% endif %}
+                                            {% if user.is_admin %}
+                                                <div class="detail-field">
+                                                    <span>ضریب امتیاز</span>
+                                                    <p>
+                                                        <span class="font-size-14">{{ receipt.ratio_score }}</span>
                                                     </p>
                                                 </div>
                                             {% endif %}
@@ -336,20 +382,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    {% if user.is_super_admin %}
-                                        <div class="container-title">
-                                            <p>
-                                                عملیات
-                                            </p>
-                                        </div>
-                                        <div class="receipt-action">
-                                            <a href="{% url 'receipt:receipt_dashboard_detail_delete' receipt_id=receipt.id %}"
-                                               class="btn btn-delete">
-                                                <i class="fa fa-trash"></i>
-                                                حذف
-                                            </a>
-                                        </div>
-                                    {% endif %}
+
                                 </div>
                             </div>
                         </div>
@@ -401,11 +434,6 @@
                                     <input type="number" required class="form-control" value="{{ receipt.ratio_score }}"
                                            id="inpRatioScoreReceipt" name="ratio_score" step="0.1">
                                 </div>
-                                <div class="text-left">
-                                    <span id="amount-value"
-                                          class="price-el text-muted font-size-10">{{ receipt.amount }}</span>
-                                    <span class="font-size-10">تومان</span>
-                                </div>
                             </div>
                             <div class="col-md-12">
                                 <label class="form-label">
@@ -453,6 +481,160 @@
                                 <button class="btn btn-reject">
                                     رد رسید
                                     <i class="fa fa-times-circle"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="container-delete" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg col-lg-12">
+            <div class="modal-content white_card mb_30">
+                <div class="white_card_header">
+                    <div class="modal-header box_header m-0">
+                        <h3 class="m-0">حذف رسید</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="white_card_body">
+                    <form action="{% url 'receipt:receipt_dashboard_detail_delete' receipt_id=receipt.id %}"
+                          method="get" class="col-12">
+                        <div class="card-body">
+
+                            <div>
+                                <p class="text- bg-danger-light">
+                                    ایا از حذف رسید اطمینان دارید؟
+                                </p>
+                            </div>
+                            <div class="text-left mt-4">
+                                <button class="btn btn-danger">
+                                    بله ، حذف رسید
+                                    <i class="fa fa-up"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="container-edit" class="modal fade" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-lg col-lg-12">
+            <div class="modal-content white_card mb_30">
+                <div class="white_card_header">
+                    <div class="modal-header box_header m-0">
+                        <h3 class="m-0">تغییر رسید</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="white_card_body">
+                    <form action="{% url 'receipt:receipt_dashboard_detail_update' receipt_id=receipt.id %}"
+                          method="post" class="col-12">
+                        <div class="card-body">
+                            {% csrf_token %}
+
+                            <div class="col-md-12">
+                                <div>
+                                    <label class="form-label" for="inpBuilding">
+                                        نام ساختمان
+                                        <span class="field-required">*</span>
+                                    </label>
+                                    <input type="text" required="" class="form-control"
+                                           value="{{ receipt.building.name }}" id="inpBuilding" name="building"
+                                           aria-required="" disabled="">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div>
+                                    <label class="form-label" for="inpNameUser">
+                                        کاربر
+                                        <span class="field-required">*</span>
+                                    </label>
+                                    <input type="text" required="" class="form-control"
+                                           value="{{ receipt.user.get_full_name }}" id="inpNameUser" name="user"
+                                           aria-required="" disabled="">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label" for="inpAmount">
+                                    مبلغ
+                                    <span class="field-required">*</span>
+                                </label>
+                                <input type="number" required="" class="form-control"
+                                       value="{{ receipt.amount }}" id="inpAmount" name="amount">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label" for="inpRatioScore">
+                                    ضریب امتیاز
+                                    <span class="field-required">*</span>
+                                </label>
+                                <input type="number" required="" class="form-control"
+                                       value="{{ receipt.ratio_score }}" id="inpRatioScore" name="ratio_score"
+                                       step="0.1">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label" for="inpDepositTime">
+                                    تاریخ واریز
+                                    <span class="field-required">*</span>
+                                </label>
+                                <input id="deposit_inp" type="hidden" value="{{ receipt.get_deposit_datetime }}"
+                                       required name="deposit_datetime">
+                                <input type="text" name="" id="inpDepositTime"
+                                       value="{{ receipt.get_deposit_datetime }}"
+                                       class="form-control datetime-picker mpdatepicker datetime-convert-inp"
+                                       set-on="deposit_inp" required="" data-timestamp="null">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label" for="inpDepositorName">
+                                    نام واریز کننده
+                                    <span class="field-required">*</span>
+                                </label>
+                                <input type="text" required="" class="form-control"
+                                       value="{{ receipt.depositor_name }}" id="inpDepositorName" name="depositor_name">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label" for="inpBankName">
+                                    نام بانک
+                                    <span class="field-required">*</span>
+                                </label>
+                                <input type="text" required="" class="form-control"
+                                       value="{{ receipt.bank_name }}" id="inpBankName" name="bank_name">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label" for="inpNote">
+                                    توضیحات
+                                </label>
+                                <textarea type="text" class="form-control" id="inpNote"
+                                          name="note">{{ receipt.note }}</textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label" for="inpNote">
+                                    وضعیت رسید
+                                    <span class="field-required">*</span>
+                                </label>
+                                <select required class="form-control form-select" name="receipt_status">
+                                    <option value="accepted" {% if receipt.get_status == 'accepted' %}selected{% endif %}>
+                                        تایید شده
+                                    </option>
+                                    <option value="rejected" {% if receipt.get_status == 'rejected' %}selected{% endif %}>
+                                        رد شده
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="text-left mt-4">
+                                <button class="btn btn-submit">
+                                    ثبت و بروزرسانی
+                                    <i class="fa fa-up"></i>
                                 </button>
                             </div>
                         </div>

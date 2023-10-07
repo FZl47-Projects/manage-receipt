@@ -136,6 +136,16 @@
                                 </div>
                             </a>
                         </li>
+                    {% elif user.is_common_admin %}
+                        <li>
+                            <a href="{% url 'receipt:receipt_dashboard_task_list' %}">
+                                رسید های مشاهده شده
+                                <div>
+                                    <i class="fa fa-user m-0 font-size-7"></i>
+                                    <i class="fa fa-receipt m-0"></i>
+                                </div>
+                            </a>
+                        </li>
                     {% endif %}
         </li>
     </ul>
@@ -157,7 +167,7 @@
                     </div>
                 </a>
             </li>
-            {% if user.is_admin %}
+            {% if user.is_super_admin %}
                 <li>
                     <a href="{% url 'notification:notification_dashboard_add' %}">
                         ایجاد اعلان عمومی
@@ -167,6 +177,8 @@
                         </div>
                     </a>
                 </li>
+            {% endif %}
+            {% if user.is_admin %}
                 <li>
                     <a href="{% url 'notification:notification_dashboard_user_add' %}">
                         ایجاد اعلان برای کاربر
@@ -234,15 +246,17 @@
                 </li>
                 <!-- end-feature -->
 
-                <li>
-                    <a href="{% url 'support:support_dashboard_question_add' %}">
-                        ایجاد پرسش
-                        <div>
-                            <i class="fa fa-plus m-0 font-size-7"></i>
-                            <i class="fa fa-question m-0"></i>
-                        </div>
-                    </a>
-                </li>
+                {% if user.is_super_admin %}
+                    <li>
+                        <a href="{% url 'support:support_dashboard_question_add' %}">
+                            ایجاد پرسش
+                            <div>
+                                <i class="fa fa-plus m-0 font-size-7"></i>
+                                <i class="fa fa-question m-0"></i>
+                            </div>
+                        </a>
+                    </li>
+                {% endif %}
                 <li>
                     <a href="{% url 'support:support_dashboard_question_list' %}">
                         لیست پرسش ها

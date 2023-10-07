@@ -1,4 +1,3 @@
-import datetime
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.urls import reverse
@@ -26,7 +25,7 @@ class Building(BaseModel):
     address = models.TextField()
     description = models.TextField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
-    progress_percentage = models.IntegerField(default=0,validators=[MinValueValidator(0), MaxValueValidator(100)])
+    progress_percentage = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])
 
     class Meta:
         ordering = '-id',
@@ -57,7 +56,7 @@ class Building(BaseModel):
         users = self.get_users()
         for user in users:
             user.score = user.get_scores_by_building(self)
-        users = list(sorted(users, key=lambda i: i.score,reverse=True))
+        users = list(sorted(users, key=lambda i: i.score, reverse=True))
         return users
 
     def get_payments(self):
@@ -78,28 +77,27 @@ class Building(BaseModel):
 
 
 class BuildingAvailable(BaseModel):
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     buildings = models.ManyToManyField('Building')
 
     def __str__(self):
         return f'building available - {self.user.get_full_name()}'
-    
+
     @classmethod
-    def get_or_create_building_user(cls,user):
-        buildingavailable = getattr(user,'buildingavailable',None)
-        if not buildingavailable:
-            buildingavailable = BuildingAvailable.objects.create(user=user)
-        return buildingavailable
+    def get_or_create_building_user(cls, user):
+        building_available = getattr(user, 'buildingavailable', None)
+        if not building_available:
+            building_available = BuildingAvailable.objects.create(user=user)
+        return building_available
 
 
 class ReceiptAbstract(BaseModel):
-
     STATUS_OPTIONS = (
         ('accepted', 'تایید شده'),
         ('pending', 'در صف'),
         ('rejected', 'رد شده')
     )
-    tracking_code = models.CharField(max_length=10,default=random_str)
+    tracking_code = models.CharField(max_length=10, default=random_str)
     status = models.CharField(max_length=15, choices=STATUS_OPTIONS, default='pending')
     user = models.ForeignKey('account.User', on_delete=models.CASCADE)
     building = models.ForeignKey(Building, on_delete=models.CASCADE)
@@ -111,7 +109,7 @@ class ReceiptAbstract(BaseModel):
     amount = models.PositiveBigIntegerField()
     picture = models.ImageField(upload_to=upload_receipt_pic_src, max_length=3000)
     submited_at = models.DateTimeField(auto_now_add=True)
-    ratio_score = models.FloatField(default=1,validators=[MinValueValidator(0),MaxValueValidator(4)])
+    ratio_score = models.FloatField(default=1, validators=[MinValueValidator(0), MaxValueValidator(4)])
 
     class Meta:
         abstract = True
@@ -143,16 +141,24 @@ class Receipt(ReceiptAbstract):
             score = 0
         # calc ratio score
         score = score * self.ratio_score
+        score = int(score)
         return score
 
     def get_absolute_url(self):
         return reverse('receipt:receipt_dashboard_detail', args=(self.id,))
 
     def get_status(self):
-        return self.status
+        try:
+            return self.receipttask.receipt_status
+        except:
+            return self.status
 
     def get_status_label(self):
-        return self.get_status_display()
+        try:
+            # show task receipt status
+            return self.receipttask.get_receipt_status_display()
+        except:
+            return self.get_status_display()
 
 
 class ReceiptTask(TaskAdmin):
