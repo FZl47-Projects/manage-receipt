@@ -388,9 +388,9 @@ class UserAdd(View):
     @admin_required_cbv()
     def get(self, request):
         context = {
-            'buildings':Building.objects.filter(is_active=True)
+            'buildings': Building.objects.filter(is_active=True)
         }
-        return render(request, self.template_name,context)
+        return render(request, self.template_name, context)
 
     @admin_required_cbv()
     def post(self, request):
@@ -406,7 +406,7 @@ class UserAdd(View):
         # set building avaialable
         data['user'] = user
         building_available = BuildingAvailable.get_or_create_building_user(user)
-        f = forms.SetBuildingAvailable(data=data,instance=building_available)
+        f = forms.SetBuildingAvailable(data=data, instance=building_available)
         if f.is_valid():
             f.save()
         # create notif for admin
@@ -423,6 +423,7 @@ class UserAdd(View):
         messages.success(request, 'حساب کاربر با موفقیت ایجاد شد')
         return redirect(user.get_absolute_url())
 
+
 class UserDetail(LoginRequiredMixinCustom, View):
 
     def get_template(self, user_obj):
@@ -436,6 +437,9 @@ class UserDetail(LoginRequiredMixinCustom, View):
         user = get_object_or_404(User, id=user_id)
         # ony super admin can access to admin detail
         if user.is_common_admin and request.user.is_super_admin is False:
+            raise Http404
+        # super user detail cant be accessible
+        if user.is_super_admin:
             raise Http404
         context = {
             # name 'user_detail' for prevent conflict
@@ -455,6 +459,9 @@ class UserDetailDelete(LoginRequiredMixinCustom, View):
     @admin_required_cbv(['super_user'])
     def post(self, request, user_id):
         user = get_object_or_404(User, id=user_id)
+        if user.is_super_admin:
+            messages.error(request, 'شما نمیتوانید کاربر ویژه را حذف کنید')
+            return redirect('account:user_list')
         user.delete()
         messages.success(request, 'کاربر با موفقیت حذف شد')
         return redirect('account:user_list')
