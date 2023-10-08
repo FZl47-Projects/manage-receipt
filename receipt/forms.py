@@ -22,7 +22,7 @@ class ReceiptTaskAddForm(forms.ModelForm):
 
 
 class ReceiptAddForm(forms.ModelForm):
-    ratio_score = forms.FloatField(validators=[MinValueValidator(0), MaxValueValidator(4)],required=False)
+    ratio_score = forms.FloatField(validators=[MinValueValidator(0), MaxValueValidator(4)], required=False)
 
     class Meta:
         model = models.Receipt
@@ -30,10 +30,9 @@ class ReceiptAddForm(forms.ModelForm):
 
 
 class ReceiptAcceptForm(forms.ModelForm):
-
     class Meta:
         model = models.Receipt
-        fields = ('amount', 'note', 'status', 'ratio_score')
+        fields = ('amount', 'note', 'status', 'ratio_score', 'deposit_datetime')
 
 
 class ReceiptRejectForm(forms.ModelForm):

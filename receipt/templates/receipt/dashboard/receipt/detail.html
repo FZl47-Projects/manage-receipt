@@ -233,17 +233,17 @@
                                             </div>
                                         {% elif user.is_common_admin and not receipt.receipttask %}
                                             <div>
-                                                {% if receipt.receipttask.receipt_status != 'accepted' %}
-                                                    <button class="btn btn-accept" type="button"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#container-receipt-accept"
-                                                            id="btnReceiptAccept">
-                                                        تایید
-                                                        <i class="fa fa-check-circle"></i>
-                                                    </button>
-                                                {% endif %}
-
                                                 {% if receipt.status != 'accepted' %}
+                                                    {% if receipt.receipttask.receipt_status != 'accepted' %}
+                                                        <button class="btn btn-accept" type="button"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#container-receipt-accept"
+                                                                id="btnReceiptAccept">
+                                                            تایید
+                                                            <i class="fa fa-check-circle"></i>
+                                                        </button>
+                                                    {% endif %}
+
                                                     {% if receipt.receipttask or receipt.get_status == 'pending' %}
                                                         <button class="btn btn-reject" type="button"
                                                                 data-bs-toggle="modal"
@@ -424,6 +424,18 @@
                                           class="price-el text-muted font-size-10">{{ receipt.amount }}</span>
                                     <span class="font-size-10">تومان</span>
                                 </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label" for="inpDepositTimeConfirm">
+                                    تاریخ واریز
+                                    <span class="field-required">*</span>
+                                </label>
+                                <input id="deposit_inp_confirm" type="hidden" value="{{ receipt.get_deposit_datetime }}"
+                                       required name="deposit_datetime">
+                                <input type="text" name="" id="inpDepositTimeConfirm"
+                                       value="{{ receipt.get_deposit_datetime }}"
+                                       class="form-control datetime-picker mpdatepicker datetime-convert-inp"
+                                       set-on="deposit_inp_confirm" required="" data-timestamp="null">
                             </div>
                             <div class="col-md-12">
                                 <div>
@@ -623,10 +635,12 @@
                                     <span class="field-required">*</span>
                                 </label>
                                 <select required class="form-control form-select" name="receipt_status">
-                                    <option value="accepted" {% if receipt.get_status == 'accepted' %}selected{% endif %}>
+                                    <option value="accepted"
+                                            {% if receipt.get_status == 'accepted' %}selected{% endif %}>
                                         تایید شده
                                     </option>
-                                    <option value="rejected" {% if receipt.get_status == 'rejected' %}selected{% endif %}>
+                                    <option value="rejected"
+                                            {% if receipt.get_status == 'rejected' %}selected{% endif %}>
                                         رد شده
                                     </option>
                                 </select>
