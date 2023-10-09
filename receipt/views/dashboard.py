@@ -273,7 +273,11 @@ class ReceiptDetail(LoginRequiredMixinCustom, View):
         # only own user and admin can access
         if receipt.user != user and user.is_admin is False:
             raise Http404
-
+        # redirect to receipt task if admin is super admin and
+        # receipt have receipt task and receipt task is pending
+        receipt_task = getattr(receipt, 'receipttask', None)
+        if user.is_super_admin and receipt_task and receipt_task.status == 'pending':
+            return redirect(receipt_task.get_absolute_url())
         context = {
             'receipt': receipt
         }
@@ -287,7 +291,7 @@ class ReceiptDetailUpdate(LoginRequiredMixinCustom, View):
         data = request.POST.copy()
         user = request.user
         # set default values
-        data['status'] = data.get('receipt_status',None)
+        data['status'] = data.get('receipt_status', None)
 
         receipt = get_object_or_404(models.Receipt, id=receipt_id)
         f = forms.ReceiptUpdateForm(data=data, instance=receipt)
