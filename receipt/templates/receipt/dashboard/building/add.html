@@ -59,6 +59,19 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3">
+                                        <div class="col-12">
+                                            <label class="form-label" for="inputAddressBuilding">
+                                                پروژه
+                                                <span class="field-required">*</span>
+                                            </label>
+                                            <select name="project" required class="form-control form-select">
+                                                {% for project in projects %}
+                                                    <option value="{{ project.id }}">{{ project.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
                                         <div class="col-md-12">
                                             <label class="form-label" for="inputDescriptionBuilding">
                                                 توضیحات

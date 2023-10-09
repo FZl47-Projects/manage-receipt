@@ -203,7 +203,8 @@
                                         <div class="quick_activity">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <div class="quick_activity_wrap" style="grid-template-columns: repeat(3,1fr)">
+                                                    <div class="quick_activity_wrap"
+                                                         style="grid-template-columns: repeat(3,1fr)">
 
                                                         <div class="single_quick_activity">
                                                             <div class="count_content">
@@ -632,6 +633,17 @@
                                     <option value="false" {% if building.is_active == False %}selected{% endif %}>غیر
                                         فعال
                                     </option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label">
+                                    پروژه
+                                    <span class="field-required">*</span>
+                                </label>
+                                <select name="project" class="form-control form-select" required>
+                                    {% for project in projects %}
+                                        <option value="{{ project.id }}">{{ project.name }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                             <div class="col-md-12">

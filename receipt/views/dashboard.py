@@ -83,7 +83,10 @@ class BuildingAdd(View):
 
     @admin_required_cbv(['super_user'])
     def get(self, request):
-        return render(request, self.template_name)
+        context = {
+            'projects': models.Project.objects.all()
+        }
+        return render(request, self.template_name, context)
 
     @admin_required_cbv(['super_user'])
     def post(self, request):
@@ -129,6 +132,7 @@ class BuildingDetail(View):
 
         context = {
             'building': building,
+            'projects': models.Project.objects.all(),
             # chart data
             'user_names': json.dumps(user_names),
             'user_payments': json.dumps(user_payments)
