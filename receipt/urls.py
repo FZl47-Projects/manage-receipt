@@ -3,6 +3,14 @@ from .views import dashboard
 
 app_name = 'receipt'
 urlpatterns = [
+
+    path('u/dashboard/project/add',dashboard.ProjectAdd.as_view(),name='project_dashboard_add'),
+    path('u/dashboard/project/list',dashboard.ProjectList.as_view(),name='project_dashboard_list'),
+    path('u/dashboard/project/<int:project_id>',dashboard.ProjectDetail.as_view(),name='project_dashboard_detail'),
+    path('u/dashboard/project/<int:project_id>/update',dashboard.ProjectUpdate.as_view(),name='project_dashboard_detail_update'),
+    path('u/dashboard/project/<int:project_id>/delete',dashboard.ProjectDelete.as_view(),name='project_dashboard_detail_delete'),
+
+
     path('u/dashboard/building/add', dashboard.BuildingAdd.as_view(), name='building_dashboard_add'),
     path('u/dashboard/building/list', dashboard.BuildingList.as_view(), name='building_dashboard_list'),
     path('u/dashboard/building/<int:building_id>', dashboard.BuildingDetail.as_view(),name='building_dashboard_detail'),

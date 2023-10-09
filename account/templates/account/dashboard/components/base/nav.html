@@ -35,10 +35,19 @@
                 <div class="icon_menu">
                     <img src="{% static 'images/dashboard/menu-icon/2.svg.xml' %}" alt>
                 </div>
-                <span>ساختمان</span>
+                <span>پروژه</span>
             </a>
             <ul>
                 {% if user.is_super_admin %}
+                    <li>
+                        <a href="{% url 'receipt:project_dashboard_add' %}">
+                            افزودن پروژه
+                            <div>
+                                <i class="fa fa-plus font-size-7 m-0"></i>
+                                <i class="fa fa-project-diagram m-0"></i>
+                            </div>
+                        </a>
+                    </li>
                     <li>
                         <a href="{% url 'receipt:building_dashboard_add' %}">
                             افزودن ساختمان
@@ -46,6 +55,14 @@
                                 <i class="fa fa-plus font-size-7 m-0"></i>
                                 <i class="fa fa-building m-0"></i>
                             </div>
+                        </a>
+                    </li>
+                {% endif %}
+                {% if user.is_admin %}
+                    <li>
+                        <a href="{% url 'receipt:project_dashboard_list' %}">
+                            لیست پروژه ها
+                            <i class="fa fa-project-diagram"></i>
                         </a>
                     </li>
                 {% endif %}

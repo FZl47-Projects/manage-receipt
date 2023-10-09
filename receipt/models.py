@@ -22,16 +22,23 @@ def upload_receipt_pic_src(instance, path):
 
 class Project(BaseModel):
     name = models.CharField(max_length=100)
+    description = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.name
+
+    def get_buildings(self):
+        return self.building_set.all()
+
+    def get_absolute_url(self):
+        return reverse('receipt:project_dashboard_detail', args=(self.id,))
 
 
 class Building(BaseModel):
     name = models.CharField(max_length=200)
     address = models.TextField()
     description = models.TextField(null=True, blank=True)
-    project = models.ForeignKey('Project',on_delete=models.CASCADE)
+    project = models.ForeignKey('Project', on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
     progress_percentage = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])
 

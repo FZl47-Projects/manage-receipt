@@ -3,7 +3,6 @@ from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View
 from django.http import Http404
-from django.conf import settings
 from django.core.paginator import Paginator
 from django.db.models import Q, Value, Case, When, Sum
 from django.db.models.functions import Concat
@@ -11,6 +10,72 @@ from core.auth.mixins import LoginRequiredMixinCustom
 from core.auth.decorators import admin_required_cbv
 from core.utils import form_validate_err
 from receipt import forms, models
+
+
+class ProjectAdd(View):
+    template_name = 'receipt/dashboard/project/add.html'
+
+    @admin_required_cbv(['super_user'])
+    def get(self, request):
+        return render(request, self.template_name)
+
+    @admin_required_cbv(['super_user'])
+    def post(self, request):
+        data = request.POST
+        f = forms.ProjectAddForm(data=data)
+        if form_validate_err(request, f) is False:
+            return render(request, self.template_name)
+        f.save()
+        messages.success(request, 'پروژه با موفقیت ایجاد شد')
+        return redirect('receipt:project_dashboard_add')
+
+
+class ProjectList(LoginRequiredMixinCustom, View):
+    template_name = 'receipt/dashboard/project/list.html'
+
+    @admin_required_cbv()
+    def get(self, request):
+        projects = models.Project.objects.all()
+        context = {
+            'projects': projects
+        }
+        return render(request, self.template_name, context)
+
+
+class ProjectDetail(LoginRequiredMixinCustom, View):
+    template_name = 'receipt/dashboard/project/detail.html'
+
+    @admin_required_cbv()
+    def get(self, request, project_id):
+        project = get_object_or_404(models.Project, id=project_id)
+        context = {
+            'project': project
+        }
+        return render(request, self.template_name, context)
+
+
+class ProjectUpdate(LoginRequiredMixinCustom, View):
+
+    @admin_required_cbv(['super_user'])
+    def post(self, request, project_id):
+        project = get_object_or_404(models.Project, id=project_id)
+        data = request.POST
+        f = forms.ProjectUpdateForm(data=data, instance=project)
+        if form_validate_err(request, f) is False:
+            return redirect(project.get_absolute_url())
+        f.save()
+        messages.success(request, 'پروژه با موفقیت بروزرسانی شد')
+        return redirect(project.get_absolute_url())
+
+
+class ProjectDelete(LoginRequiredMixinCustom, View):
+
+    @admin_required_cbv(['super_user'])
+    def post(self, request, project_id):
+        project = get_object_or_404(models.Project, id=project_id)
+        project.delete()
+        messages.success(request, 'پروژه با موفقیت حذف شد')
+        return redirect('receipt:project_dashboard_list')
 
 
 class BuildingAdd(View):

@@ -1,0 +1,381 @@
+{% extends 'account/dashboard/components/base/base_template.html' %}
+{% load static %}
+{% load custom_tags %}
+
+{% block Title %}
+    پروژه -
+    {{ project.name }}
+{% endblock %}
+
+{% block Style %}
+    <style>
+
+        #chart-building-payment {
+            margin: 10px;
+            margin-right: auto;
+            margin-left: auto;
+            display: block;
+            height: 100%;
+            width: 95%;
+        }
+
+        .notification {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 15px 0;
+            box-shadow: 0 3px 4px rgba(238, 238, 238, 0.4);
+        }
+
+        .notification-des {
+            font-size: 80%;
+            padding: 3px 7px;
+            border-radius: 5px;
+            color: #235ad2 !important;
+            background: linear-gradient(to left, #fafeff 85%, rgba(255, 255, 255, 0));
+        }
+
+        .notification-des a {
+            color: inherit;
+        }
+
+        .notification-time {
+            color: #999;
+            font-size: 65%;
+        }
+
+        .notification-time i {
+            color: #ffe289;
+        }
+
+        .building-detail {
+            padding: 30px !important;
+        }
+
+        .building-detail .single_quick_activity {
+            border: 1px solid #f0f0f0;
+        }
+
+        .building-detail .count_content span {
+            font-size: 85%;
+        }
+
+        tr.active {
+            background: #e9f6f2 !important;
+        }
+
+
+        tr.active td:first-of-type {
+            border-radius: 0 10px 10px 0;
+        }
+
+        tr.active td:last-of-type {
+            border-radius: 10px 0 0 10px;
+        }
+
+        .btn-edit-outline {
+            background: #fff;
+            border: 1px solid #5791f3;
+            border-radius: 6px;
+            color: #5791f3;
+            width: 105px;
+            transition: all .2s !important;
+        }
+
+        .btn-edit-outline:hover {
+            background: #5791f3;
+            color: #fff;
+        }
+
+        .btn-edit {
+            border-radius: 6px;
+            background: #5791f3;
+            color: #fff;
+            transition: all .2s !important;
+        }
+
+        .btn-edit:hover {
+            box-shadow: 0 2px 2px #2a4a81;
+        }
+
+        .btn-submit {
+            background: #0ae1a7;
+            color: #fff;
+        }
+
+        .btn-submit:hover {
+            box-shadow: 0 2px 2px #09b284;
+            color: #ffffff;
+        }
+
+        .btn-w {
+            border-radius: 6px;
+            width: 105px;
+        }
+
+
+    </style>
+{% endblock %}
+
+{% block Content %}
+
+    {% include 'account/dashboard/components/base/nav.html' %}
+
+    <section class="main_content dashboard_part large_header_bg">
+        {% include 'account/dashboard/components/base/header.html' %}
+        <div class="main_content_iner">
+            <div class="container-fluid p-0 ">
+                <div id="container-index">
+                    {% if user.is_super_admin %}
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="white_card mb-4">
+                                    <div class="white_card_header d-block d-md-flex justify-content-between align-items-center">
+                                        <div class="main-title">
+                                            <h3 class="m-0">عملیات</h3>
+                                        </div>
+                                        <div class="text-center mt-1">
+                                            <button class="btn btn-w btn-edit-outline m-1" type="button"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#container-edit">
+                                                تغییر
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-w btn-outline-danger m-1" type="button"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#container-delete">
+                                                حذف
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="white_card card_height_100">
+                                <div class="white_card_header">
+                                    <div class="box_header m-0">
+                                        <div class="main-title">
+                                            <h3 class="m-0">مشخصات</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="white_card_body building-detail">
+                                    <div class="single_element">
+                                        <div class="quick_activity">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="quick_activity_wrap"
+                                                         style="grid-template-columns:repeat(2,1fr) ">
+
+                                                        <div class="single_quick_activity">
+                                                            <div class="count_content">
+                                                                <span class="mb-2 d-block text-mute">نام پروژه</span>
+                                                                <h3>
+                                                                    <span class="font-s-25 price-el">{{ project.name }}</span>
+                                                                </h3>
+                                                            </div>
+                                                            <a href="#" class="notification_btn bg-purple">
+                                                                <i class="fa fa-project-diagram font-s-20 text-white"></i>
+                                                            </a>
+                                                        </div>
+
+                                                        <div class="single_quick_activity">
+                                                            <div class="count_content">
+                                                                <span class="mb-2 d-block text-mute">تعداد ساختمان ها</span>
+                                                                <h3>
+                                                                    <span class="font-s-25 price-el">{{ project.get_buildings.count }}</span>
+                                                                </h3>
+                                                            </div>
+                                                            <a href="#" class="notification_btn bg-dark">
+                                                                <i class="fa fa-building font-s-20 text-white"></i>
+                                                            </a>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="quick_activity">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="quick_activity_wrap"
+                                                         style="grid-template-columns:repeat(1,1fr) ">
+                                                        <div class="single_quick_activity">
+                                                            <div class="count_content">
+                                                                <span class="mb-2 d-block text-mute">توضیحات</span>
+                                                                <h3>
+                                                                    <span class="font-s-25 price-el">{{ project.description|default:'توضیحی ثبت نشده است' }}</span>
+                                                                </h3>
+                                                            </div>
+                                                            <a href="#" class="notification_btn bg-success">
+                                                                <i class="fa fa-info font-s-20 text-white"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="white_card card_height_100 mb_30 QA_section">
+                                <div class="white_card_header">
+                                    <div class="box_header m-0">
+                                        <div class="main-title">
+                                            <h3 class="m-0">لیست ساختمان ها</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="white_card_body">
+                                    <div class="QA_table table-responsive ">
+
+                                        <table class="table pt-0">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">نام</th>
+                                                <th scope="col">توضیحات</th>
+                                                <th scope="col">تعداد کاربران</th>
+                                                <th scope="col">جزئیات</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for building in project.get_buildings %}
+                                                <tr>
+                                                    <td>
+                                                        {{ building.name|truncatechars:20 }}
+                                                    </td>
+                                                    <td>
+                                                        {{ building.description|truncatechars:20 }}
+                                                    </td>
+                                                    <td>
+                                                        <span class="price-el">{{ building.get_users.count }}</span>
+                                                        <i class="fa fa-user text-primary font-70"></i>
+                                                    </td>
+                                                    <td>
+                                                        <a class="font-85 text-primary"
+                                                           href="{{ building.get_absolute_url }}">
+                                                            بیشتر
+                                                            <i class="fa fa-angle-left"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            {% empty %}
+                                                <tr>
+                                                    <td colspan="20">
+                                                        <div class="container-not-found-base">
+                                                            <p>ساختمانی یافت نشد</p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include 'account/dashboard/components/base/footer.html' %}
+    </section>
+
+
+
+        <div id="container-edit" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-lg col-lg-12">
+                <div class="modal-content white_card mb_30">
+                    <div class="white_card_header">
+                        <div class="modal-header box_header m-0">
+                            <h3 class="m-0">تغییر پروژه</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="white_card_body">
+                        <form action="{% url 'receipt:project_dashboard_detail_update' project_id=project.id %}"
+                              method="post" class="col-12">
+                            <div class="card-body">
+                                {% csrf_token %}
+
+                                <div class="col-md-12">
+                                    <div>
+                                        <label class="form-label" for="inpNameProject">
+                                            نام
+                                            <span class="field-required">*</span>
+                                        </label>
+                                        <input type="text" required="{{ project.name }}" class="form-control" value="{{ project.name }}"
+                                               id="inpNameProject" name="name" aria-required="">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label">
+                                        توضیحات
+                                    </label>
+                                    <textarea name="description" class="form-control">{{ project.description|default:'' }}</textarea>
+                                </div>
+                                <div class="text-left mt-4">
+                                    <button class="btn btn-submit">
+                                        ثبت و بروزرسانی
+                                        <i class="fa fa-up"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="container-delete" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-lg col-lg-12">
+                <div class="modal-content white_card mb_30">
+                    <div class="white_card_header">
+                        <div class="modal-header box_header m-0">
+                            <h3 class="m-0">حذف پروژه</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="white_card_body">
+                        <form action="{% url 'receipt:project_dashboard_detail_delete' project_id=project.id %}"
+                              method="post" class="col-12">
+                            <div class="card-body">
+                                {% csrf_token %}
+                                <div>
+                                    <p class="text- bg-danger-light">
+                                        توجه کنید با حذف پروژه تمامی محتوا و امور مربوط به ان از جمله ساختمان ها و رسید های مربوط به ان حذف خواهند شد
+                                    </p>
+                                </div>
+                                <div class="text-left mt-4">
+                                    <button class="btn btn-danger">
+                                        متوجه ام، حذف پروژه
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+{% endblock %}
+
+
+
+
+

@@ -3,6 +3,18 @@ from django import forms
 from . import models
 
 
+class ProjectAddForm(forms.ModelForm):
+    class Meta:
+        model = models.Project
+        fields = '__all__'
+
+
+class ProjectUpdateForm(forms.ModelForm):
+    class Meta:
+        model = models.Project
+        fields = '__all__'
+
+
 class BuildingAddForm(forms.ModelForm):
     class Meta:
         model = models.Building
