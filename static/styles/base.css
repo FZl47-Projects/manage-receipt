@@ -428,9 +428,9 @@ body {
 
 .icon-percentage-badge {
     background: #f1f1f1;
-    padding: 4px 6px;
+    padding: 2px 3px;
     border-radius: 7px;
-    font-size: 73%;
+    font-size: 56%;
 }
 
 .icon-percentage-badge[percentage-label='half'] {
