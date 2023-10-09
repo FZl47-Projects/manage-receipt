@@ -148,17 +148,20 @@ class Receipt(ReceiptAbstract):
         return reverse('receipt:receipt_dashboard_detail', args=(self.id,))
 
     def get_status(self):
-        try:
-            return self.receipttask.receipt_status
-        except:
-            return self.status
+        # try:
+        #     return self.receipttask.receipt_status
+        # except:
+        #     return self.status
+        return self.status
 
     def get_status_label(self):
-        try:
-            # show task receipt status
-            return self.receipttask.get_receipt_status_display()
-        except:
-            return self.get_status_display()
+        # try:
+        #     # show task receipt status
+        #     return self.receipttask.get_receipt_status_display()
+        # except:
+        #     return self.get_status_display()
+
+        return self.get_status_display()
 
 
 class ReceiptTask(TaskAdmin):
@@ -189,3 +192,6 @@ class ReceiptTask(TaskAdmin):
 
     def get_absolute_url(self):
         return reverse('receipt:receipt_dashboard_task_detail', args=(self.id,))
+
+    def get_status_receipt_by_admin(self):
+        return self.get_receipt_status_display()

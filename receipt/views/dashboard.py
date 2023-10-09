@@ -282,14 +282,13 @@ class ReceiptDetail(LoginRequiredMixinCustom, View):
 
 class ReceiptDetailUpdate(LoginRequiredMixinCustom, View):
 
+    @admin_required_cbv()
     def post(self, request, receipt_id):
         data = request.POST.copy()
         user = request.user
         # set default values
-        # if user is super admin then status accepted else status is pending until super admin check that
-        data['status'] = 'accepted'
-        if user.is_common_admin:
-            data['status'] = 'pending'
+        data['status'] = data.get('receipt_status',None)
+
         receipt = get_object_or_404(models.Receipt, id=receipt_id)
         f = forms.ReceiptUpdateForm(data=data, instance=receipt)
         if form_validate_err(request, f) is False:
@@ -297,14 +296,19 @@ class ReceiptDetailUpdate(LoginRequiredMixinCustom, View):
         f.save()
         # set status task receipt to need to check(if task receipt available and user is common admin)
         task_receipt = getattr(receipt, 'receipttask', None)
-        if task_receipt and user.is_common_admin:
-            data_task = {
-                'status': 'pending',
-                'receipt_status': data.get('receipt_status', None)
-            }
-            f = forms.ReceiptTaskUpdateForm(data=data_task, instance=task_receipt)
-            if f.is_valid():
-                f.save()
+        if task_receipt:
+            # update receipt task if user is common admin
+            if user.is_common_admin:
+                data_task = {
+                    'status': 'pending',
+                    'receipt_status': data.get('receipt_status', None)
+                }
+                f = forms.ReceiptTaskUpdateForm(data=data_task, instance=task_receipt)
+                if f.is_valid():
+                    f.save()
+            elif user.is_super_admin:
+                # delete receipt task if user is super admin
+                task_receipt.delete()
         messages.success(request, 'رسید با موفقیت تغییر کرد')
         return redirect(receipt.get_absolute_url())
 

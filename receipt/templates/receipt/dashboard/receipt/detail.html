@@ -160,14 +160,14 @@
                                     <h3 class="m-0">عملیات</h3>
                                 </div>
                                 <div class="text-center mt-3 mt-md-0">
-                                    {% if receipt.get_status != 'pending' %}
-                                        <button class="btn btn-w btn-edit-outline m-1" type="button"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#container-edit">
-                                            تغییر
-                                            <i class="fa fa-edit"></i>
-                                        </button>
-                                    {% endif %}
+
+                                    <button class="btn btn-w btn-edit-outline m-1" type="button"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#container-edit">
+                                        تغییر
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+
                                     {% if user.is_super_admin %}
                                         <button class="btn btn-w btn-outline-danger m-1 border-radius-6" type="button"
                                                 data-bs-toggle="modal"
@@ -195,13 +195,32 @@
                                     </h3>
                                 </div>
                             </div>
+                            <div class="breadcrumb">
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'account:dashboard' %}">داشبورد</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'receipt:receipt_dashboard_list' %}">رسید ها</a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            رسید
+                                            شماره
+                                            {{ receipt.id }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="white_card_body">
                             <div class="card-body">
                                 <div class="receipt-task">
+
+
                                     <div class="container-title">
                                         <p>
-                                            وضعیت
+                                            وضعیت رسید
                                         </p>
                                     </div>
                                     <div class="receipt-task-status d-block d-md-flex justify-content-between">
@@ -212,7 +231,7 @@
                                         </div>
                                         {% if user.is_super_admin %}
                                             <div>
-                                                {% if receipt.status != 'accepted' %}
+                                                {% if receipt.get_status != 'accepted' %}
                                                     <button class="btn btn-accept" type="button"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#container-receipt-accept"
@@ -221,7 +240,7 @@
                                                         <i class="fa fa-check-circle"></i>
                                                     </button>
                                                 {% endif %}
-                                                {% if receipt.status == 'pending' %}
+                                                {% if receipt.get_status == 'pending' %}
                                                     <button class="btn btn-reject" type="button"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#container-receipt-reject"
@@ -231,20 +250,19 @@
                                                     </button>
                                                 {% endif %}
                                             </div>
-                                        {% elif user.is_common_admin and not receipt.receipttask %}
-                                            <div>
-                                                {% if receipt.status != 'accepted' %}
-                                                    {% if receipt.receipttask.receipt_status != 'accepted' %}
-                                                        <button class="btn btn-accept" type="button"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#container-receipt-accept"
-                                                                id="btnReceiptAccept">
-                                                            تایید
-                                                            <i class="fa fa-check-circle"></i>
-                                                        </button>
-                                                    {% endif %}
+                                        {% endif %}
 
-                                                    {% if receipt.receipttask or receipt.get_status == 'pending' %}
+                                        {% if user.is_common_admin and not receipt.receipttask %}
+                                            <div>
+                                                {% if receipt.get_status != 'accepted' %}
+                                                    <button class="btn btn-accept" type="button"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#container-receipt-accept"
+                                                            id="btnReceiptAccept">
+                                                        تایید
+                                                        <i class="fa fa-check-circle"></i>
+                                                    </button>
+                                                    {% if receipt.get_status == 'pending' %}
                                                         <button class="btn btn-reject" type="button"
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#container-receipt-reject"
@@ -256,11 +274,28 @@
                                                 {% endif %}
                                             </div>
                                         {% endif %}
+
+
                                     </div>
-                                    {% if user.is_common_admin and receipt.receipttask %}
+
+
+                                    {% if receipt.receipttask %}
                                         <div class="container-title">
                                             <p>
-                                                وضعیت عملیات
+                                                وضعیت رسید توسط ادمین
+                                            </p>
+                                        </div>
+                                        <div class="receipt-task-status d-block d-md-flex justify-content-between">
+                                            <div class="text-mute font-80">
+                                                <span class="{{ receipt.receipttask.receipt_status }}">
+                                                    {{ receipt.receipttask.get_status_receipt_by_admin }}
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="container-title">
+                                            <p>
+                                                وضعیت عملیات ادمین
                                             </p>
                                         </div>
                                         <div class="receipt-task-status d-block d-md-flex justify-content-between">
@@ -281,6 +316,8 @@
                                             </div>
                                         </div>
                                     {% endif %}
+
+
                                     <div class="container-title">
                                         <p>
                                             جزئیات

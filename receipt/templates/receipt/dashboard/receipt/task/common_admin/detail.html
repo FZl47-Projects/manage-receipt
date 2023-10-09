@@ -104,13 +104,31 @@
                                     </h3>
                                 </div>
                             </div>
+                            <div class="breadcrumb">
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'account:dashboard' %}">داشبورد</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'receipt:receipt_dashboard_task_list' %}">رسید های مشاهده شده</a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            عملیات مدیریت
+                                            رسید
+                                            شماره
+                                            {{ receipt_task.id }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="white_card_body">
                             <div class="card-body">
                                 <div class="receipt-task">
                                     <div class="container-title">
                                         <p>
-                                            وضعیت رسید
+                                            وضعیت رسید توسط ادمین
                                         </p>
                                     </div>
                                     <div class="receipt-task-status d-block d-md-flex justify-content-between">
@@ -185,7 +203,7 @@
                                             <div class="detail-field">
                                                 <span>ضریب امتیاز</span>
                                                 <p class="font-70">
-                                                   {{ receipt_task.receipt.ratio_score }}
+                                                    {{ receipt_task.receipt.ratio_score }}
                                                 </p>
                                             </div>
                                             <div class="detail-field">
@@ -213,7 +231,7 @@
                                                     {{ receipt_task.receipt.bank_name }}
                                                 </p>
                                             </div>
-                                              <div class="detail-field">
+                                            <div class="detail-field">
                                                 <span>توضیحات کاربر</span>
                                                 <p>
                                                     {{ receipt_task.receipt.description|default:'بدون توضیحات' }}
