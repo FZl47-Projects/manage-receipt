@@ -139,8 +139,8 @@ body {
     border-radius: 10px;
     font-size: 80%;
     text-align: center;
-    /*overflow-x: auto;*/
     width: 100%;
+    white-space: nowrap;
 }
 
 .title-list-row {
@@ -184,6 +184,25 @@ body {
     display: inline-block;
     margin: 0 5px;
 }
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 3px;
+}
+
+::-webkit-scrollbar-track {
+    background: #e5e5e5;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #999;
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #666;
+}
+
 
 .font-s-40 {
     font-size: 40px !important;
@@ -568,6 +587,47 @@ option[disabled] {
 }
 
 
+.cnt-options > div {
+    padding: 5px 10px;
+    margin: 13px 7px;
+    border-radius: 10px;
+    border: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cnt-options input {
+    margin-bottom: 5px;
+}
+
+.cnt-options > div label {
+    padding: 5px;
+    margin: 0;
+    margin-left: 10px;
+}
+
+.dropdown-item{
+    text-align: center;
+    font-size: 14px!important;
+}
+
+@media screen and (max-width: 1400px) {
+    .list-row {
+        font-size: 75%;
+    }
+
+    .detail-row {
+        overflow: auto;
+    }
+
+    .detail-row > div {
+        margin: 5px;
+        padding: 0 5px;
+        overflow: auto;
+    }
+}
+
 @media screen and (max-width: 992px) {
     #container-users .title-list-row > div:last-of-type {
         display: none;
@@ -575,6 +635,19 @@ option[disabled] {
 
     #container-users .user-select > div:last-of-type {
         display: none;
+    }
+
+    .list-row {
+        font-size: 70%;
+    }
+
+    .title-list-row {
+        overflow: auto;
+    }
+
+    .title-list-row > div {
+        padding: 0 10px;
+        width: 100px;
     }
 }
 

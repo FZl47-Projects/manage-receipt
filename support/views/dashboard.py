@@ -1,11 +1,15 @@
+import xlsxwriter
 from django.contrib import messages
+from django.conf import settings
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View
 from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator
 from core.auth.decorators import admin_required_cbv
 from core.auth.mixins import LoginRequiredMixinCustom
-from core.utils import form_validate_err
+from core.utils import form_validate_err, get_media_url
+from receipt.models import Building
 from support.models import Ticket, Question, AnswerQuestion
 from support.forms import TicketForm, TicketFormByAdminForm, QuestionAddForm
 
@@ -108,7 +112,10 @@ class QuestionAdd(View):
 
     @admin_required_cbv(['super_user'])
     def get(self, request):
-        return render(request, self.template_name)
+        context = {
+            'buildings': Building.objects.all()
+        }
+        return render(request, self.template_name, context)
 
     @admin_required_cbv(['super_user'])
     def post(self, request):
@@ -121,12 +128,22 @@ class QuestionAdd(View):
         return redirect('support:support_dashboard_question_add')
 
 
-class QuestionList(View):
-    template_name = 'support/dashboard/question/list.html'
+class QuestionList(LoginRequiredMixinCustom, View):
 
-    @admin_required_cbv()
-    def get(self, request):
-        questions = Question.objects.all()
+    def get_template_by_user(self, request):
+        user = request.user
+        if user.is_admin:
+            return 'support/dashboard/question/list.html'
+        else:
+            return 'support/dashboard/question/user/list.html'
+
+    def get_context_by_role(self, request):
+        user = request.user
+        if user.is_admin:
+            questions = Question.objects.all()
+        else:
+            # getting questions for the buildings intended for the user
+            questions = Question.objects.filter(building__buildingavailable__user=user)
         page_num = request.GET.get('page', 1)
         pagination = Paginator(questions, 20)
         pagination = pagination.get_page(page_num)
@@ -135,19 +152,74 @@ class QuestionList(View):
             'questions': questions,
             'pagination': pagination
         }
-        return render(request, self.template_name, context)
+        return context
+
+    def get(self, request):
+        context = self.get_context_by_role(request)
+        return render(request, self.get_template_by_user(request), context)
 
 
-class QuestionDetail(View):
-    template_name = 'support/dashboard/question/detail.html'
+class QuestionDetail(LoginRequiredMixinCustom, View):
+
+    def get_template_by_user(self, request):
+        user = request.user
+        if user.is_admin:
+            return 'support/dashboard/question/detail.html'
+        else:
+            return 'support/dashboard/question/user/detail.html'
+
+    def get_context_by_user(self, request, question_id):
+        user = request.user
+        context = {}
+        if user.is_admin:
+            context['question'] = get_object_or_404(Question, id=question_id)
+        else:
+            question = get_object_or_404(Question, id=question_id, building__buildingavailable__user=user)
+            context['answers'] = question.get_answers_by_user(user)
+            context['question'] = question
+        return context
+
+    def get(self, request, question_id):
+        context = self.get_context_by_user(request, question_id)
+        return render(request, self.get_template_by_user(request), context)
+
+
+class QuestionDetailExport(LoginRequiredMixinCustom, View):
+
+    def perform_export_excel(self, question_obj) -> str:
+        file_name = f"{settings.EXPORT_ROOT_DIR}/export-question-{question_obj.title}-{question_obj.building.name}.xlsx"
+        export_file = settings.MEDIA_ROOT.joinpath(file_name)
+        workbook = xlsxwriter.Workbook(export_file)
+        worksheet = workbook.add_worksheet('اطلاعات')
+        # add information
+        # add title rows
+        worksheet.write(0, 0, 'عنوان پرسش')
+        worksheet.write(0, 1, 'نام ساختمان')
+        # add data
+        worksheet.write(2, 0, question_obj.title)
+        worksheet.write(2, 1, question_obj.building.name)
+        # add results
+        # add title rows
+        worksheet = workbook.add_worksheet('نتایج')
+        worksheet.write(0, 0, 'مشخصات کاربر')
+        worksheet.write(0, 1, 'جواب کاربر')
+        row = 2
+        # add data
+        for answer in question_obj.get_answers():
+            # user info
+            worksheet.write(row, 0, f"{answer.user.get_full_name()}|{answer.user.get_raw_phonenumber()}")
+            # user answer
+            worksheet.write(row, 1, answer.answer)
+            row += 1
+        workbook.close()
+        return file_name
 
     @admin_required_cbv()
     def get(self, request, question_id):
         question = get_object_or_404(Question, id=question_id)
-        context = {
-            'question': question
-        }
-        return render(request, self.template_name, context)
+        excel_file = self.perform_export_excel(question)
+        excel_file = get_media_url(excel_file)
+        return HttpResponseRedirect(excel_file)
 
 
 class QuestionDelete(View):
@@ -160,10 +232,9 @@ class QuestionDelete(View):
         return redirect('support:support_dashboard_question_list')
 
 
-class AnswerDetail(View):
+class AnswerDetail(LoginRequiredMixinCustom, View):
     template_name = 'support/dashboard/answer/detail.html'
 
-    @admin_required_cbv()
     def get(self, request, answer_id):
         answer = get_object_or_404(AnswerQuestion, id=answer_id)
         context = {
@@ -180,11 +251,11 @@ class AnswerSubmit(LoginRequiredMixinCustom, View):
         answer = request.POST.get('answer')
         if not answer:
             messages.error(request, 'لطفا پاسخ سوال را به درستی وارد نمایید')
-            return redirect('public:home')
+            return redirect(question.get_absolute_url())
         AnswerQuestion.objects.create(
             question=question,
             user=request.user,
             answer=answer,
         )
         messages.success(request, 'پاسخ شما با موفقیت ثبت شد')
-        return redirect('public:home')
+        return redirect(question.get_absolute_url())

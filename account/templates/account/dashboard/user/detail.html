@@ -83,6 +83,28 @@
     <section class="main_content dashboard_part large_header_bg">
         {% include 'account/dashboard/components/base/header.html' %}
         <div class="main_content_iner">
+            <div class="white_card mb_25">
+                <div class="white_card_header">
+                    <div class="box_header m-0">
+                        <div class="main-title">
+                            <h1 class="m-0">کاربر</h1>
+                        </div>
+                    </div>
+                    <div class="breadcrumb">
+                        <ul>
+                            <li>
+                                <a href="{% url 'account:dashboard' %}">داشبورد</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'account:user_list' %}">کاربران</a>
+                            </li>
+                            <li>
+                                <a href="">{{ user_detail.get_full_name }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
             <div class="container-fluid p-0 ">
                 <div id="container-index">
                     {% if user.is_super_admin %}
@@ -543,7 +565,8 @@
                                     {% with user_detail.get_available_building_ids as building_availabel %}
                                         <select name="buildings" class="form-control form-select" multiple>
                                             {% for building in buildings %}
-                                                <option value="{{ building.id }}" {% if building.id in building_availabel %}selected{% endif %}>{{ building.name }}</option>
+                                                <option value="{{ building.id }}"
+                                                        {% if building.id in building_availabel %}selected{% endif %}>{{ building.name }}</option>
                                             {% endfor %}
                                         </select>
                                     {% endwith %}

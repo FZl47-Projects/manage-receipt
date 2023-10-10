@@ -144,9 +144,9 @@
                         <div class="white_card_header">
                             <div class="box_header m-0">
                                 <div class="main-title">
-                                    <h3 class="m-0">
+                                    <h2 class="m-0">
                                         پاسخ پرسش
-                                    </h3>
+                                    </h2>
                                 </div>
                             </div>
                             <div class="breadcrumb">
@@ -154,7 +154,13 @@
                                     <li>
                                         <a href="{% url 'account:dashboard' %}">داشبورد</a>
                                     </li>
+                                      <li>
+                                        <a href="{% url 'support:support_dashboard_question_list' %}">پرسش ها</a>
+                                    </li>
                                     <li>
+                                        <a href="{{ answer.question.get_absolute_url }}">پرسش</a>
+                                    </li>
+                                       <li>
                                         <a href="">پاسخ پرسش</a>
                                     </li>
                                 </ul>
@@ -171,13 +177,15 @@
                                     <div class="text-center"
                                          dir="ltr">
                                         <div class="detail col-12">
-                                            <div class="detail-field">
-                                                <span>کاربر</span>
-                                                <p>
-                                                    <a href="{{ answer.user.get_absolute_url }}">{{ answer.user.get_full_name }}
-                                                        - {{ answer.user.get_raw_phonenumber }}</a>
-                                                </p>
-                                            </div>
+                                            {% if user.is_admin %}
+                                                <div class="detail-field">
+                                                    <span>کاربر</span>
+                                                    <p>
+                                                        <a href="{{ answer.user.get_absolute_url }}">{{ answer.user.get_full_name }}
+                                                            - {{ answer.user.get_raw_phonenumber }}</a>
+                                                    </p>
+                                                </div>
+                                            {% endif %}
                                             <div class="detail-field">
                                                 <span>پرسش</span>
                                                 <p>

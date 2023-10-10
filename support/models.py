@@ -46,6 +46,7 @@ class TicketReplay(Ticket):
 class Question(BaseModel, Image):
     title = models.CharField(max_length=150)
     description = models.TextField(null=True)
+    building = models.ForeignKey('receipt.Building', on_delete=models.CASCADE, null=True)
     # static options
     option_1 = models.CharField(max_length=100)
     option_2 = models.CharField(max_length=100)
@@ -59,7 +60,10 @@ class Question(BaseModel, Image):
         return self.title
 
     def get_answers(self):
-        return self.answerquestion_set.all()
+        return self.answerquestion_set.all().order_by('user__last_name')
+
+    def get_answers_by_user(self, user):
+        return self.get_answers().filter(user=user)
 
     def get_absolute_url(self):
         return reverse('support:support_dashboard_question_detail', args=(self.id,))
@@ -70,9 +74,11 @@ class AnswerQuestion(BaseModel):
     user = models.ForeignKey('account.User', on_delete=models.CASCADE)
     answer = models.CharField(max_length=100)
 
+    class Meta:
+        ordering = '-id',
+
     def __str__(self):
         return f'answer - question - {self.question}'
 
     def get_absolute_url(self):
         return reverse('support:support_dashboard_answer_detail', args=(self.id,))
-

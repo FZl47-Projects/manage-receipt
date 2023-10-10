@@ -179,3 +179,6 @@ SMS_CONFIG = {
     'API_URL': 'http://rest.ippanel.com/v1/messages/patterns/send',
     'ORIGINATOR': '983000505'
 }
+
+EXPORT_ROOT_DIR = 'exports'
+

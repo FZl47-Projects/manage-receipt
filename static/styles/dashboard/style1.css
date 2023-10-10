@@ -3760,6 +3760,7 @@ table.dataTable {
     background: #f6f6f6;
 }
 
+
 .sidebar #sidebar_menu > li.mm-active > a::after {
     color: #8890b5;
     transform: rotate(0deg) translate(0, -50%);
@@ -3814,7 +3815,7 @@ table.dataTable {
 }
 
 .sidebar #sidebar_menu > li ul li a.active {
-    color: #163b5e;
+    color: #2012ff;
 }
 
 .sidebar #sidebar_menu > li ul li a i {
@@ -10585,3 +10586,9 @@ a.pswp__share--download:hover {
     border: none;
 }
 
+
+@media screen and (max-width: 1150px ) {
+    .QA_section tr *{
+        font-size: 90%!important;
+    }
+}

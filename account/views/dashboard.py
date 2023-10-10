@@ -63,6 +63,7 @@ def login_register(request):
         email = f.cleaned_data['email']
         if User.objects.filter(phonenumber=phonenumber).exists():
             messages.error(request, 'کاربری با این شماره از قبل ثبت شده است')
+            return redirect('account:login_register')
         if User.objects.filter(email=email).exists():
             messages.error(request, 'کاربری با این شماره از قبل ثبت شده است')
             return redirect('account:login_register')

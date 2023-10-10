@@ -125,6 +125,28 @@
     <section class="main_content dashboard_part large_header_bg">
         {% include 'account/dashboard/components/base/header.html' %}
         <div class="main_content_iner">
+            <div class="white_card mb_25">
+                <div class="white_card_header">
+                    <div class="box_header m-0">
+                        <div class="main-title">
+                            <h1 class="m-0">ساختمان</h1>
+                        </div>
+                    </div>
+                    <div class="breadcrumb">
+                        <ul>
+                            <li>
+                                <a href="{% url 'account:dashboard' %}">داشبورد</a>
+                            </li>
+                              <li>
+                                <a href="{% url 'receipt:building_dashboard_list' %}">ساختمان ها</a>
+                            </li>
+                            <li>
+                                <a href="">ساختمان - {{ building.name }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
             <div class="container-fluid p-0 ">
                 <div id="container-index">
                     {% if user.is_super_admin %}

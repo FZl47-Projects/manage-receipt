@@ -106,3 +106,7 @@ def form_validate_err(request, form):
 
 def get_host_url(url):
     return settings.HOST_ADDRESS + url
+
+
+def get_media_url(url):
+    return settings.MEDIA_URL + url

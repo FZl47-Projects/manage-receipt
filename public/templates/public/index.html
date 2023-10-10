@@ -105,7 +105,7 @@
                                         </li>
                                         <li class="nav-item"><a class="nav-link" href="#notifications">اعلانات</a>
                                         </li>
-                                        <li class="nav-item"><a class="nav-link" href="#questions">پرسش ها</a>
+                                        <li class="nav-item"><a class="nav-link" href="{% url 'support:support_dashboard_question_list' %}">پرسش ها</a>
                                         </li>
                                         <li class="nav-item"><a class="nav-link" href="#contact-us">تماس با ما</a>
                                         </li>
@@ -237,115 +237,6 @@
 
             <!--feature end-->
             <!--testimonial end-->
-
-            <section class="position-relative custom-py-2" id="questions">
-                <div class="container mb-5">
-                    <h3 class="mb-5">پرسش ها</h3>
-                    <div class="row align-items-center">
-                        <div class="col-xl-4 col-md-12 image-column left p-0">
-                            <div class="img-box box-shadow radius-1" style="box-shadow: none">
-                                <div class="box-loader"><span></span>
-                                    <span></span>
-                                    <span></span>
-                                </div>
-                                <img class="img-center" src="{% static 'public/images/svg/01.svg' %}" alt="">
-                            </div>
-                        </div>
-                        <div class="col-xl-8 col-md-12 ml-auto md-mt-5">
-                            <div id="accordion" class="accordion style-1">
-                                {% for question in questions %}
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h6 class="mb-0">
-                                                <a data-toggle="collapse" data-parent="#accordion"
-                                                   href="#collapse-{{ forloop.counter }}"
-                                                   aria-expanded="false" class="collapsed"><span></span>
-                                                    {{ question.title|truncatechars:30 }}
-                                                </a>
-                                            </h6>
-                                        </div>
-                                        <div id="collapse-{{ forloop.counter }}" class="collapse border-radius-6"
-                                             data-parent="#accordion" style="border: 1px solid #ddd">
-                                            <div class="card-body">
-                                                <div>
-                                                    <h5>جزئیات و توضیحات</h5>
-                                                    <p>{{ question.title }}</p>
-                                                    <p>{{ question.description }}</p>
-                                                    {% if question.image %}
-                                                        <div class="text-center">
-                                                            <img src="{{ question.image.url }}"
-                                                                 alt="{{ question.title }}"
-                                                                 style="width: 300px">
-                                                        </div>
-                                                    {% endif %}
-                                                </div>
-                                                <br>
-                                                <div>
-                                                    <h5>گزینه ها</h5>
-                                                    <form action="{% url 'support:support_dashboard_answer_submit' question_id=question.id %}"
-                                                          method="post">
-                                                        {% csrf_token %}
-                                                        <div class="p-3 d-block d-md-flex justify-content-between align-items-center cnt-options">
-                                                            <div>
-                                                                <label for="inp-option-1-{{ question.id }}">
-                                                                    {{ question.option_1 }}
-                                                                </label>
-                                                                <input id="inp-option-1-{{ question.id }}" type="radio"
-                                                                       name="answer"
-                                                                       value="{{ question.option_1 }}" required>
-                                                            </div>
-                                                            <div>
-                                                                <label for="inp-option-2-{{ question.id }}">
-                                                                    {{ question.option_2 }}
-                                                                </label>
-                                                                <input id="inp-option-2-{{ question.id }}" type="radio"
-                                                                       name="answer"
-                                                                       value="{{ question.option_2 }}" required>
-                                                            </div>
-                                                            <div>
-                                                                <label for="inp-option-3-{{ question.id }}">
-                                                                    {{ question.option_3 }}
-                                                                </label>
-                                                                <input id="inp-option-3-{{ question.id }}" type="radio"
-                                                                       name="answer"
-                                                                       value="{{ question.option_3 }}" required>
-                                                            </div>
-                                                            <div>
-                                                                <label for="inp-option-4-{{ question.id }}">
-                                                                    {{ question.option_4 }}
-                                                                </label>
-                                                                <input id="inp-option-4-{{ question.id }}" type="radio"
-                                                                       name="answer"
-                                                                       value="{{ question.option_4 }}" required>
-                                                            </div>
-                                                        </div>
-                                                        {% if not user.is_anonymous %}
-                                                            <div class="text-left mt-4">
-                                                                <button class="btn col-12">ثبت پاسخ</button>
-                                                            </div>
-                                                        {% else %}
-                                                            <div class="text-center mt-4">
-                                                                <a href="{% url 'account:login_register' %}"
-                                                                   class="p-2 border-radius-6">برای ارسال پاسخ باید وارد
-                                                                    حساب کاربری خود شوید</a>
-                                                            </div>
-                                                        {% endif %}
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% empty %}
-                                    <div class="text-center">
-                                        <p> در حال حاظر پرسشی وجود ندارد</p>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <br>
             <br>
             <footer class="footer footer-1 pos-r" data-bg-img="{% static 'public/images/bg/05.png' %}">
                 <div class="primary-footer">

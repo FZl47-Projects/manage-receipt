@@ -34,5 +34,6 @@ if settings.DEBUG:
 
 
 
+handler403 = 'public.views.err_403_handler'
 handler404 = 'public.views.err_404_handler'
 handler500  = 'public.views.err_500_handler'
