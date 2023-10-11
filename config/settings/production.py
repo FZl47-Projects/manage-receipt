@@ -1,8 +1,13 @@
+import pymysql
 from .base import BASE_DIR
 
-DEBUG = False
+# use pymysql driver(MYSQL)
+pymysql.install_as_MySQLdb()
 
-ALLOWED_HOSTS = ['manage-receipt', 'farhikhteganmes.ir']
+
+DEBUG = True
+
+ALLOWED_HOSTS = ['manage-receipt', 'farhikhteganmes.ir','127.0.0.1']
 HOST_ADDRESS = 'https://farhikhteganmes.ir'
 CSRF_TRUSTED_ORIGINS = [
     "https://www.farhikhteganmes.ir",
@@ -28,8 +33,8 @@ DATABASES = {
 STATIC_URL = 'static/'
 MEDIA_URL = 'media/'
 
-# STATIC_ROOT = BASE_DIR / 'static'
-MEDIA_ROOT = BASE_DIR / 'media'
+STATIC_ROOT = '/var/www/html/manage_receipt/static'
+MEDIA_ROOT = '/var/www/html/manage_receipt/media'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static'

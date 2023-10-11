@@ -1,3 +1,4 @@
+import os
 import xlsxwriter
 from django.contrib import messages
 from django.conf import settings
@@ -188,7 +189,7 @@ class QuestionDetailExport(LoginRequiredMixinCustom, View):
 
     def perform_export_excel(self, question_obj) -> str:
         file_name = f"{settings.EXPORT_ROOT_DIR}/export-question-{question_obj.title}-{question_obj.building.name}.xlsx"
-        export_file = settings.MEDIA_ROOT.joinpath(file_name)
+        export_file = os.path.join(settings.MEDIA_ROOT, file_name)
         workbook = xlsxwriter.Workbook(export_file)
         worksheet = workbook.add_worksheet('اطلاعات')
         # add information

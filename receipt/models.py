@@ -38,7 +38,7 @@ class Building(BaseModel):
     name = models.CharField(max_length=200)
     address = models.TextField()
     description = models.TextField(null=True, blank=True)
-    project = models.ForeignKey('Project', on_delete=models.CASCADE)
+    project = models.ForeignKey('Project', on_delete=models.CASCADE,null=True)
     is_active = models.BooleanField(default=True)
     progress_percentage = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])
 

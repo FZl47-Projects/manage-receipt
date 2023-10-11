@@ -25,7 +25,7 @@ urlpatterns = [
     path('',include('notification.urls',namespace='notification')),
     path('',include('support.urls',namespace='support')),
     path('u/',include('account.urls',namespace='account')),
-    path('admin/', admin.site.urls),
+    path('anything-except-admin/', admin.site.urls),
 ]
 
 if settings.DEBUG:
