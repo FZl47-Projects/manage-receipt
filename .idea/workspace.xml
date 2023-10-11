@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9e0b5c57-ac93-4d3e-b733-79126e83deba" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/account/templates/account/dashboard/components/base/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/account/templates/account/dashboard/components/base/header.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/templates/account/dashboard/components/base/nav.html" beforeDir="false" afterPath="$PROJECT_DIR$/account/templates/account/dashboard/components/base/nav.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/settings/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/settings/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/styles/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/styles/base.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/styles/dashboard/metismenu.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/styles/dashboard/metismenu.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,7 +152,7 @@
       <workItem from="1697015871396" duration="56000" />
       <workItem from="1697016298829" duration="641000" />
       <workItem from="1697017432779" duration="1636000" />
-      <workItem from="1697020791646" duration="806000" />
+      <workItem from="1697020791646" duration="1346000" />
     </task>
     <servers />
   </component>
