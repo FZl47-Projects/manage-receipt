@@ -185,24 +185,6 @@ body {
     margin: 0 5px;
 }
 
-::-webkit-scrollbar {
-    width: 10px;
-    height: 3px;
-}
-
-::-webkit-scrollbar-track {
-    background: #e5e5e5;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #999;
-    border-radius: 6px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #666;
-}
-
 
 .font-s-40 {
     font-size: 40px !important;
@@ -624,7 +606,6 @@ option[disabled] {
     .detail-row > div {
         margin: 5px;
         padding: 0 5px;
-        overflow: auto;
     }
 }
 
@@ -655,6 +636,10 @@ option[disabled] {
 @media screen and (max-width: 760px) {
     .filters-radio .container {
         text-align: center;
+    }
+
+    .breadcrumb{
+        font-size: 90%;
     }
 }
 

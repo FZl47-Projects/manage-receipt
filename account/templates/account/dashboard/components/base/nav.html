@@ -1,9 +1,9 @@
 {% load static %}
 <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
     <div class="logo d-flex justify-content-between">
-        <a href="index.html"><img src="{% static 'images/logo.png' %}" alt></a>
+        <a href="{% url 'public:home' %}"><img src="{% static 'images/logo.png' %}" alt></a>
         <div class="sidebar_close_icon d-lg-none">
-            <i class="ti-close"></i>
+            <i class="fa fa-times"></i>
         </div>
     </div>
     <ul id="sidebar_menu">

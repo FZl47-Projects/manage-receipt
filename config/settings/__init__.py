@@ -1,4 +1,4 @@
-PRODUCTION = True
+PRODUCTION = False
 
 from .base import *
 
