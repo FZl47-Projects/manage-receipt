@@ -603,6 +603,9 @@ option[disabled] {
         overflow: auto;
     }
 
+}
+
+@media screen and (max-width:1100px) {
     .detail-row > div {
         margin: 5px;
         padding: 0 5px;

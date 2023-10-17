@@ -68,18 +68,20 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row mb-3">
-                                            <div class="col-12">
-                                                <div class="col-md-12">
-                                                    <label class="form-label" for="inpRatioScoreReceipt">
-                                                        ضریب امتیاز
-                                                        <span class="field-required">*</span>
-                                                    </label>
-                                                    <input type="number" value="1" id="inpRatioScoreReceipt"
-                                                           class="form-control" required name="ratio_score" step="0.1">
+                                        {% if user.is_super_admin %}
+                                            <div class="row mb-3">
+                                                <div class="col-12">
+                                                    <div class="col-md-12">
+                                                        <label class="form-label" for="inpRatioScoreReceipt">
+                                                            ضریب امتیاز
+                                                            <span class="field-required">*</span>
+                                                        </label>
+                                                        <input type="number" value="1" id="inpRatioScoreReceipt"
+                                                            class="form-control" required name="ratio_score" step="0.1">
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        {% endif %}
                                     {% endif %}
                                     <div class="row mb-3">
                                         <div class="col-md-6">
@@ -92,7 +94,7 @@
                                                         id="inputNameBuilding" required>
                                                     {% for building in buildings %}
                                                         <option value="{{ building.id }}" disabled
-                                                        >{{ building.name }}</option>
+                                                        >{{ building.get_name_by_flag }}</option>
                                                     {% endfor %}
                                                 </select>
                                             {% else %}
@@ -100,7 +102,7 @@
                                                         id="inputNameBuilding" required>
                                                     {% for building in user.get_available_buildings %}
                                                         <option value="{{ building.id }}"
-                                                        >{{ building.name }}</option>
+                                                        >{{ building.get_name_by_flag }}</option>
                                                     {% endfor %}
                                                 </select>
                                             {% endif %}

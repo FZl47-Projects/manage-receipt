@@ -85,6 +85,9 @@ class Building(BaseModel):
         receipts = self.receipt_set.filter(user=user, status='accepted')
         score = sum(receipt.get_score() for receipt in receipts)
         return score
+    
+    def get_name_by_flag(self):
+        return f'{self.project.name} / {self.name}'
 
     @classmethod
     def get_buildings_user(cls, user):

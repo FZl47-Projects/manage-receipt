@@ -56,7 +56,7 @@ class ReceiptRejectForm(forms.ModelForm):
 class ReceiptUpdateForm(forms.ModelForm):
     class Meta:
         model = models.Receipt
-        fields = ('status', 'note', 'amount', 'ratio_score', 'deposit_datetime', 'depositor_name', 'bank_name')
+        fields = ('building', 'status', 'note', 'amount', 'ratio_score', 'deposit_datetime', 'depositor_name', 'bank_name')
 
 
 class ReceiptTaskUpdateForm(forms.ModelForm):

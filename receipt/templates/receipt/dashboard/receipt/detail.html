@@ -370,7 +370,7 @@
                                                     </p>
                                                 </div>
                                             {% endif %}
-                                            {% if user.is_admin %}
+                                            {% if user.is_super_admin %}
                                                 <div class="detail-field">
                                                     <span>ضریب امتیاز</span>
                                                     <p>
@@ -474,16 +474,19 @@
                                        class="form-control datetime-picker mpdatepicker datetime-convert-inp"
                                        set-on="deposit_inp_confirm" required="" data-timestamp="null">
                             </div>
-                            <div class="col-md-12">
-                                <div>
-                                    <label class="form-label" for="inpRatioScoreReceipt">
-                                        ضریب امتیاز
-                                        <span class="field-required">*</span>
-                                    </label>
-                                    <input type="number" required class="form-control" value="{{ receipt.ratio_score }}"
-                                           id="inpRatioScoreReceipt" name="ratio_score" step="0.1">
+                            {% if user.is_super_admin %}
+                                    
+                                <div class="col-md-12">
+                                    <div>
+                                        <label class="form-label" for="inpRatioScoreReceipt">
+                                            ضریب امتیاز
+                                            <span class="field-required">*</span>
+                                        </label>
+                                        <input type="number" required class="form-control" value="{{ receipt.ratio_score }}"
+                                            id="inpRatioScoreReceipt" name="ratio_score" step="0.1">
+                                    </div>
                                 </div>
-                            </div>
+                            {% endif %}
                             <div class="col-md-12">
                                 <label class="form-label">
                                     توضیحات
@@ -598,9 +601,11 @@
                                         نام ساختمان
                                         <span class="field-required">*</span>
                                     </label>
-                                    <input type="text" required="" class="form-control"
-                                           value="{{ receipt.building.name }}" id="inpBuilding" name="building"
-                                           aria-required="" disabled="">
+                                    <select name="building" required class="form-control form-select">
+                                        {% for building in receipt.user.get_available_buildings %}
+                                            <option value="{{ building.id }}" {% if building.id == receipt.building.id %}selected{% endif %}>{{ building.get_name_by_flag }}</option>
+                                        {% endfor %}
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -622,15 +627,17 @@
                                 <input type="number" required="" class="form-control"
                                        value="{{ receipt.amount }}" id="inpAmount" name="amount">
                             </div>
-                            <div class="col-md-12">
-                                <label class="form-label" for="inpRatioScore">
-                                    ضریب امتیاز
-                                    <span class="field-required">*</span>
-                                </label>
-                                <input type="number" required="" class="form-control"
-                                       value="{{ receipt.ratio_score }}" id="inpRatioScore" name="ratio_score"
-                                       step="0.1">
-                            </div>
+                            {% if user.is_super_admin %}
+                                <div class="col-md-12">
+                                    <label class="form-label" for="inpRatioScore">
+                                        ضریب امتیاز
+                                        <span class="field-required">*</span>
+                                    </label>
+                                    <input type="number" required="" class="form-control"
+                                        value="{{ receipt.ratio_score }}" id="inpRatioScore" name="ratio_score"
+                                        step="0.1">
+                                </div>
+                            {% endif %}
                             <div class="col-md-12">
                                 <label class="form-label" for="inpDepositTime">
                                     تاریخ واریز

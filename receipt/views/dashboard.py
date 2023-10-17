@@ -191,7 +191,7 @@ class ReceiptAdd(LoginRequiredMixinCustom, View):
         if form_validate_err(request, form) is False:
             return redirect('receipt:receipt_dashboard_add')
         receipt = form.save()
-        if user.role == 'financial_user':
+        if user.is_common_admin:
             form_data['user_admin'] = user
             form_data['receipt'] = receipt
             form_data['receipt_status'] = 'accepted'
@@ -348,7 +348,7 @@ class ReceiptDetail(LoginRequiredMixinCustom, View):
         if user.is_super_admin and receipt_task and receipt_task.status == 'pending':
             return redirect(receipt_task.get_absolute_url())
         context = {
-            'receipt': receipt
+            'receipt': receipt,
         }
         return render(request, 'receipt/dashboard/receipt/detail.html', context)
 
