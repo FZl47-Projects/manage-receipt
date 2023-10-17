@@ -15,6 +15,7 @@
       <change beforePath="$PROJECT_DIR$/receipt/templates/receipt/dashboard/receipt/task/common_admin/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/receipt/templates/receipt/dashboard/receipt/task/common_admin/detail.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/receipt/templates/receipt/dashboard/receipt/task/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/receipt/templates/receipt/dashboard/receipt/task/detail.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/receipt/views/dashboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/receipt/views/dashboard.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/scripts/user-list-component.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/scripts/user-list-component.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/support/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/support/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/support/templates/support/dashboard/question/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/support/templates/support/dashboard/question/detail.html" afterDir="false" />
@@ -168,7 +169,7 @@
       <workItem from="1697017432779" duration="1636000" />
       <workItem from="1697020791646" duration="1775000" />
       <workItem from="1697111466300" duration="13000" />
-      <workItem from="1697563486790" duration="12360000" />
+      <workItem from="1697563486790" duration="12801000" />
     </task>
     <servers />
   </component>
