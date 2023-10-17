@@ -45,6 +45,9 @@ if (form_search_users_component){
             }
             initUserSelect()
             removeLoading(users_select_component.parentElement)
+            try{
+                input_select_user_component_event()
+            }catch (e){}
         }, error: function () {
             removeLoading(users_select_component.parentElement)
             createNotify({

@@ -77,7 +77,8 @@
                                                             <span class="field-required">*</span>
                                                         </label>
                                                         <input type="number" value="1" id="inpRatioScoreReceipt"
-                                                            class="form-control" required name="ratio_score" step="0.1">
+                                                               class="form-control" required name="ratio_score"
+                                                               step="0.1">
                                                     </div>
                                                 </div>
                                             </div>
@@ -198,6 +199,9 @@
     <script>
         let input_select_user_component = document.querySelector('input[name="user"]')
         let input_select_user_component_name = document.querySelector('.input-select-label-name')
+        let input_select_user_component_event = function () {
+            setEventGetBuildingUsers()
+        }
 
 
         let url_user_buildings_available = "{% url 'account:user_building_available_list' %} "
@@ -208,38 +212,45 @@
     </script>
     <script src="{% static 'scripts/user-list-component.js' %}"></script>
     <script>
-        let users_select = document.querySelectorAll('.user-select')
+
         let cnt_building_inp = document.getElementById('inputNameBuilding').parentElement
-        for (let user of users_select) {
-            user.addEventListener('click', function () {
-                let user_id = input_select_user_component.value
-                createLoading(cnt_building_inp)
-                sendAjax({
-                    url: url_user_buildings_available,
-                    data: {
-                        'user_id': user_id
-                    },
-                    success: function (response) {
-                        response = JSON.parse(response)
-                        disableOptionsBuilding()
-                        document.querySelector(`#inputNameBuilding`).selectedIndex = -1
-                        for (let building of response) {
-                            let building_id = building['pk']
-                            let option = document.querySelector(`#inputNameBuilding option[value="${building_id}"]`)
-                            option.removeAttribute('disabled')
+
+        function setEventGetBuildingUsers() {
+            disableOptionsBuilding()
+            let users_select = document.querySelectorAll('.user-select')
+            for (let user of users_select) {
+                user.addEventListener('click', function () {
+                    let user_id = input_select_user_component.value
+                    createLoading(cnt_building_inp)
+                    sendAjax({
+                        url: url_user_buildings_available,
+                        data: {
+                            'user_id': user_id
+                        },
+                        success: function (response) {
+                            response = JSON.parse(response)
+                            disableOptionsBuilding()
+                            document.querySelector(`#inputNameBuilding`).selectedIndex = -1
+                            for (let building of response) {
+                                let building_id = building['pk']
+                                let option = document.querySelector(`#inputNameBuilding option[value="${building_id}"]`)
+                                option.removeAttribute('disabled')
+                            }
+                            removeLoading(cnt_building_inp)
+                        },
+                        error: function () {
+                            removeLoading(cnt_building_inp)
+                            createNotify({
+                                title: 'مشکلی پیش امده است',
+                                theme: 'error'
+                            })
                         }
-                        removeLoading(cnt_building_inp)
-                    },
-                    error: function () {
-                        removeLoading(cnt_building_inp)
-                        createNotify({
-                            title: 'مشکلی پیش امده است',
-                            theme: 'error'
-                        })
-                    }
+                    })
                 })
-            })
+            }
         }
+
+        setEventGetBuildingUsers()
 
         function disableOptionsBuilding() {
             let options = document.querySelectorAll('#inputNameBuilding option')
