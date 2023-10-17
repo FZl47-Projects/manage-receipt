@@ -68,6 +68,12 @@ class Question(BaseModel, Image):
     def get_absolute_url(self):
         return reverse('support:support_dashboard_question_detail', args=(self.id,))
 
+    def get_answer_percentage(self, field_option):
+        answers = self.get_answers()
+        all_count = answers.count()
+        count = answers.filter(answer=field_option).count()
+        return (count * 100) / all_count
+
 
 class AnswerQuestion(BaseModel):
     question = models.ForeignKey('Question', on_delete=models.CASCADE)

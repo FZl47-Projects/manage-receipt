@@ -104,7 +104,7 @@
                                             </label>
                                             <select name='buildings' multiple class="form-control form-select">
                                                 {% for building in buildings %}
-                                                    <option value="{{ building.id }}">{{ building.name }}</option>
+                                                    <option value="{{ building.id }}">{{ building.get_name_by_flag }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>

@@ -593,7 +593,7 @@ class UserFinancialAdd(View):
             is_showing=False
         )
         messages.success(request, 'حساب کاربر با موفقیت ایجاد شد')
-        return redirect('account:user_add')
+        return redirect('account:user_financial_add')
 
 
 class UserFinancialList(View):

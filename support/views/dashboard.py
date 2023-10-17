@@ -191,9 +191,9 @@ class QuestionDetailExport(LoginRequiredMixinCustom, View):
         file_name = f"{settings.EXPORT_ROOT_DIR}/export-question-{question_obj.title}-{question_obj.building.name}.xlsx"
         export_file = os.path.join(settings.MEDIA_ROOT, file_name)
         workbook = xlsxwriter.Workbook(export_file)
-        worksheet = workbook.add_worksheet('اطلاعات')
         # add information
         # add title rows
+        worksheet = workbook.add_worksheet('اطلاعات')
         worksheet.write(0, 0, 'عنوان پرسش')
         worksheet.write(0, 1, 'نام ساختمان')
         # add data
@@ -212,6 +212,19 @@ class QuestionDetailExport(LoginRequiredMixinCustom, View):
             # user answer
             worksheet.write(row, 1, answer.answer)
             row += 1
+        # add answer percentages
+        # add title rows
+        worksheet = workbook.add_worksheet('درصد نظرسنجی')
+        worksheet.write(0, 0, '(گزینه 1){}'.format(question_obj.option_1))
+        worksheet.write(0, 1, '(گزینه 2){}'.format(question_obj.option_2))
+        worksheet.write(0, 2, '(گزینه 3){}'.format(question_obj.option_3))
+        worksheet.write(0, 3, '(گزینه 4){}'.format(question_obj.option_4))
+        # set answer percentages
+        worksheet.write(1, 0, '%{}'.format(question_obj.get_answer_percentage(question_obj.option_1)))
+        worksheet.write(1, 1, '%{}'.format(question_obj.get_answer_percentage(question_obj.option_2)))
+        worksheet.write(1, 2, '%{}'.format(question_obj.get_answer_percentage(question_obj.option_3)))
+        worksheet.write(1, 3, '%{}'.format(question_obj.get_answer_percentage(question_obj.option_4)))
+
         workbook.close()
         return file_name
 

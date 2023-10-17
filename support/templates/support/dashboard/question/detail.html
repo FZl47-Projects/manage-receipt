@@ -1,5 +1,6 @@
 {% extends 'account/dashboard/components/base/base_template.html' %}
 {% load static %}
+{% load custom_tags %}
 
 {% block Title %}
     پرسش -
@@ -60,12 +61,14 @@
                                                                     <a class="btn btn-outline-primary dropdown-toggle px-4"
                                                                        href="#" role="button" id="dropdownMenuLink"
                                                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                                                            نتیجه
+                                                                        نتیجه
                                                                     </a>
                                                                     <ul class="dropdown-menu"
                                                                         aria-labelledby="dropdownMenuLink">
                                                                         <li>
-                                                                            <a class="dropdown-item" href="{% url 'support:support_dashboard_question_detail_export' question_id=question.id %}">خروجی اکسل</a>
+                                                                            <a class="dropdown-item"
+                                                                               href="{% url 'support:support_dashboard_question_detail_export' question_id=question.id %}">خروجی
+                                                                                اکسل</a>
                                                                         </li>
                                                                     </ul>
                                                                 </div>
@@ -182,6 +185,10 @@
                                                     <a href="#" class="notification_btn bg-primary">
                                                         <i class="fa fa-dice-one font-s-20 text-white"></i>
                                                     </a>
+                                                    <span class="font-75">
+                                                        <span class="text-mute font-size-12">درصد پاسخ</span>
+                                                        %{% call question 'get_answer_percentage' question.option_1 %}
+                                                    </span>
                                                 </div>
 
                                                 <div class="single_quick_activity">
@@ -194,6 +201,10 @@
                                                     <a href="#" class="notification_btn bg-danger">
                                                         <i class="fa fa-dice-two font-s-20 text-white"></i>
                                                     </a>
+                                                    <span class="font-75">
+                                                        <span class="text-mute font-size-12">درصد پاسخ</span>
+                                                        %{% call question 'get_answer_percentage' question.option_2 %}
+                                                    </span>
                                                 </div>
 
                                                 <div class="single_quick_activity">
@@ -206,6 +217,10 @@
                                                     <a href="#" class="notification_btn bg-warning">
                                                         <i class="fa fa-dice-three font-s-20 text-white"></i>
                                                     </a>
+                                                    <span class="font-75">
+                                                        <span class="text-mute font-size-12">درصد پاسخ</span>
+                                                        %{% call question 'get_answer_percentage' question.option_3 %}
+                                                    </span>
                                                 </div>
 
                                                 <div class="single_quick_activity">
@@ -218,6 +233,10 @@
                                                     <a href="#" class="notification_btn bg-success">
                                                         <i class="fa fa-dice-four font-s-20 text-white"></i>
                                                     </a>
+                                                    <span class="font-75">
+                                                        <span class="text-mute font-size-12">درصد پاسخ</span>
+                                                        %{% call question 'get_answer_percentage' question.option_4   %}
+                                                    </span>
                                                 </div>
 
                                             </div>
@@ -269,7 +288,7 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-                                            {% empty %}
+                                                {% empty %}
                                                 <tr>
                                                     <div class="container-not-found-base">
                                                         <p>پاسخی یافت نشد</p>

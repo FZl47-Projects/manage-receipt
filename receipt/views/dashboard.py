@@ -1,6 +1,7 @@
 import json
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
+from django.core.exceptions import PermissionDenied
 from django.views.generic import View
 from django.http import Http404
 from django.core.paginator import Paginator
@@ -345,7 +346,7 @@ class ReceiptDetail(LoginRequiredMixinCustom, View):
         # redirect to receipt task if admin is super admin and
         # receipt have receipt task and receipt task is pending
         receipt_task = getattr(receipt, 'receipttask', None)
-        if user.is_super_admin and receipt_task and receipt_task.status == 'pending':
+        if user.is_admin and receipt_task and receipt_task.status == 'pending':
             return redirect(receipt_task.get_absolute_url())
         context = {
             'receipt': receipt,
@@ -359,16 +360,19 @@ class ReceiptDetailUpdate(LoginRequiredMixinCustom, View):
     def post(self, request, receipt_id):
         data = request.POST.copy()
         user = request.user
+        receipt = get_object_or_404(models.Receipt, id=receipt_id)
+        task_receipt = getattr(receipt, 'receipttask', None)
         # set default values
         data['status'] = data.get('receipt_status', None)
-
-        receipt = get_object_or_404(models.Receipt, id=receipt_id)
+        data.setdefault('ratio_score', receipt.ratio_score)
         f = forms.ReceiptUpdateForm(data=data, instance=receipt)
         if form_validate_err(request, f) is False:
             return redirect(receipt.get_absolute_url())
+        # common admin can update receipt until task receipt status is pending
+        if user.is_common_admin and task_receipt and task_receipt.status != 'pending':
+            raise PermissionDenied
         f.save()
         # set status task receipt to need to check(if task receipt available and user is common admin)
-        task_receipt = getattr(receipt, 'receipttask', None)
         if task_receipt:
             # update receipt task if user is common admin
             if user.is_common_admin:
@@ -393,6 +397,7 @@ class ReceiptDetailAccept(View):
         data = request.POST.copy()
         # accept receipt
         data['status'] = 'pending'
+        data.setdefault('ratio_score',1)
         if user.is_super_admin:
             data['status'] = 'accepted'
         f = forms.ReceiptAcceptForm(instance=receipt, data=data)

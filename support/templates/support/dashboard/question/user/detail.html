@@ -189,15 +189,17 @@
                                     <div class="box_header m-0">
                                         <div class="d-flex justify-content-between align-items-center col-12">
                                             <div class="main-title">
-                                                <h3 class="m-0">پاسخ های شما</h3>
+                                                <h3 class="m-0">پاسخ شما</h3>
                                             </div>
-                                            <div>
-                                                <button class="btn btn-submit px-3 font-70" type="button"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#container-answer">
-                                                    ثبت پاسخ
-                                                </button>
-                                            </div>
+                                            {% if answers.count == 0 %}
+                                                <div>
+                                                    <button class="btn btn-submit px-3 font-70" type="button"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#container-answer">
+                                                        ثبت پاسخ
+                                                    </button>
+                                                </div>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -231,7 +233,7 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-                                            {% empty %}
+                                                {% empty %}
                                                 <tr>
                                                     <div class="container-not-found-base">
                                                         <p>پاسخی یافت نشد</p>

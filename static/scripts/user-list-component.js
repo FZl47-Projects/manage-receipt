@@ -28,7 +28,8 @@ initUserSelect()
 
 
 let form_search_users_component = document.getElementById('form-search-users-component')
-form_search_users_component.addEventListener('submit', function (e) {
+if (form_search_users_component){
+    form_search_users_component.addEventListener('submit', function (e) {
     createLoading(users_select_component.parentElement)
     e.preventDefault()
     sendAjax({
@@ -53,6 +54,8 @@ form_search_users_component.addEventListener('submit', function (e) {
         }
     })
 })
+}
+
 
 function clearContentUsersSelect() {
     users_select_component.innerHTML = ''
