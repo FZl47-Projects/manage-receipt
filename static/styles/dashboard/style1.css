@@ -4716,6 +4716,7 @@ body::-webkit-scrollbar {
     color: #14256a;
     font-weight: 700;
     border-bottom: 0;
+    text-align: center;
 }
 
 .QA_section .QA_table tbody th a, .QA_section .QA_table tbody td a {
@@ -4781,6 +4782,7 @@ body::-webkit-scrollbar {
     border: 0 !important;
     padding-left: 0;
     padding-top: 0;
+    text-align: center;
 }
 
 .QA_section .QA_table .table thead th:first-child {

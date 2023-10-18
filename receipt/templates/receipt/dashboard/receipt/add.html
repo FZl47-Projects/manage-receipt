@@ -200,6 +200,7 @@
         let input_select_user_component = document.querySelector('input[name="user"]')
         let input_select_user_component_name = document.querySelector('.input-select-label-name')
         let input_select_user_component_event = function () {
+             disableOptionsBuilding()
             setEventGetBuildingUsers()
         }
 
@@ -216,7 +217,6 @@
         let cnt_building_inp = document.getElementById('inputNameBuilding').parentElement
 
         function setEventGetBuildingUsers() {
-            disableOptionsBuilding()
             let users_select = document.querySelectorAll('.user-select')
             for (let user of users_select) {
                 user.addEventListener('click', function () {

@@ -114,6 +114,16 @@
             width: 105px;
         }
 
+        .loading-empty{
+            background: rgba(231, 231, 231, 0.7) !important;
+            border-radius: 5px;
+            display: block;
+            width: 40%;
+            height: 20px;
+            margin: auto;
+            text-align: center;
+        }
+
 
     </style>
 {% endblock %}
@@ -313,52 +323,51 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-                    {% endif %}
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="single_element">
-                                <div class="quick_activity">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="quick_activity_wrap"
-                                                 style="grid-template-columns:repeat(2,1fr)">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="single_element">
+                                    <div class="quick_activity">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="quick_activity_wrap"
+                                                     style="grid-template-columns:repeat(2,1fr)">
 
-                                                <div class="single_quick_activity col-12 col-md-12">
-                                                    <div class="count_content">
-                                                        <span class="mb-3 d-block text-mute">مبلغ پرداخت شده</span>
-                                                        <h3>
-                                                            <span class="font-s-35 price-el">{{ building.get_payments }}</span>
-                                                            <span>
+                                                    <div class="single_quick_activity col-12 col-md-12">
+                                                        <div class="count_content">
+                                                            <span class="mb-3 d-block text-mute">مبلغ پرداخت شده</span>
+                                                            <h3>
+                                                                <span class="font-s-35 price-el">{{ building.get_payments }}</span>
+                                                                <span>
                                                                 تومان
                                                             </span>
-                                                        </h3>
+                                                            </h3>
+                                                        </div>
+                                                        <a href="#" class="notification_btn bg-secondary">
+                                                            <i class="fa fa-dollar-sign font-s-20 text-white"></i>
+                                                        </a>
                                                     </div>
-                                                    <a href="#" class="notification_btn bg-secondary">
-                                                        <i class="fa fa-dollar-sign font-s-20 text-white"></i>
-                                                    </a>
-                                                </div>
 
-                                                <div class="single_quick_activity col-12 col-md-12">
-                                                    <div class="count_content">
-                                                        <span class="mb-3 d-block text-mute">تعداد رسید ها</span>
-                                                        <h3>
-                                                            <span class="font-s-35 price-el">{{ building.get_receipts.count }}</span>
-                                                        </h3>
+                                                    <div class="single_quick_activity col-12 col-md-12">
+                                                        <div class="count_content">
+                                                            <span class="mb-3 d-block text-mute">تعداد رسید ها</span>
+                                                            <h3>
+                                                                <span class="font-s-35 price-el">{{ building.get_receipts.count }}</span>
+                                                            </h3>
+                                                        </div>
+                                                        <a href="#" class="notification_btn bg-danger">
+                                                            <i class="fa fa-file-alt font-s-20 text-white"></i>
+                                                        </a>
                                                     </div>
-                                                    <a href="#" class="notification_btn bg-danger">
-                                                        <i class="fa fa-file-alt font-s-20 text-white"></i>
-                                                    </a>
-                                                </div>
 
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    {% endif %}
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="single_element">
@@ -549,31 +558,30 @@
                                                 {% if request.user.is_super_admin %}
                                                     <th scope="col">امتیاز</th>
                                                 {% endif %}
-
                                                 {% if user.is_admin %}
                                                     <th scope="col">جزئیات</th>
                                                 {% endif %}
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {% for user in building.get_users_sort_by_score %}
-                                                <tr {% if user == request.user %}class="active"{% endif %}>
-                                                    <td>
-                                                        {{ forloop.counter }}#
-                                                    </td>
-                                                    <td>
-                                                        {{ user.get_full_name|truncatechars:20 }}
-                                                    </td>
-                                                    <td>
-                                                        {{ user.get_raw_phonenumber }}
-                                                    </td>
-                                                    {% if request.user.is_super_admin %}
-                                                        <td class="nowrap">
-                                                            <span class="price-el">{{ user.score }}</span>
-                                                            <i class="fa fa-star text-warning"></i>
+                                            {% if request.user.is_admin %}
+                                                {% for user in building.get_users_sort_by_score %}
+                                                    <tr {% if user == request.user %}class="active"{% endif %}>
+                                                        <td>
+                                                            {{ forloop.counter }}#
                                                         </td>
-                                                    {% endif %}
-                                                    {% if request.user.is_admin %}
+                                                        <td>
+                                                            {{ user.get_full_name|truncatechars:20 }}
+                                                        </td>
+                                                        <td>
+                                                            {{ user.get_raw_phonenumber }}
+                                                        </td>
+                                                        {% if request.user.is_super_admin %}
+                                                            <td class="nowrap">
+                                                                <span class="price-el">{{ user.score }}</span>
+                                                                <i class="fa fa-star text-warning"></i>
+                                                            </td>
+                                                        {% endif %}
                                                         <td>
                                                             <a class="font-85 text-primary"
                                                                href="{{ user.get_absolute_url }}">
@@ -581,17 +589,56 @@
                                                                 <i class="fa fa-angle-left"></i>
                                                             </a>
                                                         </td>
+                                                    </tr>
+                                                    {% empty %}
+                                                    <tr>
+                                                        <td colspan="20">
+                                                            <div class="container-not-found-base">
+                                                                <p>کاربری یافت نشد</p>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+
+                                            {% else %}
+
+                                                {% for user in building.get_users_sort_by_score %}
+                                                    {% if user == request.user %}
+                                                        <tr class="active">
+                                                            <td>
+                                                                {{ forloop.counter }}#
+                                                            </td>
+                                                            <td>
+                                                                {{ user.get_full_name|truncatechars:20 }}
+                                                            </td>
+                                                            <td>
+                                                                {{ user.get_raw_phonenumber }}
+                                                            </td>
+                                                        </tr>
+                                                    {% else %}
+                                                        <tr>
+                                                            <td>
+                                                                {{ forloop.counter }}#
+                                                            </td>
+                                                            <td>
+                                                                <span class="loading-empty"></span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="loading-empty"></span>
+                                                            </td>
+                                                        </tr>
                                                     {% endif %}
-                                                </tr>
-                                                {% empty %}
-                                                <tr>
-                                                    <td colspan="20">
-                                                        <div class="container-not-found-base">
-                                                            <p>کاربری یافت نشد</p>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            {% endfor %}
+                                                    {% empty %}
+                                                    <tr>
+                                                        <td colspan="20">
+                                                            <div class="container-not-found-base">
+                                                                <p>کاربری یافت نشد</p>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+
+                                            {% endif %}
                                             </tbody>
                                         </table>
                                     </div>
