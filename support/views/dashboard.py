@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View
 from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator
-from core.auth.decorators import admin_required_cbv
+from core.auth.decorators import admin_required_cbv, user_role_required_cbv
 from core.auth.mixins import LoginRequiredMixinCustom
 from core.utils import form_validate_err, get_media_url
 from receipt.models import Building
@@ -155,6 +155,7 @@ class QuestionList(LoginRequiredMixinCustom, View):
         }
         return context
 
+    @user_role_required_cbv(['normal_user', 'super_user'])
     def get(self, request):
         context = self.get_context_by_role(request)
         return render(request, self.get_template_by_user(request), context)
@@ -180,6 +181,7 @@ class QuestionDetail(LoginRequiredMixinCustom, View):
             context['question'] = question
         return context
 
+    @user_role_required_cbv(['normal_user', 'super_user'])
     def get(self, request, question_id):
         context = self.get_context_by_user(request, question_id)
         return render(request, self.get_template_by_user(request), context)
@@ -228,7 +230,7 @@ class QuestionDetailExport(LoginRequiredMixinCustom, View):
         workbook.close()
         return file_name
 
-    @admin_required_cbv()
+    @admin_required_cbv(['super_user'])
     def get(self, request, question_id):
         question = get_object_or_404(Question, id=question_id)
         excel_file = self.perform_export_excel(question)
@@ -249,6 +251,7 @@ class QuestionDelete(View):
 class AnswerDetail(LoginRequiredMixinCustom, View):
     template_name = 'support/dashboard/answer/detail.html'
 
+    @user_role_required_cbv(['normal_user', 'super_user'])
     def get(self, request, answer_id):
         answer = get_object_or_404(AnswerQuestion, id=answer_id)
         context = {

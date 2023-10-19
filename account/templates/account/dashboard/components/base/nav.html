@@ -227,7 +227,8 @@
         </ul>
     </li>
 
-    <li>
+    {% if not user.is_common_admin %}
+        <li>
         <a class="has-arrow" href="#" aria-expanded="false">
             <div class="icon_menu">
                 <img src="{% static 'images/dashboard/menu-icon/2.svg.xml' %}" alt>
@@ -285,6 +286,7 @@
             </li>
         </ul>
     </li>
+    {% endif %}
 
     <li>
         <a class="has-arrow" href="#" aria-expanded="false">
