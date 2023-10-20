@@ -72,7 +72,10 @@ class Question(BaseModel, Image):
         answers = self.get_answers()
         all_count = answers.count()
         count = answers.filter(answer=field_option).count()
-        return (count * 100) / all_count
+        try:
+            return (count * 100) / all_count
+        except ZeroDivisionError:
+            return 0
 
 
 class AnswerQuestion(BaseModel):
