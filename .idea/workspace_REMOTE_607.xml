@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9e0b5c57-ac93-4d3e-b733-79126e83deba" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/manage_receipt.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/manage_receipt.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account/templates/account/dashboard/components/base/nav.html" beforeDir="false" afterPath="$PROJECT_DIR$/account/templates/account/dashboard/components/base/nav.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/auth/decorators.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/auth/decorators.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/support/views/dashboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/support/views/dashboard.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="JavaScript File" />
+        <option value="Python Script" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2TegibYAL87grRyiuw44zQH2MJj" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\Project-Company\Smarten\manage_receipt\support\templates\support\dashboard\question\user" />
+      <recent name="F:\Project-Company\Smarten\manage_receipt\receipt\templates\receipt\dashboard\project" />
+      <recent name="F:\Project-Company\Smarten\manage_receipt\public\templates\public\errors" />
+      <recent name="F:\Project-Company\Smarten\manage_receipt\receipt\templates\receipt\dashboard\receipt\fanancial" />
+      <recent name="F:\Project-Company\Smarten\manage_receipt\receipt\templates\receipt\dashboard" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\Project-Company\Smarten\manage_receipt\account\views" />
+      <recent name="F:\Project-Company\Smarten\manage_receipt\receipt\templates\receipt\dashboard\receipt" />
+      <recent name="F:\Project-Company\Smarten\manage_receipt\account\templates\account\dashboard" />
+      <recent name="F:\Project-Company\Smarten\manage_receipt\receipt\templates\receipt\dashboard\building" />
+      <recent name="F:\Project-Company\Smarten\manage_receipt\account\templates\account\dashboard\base" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9e0b5c57-ac93-4d3e-b733-79126e83deba" name="Changes" comment="" />
+      <created>1691409089151</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1691409089151</updated>
+      <workItem from="1691409094176" duration="106000" />
+      <workItem from="1691409212366" duration="1819000" />
+      <workItem from="1691529361331" duration="7778000" />
+      <workItem from="1691578719808" duration="17737000" />
+      <workItem from="1691685214101" duration="13606000" />
+      <workItem from="1691703164287" duration="162000" />
+      <workItem from="1691756262830" duration="19976000" />
+      <workItem from="1691848471309" duration="9061000" />
+      <workItem from="1691872090406" duration="1094000" />
+      <workItem from="1691943421648" duration="6242000" />
+      <workItem from="1691953547411" duration="79000" />
+      <workItem from="1692002848922" duration="55000" />
+      <workItem from="1692967401917" duration="20000" />
+      <workItem from="1694227255816" duration="12131000" />
+      <workItem from="1694314628850" duration="14792000" />
+      <workItem from="1694404310830" duration="2199000" />
+      <workItem from="1694426485320" duration="12702000" />
+      <workItem from="1694487707528" duration="10304000" />
+      <workItem from="1694527127563" duration="1515000" />
+      <workItem from="1694572940413" duration="9756000" />
+      <workItem from="1694591301728" duration="5505000" />
+      <workItem from="1694599263237" duration="17380000" />
+      <workItem from="1694668623723" duration="12123000" />
+      <workItem from="1694689516483" duration="3651000" />
+      <workItem from="1694693444097" duration="3355000" />
+      <workItem from="1694754304421" duration="24184000" />
+      <workItem from="1694840394755" duration="18382000" />
+      <workItem from="1694874618157" duration="4787000" />
+      <workItem from="1694881759688" duration="1108000" />
+      <workItem from="1694884960483" duration="272000" />
+      <workItem from="1694887229045" duration="122000" />
+      <workItem from="1694887366759" duration="202000" />
+      <workItem from="1694891808311" duration="108000" />
+      <workItem from="1695147265676" duration="2263000" />
+      <workItem from="1695188424938" duration="177000" />
+      <workItem from="1695283318622" duration="18000" />
+      <workItem from="1695285541271" duration="5409000" />
+      <workItem from="1695292881610" duration="1542000" />
+      <workItem from="1695313180376" duration="794000" />
+      <workItem from="1695708667224" duration="9261000" />
+      <workItem from="1695721447520" duration="20304000" />
+      <workItem from="1695805970808" duration="5116000" />
+      <workItem from="1695832676164" duration="14330000" />
+      <workItem from="1695889786575" duration="11283000" />
+      <workItem from="1695979360501" duration="1262000" />
+      <workItem from="1695981321657" duration="45000" />
+      <workItem from="1695993794272" duration="6745000" />
+      <workItem from="1696005035171" duration="15761000" />
+      <workItem from="1696030028706" duration="1804000" />
+      <workItem from="1696102805017" duration="841000" />
+      <workItem from="1696104131185" duration="667000" />
+      <workItem from="1696171284896" duration="993000" />
+      <workItem from="1696411197954" duration="2635000" />
+      <workItem from="1696416208608" duration="122000" />
+      <workItem from="1696417541150" duration="7270000" />
+      <workItem from="1696438432457" duration="10569000" />
+      <workItem from="1696588462953" duration="1809000" />
+      <workItem from="1696672156802" duration="17958000" />
+      <workItem from="1696691852864" duration="62000" />
+      <workItem from="1696753357647" duration="22000" />
+      <workItem from="1696755475251" duration="1191000" />
+      <workItem from="1696769077429" duration="78000" />
+      <workItem from="1696784910960" duration="3405000" />
+      <workItem from="1696842225933" duration="11759000" />
+      <workItem from="1696871325475" duration="2643000" />
+      <workItem from="1696926114468" duration="10363000" />
+      <workItem from="1696963777485" duration="158000" />
+      <workItem from="1696968728027" duration="4834000" />
+      <workItem from="1697015871396" duration="56000" />
+      <workItem from="1697016298829" duration="641000" />
+      <workItem from="1697017432779" duration="1636000" />
+      <workItem from="1697020791646" duration="1775000" />
+      <workItem from="1697111466300" duration="13000" />
+      <workItem from="1697563486790" duration="14436000" />
+      <workItem from="1697620487768" duration="4154000" />
+      <workItem from="1697713108709" duration="598000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+</project>
