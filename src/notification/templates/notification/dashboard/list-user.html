@@ -1,0 +1,130 @@
+{% extends 'account/dashboard/components/base/base_template.html' %}
+
+{% block Title %}
+    لیست اعلان های ثبت شده برای کاربران
+{% endblock %}
+
+
+{% block Content %}
+    {% include 'account/dashboard/components/base/nav.html' %}
+
+    <section class="main_content dashboard_part large_header_bg">
+        {% include 'account/dashboard/components/base/header.html' %}
+        <div class="main_content_iner">
+            <div class="container-fluid p-0 ">
+                <div class="col-lg-12">
+                    <div class="white_card mb_30">
+                        <div class="white_card_header">
+                            <div class="box_header m-0">
+                                <div class="main-title">
+                                    <h3 class="m-0">لیست اعلان های کاربران</h3>
+                                </div>
+                            </div>
+                            <div class="breadcrumb">
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'account:dashboard' %}">داشبورد</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">اعلانات</a>
+                                    </li>
+                                    <li>
+                                        <a href="">اعلانات کاربران</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="white_card_body">
+                            <div class="card-body">
+                                <div class="text-right mb-4">
+                                    <a href="{% url 'notification:notification_dashboard_user_add' %}"
+                                       class="btn btn-outline-success font-70">ایجاد اعلان برای کاربر</a>
+                                </div>
+                                <div class="list-row">
+                                    <div class="title-list-row">
+                                        <div class="col-2">
+                                            عنوان
+                                        </div>
+                                        <div class="col-3">
+                                            توضیحات
+                                        </div>
+                                        <div class="col-3">
+                                            کاربر
+                                        </div>
+                                        <div class="col-2">
+                                            ارسال با نوتیفیکیشن
+                                        </div>
+                                        <div class="col-2">
+                                            تاریخ ایجاد
+                                        </div>
+                                    </div>
+                                    {% for notification in notifications %}
+                                        <div class="detail-row">
+                                            <div class="col-2">
+                                                <a href="{{ notification.get_absolute_url }}">
+                                                    {{ notification.get_title|truncatechars:30 }}
+                                                </a>
+                                            </div>
+                                            <div class="col-3">
+                                                {{ notification.description|default:'بدون توضیحات'|truncatechars:40 }}
+                                            </div>
+                                            <div class="col-3">
+                                                <a href="{{ notification.to_user.get_absolute_url }}">
+                                                    {{ notification.to_user.get_full_name|truncatechars:25 }}
+                                                    <span class="font-70 text-muted">({{ notification.to_user.get_raw_phonenumber }})</span>
+                                                </a>
+                                            </div>
+                                            <div class="col-2">
+                                                {% if notification.send_notify %}
+                                                    <i class="fa fa-check-circle font-size-10 text-success"></i>
+                                                {% else %}
+                                                    <i class="fa fa-minus-circle font-size-10 text-danger"></i>
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-2 datetime-convert">
+                                                {{ notification.get_created_at }}
+                                            </div>
+                                        </div>
+                                    {% empty %}
+                                        <div class="container-not-found-base">
+                                            <p>اعلانی یافت نشد</p>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="pagination">
+                                    <div class="step-links">
+                                        {% if pagination.has_previous %}
+                                            <span class="pagination-previous">
+                                                <a href="?page=1">اول</a><a
+                                                    href="?page={{ pagination.previous_page_number }}">قبلی</a>
+                                            </span>
+                                        {% endif %}
+                                        <span class="current">
+                                        صفحه  {{ pagination.number }} از {{ pagination.paginator.num_pages }}
+                                        </span>
+
+                                        {% if pagination.has_next %}
+                                            <span class="pagination-next">
+                                                <a href="?page={{ pagination.next_page_number }}">بعدی</a><a
+                                                    href="?page={{ pagination.paginator.num_pages }}">اخر</a>
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include 'account/dashboard/components/base/footer.html' %}
+    </section>
+{% endblock %}
+
+
+
+
+
+
+
+

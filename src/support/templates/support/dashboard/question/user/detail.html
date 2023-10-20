@@ -1,0 +1,327 @@
+{% extends 'account/dashboard/components/base/base_template.html' %}
+{% load static %}
+
+{% block Title %}
+    پرسش -
+    {{ question.title|truncatechars:30 }}
+{% endblock %}
+
+{% block Style %}
+    <style>
+        img {
+            width: 300px;
+        }
+    </style>
+{% endblock %}
+
+{% block Content %}
+
+    {% include 'account/dashboard/components/base/nav.html' %}
+
+    <section class="main_content dashboard_part large_header_bg">
+        {% include 'account/dashboard/components/base/header.html' %}
+        <div class="main_content_iner">
+            <div class="white_card mb_30">
+                <div class="white_card_header">
+                    <div class="box_header m-0">
+                        <div class="main-title">
+                            <h2 class="m-0">پرسش</h2>
+                        </div>
+                    </div>
+                    <div class="breadcrumb">
+                        <ul>
+                            <li>
+                                <a href="{% url 'account:dashboard' %}">داشبورد</a>
+                            </li>
+                            <li>
+                                <a href="">پرسش - {{ question.title }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid p-0 ">
+                <div id="container-index">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="single_element">
+                                <div class="quick_activity">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="quick_activity_wrap"
+                                                 style="grid-template-columns: repeat(3,1fr)">
+                                                <div class="single_quick_activity">
+                                                    <div class="count_content">
+                                                        <span class="mb-2 d-block text-mute">عنوان</span>
+                                                        <h3>
+                                                            <span class="font-s-25">{{ question.title }}</span>
+                                                        </h3>
+                                                    </div>
+                                                    <a href="#" class="notification_btn bg-primary">
+                                                        <i class="fa fa-question-circle font-s-20 text-white"></i>
+                                                    </a>
+                                                </div>
+                                                <div class="single_quick_activity">
+                                                    <div class="count_content">
+                                                        <span class="mb-2 d-block text-mute">توضیحات</span>
+                                                        <h3>
+                                                            <span class="font-s-25">{{ question.description|default:'توضیحی ثبت نشده است' }}</span>
+                                                        </h3>
+                                                    </div>
+                                                    <a href="#" class="notification_btn bg-danger">
+                                                        <i class="fa fa-info font-s-20 text-white"></i>
+                                                    </a>
+                                                </div>
+                                                <div class="single_quick_activity">
+                                                    <div class="count_content">
+                                                        <span class="mb-2 d-block text-mute">ساختمان</span>
+                                                        <a href="{{ question.building.get_absolute_url }}">
+                                                            <h3>
+                                                                <span class="font-s-25">
+                                                                    {{ question.building.name }}
+                                                                </span>
+                                                            </h3>
+                                                        </a>
+                                                    </div>
+                                                    <a href="#" class="notification_btn bg-dark">
+                                                        <i class="fa fa-building font-s-20 text-white"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% if question.image %}
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="single_element">
+                                    <div class="quick_activity">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="quick_activity_wrap d-block">
+                                                    <div class="single_quick_activity d-block d-md-flex justify-content-between align-items-center">
+                                                        <div class="count_content">
+                                                            <span class="mb-2 d-block text-mute">عکس</span>
+                                                        </div>
+                                                        <div class="text-center">
+                                                            <img src="{{ question.image.url }}"
+                                                                 alt="{{ question.title }}" class="click-full-size">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="single_element">
+                                <div class="quick_activity">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="quick_activity_wrap">
+
+                                                <div class="single_quick_activity">
+                                                    <div class="count_content">
+                                                        <span class="mb-2 d-block text-mute">گزینه اول</span>
+                                                        <h3>
+                                                            <span class="font-s-35">{{ question.option_1 }}</span>
+                                                        </h3>
+                                                    </div>
+                                                    <a href="#" class="notification_btn bg-primary">
+                                                        <i class="fa fa-dice-one font-s-20 text-white"></i>
+                                                    </a>
+                                                </div>
+
+                                                <div class="single_quick_activity">
+                                                    <div class="count_content">
+                                                        <span class="mb-2 d-block text-mute">گزینه دوم</span>
+                                                        <h3>
+                                                            <span class="font-s-35">{{ question.option_2 }}</span>
+                                                        </h3>
+                                                    </div>
+                                                    <a href="#" class="notification_btn bg-danger">
+                                                        <i class="fa fa-dice-two font-s-20 text-white"></i>
+                                                    </a>
+                                                </div>
+
+                                                <div class="single_quick_activity">
+                                                    <div class="count_content">
+                                                        <span class="mb-2 d-block text-mute">گزینه سوم</span>
+                                                        <h3>
+                                                            <span class="font-s-35">{{ question.option_3 }}</span>
+                                                        </h3>
+                                                    </div>
+                                                    <a href="#" class="notification_btn bg-warning">
+                                                        <i class="fa fa-dice-three font-s-20 text-white"></i>
+                                                    </a>
+                                                </div>
+
+                                                <div class="single_quick_activity">
+                                                    <div class="count_content">
+                                                        <span class="mb-2 d-block text-mute">گزینه چهارم</span>
+                                                        <h3>
+                                                            <span class="font-s-35">{{ question.option_4 }}</span>
+                                                        </h3>
+                                                    </div>
+                                                    <a href="#" class="notification_btn bg-success">
+                                                        <i class="fa fa-dice-four font-s-20 text-white"></i>
+                                                    </a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="white_card mb_30 card_height_100">
+                                <div class="white_card_header">
+                                    <div class="box_header m-0">
+                                        <div class="d-flex justify-content-between align-items-center col-12">
+                                            <div class="main-title">
+                                                <h3 class="m-0">پاسخ شما</h3>
+                                            </div>
+                                            {% if answers.count == 0 %}
+                                                <div>
+                                                    <button class="btn btn-submit px-3 font-70" type="button"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#container-answer">
+                                                        ثبت پاسخ
+                                                    </button>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="white_card_body">
+                                    <div class="table-responsive col-11 mt-4 mx-auto">
+                                        <table class="table bayer_table m-0">
+                                            <tbody>
+                                            {% for answer in answers %}
+                                                <tr style="border: hidden;">
+                                                    <td>
+                                                        <div class="payment_gatway">
+                                                            <h5 class="byer_name font-s-25 f_w_600 color_theme">
+                                                                {{ forloop.counter }}#
+                                                            </h5>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="payment_gatway">
+                                                            <h5 class="byer_name color_theme">
+                                                                {{ answer.answer }}
+                                                            </h5>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="payment_gatway">
+                                                            <a href="{{ answer.get_absolute_url }}"
+                                                               class="font-16">
+                                                                مشاهده
+                                                                <i class="far fa-arrow-alt-circle-left"></i>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                {% empty %}
+                                                <tr>
+                                                    <div class="container-not-found-base">
+                                                        <p>پاسخی یافت نشد</p>
+                                                    </div>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include 'account/dashboard/components/base/footer.html' %}
+    </section>
+
+
+    <div id="container-answer" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg col-lg-12">
+            <div class="modal-content white_card mb_30">
+                <div class="white_card_header border-0">
+                    <div class="modal-header box_header m-0">
+                        <h3 class="m-0">ثبت پاسخ</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="white_card_body">
+                    <form action="{% url 'support:support_dashboard_answer_submit' question_id=question.id %}"
+                          method="post" class="col-12">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <div class="p-3 d-block d-md-flex justify-content-evenly align-items-center cnt-options">
+                                <div>
+                                    <label for="inp-option-1-{{ question.id }}">
+                                        {{ question.option_1 }}
+                                    </label>
+                                    <input id="inp-option-1-{{ question.id }}" type="radio"
+                                           name="answer"
+                                           value="{{ question.option_1 }}" required class="form-check-input">
+                                </div>
+                                <div>
+                                    <label for="inp-option-2-{{ question.id }}">
+                                        {{ question.option_2 }}
+                                    </label>
+                                    <input id="inp-option-2-{{ question.id }}" type="radio"
+                                           name="answer"
+                                           value="{{ question.option_2 }}" required class="form-check-input">
+                                </div>
+                                <div>
+                                    <label for="inp-option-3-{{ question.id }}">
+                                        {{ question.option_3 }}
+                                    </label>
+                                    <input id="inp-option-3-{{ question.id }}" type="radio"
+                                           name="answer"
+                                           value="{{ question.option_3 }}" required class="form-check-input">
+                                </div>
+                                <div>
+                                    <label for="inp-option-4-{{ question.id }}">
+                                        {{ question.option_4 }}
+                                    </label>
+                                    <input id="inp-option-4-{{ question.id }}" type="radio"
+                                           name="answer"
+                                           value="{{ question.option_4 }}" required class="form-check-input">
+                                </div>
+                            </div>
+                            <div class="text-left mt-4">
+                                <button class="btn btn-submit">
+                                    ثبت پاسخ
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
+
+
+
+
+

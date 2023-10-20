@@ -1,0 +1,310 @@
+{% extends 'account/dashboard/components/base/base_template.html' %}
+
+{% block Title %}
+    اعلان عمومی
+    -
+    {{ notification.title }}
+{% endblock %}
+
+{% block Style %}
+    <style>
+        .detail {
+            direction: rtl;
+            border: 1px solid #f0f0f0;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .detail-field {
+            margin: 10px 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            border-bottom: 1px solid #f2f2f2;
+        }
+
+        .detail-field:last-of-type {
+            margin-top: 12px;
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+
+        .detail-field > span {
+            font-size: 75%;
+            color: #889ba6;
+        }
+
+        .detail-field p {
+            margin: 0;
+            display: inline-block;
+            font-size: 75%;
+            color: #555;
+        }
+
+        .detail-field a {
+            font-size: 90%;
+            background: #eef3ff;
+            color: #3741e0;
+            padding: 4px 7px;
+            border-radius: 7px;
+        }
+
+        .detail-field p span {
+            color: inherit;
+        }
+
+        .card-body img {
+            width: 250px;
+            height: 250px;
+            border: 1px solid #eee;
+            border-radius: 15px;
+        }
+
+        .btn-edit-outline {
+            background: #fff;
+            border: 1px solid #5791f3;
+            border-radius: 6px;
+            color: #5791f3;
+            width: 105px;
+            transition: all .2s !important;
+        }
+
+        .btn-edit-outline:hover {
+            background: #5791f3;
+            color: #fff;
+        }
+
+        .btn-submit {
+            background: #0ae1a7;
+            color: #fff;
+        }
+
+        .btn-submit:hover {
+            box-shadow: 0 2px 2px #09b284;
+            color: #ffffff;
+        }
+
+    </style>
+{% endblock %}
+
+{% block Content %}
+    {% include 'account/dashboard/components/base/nav.html' %}
+
+    <section class="main_content dashboard_part large_header_bg">
+        {% include 'account/dashboard/components/base/header.html' %}
+        <div class="main_content_iner">
+            <div class="container-fluid p-0 ">
+                <div class="col-lg-12">
+                    <div class="white_card mb_30">
+                        <div class="white_card_header d-block d-md-flex justify-content-between align-items-center">
+                            <div class="box_header m-0">
+                                <div class="main-title">
+                                    <h3 class="m-0">
+                                        اعلان
+                                        عمومی
+                                        شماره
+                                        {{ notification.id }}
+                                    </h3>
+                                </div>
+                            </div>
+                            {% if user.is_super_admin %}
+                                <div class="text-center mt-3 mt-md-0">
+                                    <button class="btn btn-edit-outline border-radius-6 m-1" type="button"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#container-edit">
+                                        تغییر
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-outline-danger border-radius-6 m-1" type="button"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#container-delete">
+                                        حذف
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="white_card_body">
+                            <div class="card-body">
+                                <div class="container-title">
+                                    <p>
+                                        عنوان
+                                    </p>
+                                </div>
+                                <div class="text-center">
+                                    <p class="font-size-16 text-muted">{{ notification.title }}</p>
+                                </div>
+                                {% if notification.image %}
+                                    <div class="container-title">
+                                        <p>
+                                            عکس
+                                        </p>
+                                    </div>
+                                    <div class="text-center">
+                                        <img src="{{ notification.image.url }}" alt="{{ notification.title }}"
+                                             class="click-full-size">
+                                    </div>
+                                {% endif %}
+                                <div class="container-title">
+                                    <p>
+                                        جزئیات
+                                    </p>
+                                </div>
+                                <div class="detail col-11 col-md-10 col-lg-8 mx-auto">
+                                    <div class="detail-field">
+                                        <p>{{ notification.description }}</p>
+                                    </div>
+                                    <div class="detail-field">
+                                        <span>وضعیت</span>
+                                        {% if notification.is_active %}
+                                            <span>
+                                                <i class="fa fa-check text-success"></i>
+                                                 فعال
+                                            </span>
+                                        {% else %}
+                                            <span>
+                                                <i class="fa fa-times text-danger"></i>
+                                                غیر فعال
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="detail-field">
+                                        <span>تاریخ ایجاد</span>
+                                        <p>{{ notification.get_created_at_timepast }}</p>
+                                    </div>
+                                    {% if notification.kwargs.link %}
+                                        <div class="detail-field">
+                                            <span>لینک پیوست</span>
+                                            <p><a href="{{ notification.kwargs.link }}">مشاهده</a></p>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include 'account/dashboard/components/base/footer.html' %}
+    </section>
+
+    <div id="container-delete" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg col-lg-12">
+            <div class="modal-content white_card mb_30">
+                <div class="white_card_header border-0">
+                    <div class="modal-header box_header m-0">
+                        <h3 class="m-0">تاییدیه و حذف اعلان </h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="white_card_body">
+                    <div>
+                        <p class="text- bg-danger-light">
+                            ایا از حذف اعلان اطمینان دارید ؟
+                        </p>
+                    </div>
+                    <form action="{% url 'notification:notification_dashboard_delete' notification_id=notification.id %}"
+                          method="post" class="col-12">
+                        <div class="card-body">
+                            {% csrf_token %}
+                            <div class="text-left mt-4">
+                                <button class="btn btn-danger">
+                                    بله ، حذف اعلان
+                                    <i class="fa fa-up"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="container-edit" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg col-lg-12">
+            <div class="modal-content white_card mb_30">
+                <div class="white_card_header">
+                    <div class="modal-header box_header m-0">
+                        <h3 class="m-0">تغییر اعلان</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="white_card_body">
+                    <form action="{% url 'notification:notification_dashboard_update' notification_id=notification.id %}"
+                          method="post" class="col-12" enctype="multipart/form-data">
+                        <div class="card-body">
+                            {% csrf_token %}
+
+                            <div class="col-md-12">
+                                <div>
+                                    <label class="form-label" for="inpTitle">
+                                        عنوان
+                                        <span class="field-required">*</span>
+                                    </label>
+                                    <input type="text" required="" class="form-control" value="{{ notification.title }}"
+                                           id="inpTitle"
+                                           name="title" aria-required="">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div>
+                                    <label class="form-label" for="inpImage">
+                                        عکس
+                                        <span class="field-required"></span>
+                                    </label>
+                                    <input type="file" accept="image/*" class="form-control" id="inpImage"
+                                           name="image" aria-required="">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div>
+                                    <label class="form-label" for="inpAddressBuilding">
+                                        توضیحات
+                                        <span class="field-required">*</span>
+                                    </label>
+                                    <textarea name="description" class="form-control"
+                                              rows="5">{{ notification.description }}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label">
+                                    وضعیت
+                                    <span class="text-mute font-size-10">(وضعیت نمایش)</span>
+                                    <span class="field-required">*</span>
+                                </label>
+                                <select name="is_active" class="form-control" required="">
+                                    <option value="true" {% if notification.is_active %}selected{% endif %}>
+                                        فعال
+                                    </option>
+                                    <option value="false" {% if not notification.is_active %}selected{% endif %}>
+                                        غیر
+                                        فعال
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="text-left mt-4">
+                                <button class="btn btn-submit">
+                                    ثبت و بروزرسانی
+                                    <i class="fa fa-up"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+
+
+
+
+
+

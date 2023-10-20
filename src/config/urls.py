@@ -1,0 +1,39 @@
+"""config URL Configuration
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/4.1/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+from django.contrib import admin
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+
+
+urlpatterns = [
+    path('',include('public.urls',namespace='public')),
+    path('',include('receipt.urls',namespace='receipt')),
+    path('',include('notification.urls',namespace='notification')),
+    path('',include('support.urls',namespace='support')),
+    path('u/',include('account.urls',namespace='account')),
+    path('anything-except-admin/', admin.site.urls),
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+
+handler403 = 'public.views.err_403_handler'
+handler404 = 'public.views.err_404_handler'
+handler500  = 'public.views.err_500_handler'

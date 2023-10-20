@@ -1,0 +1,302 @@
+{% extends 'account/dashboard/components/base/base_template.html' %}
+{% load static %}
+{% load custom_tags %}
+
+{% block Title %}
+    داشبورد | کاربر
+    {{ user.get_full_name }}
+{% endblock %}
+
+{% block Style %}
+    <style>
+
+        #chart-building-payment-user {
+            margin: 10px;
+            margin-right: auto;
+            margin-left: auto;
+            display: block;
+            height: 100%;
+            width: 95%;
+        }
+
+        .notification {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 15px 0;
+            box-shadow: 0 3px 4px rgba(238, 238, 238, 0.4);
+        }
+
+        .notification-des {
+            font-size: 80%;
+            padding: 3px 7px;
+            border-radius: 5px;
+            color: #235ad2 !important;
+            background: linear-gradient(to left, #fafeff 85%, rgba(255, 255, 255, 0));
+        }
+
+        .notification-des a {
+            color: inherit;
+        }
+
+        .notification-time {
+            color: #999;
+            font-size: 65%;
+        }
+
+        .notification-time i {
+            color: #ffe289;
+        }
+
+
+    </style>
+{% endblock %}
+
+{% block Content %}
+
+    {% include 'account/dashboard/components/base/nav.html' %}
+
+    <section class="main_content dashboard_part large_header_bg">
+        {% include 'account/dashboard/components/base/header.html' %}
+        <div class="main_content_iner">
+            <div class="container-fluid p-0 ">
+                <div id="container-index">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="single_element">
+                                <div class="quick_activity">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="quick_activity_wrap">
+                                                {% for building in buildings|slice:':4' %}
+                                                    <div class="single_quick_activity">
+                                                        <div class="count_content">
+                                                            <p>
+                                                                <a class="text-primary"
+                                                                   href="{{ building.get_absolute_url }}">{{ building.name }}</a>
+                                                            </p>
+                                                            <span class="font-60 mb-2 d-block text-mute">جمع پرداختی ها</span>
+                                                            <h3>
+                                                                <span class="counter price-el">{% call building 'get_building_payments_user' user %}</span>
+                                                                تومان
+                                                            </h3>
+                                                        </div>
+                                                        <a href="#" class="notification_btn bg-warning">
+                                                            <span class="price-el">{% call building 'get_building_score_user' user %}</span>
+                                                            <i class="fa fa-star text-white"></i>
+                                                        </a>
+                                                        <div id="bar{{ forloop.counter }}" class="barfiller my-2">
+                                                            <div class="tipWrap">
+                                                                <span class="tip"></span>
+                                                            </div>
+                                                            <span class="fill"
+                                                                  data-percentage="{{ building.progress_percentage }}"></span>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-lg-12 col-xl-8">
+                            <div class="white_card card_height_100 mb_30">
+                                <div class="white_card_header">
+                                    <div class="box_header m-0">
+                                        <div class="main-title">
+                                            <h3 class="m-0">نمودار پرداختی ها</h3>
+                                        </div>
+                                        <div class="header_more_tool">
+                                            <div class="dropdown">
+                                                <a href="{% url 'receipt:receipt_dashboard_list' %}">
+                                                    <i class="fa fa-angle-left p-1"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="white_card_body p-0">
+                                    <div class="text-center" style="height: 400px; position: relative;">
+                                        <canvas id="chart-building-payment-user" building-names="{{ building_names|escape }}" building-payments="{{ building_payments|escape }}"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-12 col-xl-4">
+                            {% with user.get_last_receipt as receipt %}
+                                <div class="white_card card_height_100 mb_30">
+                                    <div class="white_card_header">
+                                        <div class="box_header m-0">
+                                            <div class="main-title">
+                                                <h3 class="m-0">اخرین رسید</h3>
+                                            </div>
+                                            <div class="header_more_tool">
+                                                <div class="dropdown">
+                                                    <a href="{{ receipt.get_absolute_url }}">
+                                                        <i class="fa fa-angle-left p-1"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="white_card_body">
+                                        {% if receipt %}
+                                            <div class="equal_hdr mb_15 d-flex justify-content-between align-items-center flex-wrap">
+                                                <h4 class="f_s_28 f_w_600">
+                                                <span class="price-el">
+                                                    {{ receipt.amount }}
+                                                </span>
+                                                    <span>تومان</span>
+                                                </h4>
+                                                <a href="#"
+                                                   class="Euro_btn bg-warning text-white py-2 px-3 font-70">
+                                                    <span class="price-el">
+                                                        {{ receipt.get_score }}
+                                                    </span>
+                                                    <i class="fa fa-star text-white"></i>
+                                                </a>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <p class="color_gray f_s_14 f_w_600 mb_15 font-70">{{ receipt.get_created_at_timepast }}</p>
+                                                <p class="bg-{{ receipt.get_status }} font-70 font-weight-bold">{{ receipt.get_status_label }}</p>
+                                            </div>
+                                            <div class="detail-receipt">
+                                                <div>
+                                                    <a href="{{ receipt.get_absolute_url }}">
+                                                        <img src="{{ receipt.picture.url }}" alt="{{ receipt.id }}">
+                                                    </a>
+                                                </div>
+                                                <div class="detail-field text-left mt-4">
+                                                    <a href="{{ receipt.building.get_absolute_url }}">{{ receipt.building.name }}</a>
+                                                </div>
+                                            </div>
+                                            <div id="area-spaline"></div>
+
+                                        {% else %}
+                                            <div class="container-not-found-base h-100 vertical-align-center">
+                                                <p>پرداختی یافت نشد</p>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endwith %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-xl-8">
+                            <div class="white_card mb_30 card_height_100">
+                                <div class="white_card_header">
+                                    <div class="box_header m-0">
+                                        <div class="main-title">
+                                            <h3 class="m-0">جدید ترین رسید ها</h3>
+                                        </div>
+                                        <div class="header_more_tool">
+                                            <div class="dropdown">
+                                                <a href="{% url 'receipt:receipt_dashboard_list' %}">
+                                                    <i class="fa fa-angle-left p-1"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="white_card_body">
+                                    <div class="table-responsive">
+                                        <table class="table bayer_table m-0">
+                                            <tbody>
+                                            {% for receipt in user.get_receipts|slice:':8' %}
+                                                <tr style="border: hidden;">
+                                                    <td>
+                                                        <div class="payment_gatway">
+                                                            <h5 class="byer_name f_s_16 f_w_600 color_theme">{{ receipt.building.name }}</h5>
+                                                            <p class="font-70 f_w_600 text-center p-0 bg-{{ receipt.get_status }}"
+                                                               style="width: 70px">{{ receipt.get_status_label }}</p>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="payment_gatway text-end">
+                                                            <h5 class="byer_name  f_s_16 f_w_600 color_theme price-el">
+                                                                {{ receipt.amount }}
+                                                            </h5>
+                                                            <p class="color_gray f_s_12 f_w_600 text-left font-80">
+                                                                تومان</p>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="payment_gatway">
+                                                            <a href="{{ receipt.get_absolute_url }}"
+                                                               class="font-size-14">
+                                                                مشاهده
+                                                                <i class="far fa-arrow-alt-circle-left"></i>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-xl-4">
+                            <div class="white_card mb_30 card_height_100">
+                                <div class="white_card_header">
+                                    <div class="box_header m-0">
+                                        <div class="main-title">
+                                            <h3 class="m-0">اعلانات</h3>
+                                        </div>
+                                        <div class="header_more_tool">
+                                            <a href="{% url 'notification:notification_dashboard_user_personal_list' %}">
+                                                <i class="fa fa-angle-left p-1"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="white_card_body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            {% for notification in user.get_notifications|slice:':10' %}
+                                                <div class="notification">
+                                                    <div>
+                                                        <p class="notification-des">
+                                                            <a href="{{ notification.get_absolute_url }}">{{ notification.description|truncatechars:25 }}</a>
+                                                        </p>
+                                                    </div>
+                                                    <div>
+                                                        <p class="notification-time">
+                                                            {{ notification.get_created_at_timepast }}
+                                                            <i class="fa fa-clock"></i>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                        <div class="text-center mt-4 font-80">
+                                            <a href="{% url 'notification:notification_dashboard_user_personal_list' %}"
+                                               class="text-primary">
+                                                مشاهده همه
+                                                <i class="fa fa-bell"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include 'account/dashboard/components/base/footer.html' %}
+    </section>
+
+
+{% endblock %}
+
+
+
+
+
