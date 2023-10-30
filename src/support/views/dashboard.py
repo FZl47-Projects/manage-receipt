@@ -190,7 +190,7 @@ class QuestionDetail(LoginRequiredMixinCustom, View):
 class QuestionDetailExport(LoginRequiredMixinCustom, View):
 
     def perform_export_excel(self, question_obj) -> str:
-        file_name = f"{settings.EXPORT_ROOT_DIR}/export-question-{question_obj.title}-{question_obj.building.name}.xlsx"
+        file_name = f"{settings.EXPORT_ROOT_DIR}/export-question-{question_obj.id}-{question_obj.building.id}.xlsx"
         export_file = os.path.join(settings.MEDIA_ROOT, file_name)
         workbook = xlsxwriter.Workbook(export_file)
         # add information
