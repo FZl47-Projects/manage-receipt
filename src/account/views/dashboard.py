@@ -629,12 +629,19 @@ class UserDetailUpdateByAdmin(View):
     def post(self, request, user_id):
         data = request.POST
         user_obj = get_object_or_404(User, id=user_id)
+        state_active = user_obj.is_active
+        phonenumber = add_prefix_phonenum(data.get('phonenumber', ''))
+        # check unique phonenumber(username)
+        if phonenumber != user_obj.phonenumber:
+            if User.objects.filter(phonenumber=phonenumber).exists():
+                messages.error(request,'شماره همراه وارد شده توسط کاربر دیگری ثبت شده است')
+                return redirect(user_obj.get_absolute_url())
         f = forms.UserUpdateByAdmin(data=data, instance=user_obj)
         if form_validate_err(request, f) is False:
             return redirect(user_obj.get_absolute_url())
         user_obj = f.save()
         messages.success(request, 'کاربر با موفقیت بروزرسانی شد')
-        if user_obj.is_active:
+        if state_active is False and user_obj.is_active:
             # create notif for user
             NotificationUser.objects.create(
                 type='USER_ACCOUNT_ACTIVATED',

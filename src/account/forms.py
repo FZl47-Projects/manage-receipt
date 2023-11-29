@@ -18,7 +18,6 @@ class CustomUserChangeForm(UserChangeForm):
 
 
 class UpdateUserForm(forms.ModelForm):
-
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email')
@@ -36,8 +35,8 @@ class RegisterUserForm(forms.Form):
         'unique': 'این ایمیل توسط کاربر دیگه ای در حال استفاده است'
     }
 
-    first_name = forms.CharField(max_length=100,required=True)
-    last_name = forms.CharField(max_length=100,required=True)
+    first_name = forms.CharField(max_length=100, required=True)
+    last_name = forms.CharField(max_length=100, required=True)
     phonenumber = PhoneNumberField(region='IR')
     email = forms.EmailField(required=True, error_messages=email_error_messages)
     password = forms.CharField(max_length=64, min_length=8, required=True, widget=forms.PasswordInput())
@@ -93,10 +92,9 @@ class ResetPasswordSetForm(forms.Form):
 
 
 class UserUpdateByAdmin(forms.ModelForm):
-
     class Meta:
         model = User
-        fields = ('is_active','is_phonenumber_confirmed')
+        fields = ('is_active', 'is_phonenumber_confirmed', 'phonenumber', 'first_name', 'last_name')
 
 
 class UpdateUserPassword(forms.Form):
@@ -113,7 +111,6 @@ class UpdateUserPassword(forms.Form):
 
 
 class SetBuildingAvailable(forms.ModelForm):
-
     class Meta:
         model = BuildingAvailable
         fields = '__all__'

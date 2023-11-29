@@ -175,7 +175,7 @@ class ReceiptAdd(LoginRequiredMixinCustom, View):
         data['status'] = 'pending'
         if user_role == 'super_user':
             data['status'] = 'accepted'
-        elif user_role == 'normal_user':
+        if user_role == 'normal_user':
             data['user'] = user
         return data
 
@@ -224,6 +224,10 @@ class ReceiptList(LoginRequiredMixinCustom, View):
                 default=Value(3)
             )
             )
+        elif sort_by == 'datetime_latest':
+            objects = objects.order_by('-deposit_datetime')
+        elif sort_by == 'datetime_oldest':
+            objects = objects.order_by('deposit_datetime')
         return objects
 
     def search(self, request, objects):
