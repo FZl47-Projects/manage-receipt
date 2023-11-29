@@ -88,6 +88,11 @@ def add_prefix_phonenum(phonenumber):
     return f'+98{phonenumber}'
 
 
+def get_raw_phonenum(phonenumber):
+    p = str(phonenumber).replace('+98', '')
+    return p
+
+
 def form_validate_err(request, form):
     if form.is_valid() is False:
         errors = form.errors.as_data()
@@ -110,3 +115,4 @@ def get_host_url(url):
 
 def get_media_url(url):
     return settings.MEDIA_URL + url
+
