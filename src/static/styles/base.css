@@ -318,7 +318,7 @@ body {
 
 .filters-radio .container > div {
     display: inline-block;
-    margin: 2px;
+    margin: 4px 2px;
 }
 
 .filters-radio a {
