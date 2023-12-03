@@ -290,6 +290,10 @@ class ReceiptTaskList(View):
                 default=Value(3)
             )
             )
+        elif sort_by == 'datetime_latest':
+            objects = objects.order_by('-deposit_datetime')
+        elif sort_by == 'datetime_oldest':
+            objects = objects.order_by('deposit_datetime')
         return objects
 
     def search(self, request, objects):
