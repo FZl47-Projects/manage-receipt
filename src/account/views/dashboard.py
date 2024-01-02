@@ -396,14 +396,20 @@ class UserAdd(View):
     @admin_required_cbv()
     def post(self, request):
         data = request.POST.copy()
+        admin = request.user
         # create user
         f = forms.RegisterUserFullForm(data=data)
         if form_validate_err(request, f) is False:
             return redirect('account:user_add')
-        user = f.save()
-        user.is_active = True
+        user = f.save(commit=False)
+        # if common admin create user then user will be deactivate by default
+        if admin.is_common_admin:
+            user.is_active = False
+        else:
+            user.is_active = True
         user.set_password(f.cleaned_data['password2'])
         user.save()
+
         # set building avaialable
         data['user'] = user
         building_available = BuildingAvailable.get_or_create_building_user(user)
