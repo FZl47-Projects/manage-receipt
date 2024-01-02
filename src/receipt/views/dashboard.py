@@ -1,4 +1,5 @@
 import json
+from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import PermissionDenied
@@ -9,8 +10,8 @@ from django.db.models import Q, Value, Case, When, Sum
 from django.db.models.functions import Concat
 from core.auth.mixins import LoginRequiredMixinCustom
 from core.auth.decorators import admin_required_cbv
-from core.utils import form_validate_err
-from receipt import forms, models
+from core.utils import form_validate_err, get_media_url
+from receipt import forms, models, exports
 
 
 class ProjectAdd(View):
@@ -139,6 +140,17 @@ class BuildingDetail(View):
             'user_payments': json.dumps(user_payments)
         }
         return render(request, self.template_name, context)
+
+
+class BuildingDetailExport(View):
+    template_name = 'receipt/dashboard/building/detail.html'
+
+    @admin_required_cbv(['super_user'])
+    def get(self, request, building_id):
+        building = get_object_or_404(models.Building, id=building_id)
+        excel_file = exports.Excel.perform_export_building(building)
+        excel_file = get_media_url(excel_file)
+        return HttpResponseRedirect(excel_file)
 
 
 class BuildingDetailUpdate(View):
@@ -405,7 +417,7 @@ class ReceiptDetailAccept(View):
         data = request.POST.copy()
         # accept receipt
         data['status'] = 'pending'
-        data.setdefault('ratio_score',1)
+        data.setdefault('ratio_score', 1)
         if user.is_super_admin:
             data['status'] = 'accepted'
         f = forms.ReceiptAcceptForm(instance=receipt, data=data)

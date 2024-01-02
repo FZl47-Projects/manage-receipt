@@ -38,7 +38,7 @@ class Building(BaseModel):
     name = models.CharField(max_length=200)
     address = models.TextField()
     description = models.TextField(null=True, blank=True)
-    project = models.ForeignKey('Project', on_delete=models.CASCADE,null=True)
+    project = models.ForeignKey('Project', on_delete=models.CASCADE, null=True)
     is_active = models.BooleanField(default=True)
     progress_percentage = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])
 
@@ -85,7 +85,7 @@ class Building(BaseModel):
         receipts = self.receipt_set.filter(user=user, status='accepted')
         score = sum(receipt.get_score() for receipt in receipts)
         return score
-    
+
     def get_name_by_flag(self):
         return f'{self.project.name} / {self.name}'
 
@@ -138,6 +138,12 @@ class ReceiptAbstract(BaseModel):
 
     def get_deposit_timepast(self):
         return utils.get_timesince_persian(self.deposit_datetime)
+
+    def get_picture_full_url(self):
+        try:
+            return utils.get_host_url(self.picture.url)
+        except AttributeError:
+            return ''
 
 
 class Receipt(ReceiptAbstract):
