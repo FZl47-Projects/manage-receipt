@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="64521187-de3a-4ed9-8444-af6e5038dcf6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/manage_receipt.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/manage_receipt.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/account/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/account/templates/account/dashboard/user/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/templates/account/dashboard/user/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/account/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/account/views/dashboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/views/dashboard.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/media/exports/export-building-1.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/media/exports/export-building-1.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/building/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/building/detail.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

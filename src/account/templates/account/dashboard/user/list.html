@@ -37,7 +37,7 @@
 
                                 <a href="{% url 'account:user_add' %}" class="btn btn-w btn-outline-success font-70 m-1 py-2">افزودن
                                     کاربر</a>
-
+                                {% if request.user.is_super_admin %}
                                 <div class="dropdown d-inline-block">
                                     <a class="btn btn-w btn-outline-primary font-70 m-1 py-2 dropdown-toggle" href="#"
                                        role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
@@ -51,6 +51,7 @@
                                         </li>
                                     </ul>
                                 </div>
+                                {% endif %}
                             </div>
                             <div class="mt-4 mb-5">
                                 <form action="{% url 'account:user_list' %}">

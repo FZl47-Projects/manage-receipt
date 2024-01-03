@@ -168,17 +168,19 @@
                                             <h3 class="m-0">عملیات</h3>
                                         </div>
                                         <div class="text-center mt-1">
-                                            <div class="dropdown d-inline-block">
-                                                <a class="btn btn-w btn-outline-success dropdown-toggle px-4 m-1" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    خروجی
-                                                </a>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                    <li>
-                                                        <a class="dropdown-item" href="{% url 'receipt:building_dashboard_detail_export' building_id=building.id %}">خروجی
-                                                            اکسل</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                            {% if request.user.is_super_admin %}
+                                                <div class="dropdown d-inline-block">
+                                                    <a class="btn btn-w btn-outline-success dropdown-toggle px-4 m-1" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        خروجی
+                                                    </a>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                        <li>
+                                                            <a class="dropdown-item" href="{% url 'receipt:building_dashboard_detail_export' building_id=building.id %}">خروجی
+                                                                اکسل</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            {% endif %}
                                             <button class="btn btn-w btn-edit-outline m-1" type="button"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#container-edit-building">
