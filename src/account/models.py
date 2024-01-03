@@ -161,12 +161,17 @@ class User(AbstractUser):
     def get_available_buildings(self):
         try:
             return self.buildingavailable.buildings.all()
-        except:
+        except AttributeError:
             return []
 
     def get_available_building_ids(self):
         try:
-            return self.buildingavailable.buildings.values_list('id',flat=True)
-        except:
+            return self.buildingavailable.buildings.values_list('id', flat=True)
+        except AttributeError:
             return []
-        
+
+    def get_available_building_names(self):
+        try:
+            return self.buildingavailable.buildings.values_list('name', flat=True)
+        except AttributeError:
+            return []

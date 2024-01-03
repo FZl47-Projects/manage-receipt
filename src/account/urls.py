@@ -27,6 +27,7 @@ urlpatterns = [
     path('dashboard/user/update', dashboard.UserUpdate.as_view(), name='user_update'),
     path('dashboard/user/add', dashboard.UserAdd.as_view(), name='user_add'),
     path('dashboard/user/list', dashboard.UserList.as_view(), name='user_list'),
+    path('dashboard/user/list/export', dashboard.UserListExport.as_view(), name='user_list_export'),
     path('dashboard/user/list/component/search', dashboard.UserListComponentPartial.as_view(),
          name='user_list_component_search'),
     path('dashboard/user/task/add', dashboard.UserFinancialAdd.as_view(), name='user_financial_add'),

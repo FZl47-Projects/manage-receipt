@@ -1,10 +1,10 @@
 import json
+from django.http import JsonResponse, HttpResponseBadRequest, Http404, HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.conf import settings
 from django.db.models import Value, Q
 from django.db.models.functions import Concat
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import JsonResponse, HttpResponseBadRequest, Http404, HttpResponse
 from django.views.decorators.http import require_POST
 from django.views.generic import View
 from django.core import serializers
@@ -12,12 +12,12 @@ from django.core.paginator import Paginator
 from django.contrib.auth.mixins import LoginRequiredMixin
 from core.auth.mixins import LoginRequiredMixinCustom
 from django.contrib.auth import authenticate, login, get_user_model, logout as logout_handler
-from core.utils import add_prefix_phonenum, random_num, form_validate_err
+from core.utils import add_prefix_phonenum, random_num, form_validate_err, get_media_url
 from core.auth.decorators import admin_required_cbv
 from core.redis_py import set_value_expire, remove_key, get_value
 from receipt.models import Building, BuildingAvailable, Receipt, ReceiptTask
 from notification.models import NotificationUser
-from account import forms
+from account import forms, exports
 
 User = get_user_model()
 RESET_PASSWORD_CONFIG = settings.RESET_PASSWORD_CONFIG
@@ -532,6 +532,17 @@ class UserList(View):
         return render(request, self.template_name, context)
 
 
+class UserListExport(View):
+    template_name = 'account/dashboard/user/list.html'
+
+    @admin_required_cbv(['super_user'])
+    def get(self, request):
+        users = User.normal_user.all()
+        excel_file = exports.Excel.perform_export_users(users)
+        excel_file = get_media_url(excel_file)
+        return HttpResponseRedirect(excel_file)
+
+
 class UserListComponentPartial(View):
     template_name = 'account/dashboard/user/components/list.html'
 
@@ -640,7 +651,7 @@ class UserDetailUpdateByAdmin(View):
         # check unique phonenumber(username)
         if phonenumber != user_obj.phonenumber:
             if User.objects.filter(phonenumber=phonenumber).exists():
-                messages.error(request,'شماره همراه وارد شده توسط کاربر دیگری ثبت شده است')
+                messages.error(request, 'شماره همراه وارد شده توسط کاربر دیگری ثبت شده است')
                 return redirect(user_obj.get_absolute_url())
         f = forms.UserUpdateByAdmin(data=data, instance=user_obj)
         if form_validate_err(request, f) is False:
