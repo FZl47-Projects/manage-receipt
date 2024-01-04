@@ -347,42 +347,6 @@ class DashboardInfoChangePassword(LoginRequiredMixinCustom, View):
         return render(request, 'account/dashboard/information/change-password.html')
 
 
-# class UserAdd(View):
-#     template_name = 'account/dashboard/user/add.html'
-
-#     @admin_required_cbv()
-#     def get(self, request):
-#         context = {
-#             'buildings':Building.objects.filter(is_active=True)
-#         }
-#         return render(request, self.template_name,context)
-
-#     @admin_required_cbv()
-#     def post(self, request):
-#         data = request.POST
-#         f = forms.RegisterUserFullForm(data=data)
-#         if form_validate_err(request, f) is False:
-#             return render(request, self.template_name)
-#         # create user
-#         user = f.save()
-#         user.is_active = True
-#         user.set_password(f.cleaned_data['password2'])
-#         user.save()
-#         # create notif for admin
-#         NotificationUser.objects.create(
-#             type='CREATE_USER_BY_ADMIN',
-#             to_user=request.user,
-#             title='ایجاد کاربر توسط ادمین',
-#             description=f"""
-#                     کاربر {user.phonenumber}
-#                     ایجاد شد
-#                 """,
-#             is_showing=False
-#         )
-#         messages.success(request, 'حساب کاربر با موفقیت ایجاد شد')
-#         return redirect(user.get_absolute_url())
-
-
 class UserAdd(View):
     template_name = 'account/dashboard/user/add.html'
 
@@ -409,7 +373,6 @@ class UserAdd(View):
             user.is_active = True
         user.set_password(f.cleaned_data['password2'])
         user.save()
-
         # set building avaialable
         data['user'] = user
         building_available = BuildingAvailable.get_or_create_building_user(user)
@@ -587,11 +550,14 @@ class UserFinancialAdd(View):
 
     @admin_required_cbv()
     def get(self, request):
-        return render(request, self.template_name)
+        context = {
+            'buildings': Building.objects.filter(is_active=True)
+        }
+        return render(request, self.template_name, context)
 
     @admin_required_cbv(['super_user'])
     def post(self, request):
-        data = request.POST
+        data = request.POST.copy()
         f = forms.RegisterUserFullForm(data=data)
         if form_validate_err(request, f) is False:
             return render(request, self.template_name)
@@ -600,6 +566,12 @@ class UserFinancialAdd(View):
         user.is_active = True
         user.set_password(f.cleaned_data['password2'])
         user.save()
+        # set building avaialable
+        data['user'] = user
+        building_available = BuildingAvailable.get_or_create_building_user(user)
+        f = forms.SetBuildingAvailable(data=data, instance=building_available)
+        if f.is_valid():
+            f.save()
         # create notif for admin
         NotificationUser.objects.create(
             type='CREATE_USER_BY_SUPER_ADMIN',
@@ -610,7 +582,7 @@ class UserFinancialAdd(View):
             is_showing=False
         )
         messages.success(request, 'حساب کاربر با موفقیت ایجاد شد')
-        return redirect('account:user_financial_add')
+        return redirect(user.get_absolute_url())
 
 
 class UserFinancialList(View):

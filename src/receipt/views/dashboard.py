@@ -104,16 +104,21 @@ class BuildingAdd(View):
 class BuildingList(LoginRequiredMixinCustom, View):
     template_name = 'receipt/dashboard/building/list.html'
 
-    def get(self, request):
-        user = request.user
-        if user.is_admin:
-            buildings = models.Building.objects.all()
+    def get_buildings(self):
+        user = self.request.user
+        if user.is_super_admin:
+            return models.Building.objects.all()
+        elif user.is_common_admin:
+            return user.get_available_buildings()
         else:
             buildings = models.Building.get_buildings_user(user)
             buildings = buildings.annotate(
                 payments=Sum('receipt__amount')
             )
+            return buildings
 
+    def get(self, request):
+        buildings = self.get_buildings()
         context = {
             'buildings': buildings
         }
@@ -123,8 +128,16 @@ class BuildingList(LoginRequiredMixinCustom, View):
 class BuildingDetail(View):
     template_name = 'receipt/dashboard/building/detail.html'
 
-    def get(self, request, building_id):
+    def get_building(self, building_id):
+        user = self.request.user
         building = get_object_or_404(models.Building, id=building_id)
+        if not user.is_super_admin:
+            if not (building in user.get_available_buildings()):
+                raise Http404
+        return building
+
+    def get(self, request, building_id):
+        building = self.get_building(building_id)
         # chart data
         user_names = []
         user_payments = []
