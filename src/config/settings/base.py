@@ -110,6 +110,10 @@ COMMON_ADMIN_USER_ROLES = [
     'financial_user'
 ]
 
+COMMON_USER_ROLES = [
+    'normal_user'
+]
+
 SUPER_ADMIN_ROLES = [
     'super_user'
 ]
@@ -121,7 +125,7 @@ ADMIN_USER_ROLES = [
 
 USER_ROLES = [
     *ADMIN_USER_ROLES,
-    'normal_user',
+    *COMMON_USER_ROLES
 ]
 
 IMAGE_FORMATS = [

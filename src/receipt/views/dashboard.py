@@ -14,7 +14,7 @@ from core.utils import form_validate_err, get_media_url
 from receipt import forms, models, exports
 
 
-class ProjectAdd(View):
+class ProjectAdd(LoginRequiredMixinCustom, View):
     template_name = 'receipt/dashboard/project/add.html'
 
     @admin_required_cbv(['super_user'])
@@ -35,11 +35,17 @@ class ProjectAdd(View):
 class ProjectList(LoginRequiredMixinCustom, View):
     template_name = 'receipt/dashboard/project/list.html'
 
+    def get_projects_by_user_role(self, user):
+        if user.is_super_admin:
+            return models.Project.objects.all()
+        elif user.is_common_admin:
+            buildings = user.get_available_buildings()
+            return models.Project.objects.filter(building__in=buildings)
+
     @admin_required_cbv()
     def get(self, request):
-        projects = models.Project.objects.all()
         context = {
-            'projects': projects
+            'projects': self.get_projects_by_user_role(request.user)
         }
         return render(request, self.template_name, context)
 
@@ -47,11 +53,18 @@ class ProjectList(LoginRequiredMixinCustom, View):
 class ProjectDetail(LoginRequiredMixinCustom, View):
     template_name = 'receipt/dashboard/project/detail.html'
 
+    def get_project_building_by_user_role(self, project, user):
+        if user.is_super_admin:
+            return project.get_buildings()
+        elif user.is_common_admin:
+            return project.get_buildings().filter(pk__in=user.get_available_building_ids())
+
     @admin_required_cbv()
     def get(self, request, project_id):
         project = get_object_or_404(models.Project, id=project_id)
         context = {
-            'project': project
+            'project': project,
+            'buildings': self.get_project_building_by_user_role(project, request.user)
         }
         return render(request, self.template_name, context)
 
@@ -80,7 +93,7 @@ class ProjectDelete(LoginRequiredMixinCustom, View):
         return redirect('receipt:project_dashboard_list')
 
 
-class BuildingAdd(View):
+class BuildingAdd(LoginRequiredMixinCustom, View):
     template_name = 'receipt/dashboard/building/add.html'
 
     @admin_required_cbv(['super_user'])
@@ -125,7 +138,7 @@ class BuildingList(LoginRequiredMixinCustom, View):
         return render(request, self.template_name, context)
 
 
-class BuildingDetail(View):
+class BuildingDetail(LoginRequiredMixinCustom, View):
     template_name = 'receipt/dashboard/building/detail.html'
 
     def get_building(self, building_id):
@@ -155,7 +168,7 @@ class BuildingDetail(View):
         return render(request, self.template_name, context)
 
 
-class BuildingDetailExport(View):
+class BuildingDetailExport(LoginRequiredMixinCustom, View):
     template_name = 'receipt/dashboard/building/detail.html'
 
     @admin_required_cbv(['super_user'])
@@ -166,7 +179,7 @@ class BuildingDetailExport(View):
         return HttpResponseRedirect(excel_file)
 
 
-class BuildingDetailUpdate(View):
+class BuildingDetailUpdate(LoginRequiredMixinCustom, View):
     template_name = 'receipt/dashboard/building/detail.html'
 
     @admin_required_cbv(['super_user'])
@@ -179,7 +192,7 @@ class BuildingDetailUpdate(View):
         return redirect(building.get_absolute_url())
 
 
-class BuildingDetailDelete(View):
+class BuildingDetailDelete(LoginRequiredMixinCustom, View):
 
     @admin_required_cbv(['super_user'])
     def post(self, request, building_id):
@@ -272,14 +285,19 @@ class ReceiptList(LoginRequiredMixinCustom, View):
         objects = pagination.object_list
         return objects, pagination
 
+    def get_receipts_by_user_role(self, user):
+        if user.is_super_admin:
+            return models.Receipt.objects.exclude(receipttask__status__in=['rejected', 'pending'])
+        elif user.is_common_admin:
+            building = user.get_available_buildings()
+            return models.Receipt.objects.filter(building__in=building).exclude(
+                receipttask__status__in=['rejected', 'pending'])
+        else:
+            return user.get_receipts()
+
     def get_context(self, request):
         user = request.user
-        if user.is_admin:
-            receipts = models.Receipt.objects.exclude(receipttask__status='rejected').exclude(
-                receipttask__status='pending')
-        else:
-            receipts = user.get_receipts()
-
+        receipts = self.get_receipts_by_user_role(user)
         # filter and search
         receipts = self.search(request, receipts)
         receipts = self.sort(request, receipts)
@@ -295,7 +313,7 @@ class ReceiptList(LoginRequiredMixinCustom, View):
         return render(request, 'receipt/dashboard/receipt/list.html', context)
 
 
-class ReceiptTaskList(View):
+class ReceiptTaskList(LoginRequiredMixinCustom, View):
 
     def sort(self, request, objects):
         sort_by = request.GET.get('sort_by', 'latest')
@@ -423,7 +441,7 @@ class ReceiptDetailUpdate(LoginRequiredMixinCustom, View):
         return redirect(receipt.get_absolute_url())
 
 
-class ReceiptDetailAccept(View):
+class ReceiptDetailAccept(LoginRequiredMixinCustom, View):
 
     def perform_by_user_role(self, request, receipt):
         user = request.user
@@ -459,7 +477,7 @@ class ReceiptDetailAccept(View):
         return self.perform_by_user_role(request, receipt)
 
 
-class ReceiptDetailReject(View):
+class ReceiptDetailReject(LoginRequiredMixinCustom, View):
 
     def perform_by_user_role(self, request, receipt):
         user = request.user
@@ -494,7 +512,7 @@ class ReceiptDetailReject(View):
         return self.perform_by_user_role(request, receipt)
 
 
-class ReceiptDetailDelete(View):
+class ReceiptDetailDelete(LoginRequiredMixinCustom, View):
 
     @admin_required_cbv(['super_user'])
     def get(self, request, receipt_id):
@@ -504,7 +522,7 @@ class ReceiptDetailDelete(View):
         return redirect('receipt:receipt_dashboard_list')
 
 
-class ReceiptTaskDetail(View):
+class ReceiptTaskDetail(LoginRequiredMixinCustom, View):
 
     def get_template(self, request):
         user = request.user
@@ -522,7 +540,7 @@ class ReceiptTaskDetail(View):
         return render(request, self.get_template(request), context)
 
 
-class ReceiptTaskDetailAccept(View):
+class ReceiptTaskDetailAccept(LoginRequiredMixinCustom, View):
 
     @admin_required_cbv(['super_user'])
     def post(self, request, receipt_task_id):
@@ -538,7 +556,7 @@ class ReceiptTaskDetailAccept(View):
         return redirect('receipt:receipt_dashboard_task_list')
 
 
-class ReceiptTaskDetailReject(View):
+class ReceiptTaskDetailReject(LoginRequiredMixinCustom, View):
 
     @admin_required_cbv(['super_user'])
     def post(self, request, receipt_task_id):

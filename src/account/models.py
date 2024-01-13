@@ -4,7 +4,7 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from phonenumber_field.modelfields import PhoneNumberField
-from support.models import Ticket
+from support.models import Ticket, Question
 
 
 class CustomBaseUserManager(BaseUserManager):
@@ -82,6 +82,10 @@ class User(AbstractUser):
 
     class Meta:
         ordering = '-id',
+
+    @property
+    def is_common_user(self):
+        return True if self.role in settings.COMMON_USER_ROLES else False
 
     @property
     def is_admin(self):
@@ -175,3 +179,8 @@ class User(AbstractUser):
             return self.buildingavailable.buildings.values_list('name', flat=True)
         except AttributeError:
             return []
+
+    def get_unanswered_question(self):
+        buildings = self.get_available_buildings()
+        questions = Question.objects.filter(building__in=buildings).exclude(answerquestion__user=self)
+        return questions

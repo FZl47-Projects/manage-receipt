@@ -137,7 +137,7 @@
                                 <div class="quick_activity">
                                     <div class="row">
                                         <div class="col-12">
-                                            <div class="quick_activity_wrap" style="grid-template-columns: repeat(3, 1fr);">
+                                            <div class="quick_activity_wrap">
 
                                                 <div class="single_quick_activity">
                                                     <div class="count_content">
@@ -150,6 +150,20 @@
                                                     </div>
                                                     <a href="#" class="notification_btn bg-primary">
                                                         <i class="fa fa-users font-s-20 text-white"></i>
+                                                    </a>
+                                                </div>
+
+                                                <div class="single_quick_activity">
+                                                    <div class="count_content">
+                                                        <a href="{% url 'account:user_financial_list' %}">
+                                                            <span class="mb-2 d-block text-mute">تعداد ادمین ها</span>
+                                                        </a>
+                                                        <h3>
+                                                            <span class="font-s-35 price-el">{{ admins.count }}</span>
+                                                        </h3>
+                                                    </div>
+                                                    <a href="#" class="notification_btn bg-danger">
+                                                        <i class="fa fa fa-user-tie font-s-20 text-white"></i>
                                                     </a>
                                                 </div>
 
@@ -277,10 +291,10 @@
                                                         </p>
                                                     </div>
                                                 </div>
-                                            {% empty %}
-                                                <div class="container-not-found-base">
-                                                    <p>اعلانی یافت نشد</p>
-                                                </div>
+                                                {% empty %}
+                                                    <div class="container-not-found-base">
+                                                        <p>اعلانی یافت نشد</p>
+                                                    </div>
                                             {% endfor %}
                                         </div>
                                         {% if user.get_notifications %}

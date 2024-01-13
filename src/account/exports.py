@@ -9,7 +9,7 @@ class Excel:
     @classmethod
     def perform_export_users(cls, users) -> str:
         # TODO: maybe need to refactor
-        file_name = f"{settings.EXPORT_ROOT_DIR}/export-building-{random_str(5)}.xlsx"
+        file_name = f"{settings.EXPORT_ROOT_DIR}/export-user-{random_str(5)}.xlsx"
         export_file = os.path.join(settings.MEDIA_ROOT, file_name)
         workbook = xlsxwriter.Workbook(export_file)
         # add users

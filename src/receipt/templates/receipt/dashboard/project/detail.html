@@ -188,7 +188,7 @@
                                                             <div class="count_content">
                                                                 <span class="mb-2 d-block text-mute">تعداد ساختمان ها</span>
                                                                 <h3>
-                                                                    <span class="font-s-25 price-el">{{ project.get_buildings.count }}</span>
+                                                                    <span class="font-s-25 price-el">{{ buildings.count }}</span>
                                                                 </h3>
                                                             </div>
                                                             <a href="#" class="notification_btn bg-dark">
@@ -248,7 +248,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {% for building in project.get_buildings %}
+                                            {% for building in buildings %}
                                                 <tr>
                                                     <td>
                                                         {{ building.name|truncatechars:20 }}

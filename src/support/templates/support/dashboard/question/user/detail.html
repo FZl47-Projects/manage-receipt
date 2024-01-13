@@ -270,6 +270,10 @@
                           method="post" class="col-12">
                         {% csrf_token %}
                         <div class="card-body">
+                            <div>
+                                <h3 class="text-center">{{ question.title }}</h3>
+                                <p class="mt-1 font-85">{{ question.description }}</p>
+                            </div>
                             <div class="p-3 d-block d-md-flex justify-content-evenly align-items-center cnt-options">
                                 <div>
                                     <label for="inp-option-1-{{ question.id }}">

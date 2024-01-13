@@ -80,6 +80,15 @@ class NotificationUser:
         })
 
 
+    @classmethod
+    def handler_survey_notification(cls, notification, phonenumber):
+        pattern = '685xfvaiep1qflg'
+        send_sms(phonenumber, pattern, {
+            'user_name': notification.to_user.get_full_name(),
+            'question_link': notification.kwargs['question_link'],
+        })
+
+
 class Notification:
 
     @classmethod
@@ -101,6 +110,7 @@ NOTIFICATION_USER_HANDLERS = {
     'PASSWORD_CHANGED_SUCCESSFULLY': NotificationUser.handler_password_changed_successfully,
     'RESET_PASSWORD_CODE_SENT': NotificationUser.handler_reset_password_code_sent,
     'USER_ACCOUNT_ACTIVATED': NotificationUser.handler_user_account_activated,
-    'CONFIRM_PHONENUMBER_CODE_SENT':NotificationUser.handler_confirm_phonenumber_code_sent,
-    'PHONENUMBER_CONFIRMED':NotificationUser.handler_phonenumber_confirmed,
+    'CONFIRM_PHONENUMBER_CODE_SENT': NotificationUser.handler_confirm_phonenumber_code_sent,
+    'PHONENUMBER_CONFIRMED': NotificationUser.handler_phonenumber_confirmed,
+    'SURVEY_NOTIFICATION': NotificationUser.handler_survey_notification,
 }

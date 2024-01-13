@@ -273,15 +273,21 @@
                                                         </p>
                                                     </div>
                                                 </div>
+                                            {% empty %}
+                                                <div class="container-not-found-base">
+                                                    <p>اعلانی یافت نشد</p>
+                                                </div>
                                             {% endfor %}
                                         </div>
-                                        <div class="text-center mt-4 font-80">
-                                            <a href="{% url 'notification:notification_dashboard_user_personal_list' %}"
-                                               class="text-primary">
-                                                مشاهده همه
-                                                <i class="fa fa-bell"></i>
-                                            </a>
-                                        </div>
+                                        {% if user.get_notifications %}
+                                            <div class="text-center mt-4 font-80">
+                                                <a href="{% url 'notification:notification_dashboard_user_personal_list' %}"
+                                                   class="text-primary">
+                                                    مشاهده همه
+                                                    <i class="fa fa-bell"></i>
+                                                </a>
+                                            </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>

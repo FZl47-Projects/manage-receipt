@@ -3186,7 +3186,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child::befor
 }
 
 .sidebar_icon i {
-    font-size: 20px;
+    font-size: 25px;
     color: #fff;
 }
 
@@ -10593,4 +10593,32 @@ a.pswp__share--download:hover {
     .QA_section tr *{
         font-size: 90%!important;
     }
+}
+
+.header_notification_warp2 {
+    margin-top: 4px;
+    font-size: 95%;
+}
+
+.header_notification_warp2  li{
+    position: relative;
+    margin: 7px;
+}
+
+.header_notification_warp2 li a{
+    color: #f1f1f1;
+}
+
+.header_notification_warp2 li a:hover{
+    color: #d4ffff;
+}
+
+.header_notification_warp2 .icon-value{
+    display: block;
+    position: absolute;
+    bottom: -8px;
+    right: -5px;
+    font-size: 11px;
+    text-align: center;
+    color: #39ffc4;
 }

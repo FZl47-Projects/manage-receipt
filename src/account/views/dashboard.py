@@ -1,4 +1,5 @@
 import json
+import warnings
 from django.http import JsonResponse, HttpResponseBadRequest, Http404, HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.conf import settings
@@ -199,69 +200,104 @@ def reset_password_set(request):
         to_user=user,
         title='رمز عبور شما تغییر کرد',
         description="""رمز عبور شما با موفقیت تغییر کرد""",
-        send_notify=True
     )
     return JsonResponse({})
 
 
 class Dashboard(LoginRequiredMixinCustom, View):
 
+    def get_context_normal_user(self, request, user):
+        buildings = Building.get_buildings_user(user)
+        # chart data
+        building_names = []
+        building_payments = []
+
+        for building in buildings:
+            building_names.append(building.name)
+            building_payments.append(building.get_building_payments_user(user))
+
+        context = {
+            'buildings': buildings,
+            # chart data
+            'building_names': json.dumps(building_names),
+            'building_payments': json.dumps(building_payments),
+        }
+        return context
+
+    def get_context_financial_user(self, request, user):
+        buildings = user.get_available_buildings()
+        # chart data
+        building_names = []
+        building_payments = []
+
+        for building in buildings:
+            building_names.append(building.name)
+            building_payments.append(building.get_payments())
+
+        context = {
+            'buildings': buildings,
+            'receipts': Receipt.objects.filter(building__in=buildings),
+            'users': User.normal_user.all(),
+            # chart data
+            'building_names': json.dumps(building_names),
+            'building_payments': json.dumps(building_payments),
+        }
+        return context
+
+    def get_context_super_user(self, request, user):
+        buildings = Building.objects.all()
+        # chart data
+        building_names = []
+        building_payments = []
+
+        for building in buildings:
+            building_names.append(building.name)
+            building_payments.append(building.get_payments())
+
+        context = {
+            'buildings': buildings,
+            'receipts': Receipt.objects.all(),
+            'users': User.normal_user.all(),
+            'admins': User.financial_user.all(),
+            # chart data
+            'building_names': json.dumps(building_names),
+            'building_payments': json.dumps(building_payments),
+        }
+        return context
+
+    USER_CONTEXT_NAME = {
+        'normal_user': get_context_normal_user,
+        'financial_user': get_context_financial_user,
+        'super_user': get_context_super_user
+    }
+
+    USER_TEMPLATE_NAME = {
+        'normal_user': 'account/dashboard/main/user.html',
+        'financial_user': 'account/dashboard/main/admin.html',
+        'super_user': 'account/dashboard/main/super_admin.html',
+    }
+
+    def get_template(self):
+        user_role = self.request.user.role
+        try:
+            return self.USER_TEMPLATE_NAME[user_role]
+        except KeyError:
+            warnings.warn('template not found for role %s' % user_role)
+            raise Http404
+
     def get_context(self, request):
         # get context by role user
         user = request.user
         user_role = user.role
-        context = {}
-        if user_role == 'normal_user':
-            buildings = Building.get_buildings_user(user)
-            # chart data
-            building_names = []
-            building_payments = []
-
-            for building in buildings:
-                building_names.append(building.name)
-                building_payments.append(building.get_building_payments_user(user))
-
-            context = {
-                'buildings': buildings,
-                # chart data
-                'building_names': json.dumps(building_names),
-                'building_payments': json.dumps(building_payments),
-            }
-        elif user_role == 'financial_user' or user_role == 'super_user':
-            buildings = Building.objects.all()
-            # chart data
-            building_names = []
-            building_payments = []
-
-            for building in buildings:
-                building_names.append(building.name)
-                building_payments.append(building.get_payments())
-
-            context = {
-                'buildings': buildings,
-                'receipts': Receipt.objects.all(),
-                'users': User.normal_user.all(),
-                # chart data
-                'building_names': json.dumps(building_names),
-                'building_payments': json.dumps(building_payments),
-            }
-
-        if user_role == 'super_user':
-            context['admins'] = User.financial_user.all()
-
-        return context
-
-    def get_template(self, request):
-        # get template by role user
-        user_role = request.user.role
-        if user_role == 'normal_user':
-            return 'account/dashboard/main/user.html'
-        else:
-            return 'account/dashboard/main/admin.html'
+        try:
+            return self.USER_CONTEXT_NAME[user_role](self, request, user)
+        except KeyError:
+            warnings.warn('context function not found for role %s' % user_role)
+            return {}
 
     def get(self, request):
         context = self.get_context(request)
-        return render(request, self.get_template(request), context)
+        return render(request, self.get_template(), context)
 
 
 class ConfirmPhonenumber(LoginRequiredMixin, View):
@@ -402,26 +438,35 @@ class UserDetail(LoginRequiredMixinCustom, View):
         else:
             return 'account/dashboard/user/detail.html'
 
+    def get_buildings_user_by_visitor_user(self, user_obj):
+        user_visitor = self.request.user
+        if user_visitor.is_super_admin:
+            return Building.get_buildings_user(user_obj)
+        else:
+            buildings = user_visitor.get_available_buildings()
+            return Building.get_buildings_user(user_obj).filter(pk__in=buildings)
+
     @admin_required_cbv()
     def get(self, request, user_id):
-        user = get_object_or_404(User, id=user_id)
+        user_obj = get_object_or_404(User, id=user_id)
+        user_visitor = request.user
         # ony super admin can access to admin detail
-        if user.is_common_admin and request.user.is_super_admin is False:
+        if user_obj.is_common_admin and user_visitor.is_super_admin is False:
             raise Http404
         # super user detail cant be accessible
-        if user.is_super_admin:
+        if user_obj.is_super_admin:
             raise Http404
         context = {
             # name 'user_detail' for prevent conflict
-            'user_detail': user,
-            'buildings_user': Building.get_buildings_user(user),
+            'user_detail': user_obj,
+            'buildings_user': self.get_buildings_user_by_visitor_user(user_obj),
             'buildings': Building.objects.filter(is_active=True),
         }
 
-        if user.is_common_admin:
-            context['receipt_tasks'] = ReceiptTask.objects.filter(user_admin=user)
+        if user_obj.is_common_admin:
+            context['receipt_tasks'] = ReceiptTask.objects.filter(user_admin=user_obj)
 
-        return render(request, self.get_template(user), context)
+        return render(request, self.get_template(user_obj), context)
 
 
 class UserDetailDelete(LoginRequiredMixinCustom, View):

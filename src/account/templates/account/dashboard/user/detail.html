@@ -562,11 +562,11 @@
                                         ساختمان ها
                                         <span class="field-required">*</span>
                                     </label>
-                                    {% with user_detail.get_available_building_ids as building_availabel %}
+                                    {% with user_detail.get_available_building_ids as building_available %}
                                         <select name="buildings" class="form-control form-select" multiple>
                                             {% for building in buildings %}
                                                 <option value="{{ building.id }}"
-                                                        {% if building.id in building_availabel %}selected{% endif %}>{{ building.get_name_by_flag }}</option>
+                                                        {% if building.id in building_available %}selected{% endif %}>{{ building.get_name_by_flag }}</option>
                                             {% endfor %}
                                         </select>
                                     {% endwith %}
