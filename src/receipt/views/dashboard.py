@@ -37,10 +37,10 @@ class ProjectList(LoginRequiredMixinCustom, View):
 
     def get_projects_by_user_role(self, user):
         if user.is_super_admin:
-            return models.Project.objects.all()
+            return models.Project.objects.all().distinct()
         elif user.is_common_admin:
             buildings = user.get_available_buildings()
-            return models.Project.objects.filter(building__in=buildings)
+            return models.Project.objects.filter(building__in=buildings).distinct()
 
     @admin_required_cbv()
     def get(self, request):
