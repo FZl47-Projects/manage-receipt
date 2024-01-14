@@ -258,7 +258,7 @@
                                                             <div class="count_content">
                                                                 <span class="mb-2 d-block text-mute">تعداد رسید ها</span>
                                                                 <h3>
-                                                                    <span class="font-s-25 price-el">{{ user_detail.get_receipts.count }}</span>
+                                                                    <span class="font-s-25 price-el">{{ receipts.count }}</span>
                                                                 </h3>
                                                             </div>
                                                             <a href="#" class="notification_btn bg-success">
@@ -365,7 +365,7 @@
                                     <div class="table-responsive">
                                         <table class="table bayer_table m-0">
                                             <tbody>
-                                            {% for receipt in user_detail.get_receipts|slice:':6' %}
+                                            {% for receipt in receipts|slice:':6' %}
                                                 <tr style="border: hidden;">
                                                     <td>
                                                         <div class="payment_gatway">

@@ -442,7 +442,7 @@ class UserDetail(LoginRequiredMixinCustom, View):
         user_visitor = self.request.user
         if user_visitor.is_super_admin:
             return Building.get_buildings_user(user_obj)
-        else:
+        elif user_visitor.is_common_admin:
             buildings = user_visitor.get_available_buildings()
             return Building.get_buildings_user(user_obj).filter(pk__in=buildings)
 
@@ -456,10 +456,12 @@ class UserDetail(LoginRequiredMixinCustom, View):
         # super user detail cant be accessible
         if user_obj.is_super_admin:
             raise Http404
+        buildings_user = self.get_buildings_user_by_visitor_user(user_obj)
         context = {
             # name 'user_detail' for prevent conflict
             'user_detail': user_obj,
-            'buildings_user': self.get_buildings_user_by_visitor_user(user_obj),
+            'buildings_user': buildings_user,
+            'receipts': user_obj.get_receipts().filter(building__pk__in=buildings_user),
             'buildings': Building.objects.filter(is_active=True),
         }
 
