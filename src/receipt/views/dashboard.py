@@ -217,9 +217,16 @@ class ReceiptAdd(LoginRequiredMixinCustom, View):
             data['user'] = user
         return data
 
+    def get_buildings_by_user_role(self):
+        user = self.request.user
+        if user.is_common_admin:
+            buildings_admin = user.get_available_buildings()
+            return models.Building.objects.filter(is_active=True,pk__in=buildings_admin)
+        return models.Building.objects.filter(is_active=True)
+
     def get(self, request):
         context = {
-            'buildings': models.Building.objects.filter(is_active=True)
+            'buildings': self.get_buildings_by_user_role()
         }
         return render(request, self.template_name, context)
 

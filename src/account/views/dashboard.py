@@ -527,9 +527,16 @@ class UserList(View):
             email__icontains=s)
         return objects.filter(lookup)
 
+    def get_users_by_user_role(self):
+        user = self.request.user
+        if user.is_common_admin:
+            buildings_admin = user.get_available_buildings()
+            return User.normal_user.filter(buildingavailable__buildings__in=buildings_admin)
+        return User.normal_user.all()
+
     @admin_required_cbv()
     def get(self, request):
-        users = User.normal_user.all()
+        users = self.get_users_by_user_role()
         users = self.search(request, users)
         page_num = request.GET.get('page', 1)
         pagination = Paginator(users, 20)
