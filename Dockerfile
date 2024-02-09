@@ -1,26 +1,22 @@
-FROM python:3.10-slim
+FROM hub.hamdocker.ir/library/python:3.10
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV DJANGO_SUPERUSER_PASSWORD admin
 
-RUN apt update -y && \
-    apt install gcc -y # install gcc for uwsgi lib
-
 ADD ./requirements.txt /root/app/
-ADD ./uwsgi.ini /root/app/
-ADD ./run.sh /root/app/
-RUN chmod 777 /root/app/run.sh
 
 WORKDIR /root/app
 RUN pip install -r requirements.txt --timeout 1000
+RUN pip install gunicorn --timeout 1000
+ADD ./src /root/app/src
 
-RUN mkdir logs
 WORKDIR /root/app/src
 
 CMD while ! python manage.py sqlflush > /dev/null ; do sleep 1; done && \
     python manage.py makemigrations --noinput && \
     python manage.py migrate --noinput && \
     python manage.py collectstatic --noinput && \
-    /bin/sh -c /root/app/run.sh
+    python manage.py qcluster 2>&1 & \
+    gunicorn --bind 0.0.0.0:8000 config.wsgi
 

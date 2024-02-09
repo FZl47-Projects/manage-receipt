@@ -1,1 +1,0 @@
-const LOGIN_REGISTER = '/u/login-register'
