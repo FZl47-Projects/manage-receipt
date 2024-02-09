@@ -133,25 +133,7 @@ IMAGE_FORMATS = [
     'png'
 ]
 
-Q_CLUSTER = {
-    'name': 'django-q',
-    'timeout': 60,
-    'redis': {
-        'host': 'localhost',
-        'port': 6379,
-        'db': 0,
-        'socket_timeout': None,
-        'charset': 'utf-8',
-        'errors': 'strict',
-    }
-}
-
 MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
-
-REDIS_CONFIG = {
-    'HOST': 'localhost',
-    'PORT': '6379'
-}
 
 RESET_PASSWORD_CONFIG = {
     'TIMEOUT': 300,  # by sec
