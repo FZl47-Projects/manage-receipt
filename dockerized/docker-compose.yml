@@ -1,0 +1,59 @@
+version: '3.7'
+
+services:
+  app:
+    build: './app'
+    container_name: 'app_service'
+    restart: always
+    expose:
+      - '8000'
+    volumes:
+      - type: 'bind'
+        source: '../src'
+        target: '/root/app/src'
+
+      - type: 'bind'
+        source: './volumes/media'
+        target: '/root/app/volumes/media'
+
+      - type: 'bind'
+        source: './volumes/static'
+        target: '/root/app/volumes/static'
+    environment:
+      PRODUCTION_STATE: True
+      SERVE_FILE_BY_DJANGO: False
+  db:
+    image: 'mysql:latest'
+    container_name: 'db_service'
+    restart: always
+    expose:
+      - '3306'
+    environment:
+      MYSQL_DATABASE: 'manage_receipt_db'
+      MYSQL_USER: 'manage_receipt_user'
+      MYSQL_PASSWORD: 'manage_receipt_password'
+      MYSQL_ROOT_PASSWORD: 'manage_receipt_password'
+    volumes:
+      - type: 'bind'
+        source: './volumes/db'
+        target: '/var/lib/mysql'
+  webserver:
+    build: './webserver'
+    container_name: 'webserver_service'
+    restart: always
+    ports:
+      - '80:80'
+    volumes:
+      - type: 'bind'
+        source: './volumes/media'
+        target: '/app/media'
+
+      - type: 'bind'
+        source: './volumes/static'
+        target: '/app/static'
+  redis:
+    image: 'redis:latest'
+    container_name: 'redis_service'
+    restart: always
+    expose:
+      - '6379'
