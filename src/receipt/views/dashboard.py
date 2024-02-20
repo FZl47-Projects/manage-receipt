@@ -221,7 +221,7 @@ class ReceiptAdd(LoginRequiredMixinCustom, View):
         user = self.request.user
         if user.is_common_admin:
             buildings_admin = user.get_available_buildings()
-            return models.Building.objects.filter(is_active=True,pk__in=buildings_admin)
+            return models.Building.objects.filter(is_active=True, pk__in=buildings_admin)
         return models.Building.objects.filter(is_active=True)
 
     def get(self, request):
@@ -423,7 +423,7 @@ class ReceiptDetailUpdate(LoginRequiredMixinCustom, View):
         # set default values
         data['status'] = data.get('receipt_status', None)
         data.setdefault('ratio_score', receipt.ratio_score)
-        f = forms.ReceiptUpdateForm(data=data, instance=receipt)
+        f = forms.ReceiptUpdateForm(data=data, instance=receipt, files=request.FILES)
         if form_validate_err(request, f) is False:
             return redirect(receipt.get_absolute_url())
         # common admin can update receipt until task receipt status is pending
