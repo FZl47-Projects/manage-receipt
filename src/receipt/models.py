@@ -75,14 +75,17 @@ class Building(BaseModel):
         return users
 
     def get_payments(self):
-        return self.receipt_set.filter(status='accepted').aggregate(payments=models.Sum('amount'))['payments'] or 0
+        return self.receipt_set.filter(status='accepted').exclude(
+            receipttask__status__in=['rejected', 'pending']).aggregate(payments=models.Sum('amount'))['payments'] or 0
 
     def get_building_payments_user(self, user):
-        return self.receipt_set.filter(user=user, status='accepted').aggregate(payments=models.Sum('amount'))[
+        return self.receipt_set.filter(user=user, status='accepted').exclude(
+            receipttask__status__in=['rejected', 'pending']).aggregate(payments=models.Sum('amount'))[
             'payments'] or 0
 
     def get_building_score_user(self, user):
-        receipts = self.receipt_set.filter(user=user, status='accepted')
+        receipts = self.receipt_set.filter(user=user, status='accepted').exclude(
+            receipttask__status__in=['rejected', 'pending'])
         score = sum(receipt.get_score() for receipt in receipts)
         return score
 

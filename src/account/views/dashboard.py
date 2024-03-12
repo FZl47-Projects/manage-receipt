@@ -461,7 +461,7 @@ class UserDetail(LoginRequiredMixinCustom, View):
             # name 'user_detail' for prevent conflict
             'user_detail': user_obj,
             'buildings_user': buildings_user,
-            'receipts': user_obj.get_receipts().filter(building__pk__in=buildings_user),
+            'receipts': user_obj.get_receipts().filter(building__pk__in=buildings_user).exclude(receipttask__status__in=['rejected', 'pending']),
             'buildings': Building.objects.filter(is_active=True),
         }
 

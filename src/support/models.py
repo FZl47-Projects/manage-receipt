@@ -73,7 +73,7 @@ class Question(BaseModel, Image):
         all_count = answers.count()
         count = answers.filter(answer=field_option).count()
         try:
-            return (count * 100) / all_count
+            return "{:.2f}".format((count * 100) / all_count)
         except ZeroDivisionError:
             return 0
 

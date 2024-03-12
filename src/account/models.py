@@ -160,7 +160,8 @@ class User(AbstractUser):
         return reverse('account:user_detail', args=(self.id,))
 
     def get_payments(self):
-        return self.receipt_set.filter(status='accepted').aggregate(payments=models.Sum('amount'))['payments'] or 0
+        return self.receipt_set.filter(status='accepted').exclude(
+            receipttask__status__in=['rejected', 'pending']).aggregate(payments=models.Sum('amount'))['payments'] or 0
 
     def get_available_buildings(self):
         try:
