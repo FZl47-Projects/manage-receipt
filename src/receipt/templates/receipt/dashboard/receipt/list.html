@@ -113,8 +113,11 @@
                                     <div class="col-2">
                                         تاریخ واریز
                                     </div>
-                                    <div class="col-2">
+                                    <div class="col-1">
                                         نام ساختمان
+                                    </div>
+                                    <div class="col-1">
+                                        نام پروژه
                                     </div>
                                     {% if user.is_admin %}
                                     <div class="col-2">
@@ -139,9 +142,14 @@
                                     <div class="col-2 datetime-convert font-75">
                                         {{ receipt.get_deposit_datetime }}
                                     </div>
-                                    <div class="col-2">
+                                    <div class="col-1">
                                         <a href="{{ receipt.building.get_absolute_url }}">
-                                            {{ receipt.building.name|truncatechars:30 }}
+                                            {{ receipt.building.name|truncatechars:20 }}
+                                        </a>
+                                    </div>
+                                    <div class="col-1">
+                                        <a href="{{ receipt.building.project.get_absolute_url }}">
+                                            {{ receipt.building.project.name|truncatechars:20 }}
                                         </a>
                                     </div>
                                     {% if user.is_admin %}

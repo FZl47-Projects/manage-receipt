@@ -5,11 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="64521187-de3a-4ed9-8444-af6e5038dcf6" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/manage_receipt.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/manage_receipt.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/account/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/account/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/account/templates/account/dashboard/components/base/nav.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/templates/account/dashboard/components/base/nav.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/account/templates/account/dashboard/user/components/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/templates/account/dashboard/user/components/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/account/templates/account/dashboard/user/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/templates/account/dashboard/user/detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/account/templates/account/dashboard/user/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/templates/account/dashboard/user/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/account/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/account/views/dashboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/views/dashboard.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/settings/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/settings/base.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/auth/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/auth/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/models/task.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/models/task.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/receipt/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/support/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/support/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/add.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/add.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/list.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,12 +63,12 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;F:/Project-Company/Smarten/manage_receipt - Copy&quot;,
+    &quot;last_opened_file_path&quot;: &quot;F:/Project-Company/Smarten/manage_receipt&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.templateLanguages.PyTemplateLanguageModulesConfigurable&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -97,7 +110,18 @@
       <workItem from="1707403206702" duration="10776000" />
       <workItem from="1707453087709" duration="8029000" />
       <workItem from="1707478279702" duration="2286000" />
-      <workItem from="1710268763784" duration="3708000" />
+      <workItem from="1710268763784" duration="4378000" />
+      <workItem from="1710286123098" duration="832000" />
+      <workItem from="1710362168444" duration="362000" />
+      <workItem from="1717346134589" duration="928000" />
+      <workItem from="1717462950802" duration="17000" />
+      <workItem from="1717565266431" duration="4173000" />
+      <workItem from="1717876157434" duration="3939000" />
+      <workItem from="1717944905353" duration="2614000" />
+      <workItem from="1717949991714" duration="3993000" />
+      <workItem from="1717954972701" duration="8000" />
+      <workItem from="1717954994355" duration="10709000" />
+      <workItem from="1718047537163" duration="5196000" />
     </task>
     <servers />
   </component>

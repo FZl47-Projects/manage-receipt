@@ -107,37 +107,50 @@
             </div>
             <div class="container-fluid p-0 ">
                 <div id="container-index">
-                    {% if user.is_super_admin %}
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="white_card mb-4">
-                                    <div class="white_card_header d-block d-md-flex justify-content-between align-items-center">
-                                        <div class="main-title">
-                                            <h3 class="m-0">عملیات</h3>
-                                        </div>
-                                        <div class="text-center mt-3 mt-md-0">
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="white_card mb-4">
+                                <div class="white_card_header d-block d-md-flex justify-content-between align-items-center">
+                                    <div class="main-title">
+                                        <h3 class="m-0">عملیات</h3>
+                                    </div>
+                                    <div class="text-center mt-3 mt-md-0">
+                                        {% if perms.auth.view_group %}
+                                            <button class="btn btn-outline-dark m-1 border-radius-6" type="button"
+                                                    data-bs-toggle="modal" data-bs-target="#container-set-permission">
+                                                تنظیم دسترسی
+                                                <i class="fa fa-user-cog"></i>
+                                            </button>
+                                        {% endif %}
+                                        {% if perms.receipt.set_available_building %}
                                             <button class="btn btn-outline-success m-1 border-radius-6" type="button"
                                                     data-bs-toggle="modal" data-bs-target="#container-set-building">
                                                 تنظیم ساختمان
                                                 <i class="fa fa-building"></i>
                                             </button>
+                                        {% endif %}
+                                        {% if perms.account.change_user %}
                                             <button class="btn btn-w btn-edit-outline m-1" type="button"
                                                     data-bs-toggle="modal" data-bs-target="#container-edit-user">
                                                 تغییر
                                                 <i class="fa fa-edit"></i>
                                             </button>
+                                        {% endif %}
+                                        {% if perms.account.delete_user %}
                                             <button class="btn btn-w btn-outline-danger m-1" type="button"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#container-delete-user">
                                                 حذف کاربر
                                                 <i class="fa fa-trash"></i>
                                             </button>
-                                        </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    {% endif %}
+                    </div>
+
                     <div class="row">
                         <div class="col-12">
                             <div class="white_card card_height_100">
@@ -344,68 +357,135 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="white_card mb_30 card_height_100">
-                                <div class="white_card_header">
-                                    <div class="box_header m-0">
-                                        <div class="main-title">
-                                            <h3 class="m-0"> رسید ها</h3>
-                                        </div>
-                                        <div class="header_more_tool">
-                                            <div class="dropdown">
-                                                <a href="{% url 'receipt:receipt_dashboard_list' %}?search={{ user_detail.get_raw_phonenumber }}">
-                                                    <i class="fa fa-angle-left p-1"></i>
-                                                </a>
+                    {% if not receipt_tasks %}
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="white_card mb_30 card_height_100">
+                                    <div class="white_card_header">
+                                        <div class="box_header m-0">
+                                            <div class="main-title">
+                                                <h3 class="m-0"> رسید ها</h3>
+                                            </div>
+                                            <div class="header_more_tool">
+                                                <div class="dropdown">
+                                                    <a href="{% url 'receipt:receipt_dashboard_list' %}?search={{ user_detail.get_raw_phonenumber }}">
+                                                        <i class="fa fa-angle-left p-1"></i>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="white_card_body">
-                                    <div class="table-responsive">
-                                        <table class="table bayer_table m-0">
-                                            <tbody>
-                                            {% for receipt in receipts|slice:':6' %}
-                                                <tr style="border: hidden;">
-                                                    <td>
-                                                        <div class="payment_gatway">
-                                                            <h5 class="byer_name f_s_16 f_w_600 color_theme">{{ receipt.building.name }}</h5>
-                                                            <p class="font-70 f_w_600 text-center p-0 bg-{{ receipt.get_status }}"
-                                                               style="width: 70px">{{ receipt.get_status_label }}</p>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="payment_gatway text-end">
-                                                            <h5 class="byer_name  f_s_16 f_w_600 color_theme price-el">
-                                                                {{ receipt.amount }}
-                                                            </h5>
-                                                            <p class="color_gray f_s_12 f_w_600 text-left font-80">
-                                                                تومان</p>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="payment_gatway">
-                                                            <a href="{{ receipt.get_absolute_url }}"
-                                                               class="font-size-14">
-                                                                مشاهده
-                                                                <i class="far fa-arrow-alt-circle-left"></i>
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            {% endfor %}
-                                            </tbody>
-                                        </table>
+                                    <div class="white_card_body">
+                                        <div class="table-responsive">
+                                            <table class="table bayer_table m-0">
+                                                <tbody>
+                                                {% for receipt in receipts|slice:':6' %}
+                                                    <tr style="border: hidden;">
+                                                        <td>
+                                                            <div class="payment_gatway">
+                                                                <h5 class="byer_name f_s_16 f_w_600 color_theme">{{ receipt.building.name }}</h5>
+                                                                <p class="font-70 f_w_600 text-center p-0 bg-{{ receipt.get_status }}"
+                                                                   style="width: 70px">{{ receipt.get_status_label }}</p>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="payment_gatway text-end">
+                                                                <h5 class="byer_name  f_s_16 f_w_600 color_theme price-el">
+                                                                    {{ receipt.amount }}
+                                                                </h5>
+                                                                <p class="color_gray f_s_12 f_w_600 text-left font-80">
+                                                                    تومان</p>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="payment_gatway">
+                                                                <a href="{{ receipt.get_absolute_url }}"
+                                                                   class="font-size-14">
+                                                                    مشاهده
+                                                                    <i class="far fa-arrow-alt-circle-left"></i>
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <a class="d-block text-center font-85 my-3"
+                                           href="{% url 'receipt:receipt_dashboard_list' %}?search={{ user_detail.get_raw_phonenumber }}">
+                                            مشاهده همه
+                                            <i class="fa fa-angle-left"></i>
+                                        </a>
                                     </div>
-                                    <a class="d-block text-center font-85 my-3"
-                                       href="{% url 'receipt:receipt_dashboard_list' %}?search={{ user_detail.get_raw_phonenumber }}">
-                                        مشاهده همه
-                                        <i class="fa fa-angle-left"></i>
-                                    </a>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    {% endif %}
+                    {% if receipt_tasks %}
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="white_card mb_30 card_height_100">
+                                    <div class="white_card_header">
+                                        <div class="box_header m-0">
+                                            <div class="main-title">
+                                                <h3 class="m-0"> مدیریت رسید ها</h3>
+                                            </div>
+                                            <div class="header_more_tool">
+                                                <div class="dropdown">
+                                                    <a href="{% url 'receipt:receipt_dashboard_task_list' %}?search={{ user_detail.get_raw_phonenumber }}">
+                                                        <i class="fa fa-angle-left p-1"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="white_card_body">
+                                        <div class="table-responsive">
+                                            <table class="table bayer_table m-0">
+                                                <tbody>
+                                                {% for receipt_task in receipt_tasks|slice:':6' %}
+                                                    <tr style="border: hidden;">
+                                                        <td>
+                                                            <div class="payment_gatway">
+                                                                <h5 class="byer_name f_s_16 f_w_600 color_theme">{{ receipt_task.receipt.building.name }}</h5>
+                                                                <p class="font-70 f_w_600 text-center p-0 bg-{{ receipt_task.status }}"
+                                                                   style="width: 125px">
+                                                                    عملیات {{ receipt_task.get_status_display }}</p>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="payment_gatway text-end">
+                                                                <h5 class="byer_name  f_s_16 f_w_600 color_theme price-el">
+                                                                    {{ receipt_task.receipt.amount }}
+                                                                </h5>
+                                                                <p class="color_gray f_s_12 f_w_600 text-left font-80">
+                                                                    تومان</p>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="payment_gatway">
+                                                                <a href="{{ receipt_task.get_absolute_url }}"
+                                                                   class="font-size-14">
+                                                                    مشاهده
+                                                                    <i class="far fa-arrow-alt-circle-left"></i>
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <a class="d-block text-center font-85 my-3"
+                                           href="{% url 'receipt:receipt_dashboard_task_list' %}?search={{ user_detail.get_raw_phonenumber }}">
+                                            مشاهده همه
+                                            <i class="fa fa-angle-left"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -566,10 +646,58 @@
                                         <select name="buildings" class="form-control form-select" multiple>
                                             {% for building in buildings %}
                                                 <option value="{{ building.id }}"
-                                                        {% if building.id in building_available %}selected{% endif %}>{{ building.get_name_by_flag }}</option>
+                                                        {% if building.id in building_available %}selected{% endif %}>{{ building.get_name_by_flag }}
+                                                </option>
                                             {% endfor %}
                                         </select>
                                     {% endwith %}
+                                </div>
+                            </div>
+                            <div class="text-left mt-4">
+                                <button class="btn btn-submit">
+                                    ثبت و بروزرسانی
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="container-set-permission" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg col-lg-12">
+            <div class="modal-content white_card mb_30">
+                <div class="white_card_header">
+                    <div class="modal-header box_header m-0">
+                        <h3 class="m-0">تنظیم دسترسی</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="white_card_body">
+                    <form action="{% url 'account:user_permission_set' %}"
+                          method="post" class="col-12">
+                        <div class="card-body">
+                            <input type="hidden" name="user" value="{{ user_obj.id }}">
+                            {% csrf_token %}
+
+                            <div class="col-md-12">
+                                <div>
+                                    <label class="form-label" for="inpNameUser">
+                                        گروه های دسترسی
+                                        <span class="field-required">*</span>
+                                    </label>
+
+                                    <select name="group" class="form-control form-select">
+                                        {% for group in permission_groups %}
+                                            <option value="{{ group.id }}"
+                                                    {% if building.id in building_available %}selected{% endif %}>{{ group.name }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+
                                 </div>
                             </div>
                             <div class="text-left mt-4">

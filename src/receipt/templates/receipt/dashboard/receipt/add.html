@@ -95,7 +95,8 @@
                                                         id="inputNameBuilding" required>
                                                     {% for building in buildings %}
                                                         <option value="{{ building.id }}" disabled
-                                                        >{{ building.get_name_by_flag }}</option>
+                                                        >{{ building.get_name_by_flag }}
+                                                        </option>
                                                     {% endfor %}
                                                 </select>
                                             {% else %}
@@ -103,7 +104,8 @@
                                                         id="inputNameBuilding" required>
                                                     {% for building in user.get_available_buildings %}
                                                         <option value="{{ building.id }}"
-                                                        >{{ building.get_name_by_flag }}</option>
+                                                        >{{ building.get_name_by_flag }}
+                                                        </option>
                                                     {% endfor %}
                                                 </select>
                                             {% endif %}
@@ -200,7 +202,7 @@
         let input_select_user_component = document.querySelector('input[name="user"]')
         let input_select_user_component_name = document.querySelector('.input-select-label-name')
         let input_select_user_component_event = function () {
-             disableOptionsBuilding()
+            disableOptionsBuilding()
             setEventGetBuildingUsers()
         }
 

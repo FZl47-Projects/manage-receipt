@@ -1,0 +1,277 @@
+{% extends 'account/dashboard/components/base/base_template.html' %}
+
+{% block Title %}
+    مدیریت دسترسی ها
+{% endblock %}
+
+
+{% block Content %}
+    {% include 'account/dashboard/components/base/nav.html' %}
+
+    <section class="main_content dashboard_part large_header_bg">
+        {% include 'account/dashboard/components/base/header.html' %}
+        <div class="main_content_iner">
+            <div class="container-fluid p-0 ">
+                <div class="col-lg-12">
+                    <div class="white_card mb_30">
+                        <div class="white_card_header">
+                            <div class="box_header m-0">
+                                <div class="main-title">
+                                    <h3 class="m-0">مدیریت دسترسی ها</h3>
+                                </div>
+                            </div>
+                            <div class="breadcrumb">
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'account:dashboard' %}">داشبورد</a>
+                                    </li>
+                                    <li>
+                                        <a>کاربران</a>
+                                    </li>
+                                    <li>
+                                        <a href="">مدیریت دسترسی ها</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="white_card_body">
+                            <div class="card-body">
+                                <div class="text-right mb-3">
+                                    <button class="btn btn-outline-success font-70 m-1 m-1 py-2" type="button"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#container-add-group-perm">
+                                        افزودن
+                                        گروه دسترسی
+                                    </button>
+                                </div>
+                                <div class="list-row">
+                                    <div class="title-list-row">
+                                        <div class="col-2">
+                                            نام گروه
+                                        </div>
+                                        <div class="col-8">
+                                            برخی از دسترسی ها
+                                        </div>
+                                        <div class="col-2">
+                                            عملیات
+                                        </div>
+                                    </div>
+                                    {% for object in object_list %}
+                                        <div class="detail-row">
+                                            <div class="col-2">
+                                                <span>{{ object.name|truncatechars:20 }}</span>
+                                            </div>
+                                            <div class="col-8">
+                                                {% for permission in object.permissions.all|slice:':4' %}
+                                                    <span class="badge bg-primary">{{ permission.name }}</span>
+                                                {% empty %}
+                                                    <span>دسترسی یافت نشد</span>
+                                                {% endfor %}
+                                            </div>
+                                            <div class="col-2 ">
+                                                <button class="btn btn-outline-success font-80" type="button"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#container-edit-group-perm-{{ object.id }}">
+                                                    ویرایش
+                                                    <i class="fa fa-pen"></i>
+                                                </button>
+
+                                                <button class="btn btn-outline-danger font-80 m-1" type="button"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#container-delete-group-perm-{{ object.id }}">
+                                                    حذف
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    {% empty %}
+                                        <div class="container-not-found-base">
+                                            <p>چیزی یافت نشد</p>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="pagination">
+                                    <div class="step-links">
+                                        {% if page_obj.has_previous %}
+                                            <span class="pagination-previous">
+                                                <a href="?page=1">اول</a><a
+                                                    href="?page={{ page_obj.previous_page_number }}">قبلی</a>
+                                            </span>
+                                        {% endif %}
+                                        <span class="current">
+                                        صفحه  {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}
+                                        </span>
+
+                                        {% if page_obj.has_next %}
+                                            <span class="pagination-next">
+                                                <a href="?page={{ page_obj.next_page_number }}">بعدی</a><a
+                                                    href="?page={{ page_obj.paginator.num_pages }}">اخر</a>
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include 'account/dashboard/components/base/footer.html' %}
+    </section>
+
+    {% for group in groups %}
+        <div id="container-delete-group-perm-{{ group.id }}" class="modal show" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg col-lg-12">
+                <div class="modal-content white_card mb_30">
+                    <div class="white_card_header">
+                        <div class="modal-header box_header m-0">
+                            <h3 class="m-0">حذف گروه دسترسی</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="white_card_body">
+                        <form action="{% url 'account:permission_group_delete' group_id=group.id %}" method="post"
+                              class="col-12">
+                            <div class="card-body">
+                                {% csrf_token %}
+                                <div>
+                                    <p class="bg-danger-light">
+                                        ایا از حذف گروه دسترسی
+                                        <b>{{ group.name }}</b>
+                                        اطمینان دارید ؟
+                                    </p>
+                                </div>
+                                <div class="text-left mt-4">
+                                    <button class="btn btn-danger">
+                                        بله، حذف!
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="container-edit-group-perm-{{ group.id }}" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg col-lg-12">
+                <div class="modal-content white_card mb_30">
+                    <div class="white_card_header">
+                        <div class="modal-header box_header m-0">
+                            <h3 class="m-0">ویرایش گروه دسترسی</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="white_card_body">
+                        <form action="{% url 'account:permission_group_update' group_id=group.id %}" method="post"
+                              class="col-12">
+                            {% csrf_token %}
+                            <div class="card-body">
+
+                                <div class="col-md-12">
+                                    <div>
+                                        <label class="form-label" for="inpNameProject">
+                                            نام
+                                            <span class="field-required">*</span>
+                                        </label>
+                                        <input type="text" required="" class="form-control" value="{{ group.name }}"
+                                               name="name">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label">
+                                        دسترسی ها
+                                        <span class="field-required">*</span>
+                                    </label>
+                                    <select name="permissions" multiple class="form-control form-select" required
+                                            style="height: 370px">
+                                        {% for permission in permissions %}
+                                            <option value="{{ permission.id }}"
+                                                    {% if permission in group.permissions.all %}selected{% endif %}>
+                                                {{ permission.name }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="text-left mt-4">
+                                    <button class="btn btn-submit">
+                                        ثبت و بروزرسانی
+                                        <i class="fa fa-up"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+
+    <div id="container-add-group-perm" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg col-lg-12">
+            <div class="modal-content white_card mb_30">
+                <div class="white_card_header">
+                    <div class="modal-header box_header m-0">
+                        <h3 class="m-0">افزودن گروه دسترسی</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="white_card_body">
+                    <form action="{% url 'account:permission_group_add' %}" method="post"
+                          class="col-12">
+                        {% csrf_token %}
+                        <div class="card-body">
+
+                            <div class="col-md-12">
+                                <div>
+                                    <label class="form-label" for="inpNameProject">
+                                        نام
+                                        <span class="field-required">*</span>
+                                    </label>
+                                    <input type="text" required="" class="form-control"
+                                           name="name">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label">
+                                    دسترسی ها
+                                    <span class="field-required">*</span>
+                                </label>
+                                <select name="permissions" multiple class="form-control form-select" required
+                                        style="height: 370px">
+                                    {% for permission in permissions %}
+                                        <option value="{{ permission.id }}">
+                                            {{ permission.name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="text-left mt-4">
+                                <button class="btn btn-submit">
+                                    ایجاد گروه دسترسی
+                                    <i class="fa fa-up"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+
+
+
+
+

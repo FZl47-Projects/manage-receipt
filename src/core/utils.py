@@ -1,4 +1,5 @@
 import string
+import logging
 import random
 import datetime
 import requests
@@ -8,6 +9,8 @@ from django.core.mail import send_mail as _send_email_django
 from django.conf import settings
 from django_q.tasks import async_task
 from django.contrib import messages
+
+_logger = logging.getLogger('root')
 
 
 def random_str(size=15, chars=string.ascii_lowercase + string.ascii_uppercase + string.digits):
@@ -109,6 +112,19 @@ def form_validate_err(request, form):
     return True
 
 
+def create_form_messages(request, form):
+    errors = form.errors.as_data()
+    if errors:
+        for field, err in errors.items():
+            err = str(err[0])
+            err = err.replace('[', '').replace(']', '')
+            err = err.replace("'", '').replace('This', '')
+            err = f'{field} {err}'
+            messages.error(request, err)
+    else:
+        messages.error(request, _('Incorrect Data'))
+
+
 def get_host_url(url):
     return settings.HOST_ADDRESS + url
 
@@ -116,3 +132,15 @@ def get_host_url(url):
 def get_media_url(url):
     return settings.MEDIA_URL + url
 
+
+def log_event(msg, level='info', exc_info=False, **kwargs):
+    level = level.upper()
+    levels = {
+        'NOTSET': 0,
+        'DEBUG': 10,
+        'INFO': 20,
+        'WARNING': 30,
+        'ERROR': 40,
+        'CRITICAL': 50,
+    }
+    logging.log(levels[level], msg=msg, exc_info=exc_info, **kwargs)

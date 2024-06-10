@@ -1,13 +1,18 @@
+from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from phonenumber_field.modelfields import PhoneNumberField
+
 from support.models import Ticket, Question
 
 
 class CustomBaseUserManager(BaseUserManager):
+
+    def get_users(self):
+        return self.get_queryset().exclude(is_superuser=True)
 
     def create_user(self, phonenumber, password, email=None, **extra_fields):
         """
@@ -64,7 +69,7 @@ class User(AbstractUser):
         ('super_user', 'ادمین وِیژه'),
     )
 
-    first_name = models.CharField("first name", max_length=150, blank=True, default="بدون نام")
+    first_name = models.CharField("first name", max_length=150, blank=True, default=_('No name'))
     username = None
     email = models.EmailField("email address", null=True, blank=True, unique=True)
     phonenumber = PhoneNumberField(region='IR', unique=True)
@@ -82,6 +87,11 @@ class User(AbstractUser):
 
     class Meta:
         ordering = '-id',
+
+        permissions = (
+            ('view_full_user', _('Can view all user')),
+            ('export_list_user', _('Can export data list of users')),
+        )
 
     @property
     def is_common_user(self):
@@ -110,7 +120,7 @@ class User(AbstractUser):
         return p
 
     def get_full_name(self):
-        fl = f'{self.first_name} {self.last_name}'.strip() or 'بدون نام'
+        fl = f'{self.first_name} {self.last_name}'.strip() or _('No name')
         return fl
 
     def get_email(self):

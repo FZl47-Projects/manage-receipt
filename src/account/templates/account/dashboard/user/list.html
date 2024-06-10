@@ -1,140 +1,146 @@
 {% extends 'account/dashboard/components/base/base_template.html' %}
 
 {% block Title %}
-لیست کاربران
+    لیست کاربران
 {% endblock %}
 
 
 {% block Content %}
-{% include 'account/dashboard/components/base/nav.html' %}
+    {% include 'account/dashboard/components/base/nav.html' %}
 
-<section class="main_content dashboard_part large_header_bg">
-    {% include 'account/dashboard/components/base/header.html' %}
-    <div class="main_content_iner">
-        <div class="container-fluid p-0 ">
-            <div class="col-lg-12">
-                <div class="white_card mb_30">
-                    <div class="white_card_header">
-                        <div class="box_header m-0">
-                            <div class="main-title">
-                                <h3 class="m-0">لیست کاربران</h3>
-                            </div>
-                        </div>
-                        <div class="breadcrumb">
-                            <ul>
-                                <li>
-                                    <a href="{% url 'account:dashboard' %}">داشبورد</a>
-                                </li>
-                                <li>
-                                    <a href="">کاربران</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="white_card_body">
-                        <div class="card-body">
-                            <div class="text-right mb-3">
-
-                                <a href="{% url 'account:user_add' %}" class="btn btn-w btn-outline-success font-70 m-1 py-2">افزودن
-                                    کاربر</a>
-                                {% if request.user.is_super_admin %}
-                                <div class="dropdown d-inline-block">
-                                    <a class="btn btn-w btn-outline-primary font-70 m-1 py-2 dropdown-toggle" href="#"
-                                       role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
-                                       aria-expanded="false">
-                                        خروجی
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <li>
-                                            <a class="dropdown-item" href="{% url 'account:user_list_export' %}">خروجی
-                                                اکسل</a>
-                                        </li>
-                                    </ul>
+    <section class="main_content dashboard_part large_header_bg">
+        {% include 'account/dashboard/components/base/header.html' %}
+        <div class="main_content_iner">
+            <div class="container-fluid p-0 ">
+                <div class="col-lg-12">
+                    <div class="white_card mb_30">
+                        <div class="white_card_header">
+                            <div class="box_header m-0">
+                                <div class="main-title">
+                                    <h3 class="m-0">لیست کاربران</h3>
                                 </div>
-                                {% endif %}
                             </div>
-                            <div class="mt-4 mb-5">
-                                <form action="{% url 'account:user_list' %}">
-                                    <div class="cnt-search col-11 col-md-8">
-                                        <input type="text" name="search"
-                                               placeholder="نام کاربر ، شماره همراه ، ایمیل و.."
-                                               value="{{ request.GET.search }}">
-                                        <div>
-                                            {% if request.GET.search %}
-                                            <a class="text-danger font-80" style="margin-left: 8px;"
-                                               href="{% url 'account:user_list' %}">
-                                                <i class="fa fa-times"></i>
+                            <div class="breadcrumb">
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'account:dashboard' %}">داشبورد</a>
+                                    </li>
+                                    <li>
+                                        <a href="">کاربران</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="white_card_body">
+                            <div class="card-body">
+                                <div class="text-right mb-3">
+
+                                    {% if perms.account.add_user %}
+                                        <a href="{% url 'account:user_add' %}"
+                                           class="btn btn-w btn-outline-success font-70 m-1 py-2">افزودن
+                                            کاربر</a>
+                                    {% endif %}
+                                    {% if perms.account.export_list_user %}
+                                        <div class="dropdown d-inline-block">
+                                            <a class="btn btn-w btn-outline-primary font-70 m-1 py-2 dropdown-toggle"
+                                               href="#"
+                                               role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+                                               aria-expanded="false">
+                                                خروجی
                                             </a>
-                                            {% endif %}
-                                            <button>
-                                                <i class="fa fa-search"></i>
-                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <li>
+                                                    <a class="dropdown-item"
+                                                       href="{% url 'account:user_list_export' %}">خروجی
+                                                        اکسل</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="mt-4 mb-5">
+                                    <form action="{% url 'account:user_list' %}">
+                                        <div class="cnt-search col-11 col-md-8">
+                                            <input type="text" name="search"
+                                                   placeholder="نام کاربر ، شماره همراه ، ایمیل و.."
+                                                   value="{{ request.GET.search }}">
+                                            <div>
+                                                {% if request.GET.search %}
+                                                    <a class="text-danger font-80" style="margin-left: 8px;"
+                                                       href="{% url 'account:user_list' %}">
+                                                        <i class="fa fa-times"></i>
+                                                    </a>
+                                                {% endif %}
+                                                <button>
+                                                    <i class="fa fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="list-row">
+                                    <div class="title-list-row">
+                                        <div class="col-3">
+                                            نام و نام خانوادگی
+                                        </div>
+                                        <div class="col-2">
+                                            شماره همراه
+                                        </div>
+                                        <div class="col-3">
+                                            ایمیل
+                                        </div>
+                                        <div class="col-2">
+                                            امتیاز کل
+                                        </div>
+                                        <div class="col-1">
+                                            اخرین بازدید
                                         </div>
                                     </div>
-                                </form>
-                            </div>
-                            <div class="list-row">
-                                <div class="title-list-row">
-                                    <div class="col-3">
-                                        نام و نام خانوادگی
-                                    </div>
-                                    <div class="col-2">
-                                        شماره همراه
-                                    </div>
-                                    <div class="col-3">
-                                        ایمیل
-                                    </div>
-                                    <div class="col-2">
-                                        امتیاز کل
-                                    </div>
-                                    <div class="col-1">
-                                        اخرین بازدید
-                                    </div>
+                                    {% for user in object_list %}
+                                        <div class="detail-row">
+                                            <div class="col-3">
+                                                <a href="{{ user.get_absolute_url }}">
+                                                    {{ user.get_full_name|default:'بدون نام' }}
+                                                </a>
+                                            </div>
+                                            <div class="col-2">
+                                                {{ user.get_raw_phonenumber }}
+                                            </div>
+                                            <div class="col-3 font-80">
+                                                {{ user.email|truncatechars:15|default:'-' }}
+                                            </div>
+                                            <div class="col-2 font-80">
+                                                {{ user.get_scores }}
+                                            </div>
+                                            <div class="col-1 font-70 datetime-convert">
+                                                {{ user.get_last_login|default:'-' }}
+                                            </div>
+                                        </div>
+                                    {% empty %}
+                                        <div class="container-not-found-base">
+                                            <p>کاربری یافت نشد</p>
+                                        </div>
+                                    {% endfor %}
                                 </div>
-                                {% for user in users %}
-                                <div class="detail-row">
-                                    <div class="col-3">
-                                        <a href="{{ user.get_absolute_url }}">
-                                            {{ user.get_full_name|default:'بدون نام' }}
-                                        </a>
-                                    </div>
-                                    <div class="col-2">
-                                        {{ user.get_raw_phonenumber }}
-                                    </div>
-                                    <div class="col-3 font-80">
-                                        {{ user.email|truncatechars:15|default:'-' }}
-                                    </div>
-                                    <div class="col-2 font-80">
-                                        {{ user.get_scores }}
-                                    </div>
-                                    <div class="col-1 font-70 datetime-convert">
-                                        {{ user.get_last_login|default:'-' }}
-                                    </div>
-                                </div>
-                                {% empty %}
-                                <div class="container-not-found-base">
-                                    <p>کاربری یافت نشد</p>
-                                </div>
-                                {% endfor %}
-                            </div>
-                            <div class="pagination">
-                                <div class="step-links">
-                                    {% if pagination.has_previous %}
-                                    <span class="pagination-previous">
+                                <div class="pagination">
+                                    <div class="step-links">
+                                        {% if page_obj.has_previous %}
+                                            <span class="pagination-previous">
                                                 <a href="?page=1">اول</a><a
-                                            href="?page={{ pagination.previous_page_number }}">قبلی</a>
+                                                    href="?page={{ page_obj.previous_page_number }}">قبلی</a>
                                             </span>
-                                    {% endif %}
-                                    <span class="current">
-                                        صفحه  {{ pagination.number }} از {{ pagination.paginator.num_pages }}
+                                        {% endif %}
+                                        <span class="current">
+                                        صفحه  {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}
                                         </span>
 
-                                    {% if pagination.has_next %}
-                                    <span class="pagination-next">
-                                                <a href="?page={{ pagination.next_page_number }}">بعدی</a><a
-                                            href="?page={{ pagination.paginator.num_pages }}">اخر</a>
+                                        {% if page_obj.has_next %}
+                                            <span class="pagination-next">
+                                                <a href="?page={{ page_obj.next_page_number }}">بعدی</a><a
+                                                    href="?page={{ page_obj.paginator.num_pages }}">اخر</a>
                                             </span>
-                                    {% endif %}
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -142,9 +148,8 @@
                 </div>
             </div>
         </div>
-    </div>
-    {% include 'account/dashboard/components/base/footer.html' %}
-</section>
+        {% include 'account/dashboard/components/base/footer.html' %}
+    </section>
 {% endblock %}
 
 

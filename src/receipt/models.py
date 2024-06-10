@@ -1,4 +1,5 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.urls import reverse
 from core.models import BaseModel
@@ -101,6 +102,11 @@ class BuildingAvailable(BaseModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     buildings = models.ManyToManyField('Building')
 
+    class Meta:
+        permissions = (
+            ('set_available_building', _('Can set available building')),
+        )
+
     def __str__(self):
         return f'building available - {self.user.get_full_name()}'
 
@@ -192,6 +198,11 @@ class Receipt(ReceiptAbstract):
 
 
 class ReceiptTask(TaskAdmin):
+    class Meta:
+        permissions = (
+            ('view_in_user_detail_receipt_tasks', _('Can access to receipt tasks in user detail page')),
+        )
+
     RECEIPT_STATUS_OPTIONS = (
         ('accepted', 'تایید شده'),
         ('rejected', 'رد شده')

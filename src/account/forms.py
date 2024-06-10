@@ -1,8 +1,10 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth import models as permission_models
 from django import forms
 from phonenumber_field.formfields import PhoneNumberField
-from .models import User
+
 from receipt.models import BuildingAvailable
+from .models import User
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -91,13 +93,13 @@ class ResetPasswordSetForm(forms.Form):
         return p2
 
 
-class UserUpdateByAdmin(forms.ModelForm):
+class UserUpdateByAdminForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('is_active', 'is_phonenumber_confirmed', 'phonenumber', 'first_name', 'last_name')
 
 
-class UpdateUserPassword(forms.Form):
+class UpdateUserPasswordForm(forms.Form):
     current_password = forms.CharField(max_length=64, min_length=8, required=True, widget=forms.PasswordInput())
     new_password = forms.CharField(max_length=64, min_length=8, required=True, widget=forms.PasswordInput())
     new_password2 = forms.CharField(max_length=64, min_length=8, required=True, widget=forms.PasswordInput())
@@ -110,7 +112,17 @@ class UpdateUserPassword(forms.Form):
         return p2
 
 
-class SetBuildingAvailable(forms.ModelForm):
+class SetBuildingAvailableForm(forms.ModelForm):
     class Meta:
         model = BuildingAvailable
         fields = '__all__'
+
+
+class PermissionGroupCreateForm(forms.ModelForm):
+    class Meta:
+        model = permission_models.Group
+        fields = '__all__'
+
+
+class PermissionGroupUpdateForm(PermissionGroupCreateForm):
+    pass

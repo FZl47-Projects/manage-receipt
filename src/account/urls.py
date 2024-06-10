@@ -4,7 +4,7 @@ from .views import dashboard
 app_name = 'account'
 urlpatterns = [
     # login logout and register
-    path('login-register', dashboard.login_register, name='login_register'),
+    path('login-register', dashboard.LoginOrRegister.as_view(), name='login_register'),
     path('logout', dashboard.logout, name='logout'),
     # confirm account
     path('confirm/phonenumber', dashboard.ConfirmPhonenumber.as_view(), name='confirm_phonenumber'),
@@ -23,6 +23,7 @@ urlpatterns = [
          name='info_change_password'),
     # dashboard operations
     # --- user
+    path('dashboard/user/permissions/set', dashboard.UserUpdatePassword.as_view(), name='user_permission_set'),
     path('dashboard/user/update/password', dashboard.UserUpdatePassword.as_view(), name='user_update_password'),
     path('dashboard/user/update', dashboard.UserUpdate.as_view(), name='user_update'),
     path('dashboard/user/add', dashboard.UserAdd.as_view(), name='user_add'),
@@ -30,8 +31,23 @@ urlpatterns = [
     path('dashboard/user/list/export', dashboard.UserListExport.as_view(), name='user_list_export'),
     path('dashboard/user/list/component/search', dashboard.UserListComponentPartial.as_view(),
          name='user_list_component_search'),
-    path('dashboard/user/task/add', dashboard.UserFinancialAdd.as_view(), name='user_financial_add'),
-    path('dashboard/user/task/list', dashboard.UserFinancialList.as_view(), name='user_financial_list'),
+
+    path('dashboard/user/permissions/group/manage', dashboard.PermissionGroupsManage.as_view(),
+         name='permission_groups_manage'),
+
+    path('dashboard/user/permissions/group/add', dashboard.PermissionGroupsAdd.as_view(),
+         name='permission_group_add'),
+
+    path('dashboard/user/permissions/group/<int:group_id>/update', dashboard.PermissionGroupUpdate.as_view(),
+         name='permission_group_update'),
+
+    path('dashboard/user/permissions/group/<int:group_id>/delete', dashboard.PermissionGroupDelete.as_view(),
+         name='permission_group_delete'),
+
+
+
+    # path('dashboard/user/task/add', dashboard.UserAdd.as_view(), name='user_financial_add'),
+    # path('dashboard/user/task/list', dashboard.UserList.as_view(), name='user_financial_list'),
     path('dashboard/user/<int:user_id>/detail', dashboard.UserDetail.as_view(), name='user_detail'),
     path('dashboard/user/<int:user_id>/detail/delete', dashboard.UserDetailDelete.as_view(), name='user_detail_delete'),
     path('dashboard/user/<int:user_id>/detail/update/admin', dashboard.UserDetailUpdateByAdmin.as_view(),

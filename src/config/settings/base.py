@@ -5,7 +5,7 @@
 import os
 from dotenv import load_dotenv
 from pathlib import Path
-
+from django.utils.translation import gettext_lazy as _
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
@@ -83,6 +83,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LANGUAGES = [
+    ("fa", _("Persian")),
+]
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+    BASE_DIR / 'locale/django_q',
+]
+
 LANGUAGE_CODE = "fa-ir"
 
 TIME_ZONE = 'Asia/Tehran'
@@ -91,11 +100,10 @@ USE_I18N = True
 
 USE_TZ = False
 
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email
-EMAIL_SUBJECT = 'اعلان از طرف سامانه انصاری - {} '
+EMAIL_SUBJECT = 'اعلان از طرف سامانه فرهیختگان مس - {} '
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
@@ -154,4 +162,3 @@ SMS_CONFIG = {
 }
 
 EXPORT_ROOT_DIR = 'exports'
-

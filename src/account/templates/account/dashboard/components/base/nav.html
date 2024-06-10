@@ -96,20 +96,12 @@
                             <i class="fa fa-users"></i>
                         </a>
                     </li>
-                    {% if user.is_super_admin %}
-                        <li>
-                            <a href="{% url 'account:user_financial_add' %}">
-                                افزودن مدیر مالی
-                                <i class="fa fa-user-tie"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{% url 'account:user_financial_list' %}">
-                                لیست مدیران مالی
-                                <i class="fa fa-users"></i>
-                            </a>
-                        </li>
-                    {% endif %}
+                    <li>
+                        <a href="{% url 'account:permission_groups_manage' %}">
+                            گروه های دسترسی
+                            <i class="fa fa-user-cog"></i>
+                        </a>
+                    </li>
                 </ul>
             </li>
         {% endif %}
@@ -164,164 +156,163 @@
                             </a>
                         </li>
                     {% endif %}
+            </ul>
         </li>
-    </ul>
-    </li>
 
-    <li>
-        <a class="has-arrow" href="#" aria-expanded="false">
-            <div class="icon_menu">
-                <img src="{% static 'images/dashboard/menu-icon/2.svg.xml' %}" alt>
-            </div>
-            <span>اعلانات</span>
-        </a>
-        <ul>
-            <li>
-                <a href="{% url 'notification:notification_dashboard_user_personal_list' %}">
-                    اعلانات شخصی
-                    <div>
-                        <i class="fa fa-bell"></i>
-                    </div>
-                </a>
-            </li>
-            {% if user.is_super_admin %}
-                <li>
-                    <a href="{% url 'notification:notification_dashboard_add' %}">
-                        ایجاد اعلان عمومی
-                        <div>
-                            <i class="fa fa-plus m-0 font-size-7"></i>
-                            <i class="fa fa-bell m-0"></i>
-                        </div>
-                    </a>
-                </li>
-            {% endif %}
-            {% if user.is_admin %}
-                <li>
-                    <a href="{% url 'notification:notification_dashboard_user_add' %}">
-                        ایجاد اعلان برای کاربر
-                        <div>
-                            <i class="fa fa-user m-0 font-size-7"></i>
-                            <i class="fa fa-bell m-0"></i>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'notification:notification_dashboard_list' %}">
-                        لیست اعلان های عمومی
-                        <div>
-                            <i class="fa fa-bell m-0 font-size-7"></i>
-                            <i class="fa fa-list m-0"></i>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'notification:notification_dashboard_user_list' %}">
-                        لیست اعلان های کاربران
-                        <div>
-                            <i class="fa fa-user m-0 font-size-7"></i>
-                            <i class="fa fa-list m-0"></i>
-                        </div>
-                    </a>
-                </li>
-            {% endif %}
-        </ul>
-    </li>
-
-    {% if not user.is_common_admin %}
         <li>
-        <a class="has-arrow" href="#" aria-expanded="false">
-            <div class="icon_menu">
-                <img src="{% static 'images/dashboard/menu-icon/2.svg.xml' %}" alt>
-            </div>
-            <span>پشتیبانی</span>
-        </a>
-
-        <ul>
-            <!-- TODO: should be completed in feature  -->
-            <li class="d-none">
-                <a href="{% url 'support:support_dashboard_ticket_add' %}">
-                    ایجاد تیکت
-                    <div>
-                        <i class="fa fa-plus m-0 font-size-7"></i>
-                        <i class="fa fa-ticket-alt m-0"></i>
-                    </div>
-                </a>
-            </li>
-            <li class="d-none">
-                <a href="{% url 'support:support_dashboard_ticket_list_new' %}">
-                    تیکت های جدید
-                    <div>
-                        <i class="fa fa-reply m-0 font-size-7"></i>
-                        <i class="fa fa-ticket-alt m-0"></i>
-                    </div>
-                </a>
-            </li>
-            <li class="d-none">
-                <a href="{% url 'support:support_dashboard_ticket_list_archive' %}">
-                    تیکت های ارشیو شده
-                    <i class="fa fa-ticket-alt"></i>
-                </a>
-            </li>
-            <!-- end-feature -->
-
-            {% if user.is_super_admin %}
+            <a class="has-arrow" href="#" aria-expanded="false">
+                <div class="icon_menu">
+                    <img src="{% static 'images/dashboard/menu-icon/2.svg.xml' %}" alt>
+                </div>
+                <span>اعلانات</span>
+            </a>
+            <ul>
                 <li>
-                    <a href="{% url 'support:support_dashboard_question_add' %}">
-                        ایجاد پرسش
+                    <a href="{% url 'notification:notification_dashboard_user_personal_list' %}">
+                        اعلانات شخصی
                         <div>
-                            <i class="fa fa-plus m-0 font-size-7"></i>
-                            <i class="fa fa-question m-0"></i>
+                            <i class="fa fa-bell"></i>
                         </div>
                     </a>
                 </li>
-            {% endif %}
-            <li>
-                <a href="{% url 'support:support_dashboard_question_list' %}">
-                    لیست پرسش ها
-                    <div>
-                        <i class="fa fa-list m-0 font-size-7"></i>
-                        <i class="fa fa-question m-0"></i>
-                    </div>
-                </a>
-            </li>
-        </ul>
-    </li>
-    {% endif %}
+                {% if user.is_super_admin %}
+                    <li>
+                        <a href="{% url 'notification:notification_dashboard_add' %}">
+                            ایجاد اعلان عمومی
+                            <div>
+                                <i class="fa fa-plus m-0 font-size-7"></i>
+                                <i class="fa fa-bell m-0"></i>
+                            </div>
+                        </a>
+                    </li>
+                {% endif %}
+                {% if user.is_admin %}
+                    <li>
+                        <a href="{% url 'notification:notification_dashboard_user_add' %}">
+                            ایجاد اعلان برای کاربر
+                            <div>
+                                <i class="fa fa-user m-0 font-size-7"></i>
+                                <i class="fa fa-bell m-0"></i>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'notification:notification_dashboard_list' %}">
+                            لیست اعلان های عمومی
+                            <div>
+                                <i class="fa fa-bell m-0 font-size-7"></i>
+                                <i class="fa fa-list m-0"></i>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'notification:notification_dashboard_user_list' %}">
+                            لیست اعلان های کاربران
+                            <div>
+                                <i class="fa fa-user m-0 font-size-7"></i>
+                                <i class="fa fa-list m-0"></i>
+                            </div>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </li>
 
-    <li>
-        <a class="has-arrow" href="#" aria-expanded="false">
-            <div class="icon_menu">
-                <img src="{% static 'images/dashboard/menu-icon/2.svg.xml' %}" alt>
-            </div>
-            <span>اطلاعات شخصی</span>
-        </a>
-        <ul>
+        {% if not user.is_common_admin %}
             <li>
-                <a href="{% url 'account:info_detail' %}">
-                    مشخصات
-                    <div>
-                        <i class="fa fa-info"></i>
+                <a class="has-arrow" href="#" aria-expanded="false">
+                    <div class="icon_menu">
+                        <img src="{% static 'images/dashboard/menu-icon/2.svg.xml' %}" alt>
                     </div>
+                    <span>پشتیبانی</span>
                 </a>
+
+                <ul>
+                    <!-- TODO: should be completed in feature  -->
+                    <li class="d-none">
+                        <a href="{% url 'support:support_dashboard_ticket_add' %}">
+                            ایجاد تیکت
+                            <div>
+                                <i class="fa fa-plus m-0 font-size-7"></i>
+                                <i class="fa fa-ticket-alt m-0"></i>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="d-none">
+                        <a href="{% url 'support:support_dashboard_ticket_list_new' %}">
+                            تیکت های جدید
+                            <div>
+                                <i class="fa fa-reply m-0 font-size-7"></i>
+                                <i class="fa fa-ticket-alt m-0"></i>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="d-none">
+                        <a href="{% url 'support:support_dashboard_ticket_list_archive' %}">
+                            تیکت های ارشیو شده
+                            <i class="fa fa-ticket-alt"></i>
+                        </a>
+                    </li>
+                    <!-- end-feature -->
+
+                    {% if user.is_super_admin %}
+                        <li>
+                            <a href="{% url 'support:support_dashboard_question_add' %}">
+                                ایجاد پرسش
+                                <div>
+                                    <i class="fa fa-plus m-0 font-size-7"></i>
+                                    <i class="fa fa-question m-0"></i>
+                                </div>
+                            </a>
+                        </li>
+                    {% endif %}
+                    <li>
+                        <a href="{% url 'support:support_dashboard_question_list' %}">
+                            لیست پرسش ها
+                            <div>
+                                <i class="fa fa-list m-0 font-size-7"></i>
+                                <i class="fa fa-question m-0"></i>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
             </li>
-            <li>
-                <a href="{% url 'account:info_change_password' %}">
-                    تغییر رمز عبور
-                    <div>
-                        <i class="fa fa-key"></i>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="{% url 'account:reset_password' %}">
-                    <span class="font-size-12">بازیابی رمز عبور</span>
-                    <div>
-                        <i class="fa fa-phone m-0 font-size-7"></i>
-                        <i class="fa fa-key m-0"></i>
-                    </div>
-                </a>
-            </li>
-        </ul>
-    </li>
+        {% endif %}
+
+        <li>
+            <a class="has-arrow" href="#" aria-expanded="false">
+                <div class="icon_menu">
+                    <img src="{% static 'images/dashboard/menu-icon/2.svg.xml' %}" alt>
+                </div>
+                <span>اطلاعات شخصی</span>
+            </a>
+            <ul>
+                <li>
+                    <a href="{% url 'account:info_detail' %}">
+                        مشخصات
+                        <div>
+                            <i class="fa fa-info"></i>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'account:info_change_password' %}">
+                        تغییر رمز عبور
+                        <div>
+                            <i class="fa fa-key"></i>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'account:reset_password' %}">
+                        <span class="font-size-12">بازیابی رمز عبور</span>
+                        <div>
+                            <i class="fa fa-phone m-0 font-size-7"></i>
+                            <i class="fa fa-key m-0"></i>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </li>
     </ul>
 </nav>
