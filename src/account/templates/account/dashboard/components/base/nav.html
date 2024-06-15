@@ -38,7 +38,7 @@
                 <span>پروژه</span>
             </a>
             <ul>
-                {% if user.is_super_admin %}
+
                     <li>
                         <a href="{% url 'receipt:project_dashboard_add' %}">
                             افزودن پروژه
@@ -57,15 +57,15 @@
                             </div>
                         </a>
                     </li>
-                {% endif %}
-                {% if user.is_admin %}
+
+
                     <li>
                         <a href="{% url 'receipt:project_dashboard_list' %}">
                             لیست پروژه ها
                             <i class="fa fa-project-diagram"></i>
                         </a>
                     </li>
-                {% endif %}
+
                 <li>
                     <a href="{% url 'receipt:building_dashboard_list' %}">
                         لیست ساختمان ها
@@ -75,7 +75,7 @@
             </ul>
         </li>
 
-        {% if user.is_admin %}
+
             <li>
                 <a class="has-arrow" href="#" aria-expanded="false">
                     <div class="icon_menu">
@@ -104,7 +104,7 @@
                     </li>
                 </ul>
             </li>
-        {% endif %}
+
 
         <li>
             <a class="has-arrow" href="#" aria-expanded="false">
@@ -124,18 +124,18 @@
                     </a>
                 </li>
                 <li>
-                    {% if user.is_admin %}
+
                         <a href="{% url 'receipt:receipt_dashboard_list' %}" title="رسید های ثبت شده توسط کاربران">
                             لیست رسید های کاربران
                             <i class="fa fa-receipt"></i>
                         </a>
-                    {% else %}
+
                         <a href="{% url 'receipt:receipt_dashboard_list' %}" title="لیست رسید ها">
                             لیست رسید ها
                             <i class="fa fa-receipt"></i>
                         </a>
-                    {% endif %}
-                    {% if user.is_super_admin %}
+
+
                         <li>
                             <a href="{% url 'receipt:receipt_dashboard_task_list' %}">
                                 رسید های ادمین
@@ -145,7 +145,7 @@
                                 </div>
                             </a>
                         </li>
-                    {% elif user.is_common_admin %}
+
                         <li>
                             <a href="{% url 'receipt:receipt_dashboard_task_list' %}">
                                 رسید های مشاهده شده
@@ -155,7 +155,7 @@
                                 </div>
                             </a>
                         </li>
-                    {% endif %}
+
             </ul>
         </li>
 

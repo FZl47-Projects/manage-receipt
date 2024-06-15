@@ -114,7 +114,7 @@
             width: 105px;
         }
 
-        .loading-empty{
+        .loading-empty {
             background: rgba(231, 231, 231, 0.7) !important;
             border-radius: 5px;
             display: block;
@@ -159,46 +159,53 @@
             </div>
             <div class="container-fluid p-0 ">
                 <div id="container-index">
-                    {% if user.is_super_admin %}
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="white_card mb-4">
-                                    <div class="white_card_header d-block d-md-flex justify-content-between align-items-center">
-                                        <div class="main-title">
-                                            <h3 class="m-0">عملیات</h3>
-                                        </div>
-                                        <div class="text-center mt-1">
-                                            {% if request.user.is_super_admin %}
-                                                <div class="dropdown d-inline-block">
-                                                    <a class="btn btn-w btn-outline-success dropdown-toggle px-4 m-1" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        خروجی
-                                                    </a>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                        <li>
-                                                            <a class="dropdown-item" href="{% url 'receipt:building_dashboard_detail_export' building_id=building.id %}">خروجی
-                                                                اکسل</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            {% endif %}
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="white_card mb-4">
+                                <div class="white_card_header d-block d-md-flex justify-content-between align-items-center">
+                                    <div class="main-title">
+                                        <h3 class="m-0">عملیات</h3>
+                                    </div>
+                                    <div class="text-center mt-1">
+                                        {% if perms.receipt.export_building %}
+                                            <div class="dropdown d-inline-block">
+                                                <a class="btn btn-w btn-outline-success dropdown-toggle px-4 m-1"
+                                                   href="#" role="button" id="dropdownMenuLink"
+                                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                                    خروجی
+                                                </a>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    <li>
+                                                        <a class="dropdown-item"
+                                                           href="{% url 'receipt:building_dashboard_detail_export' building_id=building.id %}">خروجی
+                                                            اکسل</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        {% endif %}
+                                        {% if perms.receipt.change_building %}
                                             <button class="btn btn-w btn-edit-outline m-1" type="button"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#container-edit-building">
                                                 تغییر
                                                 <i class="fa fa-edit"></i>
                                             </button>
+                                        {% endif %}
+                                        {% if perms.receipt.delete_building %}
                                             <button class="btn btn-w btn-outline-danger m-1" type="button"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#container-delete-building">
                                                 حذف
                                                 <i class="fa fa-trash"></i>
                                             </button>
-                                        </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    {% endif %}
+                    </div>
+
                     <div class="row">
                         <div class="col-12">
                             <div class="white_card card_height_100">
@@ -268,7 +275,11 @@
                                                             <div class="count_content">
                                                                 <span class="mb-2 d-block text-mute">تعداد کاربران شرکت کرده</span>
                                                                 <h3>
-                                                                    <span class="font-s-25 price-el">{{ building.get_users.count }}</span>
+                                                                    {% if perms.receipt.view_users_building %}
+                                                                        <span class="font-s-25 price-el">{{ building.get_users.count }}</span>
+                                                                    {% else %}
+                                                                        <span class="font-s-25">غیر قابل نمایش</span>
+                                                                    {% endif %}
                                                                 </h3>
                                                             </div>
                                                             <a href="#" class="notification_btn bg-success">
@@ -309,7 +320,7 @@
                             </div>
                         </div>
                     </div>
-                    {% if request.user.is_admin %}
+                    {% if perms.receipt.view_financial_building %}
                         <div class="row">
                             <div class="col-12">
                                 <div class="white_card card_height_100 mb_30">
@@ -422,7 +433,7 @@
                             </div>
                         </div>
                     </div>
-                    {% if user.is_admin %}
+                    {% if perms.receipt.view_receipts_building %}
                         <div class="row">
                             <div class="col-12 col-xl-8">
                                 <div class="white_card mb_30 card_height_100">
@@ -472,7 +483,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                    {% empty %}
+                                                {% empty %}
                                                     <div class="container-not-found-base h-100 vertical-align-center">
                                                         <p>رسیدی یافت نشد</p>
                                                     </div>
@@ -550,7 +561,7 @@
                                         <div class="main-title">
                                             <h3 class="m-0">رتبه بندی کاربران</h3>
                                         </div>
-                                        {% if request.user.is_admin %}
+                                        {% if perms.account.view_user %}
                                             <div class="header_more_tool">
                                                 <a href="{% url 'account:user_list' %}">
                                                     <i class="fa fa-angle-left"></i>
@@ -568,16 +579,16 @@
                                                 <th scope="col">رتبه</th>
                                                 <th scope="col">نام و نام خانوادگی</th>
                                                 <th scope="col">شماره همراه</th>
-                                                {% if request.user.is_super_admin %}
-                                                    <th scope="col">امتیاز</th>
-                                                {% endif %}
-                                                {% if user.is_admin %}
+                                                {% if perms.receipt.view_users_building %}
+                                                    {% if perms.receipt.view_users_score_building %}
+                                                        <th scope="col">امتیاز</th>
+                                                    {% endif %}
                                                     <th scope="col">جزئیات</th>
                                                 {% endif %}
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {% if request.user.is_admin %}
+                                            {% if perms.receipt.view_users_building %}
                                                 {% for user in building.get_users_sort_by_score %}
                                                     <tr {% if user == request.user %}class="active"{% endif %}>
                                                         <td>
@@ -589,7 +600,8 @@
                                                         <td>
                                                             {{ user.get_raw_phonenumber }}
                                                         </td>
-                                                        {% if request.user.is_super_admin %}
+
+                                                        {% if perms.receipt.view_users_score_building %}
                                                             <td class="nowrap">
                                                                 <span class="price-el">{{ user.score }}</span>
                                                                 <i class="fa fa-star text-warning"></i>
@@ -602,8 +614,9 @@
                                                                 <i class="fa fa-angle-left"></i>
                                                             </a>
                                                         </td>
+
                                                     </tr>
-                                                    {% empty %}
+                                                {% empty %}
                                                     <tr>
                                                         <td colspan="20">
                                                             <div class="container-not-found-base">
@@ -612,8 +625,9 @@
                                                         </td>
                                                     </tr>
                                                 {% endfor %}
+                                            {% endif %}
 
-                                            {% else %}
+                                            {% if not perms.receipt.view_users_building %}
 
                                                 {% for user in building.get_users_sort_by_score %}
                                                     {% if user == request.user %}
@@ -641,7 +655,7 @@
                                                             </td>
                                                         </tr>
                                                     {% endif %}
-                                                    {% empty %}
+                                                {% empty %}
                                                     <tr>
                                                         <td colspan="20">
                                                             <div class="container-not-found-base">
@@ -736,86 +750,6 @@
                                     {% for project in projects %}
                                         <option value="{{ project.id }}">{{ project.name }}</option>
                                     {% endfor %}
-                                </select>
-                            </div>
-                            <div class="col-md-12">
-                                <label class="form-label">
-                                    توضیحات
-                                </label>
-                                <textarea name="description" class="form-control">{{ building.description }}</textarea>
-                            </div>
-                            <div class="text-left mt-4">
-                                <button class="btn btn-submit">
-                                    ثبت و بروزرسانی
-                                    <i class="fa fa-up"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="container-edit-building" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog modal-lg col-lg-12">
-            <div class="modal-content white_card mb_30">
-                <div class="white_card_header">
-                    <div class="modal-header box_header m-0">
-                        <h3 class="m-0">تغییر ساختمان</h3>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="white_card_body">
-                    <form action="{% url 'receipt:building_dashboard_detail_update' building_id=building.id %}"
-                          method="post" class="col-12">
-                        <div class="card-body">
-                            {% csrf_token %}
-
-                            <div class="col-md-12">
-                                <div>
-                                    <label class="form-label" for="inpNameBuilding">
-                                        نام
-                                        <span class="field-required">*</span>
-                                    </label>
-                                    <input type="text" required="" class="form-control" value="{{ building.name }}"
-                                           id="inpNameBuilding" name="name" aria-required="">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div>
-                                    <label class="form-label" for="inpAddressBuilding">
-                                        ادرس
-                                        <span class="field-required">*</span>
-                                    </label>
-                                    <input type="text" required="" class="form-control" value="{{ building.address }}"
-                                           id="inpAddressBuilding" name="address" aria-required="">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div>
-                                    <label class="form-label" for="inpProgressBuilding">
-                                        درصد پیشرفت
-                                        <span class="field-required">*</span>
-                                    </label>
-                                    <input type="number" required="" class="form-control"
-                                           value="{{ building.progress_percentage }}"
-                                           id="inpProgressBuilding" name="progress_percentage" aria-required="" min="0"
-                                           max="100">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <label class="form-label">
-                                    وضعیت فعالی
-                                    <span class="field-required">*</span>
-                                </label>
-                                <select name="is_active" class="form-control" required>
-                                    <option value="true" {% if building.is_active %}selected{% endif %}>فعال</option>
-                                    <option value="false" {% if building.is_active == False %}selected{% endif %}>غیر
-                                        فعال
-                                    </option>
                                 </select>
                             </div>
                             <div class="col-md-12">

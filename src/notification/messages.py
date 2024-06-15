@@ -1,29 +1,26 @@
+from django.utils.translation import  gettext_lazy as _
+
 # task messages
-TASK_REJECTED = """
-    درخواست شما رد شد
-"""
+TASK_REJECTED = _('Your request has been rejected')
 
-TASK_ACCEPTED = """
-    درخواست شما تایید شد
-"""
+TASK_ACCEPTED = _('Your request has been accepted')
 
-RECEIPT_ACCEPTED = """
-    فیش شما تایید شد
-"""
+RECEIPT_ACCEPTED = _('Your receipt has been accepted')
 
-RECEIPT_REJECTED = """
-    فیش شما رد شد
-"""
+RECEIPT_REJECTED = _('Your receipt has been rejected')
 
-RECEIPT_PERFORMED_SUCCESSFULLY = """
-    با سلام
-    جناب/سرکار {}
-    فیش ارسالی شما با موفقیت تایید شد
-"""
+RECEIPT_PERFORMED_SUCCESSFULLY = _("""
+    Hello, 
+    Mr/Mrs
+    {} 
+    Your submitted receipt has been successfully accepted.
+""")
 
-RECEIPT_PERFORMED_FAILD = """
-    با سلام
-    جناب/سرکار {}
-    فیش ارسالی شما رد نشد
-    برای اطلاعات بیشتر به لینک روبه رو {} مراجعه نمایید
-"""
+RECEIPT_PERFORMED_FAILD = _("""
+    Hello, 
+    Mr/Mrs
+    {} 
+    Your submitted receipt has been successfully accepted.
+    See the link {} for more information
+""")
+

@@ -3,7 +3,6 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
-from django.conf import settings
 from phonenumber_field.modelfields import PhoneNumberField
 
 from support.models import Ticket, Question
@@ -26,8 +25,8 @@ class CustomBaseUserManager(BaseUserManager):
         user.save()
         return user
 
-    def create_financial_user(self, phonenumber, password, email=None, **extra_fields):
-        return self.create_user(phonenumber=phonenumber, password=password, role='financial_user', email=email,
+    def create_admin_user(self, phonenumber, password, email=None, **extra_fields):
+        return self.create_user(phonenumber=phonenumber, password=password, role='admin_user', email=email,
                                 **extra_fields)
 
     def create_superuser(self, phonenumber, password, email=None, **extra_fields):
@@ -44,16 +43,16 @@ class CustomBaseUserManager(BaseUserManager):
                                 **extra_fields)
 
 
-class NormalUserManager(models.Manager):
+class CommonUserManager(models.Manager):
 
     def get_queryset(self):
-        return super().get_queryset().filter(role='normal_user')
+        return super().get_queryset().filter(role='common_user')
 
 
-class FinancialUserManager(models.Manager):
+class AdminUserManager(models.Manager):
 
     def get_queryset(self):
-        return super().get_queryset().filter(role='financial_user')
+        return super().get_queryset().filter(role='admin_user')
 
 
 class SuperUserManager(models.Manager):
@@ -64,9 +63,9 @@ class SuperUserManager(models.Manager):
 
 class User(AbstractUser):
     ROLE_USER_OPTIONS = (
-        ('normal_user', 'کاربر عادی'),
-        ('financial_user', 'ادمین مالی'),
-        ('super_user', 'ادمین وِیژه'),
+        ('common_user', _('Common user')),
+        ('admin_user', _('Admin user')),
+        ('super_user', _('Super user')),
     )
 
     first_name = models.CharField("first name", max_length=150, blank=True, default=_('No name'))
@@ -75,14 +74,14 @@ class User(AbstractUser):
     phonenumber = PhoneNumberField(region='IR', unique=True)
     is_phonenumber_confirmed = models.BooleanField(default=False)
     # type users|roles
-    role = models.CharField(max_length=20, choices=ROLE_USER_OPTIONS, default='normal_user')
+    role = models.CharField(max_length=20, choices=ROLE_USER_OPTIONS, default='common_user')
 
     USERNAME_FIELD = "phonenumber"
     REQUIRED_FIELDS = []
 
     objects = CustomBaseUserManager()
-    normal_user = NormalUserManager()
-    financial_user = FinancialUserManager()
+    common_user = CommonUserManager()
+    admin_user = AdminUserManager()
     super_user = SuperUserManager()
 
     class Meta:
@@ -95,19 +94,15 @@ class User(AbstractUser):
 
     @property
     def is_common_user(self):
-        return True if self.role in settings.COMMON_USER_ROLES else False
+        return not self.is_admin
 
     @property
     def is_admin(self):
-        return True if self.role in settings.ADMIN_USER_ROLES else False
+        return True if self.role in ['admin_user', 'super_user'] else False
 
     @property
     def is_common_admin(self):
-        return True if self.role in settings.COMMON_ADMIN_USER_ROLES else False
-
-    @property
-    def is_super_admin(self):
-        return True if self.role in settings.SUPER_ADMIN_ROLES else False
+        return True if self.is_admin and not self.is_superuser else False
 
     def __str__(self):
         return f'{self.role} - {self.phonenumber}'

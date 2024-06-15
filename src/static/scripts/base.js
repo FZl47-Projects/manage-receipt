@@ -201,3 +201,9 @@ function truncate(str, max) {
 }
 
 
+// close modal btn
+document.querySelectorAll('.modal').forEach(function (modal) {
+    modal.querySelector('[data-dismiss="modal"]').addEventListener('click', function () {
+        $(modal).modal('hide')
+    })
+})

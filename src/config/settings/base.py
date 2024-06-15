@@ -103,7 +103,7 @@ USE_TZ = False
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email
-EMAIL_SUBJECT = 'اعلان از طرف سامانه فرهیختگان مس - {} '
+EMAIL_SUBJECT = _('Notification from farhikhtegan mes company {}')
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
@@ -114,27 +114,6 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 AUTH_USER_MODEL = 'account.User'  # custom user model
 LOGIN_URL = '/u/login-register'
 
-COMMON_ADMIN_USER_ROLES = [
-    'financial_user'
-]
-
-COMMON_USER_ROLES = [
-    'normal_user'
-]
-
-SUPER_ADMIN_ROLES = [
-    'super_user'
-]
-
-ADMIN_USER_ROLES = [
-    *COMMON_ADMIN_USER_ROLES,
-    *SUPER_ADMIN_ROLES
-]
-
-USER_ROLES = [
-    *ADMIN_USER_ROLES,
-    *COMMON_USER_ROLES
-]
 
 IMAGE_FORMATS = [
     'jpg',

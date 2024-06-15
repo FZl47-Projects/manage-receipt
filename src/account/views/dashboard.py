@@ -10,14 +10,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.views.generic import View, TemplateView, ListView
 from django.core import serializers
-from django.core.paginator import Paginator
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import models as permission_models
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth import authenticate, login, get_user_model, logout as logout_handler
 from core.auth.mixins import LoginRequiredMixinCustom
 from core.utils import add_prefix_phonenum, random_num, form_validate_err, get_media_url
-from core.auth.decorators import admin_required_cbv
 from core import redis_py
 from core.mixins import views as core_mixins
 from receipt.models import Building, BuildingAvailable, Receipt, ReceiptTask
@@ -206,7 +204,7 @@ def reset_password_set(request):
 
 class Dashboard(LoginRequiredMixinCustom, View):
 
-    def get_context_normal_user(self, request, user):
+    def get_context_common_user(self, request, user):
         buildings = Building.get_buildings_user(user)
         # chart data
         building_names = []
@@ -224,7 +222,7 @@ class Dashboard(LoginRequiredMixinCustom, View):
         }
         return context
 
-    def get_context_financial_user(self, request, user):
+    def get_context_admin_user(self, request, user):
         buildings = user.get_available_buildings()
         # chart data
         building_names = []
@@ -237,7 +235,7 @@ class Dashboard(LoginRequiredMixinCustom, View):
         context = {
             'buildings': buildings,
             'receipts': Receipt.objects.filter(building__in=buildings),
-            'users': User.normal_user.all(),
+            'users': User.common_user.all(),
             # chart data
             'building_names': json.dumps(building_names),
             'building_payments': json.dumps(building_payments),
@@ -253,12 +251,11 @@ class Dashboard(LoginRequiredMixinCustom, View):
         for building in buildings:
             building_names.append(building.name)
             building_payments.append(building.get_payments())
-
         context = {
             'buildings': buildings,
             'receipts': Receipt.objects.all(),
-            'users': User.normal_user.all(),
-            'admins': User.financial_user.all(),
+            'users': User.common_user.all(),
+            'admins': User.admin_user.all(),
             # chart data
             'building_names': json.dumps(building_names),
             'building_payments': json.dumps(building_payments),
@@ -266,14 +263,14 @@ class Dashboard(LoginRequiredMixinCustom, View):
         return context
 
     USER_CONTEXT_NAME = {
-        'normal_user': get_context_normal_user,
-        'financial_user': get_context_financial_user,
+        'common_user': get_context_common_user,
+        'admin_user': get_context_admin_user,
         'super_user': get_context_super_user
     }
 
     USER_TEMPLATE_NAME = {
-        'normal_user': 'account/dashboard/main/user.html',
-        'financial_user': 'account/dashboard/main/admin.html',
+        'common_user': 'account/dashboard/main/user.html',
+        'admin_user': 'account/dashboard/main/admin.html',
         'super_user': 'account/dashboard/main/super_admin.html',
     }
 
@@ -545,7 +542,7 @@ class UserListExport(PermissionRequiredMixin, View):
     template_name = 'account/dashboard/user/list.html'
 
     def get(self, request):
-        users = User.normal_user.all()
+        users = User.common_user.all()
         excel_file = exports.Excel.perform_export_users(users)
         excel_file = get_media_url(excel_file)
         return HttpResponseRedirect(excel_file)
@@ -573,7 +570,6 @@ class UserListComponentPartial(PermissionRequiredMixin, core_mixins.PermissionOb
     def get_queryset(self):
         return self.get_context_perm()['users']
 
-    @admin_required_cbv()
     def post(self, request):
         # ajax view
         if not request.headers.get('X_REQUESTED_WITH') == 'XMLHttpRequest':
@@ -594,72 +590,6 @@ class UserListComponentPartial(PermissionRequiredMixin, core_mixins.PermissionOb
         users_serialized = serializers.serialize('json', users,
                                                  fields=('id', 'first_name', 'last_name', 'email', 'phonenumber'))
         return JsonResponse(users_serialized, safe=False)
-
-
-# class UserFinancialAdd(PermissionRequiredMixin, TemplateView):
-#     permission_required = ('account.add_user',)
-#     template_name = 'account/dashboard/user/add.html'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['buildings'] = Building.objects.filter(is_active=True)
-#         return context
-#
-#     def post(self, request):
-#         data = request.POST.copy()
-#         f = forms.RegisterUserFullForm(data=data)
-#         if form_validate_err(request, f) is False:
-#             return render(request, self.template_name)
-#         user_visitor = self.request.user
-#         # create user
-#         user = f.save(commit=False)
-#         user.is_active = True
-#         user.set_password(f.cleaned_data['password2'])
-#         user.save()
-#         if user_visitor.has_perm('account.set_available_building'):
-#             # set building available
-#             data['user'] = user
-#             building_available = BuildingAvailable.get_or_create_building_user(user)
-#             f = forms.SetBuildingAvailable(data=data, instance=building_available)
-#             if f.is_valid():
-#                 f.save()
-#         # create notif for admin
-#         NotificationUser.objects.create(
-#             type='CREATE_USER_BY_ADMIN',
-#             to_user=request.user,
-#             title=_('Create an user by the manager'),
-#             description=_('User %s created successfully') % user.get_raw_phonenumber(),
-#             is_showing=False
-#         )
-#         messages.success(request, _('User account successfully created'))
-#         return redirect(user.get_absolute_url())
-#
-#
-# class UserFinancialList(View):
-#     template_name = 'account/dashboard/admin/list.html'
-#
-#     def search(self, request, objects):
-#         s = request.GET.get('search')
-#         if not s:
-#             return objects
-#         objects = objects.annotate(full_name=Concat('first_name', Value(' '), 'last_name'))
-#         lookup = Q(phonenumber__icontains=s) | Q(full_name__icontains=s) | Q(
-#             email__icontains=s)
-#         return objects.filter(lookup)
-#
-#     @admin_required_cbv()
-#     def get(self, request):
-#         users = User.financial_user.all()
-#         users = self.search(request, users)
-#         page_num = request.GET.get('page', 1)
-#         pagination = Paginator(users, 20)
-#         pagination = pagination.get_page(page_num)
-#         users = pagination.object_list
-#         context = {
-#             'users': users,
-#             'pagination': pagination
-#         }
-#         return render(request, self.template_name, context)
 
 
 class UserDetailUpdateByAdmin(PermissionRequiredMixin, View):
@@ -718,7 +648,6 @@ class UserBuildingAvailableList(PermissionRequiredMixin, View):
             return user_buildings.filter(pk__in=admin_buildings_ids)
         return user_buildings
 
-    @admin_required_cbv()
     def post(self, request):
         # Ajax view
         data = json.loads(request.body)

@@ -164,33 +164,37 @@
     <section class="main_content dashboard_part large_header_bg">
         {% include 'account/dashboard/components/base/header.html' %}
         <div class="main_content_iner">
-            {% if user.is_super_admin %}
-                <div class="row">
-                    <div class="col-12">
-                        <div class="white_card mb-4">
-                            <div class="white_card_header d-block d-md-flex justify-content-between align-items-center">
-                                <div class="main-title">
-                                    <h3 class="m-0">عملیات</h3>
-                                </div>
-                                <div class="text-center mt-3 mt-md-0">
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="white_card mb-4">
+                        <div class="white_card_header d-block d-md-flex justify-content-between align-items-center">
+                            <div class="main-title">
+                                <h3 class="m-0">عملیات</h3>
+                            </div>
+                            <div class="text-center mt-3 mt-md-0">
+                                {% if perms.receipt.change_receipt %}
                                     <button class="btn btn-w btn-edit-outline m-1" type="button"
                                             data-bs-toggle="modal"
                                             data-bs-target="#container-edit">
-                                        تغییر
+                                        ویرایش
                                         <i class="fa fa-edit"></i>
                                     </button>
+                                {% endif %}
+                                {% if perms.receipt.delete_receipt %}
                                     <button class="btn btn-w btn-outline-danger m-1 border-radius-6" type="button"
                                             data-bs-toggle="modal"
                                             data-bs-target="#container-delete">
                                         حذف رسید
                                         <i class="fa fa-trash"></i>
                                     </button>
-                                </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
                 </div>
-            {% endif %}
+            </div>
+
             <div class="container-fluid p-0 ">
                 <div class="col-lg-12">
                     <div class="white_card mb_30">
@@ -199,8 +203,7 @@
                                 <div class="main-title">
                                     <h2 class="m-0">
                                         رسید
-                                        شماره
-                                        {{ receipt.id }}
+                                        {{ receipt.user.get_full_name }}
                                     </h2>
                                 </div>
                             </div>
@@ -215,8 +218,7 @@
                                     <li>
                                         <a href="">
                                             رسید
-                                            شماره
-                                            {{ receipt.id }}
+                                            {{ receipt.user.get_full_name }}
                                         </a>
                                     </li>
                                 </ul>
@@ -236,9 +238,10 @@
                                                 {{ receipt.get_status_label }}
                                             </span>
                                         </div>
-                                        {% if user.is_super_admin %}
-                                            <div>
-                                                {% if receipt.get_status != 'accepted' %}
+
+                                        <div>
+                                            {% if not receipt.receipttask %}
+                                                {% if perms.receipt.user_accept_receipt and receipt.get_status != 'accepted' %}
                                                     <button class="btn btn-accept" type="button"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#container-receipt-accept"
@@ -247,7 +250,7 @@
                                                         <i class="fa fa-check-circle"></i>
                                                     </button>
                                                 {% endif %}
-                                                {% if receipt.get_status == 'pending' %}
+                                                {% if perms.receipt.user_reject_receipt and receipt.get_status == 'pending' %}
                                                     <button class="btn btn-reject" type="button"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#container-receipt-reject"
@@ -256,31 +259,9 @@
                                                         <i class="fa fa-times-circle"></i>
                                                     </button>
                                                 {% endif %}
-                                            </div>
-                                        {% endif %}
+                                            {% endif %}
+                                        </div>
 
-                                        {% if user.is_common_admin and not receipt.receipttask %}
-                                            <div>
-                                                {% if receipt.get_status != 'accepted' %}
-                                                    <button class="btn btn-accept" type="button"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#container-receipt-accept"
-                                                            id="btnReceiptAccept">
-                                                        تایید
-                                                        <i class="fa fa-check-circle"></i>
-                                                    </button>
-                                                    {% if receipt.get_status == 'pending' %}
-                                                        <button class="btn btn-reject" type="button"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#container-receipt-reject"
-                                                                id="btnReceiptReject">
-                                                            رد
-                                                            <i class="fa fa-times-circle"></i>
-                                                        </button>
-                                                    {% endif %}
-                                                {% endif %}
-                                            </div>
-                                        {% endif %}
                                     </div>
                                     {% if receipt.receipttask %}
                                         <div class="container-title">
@@ -332,7 +313,7 @@
                                                  alt="{{ receipt.id }}">
                                         </div>
                                         <div class="detail col-12 col-md-6">
-                                            {% if user.is_admin %}
+                                            {% if perms.account.view_user %}
                                                 <div class="detail-field">
                                                     <span>کاربر</span>
                                                     <p>
@@ -349,6 +330,16 @@
                                                     </a>
                                                 </p>
                                             </div>
+                                            {% if receipt.receipttask %}
+                                                <div class="detail-field">
+                                                    <span>عملیات بررسی</span>
+                                                    <p>
+                                                        <a href="{{ receipt.receipttask.get_absolute_url }}">
+                                                            مشاهده
+                                                        </a>
+                                                    </p>
+                                                </div>
+                                            {% endif %}
                                             <div class="detail-field">
                                                 <span>کد رهگیری</span>
                                                 <p>
@@ -371,21 +362,22 @@
                                                     </p>
                                                 </div>
                                             {% endif %}
-                                            {% if user.is_super_admin %}
+                                            {% if perms.receipt.view_ratio_score_receipt %}
                                                 <div class="detail-field">
                                                     <span>ضریب امتیاز</span>
                                                     <p>
                                                         <span class="font-size-14">{{ receipt.ratio_score }}</span>
                                                     </p>
                                                 </div>
-                                                <div class="detail-field">
-                                                    <span>تاریخ ثبت</span>
-                                                    <p>
-                                                        <span class="datetime-convert">{{ receipt.get_created_at }}</span>
-                                                        <span class="font-size-10">({{ receipt.get_created_at_timepast }})</span>
-                                                    </p>
-                                                </div>
                                             {% endif %}
+                                            <div class="detail-field">
+                                                <span>تاریخ ثبت</span>
+                                                <p>
+                                                    <span class="datetime-convert">{{ receipt.get_created_at }}</span>
+                                                    <span class="font-size-10">({{ receipt.get_created_at_timepast }})</span>
+                                                </p>
+                                            </div>
+
                                             <div class="detail-field">
                                                 <span>تاریخ واریز</span>
                                                 <p>
@@ -411,14 +403,13 @@
                                                 </p>
                                             </div>
                                             <div class="detail-field">
-                                                <span>توضیحات مدیر</span>
+                                                <span>توضیحات ادمین</span>
                                                 <p>
                                                     {{ receipt.note|default:'بدون توضیحات' }}
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -473,7 +464,7 @@
                                        class="form-control datetime-picker mpdatepicker datetime-convert-inp"
                                        set-on="deposit_inp_confirm" required="" data-timestamp="null">
                             </div>
-                            {% if user.is_super_admin %}
+                            {% if perms.receipt.set_ratio_score_receipt %}
 
                                 <div class="col-md-12">
                                     <div>
@@ -583,13 +574,19 @@
             <div class="modal-content white_card mb_30">
                 <div class="white_card_header">
                     <div class="modal-header box_header m-0">
-                        <h3 class="m-0">تغییر رسید</h3>
+                        <h3 class="m-0">ویرایش رسید</h3>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
                 </div>
                 <div class="white_card_body">
+                    {% if receipt.receipttask %}
+                        <p class="font-80 text-mute my-2 px-5">
+                            توجه کنید با ویرایش رسید عملیات رسید که توسط ادمین ایجاد شده است حذف و تغییرات شما مستقیم بر
+                            روی رسید اعمال میشود !
+                        </p>
+                    {% endif %}
                     <form action="{% url 'receipt:receipt_dashboard_detail_update' receipt_id=receipt.id %}"
                           method="post" class="col-12" enctype="multipart/form-data">
                         <div class="card-body">
@@ -627,7 +624,7 @@
                                 <input type="number" required="" class="form-control"
                                        value="{{ receipt.amount }}" id="inpAmount" name="amount">
                             </div>
-                            {% if user.is_super_admin %}
+                            {% if perms.receipt.set_ratio_score_receipt %}
                                 <div class="col-md-12">
                                     <label class="form-label" for="inpRatioScore">
                                         ضریب امتیاز
@@ -679,22 +676,24 @@
                                 <textarea type="text" class="form-control" id="inpNote"
                                           name="note">{{ receipt.note }}</textarea>
                             </div>
-                            <div class="col-md-12">
-                                <label class="form-label" for="inpNote">
-                                    وضعیت رسید
-                                    <span class="field-required">*</span>
-                                </label>
-                                <select required class="form-control form-select" name="receipt_status">
-                                    <option value="accepted"
-                                            {% if receipt.get_status == 'accepted' %}selected{% endif %}>
-                                        تایید شده
-                                    </option>
-                                    <option value="rejected"
-                                            {% if receipt.get_status == 'rejected' %}selected{% endif %}>
-                                        رد شده
-                                    </option>
-                                </select>
-                            </div>
+                            {% if user.is_superuser %}
+                                <div class="col-md-12">
+                                    <label class="form-label" for="inpNote">
+                                        وضعیت رسید
+                                        <span class="field-required">*</span>
+                                    </label>
+                                    <select required class="form-control form-select" name="receipt_status">
+                                        <option value="accepted"
+                                                {% if receipt.get_status == 'accepted' %}selected{% endif %}>
+                                            تایید شده
+                                        </option>
+                                        <option value="rejected"
+                                                {% if receipt.get_status == 'rejected' %}selected{% endif %}>
+                                            رد شده
+                                        </option>
+                                    </select>
+                                </div>
+                            {% endif %}
                             <div class="text-left mt-4">
                                 <button class="btn btn-submit">
                                     ثبت و بروزرسانی

@@ -5,24 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="64521187-de3a-4ed9-8444-af6e5038dcf6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/manage_receipt.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/manage_receipt.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/account/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/account/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/account/templates/account/dashboard/components/base/nav.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/templates/account/dashboard/components/base/nav.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/account/templates/account/dashboard/user/components/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/templates/account/dashboard/user/components/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/account/templates/account/dashboard/user/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/templates/account/dashboard/user/detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/account/templates/account/dashboard/user/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/templates/account/dashboard/user/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/account/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/account/templates/account/dashboard/main/super_admin.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/templates/account/dashboard/main/super_admin.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/account/views/dashboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/views/dashboard.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/config/settings/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/settings/base.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/auth/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/auth/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/auth/decorators.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/auth/decorators.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/mixins/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/mixins/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/models/task.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/models/task.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notification/messages.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/notification/messages.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/receipt/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/receipt/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/add.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/add.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/building/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/building/detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/building/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/building/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/project/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/project/detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/project/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/project/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/detail.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/task/common_admin/detail.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/task/common_admin/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/task/common_admin/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/task/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/task/detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/task/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/task/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/receipt/views/dashboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/views/dashboard.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/static/scripts/base.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/static/scripts/base.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +128,14 @@
       <workItem from="1717949991714" duration="3993000" />
       <workItem from="1717954972701" duration="8000" />
       <workItem from="1717954994355" duration="10709000" />
-      <workItem from="1718047537163" duration="5196000" />
+      <workItem from="1718047537163" duration="5837000" />
+      <workItem from="1718125564992" duration="572000" />
+      <workItem from="1718128791075" duration="2118000" />
+      <workItem from="1718198914150" duration="6299000" />
+      <workItem from="1718242502302" duration="9467000" />
+      <workItem from="1718305452765" duration="595000" />
+      <workItem from="1718343631839" duration="1191000" />
+      <workItem from="1718405912014" duration="14862000" />
     </task>
     <servers />
   </component>

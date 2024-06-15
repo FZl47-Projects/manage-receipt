@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.db.models import Q
+from django.db import transaction
 from django.core.exceptions import PermissionDenied
 from django.views.generic.base import TemplateResponseMixin
 
@@ -36,7 +37,7 @@ class BaseCUViewMixin(abc.ABC):
         obj = getattr(self, 'obj', None)
         if obj:
             try:
-                self.redirect_url += f"?next_url={obj.get_dashboard_absolute_url()}"
+                self.redirect_url += f"?next_url={obj.get_absolute_url()}"
             except (TypeError, ValueError, AttributeError):
                 log_event('There is Some issue in add next_url(object dashboard absolute url) to redirect url',
                           'WARNING', exc_info=True)
@@ -349,3 +350,21 @@ class PermissionObjectsMixin(abc.ABC):
                     context[name] = qs
                 self.USER_PERMISSIONS.append(perm)
         return context
+
+
+class TransactionAtomicViewMixin:
+
+    @transaction.atomic
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+
+class TemplateChooserMixin:
+
+    @abc.abstractmethod
+    def get_template(self):
+        raise NotImplementedError
+
+    def get_template_names(self):
+        t = self.get_template()
+        return [t] or super().get_template_names()

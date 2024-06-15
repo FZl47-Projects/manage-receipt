@@ -21,16 +21,18 @@ class BuildingAddForm(forms.ModelForm):
         exclude = ('is_active', 'progress_percentage')
 
 
-class BuildingEditForm(forms.ModelForm):
+class BuildingUpdateForm(forms.ModelForm):
     class Meta:
         model = models.Building
         fields = '__all__'
 
 
 class ReceiptTaskAddForm(forms.ModelForm):
+    status = forms.CharField(max_length=10, required=False)
+
     class Meta:
         model = models.ReceiptTask
-        exclude = ('user_super_admin', 'status', 'description_task')
+        exclude = ('user_supervisor', 'description_task')
 
 
 class ReceiptAddForm(forms.ModelForm):
@@ -54,6 +56,8 @@ class ReceiptRejectForm(forms.ModelForm):
 
 
 class ReceiptUpdateForm(forms.ModelForm):
+    status = forms.CharField(max_length=12, required=False)
+
     class Meta:
         model = models.Receipt
         fields = (

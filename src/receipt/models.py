@@ -25,6 +25,11 @@ class Project(BaseModel):
     name = models.CharField(max_length=100)
     description = models.TextField(null=True, blank=True)
 
+    class Meta:
+        permissions = (
+            ('view_full_project', _('Can view all projects')),
+        )
+
     def __str__(self):
         return self.name
 
@@ -45,6 +50,17 @@ class Building(BaseModel):
 
     class Meta:
         ordering = '-id',
+
+        permissions = (
+            ('view_full_building', _('Can view all buildings')),
+            ('view_admin_building', _('Can view admin buildings')),
+            ('view_user_building', _('Can view user buildings')),
+            ('view_financial_building', _('Can view financial part(amount,chart and ..) buildings')),
+            ('view_receipts_building', _('Can view receipts buildings')),
+            ('view_users_building', _('Can view users buildings')),
+            ('view_users_score_building', _('Can view users score buildings')),
+            ('export_building', _('Can export all data of buildings')),
+        )
 
     def __str__(self):
         return self.name
@@ -95,7 +111,11 @@ class Building(BaseModel):
 
     @classmethod
     def get_buildings_user(cls, user):
-        return Building.objects.filter(receipt__user=user).distinct()
+        buildings = Building.objects.filter(receipt__user=user).distinct()
+        buildings = buildings.annotate(
+            payments=models.Sum('receipt__amount')
+        )
+        return buildings
 
 
 class BuildingAvailable(BaseModel):
@@ -120,9 +140,9 @@ class BuildingAvailable(BaseModel):
 
 class ReceiptAbstract(BaseModel):
     STATUS_OPTIONS = (
-        ('accepted', 'تایید شده'),
-        ('pending', 'در صف'),
-        ('rejected', 'رد شده')
+        ('accepted', _('Accepted')),
+        ('pending', _('Pending')),
+        ('rejected', _('Rejected'))
     )
     tracking_code = models.CharField(max_length=10, default=random_str)
     status = models.CharField(max_length=15, choices=STATUS_OPTIONS, default='pending')
@@ -156,6 +176,18 @@ class ReceiptAbstract(BaseModel):
 
 
 class Receipt(ReceiptAbstract):
+    class Meta:
+        permissions = (
+            ('change_full_receipt', _('User can edit all receipt')),
+            ('auto_accept_receipt', _('Accept receipt automatically')),
+            ('user_accept_receipt', _('User can accept receipt')),
+            ('user_reject_receipt', _('User can reject receipt')),
+            ('view_full_receipts', _('Can view all receipts')),
+            ('view_admin_receipts', _('Can view receipts submited by (admin)')),
+            ('view_user_receipts', _('Can view receipts submited by (user)')),
+            ('view_ratio_score_receipt', _('Can view ratio score receipt')),
+            ('set_ratio_score_receipt', _('Can set ratio score receipt')),
+        )
 
     def __str__(self):
         return f'#{self.id} receipt'
@@ -200,12 +232,17 @@ class Receipt(ReceiptAbstract):
 class ReceiptTask(TaskAdmin):
     class Meta:
         permissions = (
+            ('auto_accept_receipt_task', _('Accept receipt task automatically')),
+            ('view_full_receipts_task', _('Can view all receipts task')),
             ('view_in_user_detail_receipt_tasks', _('Can access to receipt tasks in user detail page')),
+            ('view_admin_receipt_task', _('Can access to receipt tasks user by admin role')),
+            ('user_accept_receipt_task', _('User can accept receipt task')),
+            ('user_reject_receipt_task', _('User can reject receipt task')),
         )
 
     RECEIPT_STATUS_OPTIONS = (
-        ('accepted', 'تایید شده'),
-        ('rejected', 'رد شده')
+        ('accepted', _('Accepted')),
+        ('rejected', _('Rejected'))
     )
     receipt_status = models.CharField(max_length=15, choices=RECEIPT_STATUS_OPTIONS, default='accepted')
     receipt = models.OneToOneField('Receipt', on_delete=models.CASCADE)
@@ -217,7 +254,6 @@ class ReceiptTask(TaskAdmin):
             type='TASK_ACCEPTED',
             to_user=self.user_admin,
             title=messages.TASK_ACCEPTED,
-            description="""درخواست ثبت فیش تایید شد"""
         )
 
     def perform_rejected(self):
@@ -225,7 +261,6 @@ class ReceiptTask(TaskAdmin):
             type='TASK_REJECTED',
             to_user=self.user_admin,
             title=messages.TASK_REJECTED,
-            description="""درخواست ثبت فیش رد شد"""
         )
 
     def get_absolute_url(self):

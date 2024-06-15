@@ -155,20 +155,6 @@
 
                                                 <div class="single_quick_activity">
                                                     <div class="count_content">
-                                                        <a href="{% url 'account:user_financial_list' %}">
-                                                            <span class="mb-2 d-block text-mute">تعداد ادمین ها</span>
-                                                        </a>
-                                                        <h3>
-                                                            <span class="font-s-35 price-el">{{ admins.count }}</span>
-                                                        </h3>
-                                                    </div>
-                                                    <a href="#" class="notification_btn bg-danger">
-                                                        <i class="fa fa fa-user-tie font-s-20 text-white"></i>
-                                                    </a>
-                                                </div>
-
-                                                <div class="single_quick_activity">
-                                                    <div class="count_content">
                                                         <a href="{% url 'receipt:receipt_dashboard_list' %}">
                                                             <span class="mb-2 d-block text-mute">تعداد رسید ها</span>
                                                         </a>
@@ -192,6 +178,20 @@
                                                     </div>
                                                     <a href="#" class="notification_btn bg-dark">
                                                         <i class="fa fa-building font-s-20 text-white"></i>
+                                                    </a>
+                                                </div>
+
+                                                <div class="single_quick_activity">
+                                                    <div class="count_content">
+                                                        <a href="{% url 'notification:notification_dashboard_user_personal_list' %}">
+                                                            <span class="mb-2 d-block text-mute">تعداد اعلان های شخصی</span>
+                                                        </a>
+                                                        <h3>
+                                                            <span class="font-s-35 price-el">{{ user.get_notifications.count }}</span>
+                                                        </h3>
+                                                    </div>
+                                                    <a href="#" class="notification_btn bg-warning">
+                                                        <i class="fa fa-bell font-s-20 text-white"></i>
                                                     </a>
                                                 </div>
 
@@ -291,10 +291,10 @@
                                                         </p>
                                                     </div>
                                                 </div>
-                                                {% empty %}
-                                                    <div class="container-not-found-base">
-                                                        <p>اعلانی یافت نشد</p>
-                                                    </div>
+                                            {% empty %}
+                                                <div class="container-not-found-base">
+                                                    <p>اعلانی یافت نشد</p>
+                                                </div>
                                             {% endfor %}
                                         </div>
                                         {% if user.get_notifications %}
@@ -378,78 +378,6 @@
                             </div>
                         </div>
                     </div>
-
-                    {% if user.is_super_admin %}
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="white_card card_height_100 mb_30 QA_section">
-                                    <div class="white_card_header">
-                                        <div class="box_header m-0">
-                                            <div class="main-title">
-                                                <h3 class="m-0">لیست ادمین ها</h3>
-                                            </div>
-                                            <div class="header_more_tool">
-                                                <a href="{% url 'account:user_financial_list' %}">
-                                                    <i class="fa fa-angle-left"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="white_card_body">
-                                        <div class="QA_table table-responsive ">
-
-                                            <table class="table pt-0">
-                                                <thead>
-                                                <tr>
-                                                    <th scope="col">نام و نام خانوادگی</th>
-                                                    <th scope="col">شماره همراه</th>
-                                                    <th scope="col">ایمیل</th>
-                                                    <th scope="col">اخرین بازدید</th>
-                                                    <th scope="col">جزئیات</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-
-                                                {% for user in admins|slice:':8' %}
-                                                    <tr>
-                                                        <td>
-                                                            {{ user.get_full_name|truncatechars:20 }}
-                                                        </td>
-                                                        <td>
-                                                            {{ user.get_raw_phonenumber }}
-                                                        </td>
-                                                        <td class="nowrap">
-                                                            {{ user.get_email|truncatechars:15 }}
-                                                        </td>
-                                                        <td class="nowrap datetime-convert">
-                                                            {{ user.get_last_login }}
-                                                        </td>
-                                                        <td>
-                                                            <a class="font-85 text-primary"
-                                                               href="{{ user.get_absolute_url }}">
-                                                                بیشتر
-                                                                <i class="fa fa-angle-left"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                {% empty %}
-                                                    <tr>
-                                                        <td colspan="20">
-                                                            <div class="container-not-found-base">
-                                                                <p>ادمینی یافت نشد</p>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                {% endfor %}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {% endif %}
-
                 </div>
             </div>
         </div>
