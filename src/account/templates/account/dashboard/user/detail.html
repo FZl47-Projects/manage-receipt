@@ -116,7 +116,7 @@
                                         <h3 class="m-0">عملیات</h3>
                                     </div>
                                     <div class="text-center mt-3 mt-md-0">
-                                        {% if perms.auth.view_group %}
+                                        {% if perms.account.set_permission_user %}
                                             <button class="btn btn-outline-dark m-1 border-radius-6" type="button"
                                                     data-bs-toggle="modal" data-bs-target="#container-set-permission">
                                                 تنظیم دسترسی
@@ -677,7 +677,7 @@
                     </div>
                 </div>
                 <div class="white_card_body">
-                    <form action="{% url 'account:user_permission_set' %}"
+                    <form action="{% url 'account:user_permission_group_set' %}"
                           method="post" class="col-12">
                         <div class="card-body">
                             <input type="hidden" name="user" value="{{ user_obj.id }}">

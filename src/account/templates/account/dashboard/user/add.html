@@ -20,7 +20,7 @@
                                     <h3 class="m-0">اضافه کردن کاربر</h3>
                                 </div>
                             </div>
-                             <div class="breadcrumb">
+                            <div class="breadcrumb">
                                 <ul>
                                     <li>
                                         <a href="{% url 'account:dashboard' %}">داشبورد</a>
@@ -38,7 +38,6 @@
                             <div class="card-body">
                                 <form action="{% url 'account:user_add' %}" method="post">
                                     {% csrf_token %}
-                                    <input type="hidden" name="role" value="normal_user">
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <label class="form-label" for="inputNameUserRegister">
@@ -98,17 +97,46 @@
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-md-12">
+                                            <label class="form-label" for="inputRoleUserRegister">
+                                                نوع کاربر
+                                                <span class="field-required">*</span>
+                                            </label>
+                                            <select name='role' id="inputRoleUserRegister"
+                                                    class="form-control form-select">
+                                                <option value="common_user">کاربر عادی</option>
+                                                <option value="admin_user" {% if not perms.account.create_admin_user %}disabled{% endif %}>ادمین عادی</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-12">
                                             <label class="form-label" for="inputBuildingUserRegister">
                                                 تنظیم ساختمان
                                                 <span class="field-required">*</span>
                                             </label>
-                                            <select name='buildings' id="inputBuildingUserRegister" multiple class="form-control form-select">
+                                            <select name='buildings' id="inputBuildingUserRegister" multiple
+                                                    class="form-control form-select">
                                                 {% for building in buildings %}
                                                     <option value="{{ building.id }}">{{ building.get_name_by_flag }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
                                     </div>
+                                    {% if perms.account.set_permission_user %}
+                                        <div class="row mb-3">
+                                            <div class="col-md-12">
+                                                <label class="form-label" for="inputGroupPermissionUserRegister">
+                                                    تنظیم دسترسی
+                                                </label>
+                                                <select name='groups' id="inputGroupPermissionUserRegister"
+                                                        class="form-control form-select">
+                                                    {% for group in permission_groups %}
+                                                        <option value="{{ group.id }}">{{ group.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    {% endif %}
                                     <div class="field field-button text-left">
                                         <button type="submit">ثبت</button>
                                     </div>

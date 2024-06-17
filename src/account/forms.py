@@ -1,4 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import models as permission_models
 from django import forms
 from phonenumber_field.formfields import PhoneNumberField
@@ -25,16 +26,16 @@ class UpdateUserForm(forms.ModelForm):
         fields = ('first_name', 'last_name', 'email')
         error_messages = {
             'email': {
-                'invalid': 'ایمیل نامعتبر است',
-                'unique': 'این ایمیل توسط کاربر دیگه ای در حال استفاده است'
+                'invalid': _('Email is invalid'),
+                'unique': _('This email is currently in use by another user')
             }
         }
 
 
 class RegisterUserForm(forms.Form):
     email_error_messages = {
-        'invalid': 'ایمیل نامعتبر است',
-        'unique': 'این ایمیل توسط کاربر دیگه ای در حال استفاده است'
+        'invalid': _('Email is invalid'),
+        'unique': _('This email is currently in use by another user')
     }
 
     first_name = forms.CharField(max_length=100, required=True)
@@ -54,8 +55,8 @@ class RegisterUserForm(forms.Form):
 
 class RegisterUserFullForm(forms.ModelForm):
     email_error_messages = {
-        'invalid': 'ایمیل نامعتبر است',
-        'unique': 'این ایمیل توسط کاربر دیگه ای در حال استفاده است'
+        'invalid': _('Email is invalid'),
+        'unique': _('This email is currently in use by another user')
     }
     email = forms.EmailField(required=True, error_messages=email_error_messages)
     password2 = forms.CharField(max_length=64, min_length=8, required=True, widget=forms.PasswordInput())
@@ -65,17 +66,16 @@ class RegisterUserFullForm(forms.ModelForm):
         exclude = ('date_joined',)
         error_messages = {
             'phonenumber': {
-                'invalid': 'شماره همراه نامعتبر است',
-                'unique': 'کاربری با این شماره از قبل ثبت شده است'
+                'invalid': _('Phonenumber is invalid'),
+                'unique': _('User with this number is already registered')
             },
-            # TODO: should add more error messages
         }
 
     def clean_password2(self):
         p1 = self.cleaned_data.get('password')
         p2 = self.cleaned_data.get('password2')
         if p1 != p2:
-            raise forms.ValidationError('رمز های عبور وارد شده بایکدیگر مغایرت دارند ')
+            raise forms.ValidationError(_('Passwords are not the same'))
         return p2
 
 
@@ -89,7 +89,7 @@ class ResetPasswordSetForm(forms.Form):
         p1 = self.cleaned_data.get('password')
         p2 = self.cleaned_data.get('password2')
         if p1 != p2:
-            raise forms.ValidationError('رمز های عبور وارد شده با یکدیگر مغایرت دارند')
+            raise forms.ValidationError(_('Passwords are not the same'))
         return p2
 
 
@@ -108,7 +108,7 @@ class UpdateUserPasswordForm(forms.Form):
         p1 = self.cleaned_data.get('new_password')
         p2 = self.cleaned_data.get('new_password2')
         if p1 != p2:
-            raise forms.ValidationError('رمز های عبور وارد شده با یکدیگر مغایرت دارند')
+            raise forms.ValidationError(_('Passwords are not the same'))
         return p2
 
 
@@ -126,3 +126,9 @@ class PermissionGroupCreateForm(forms.ModelForm):
 
 class PermissionGroupUpdateForm(PermissionGroupCreateForm):
     pass
+
+
+class UserPermissionGroupSetForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('groups',)

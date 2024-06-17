@@ -5,16 +5,13 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Q, Value, Case, When, Sum
 from django.db.models.functions import Concat
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth import models as permission_models
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
-from django.core.paginator import Paginator
 from django.contrib import messages
 from django.views.generic import View, TemplateView, ListView
 from django.http import Http404
 from core.auth.mixins import LoginRequiredMixinCustom
 from core.mixins import views as core_mixins
-from core.auth.decorators import admin_required_cbv
 from core.utils import form_validate_err, get_media_url, create_form_messages
 from receipt import forms, models, exports
 
@@ -125,7 +122,6 @@ class BuildingList(LoginRequiredMixinCustom, PermissionRequiredMixin, core_mixin
         }
 
     def get_queryset(self):
-        print(self.get_context_perm())
         return self.get_context_perm().get('buildings', [])
 
 

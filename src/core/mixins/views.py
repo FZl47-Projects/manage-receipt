@@ -72,6 +72,7 @@ class CreateViewMixin(BaseCUViewMixin):
         data = self.get_data(**kwargs)
         f = self.get_form()(data=data, files=request.FILES)
         self.form_init = f
+        self.data_init = data
         self.do_before_form_check()
         if not f.is_valid():
             # create error message's

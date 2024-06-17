@@ -1,5 +1,4 @@
 import json
-import warnings
 from django.utils.translation import gettext_lazy as _
 from django.http import (JsonResponse, HttpResponseBadRequest, Http404, HttpResponse, HttpResponseRedirect)
 from django.contrib import messages
@@ -9,13 +8,14 @@ from django.db.models.functions import Concat
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.views.generic import View, TemplateView, ListView
+from django.contrib.auth.models import Group
 from django.core import serializers
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import models as permission_models
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth import authenticate, login, get_user_model, logout as logout_handler
 from core.auth.mixins import LoginRequiredMixinCustom
-from core.utils import add_prefix_phonenum, random_num, form_validate_err, get_media_url
+from core.utils import add_prefix_phonenum, random_num, form_validate_err, get_media_url, log_event
 from core import redis_py
 from core.mixins import views as core_mixins
 from receipt.models import Building, BuildingAvailable, Receipt, ReceiptTask
@@ -279,7 +279,7 @@ class Dashboard(LoginRequiredMixinCustom, View):
         try:
             return self.USER_TEMPLATE_NAME[user_role]
         except KeyError:
-            warnings.warn('template not found for role %s' % user_role)
+            log_event('template not found for role %s' % user_role, 'WARNING', exc_info=True)
             raise Http404
 
     def get_context(self, request):
@@ -289,7 +289,7 @@ class Dashboard(LoginRequiredMixinCustom, View):
         try:
             return self.USER_CONTEXT_NAME[user_role](self, request, user)
         except KeyError:
-            warnings.warn('context function not found for role %s' % user_role)
+            log_event('context function not found for role %s' % user_role, 'WARNING', exc_info=True)
             return {}
 
     def get(self, request):
@@ -381,13 +381,20 @@ class UserAdd(PermissionRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['buildings'] = Building.objects.filter(is_active=True)
+        context['permission_groups'] = Group.objects.all()
         return context
 
     def post(self, request):
         data = request.POST.copy()
+
+        # add additional value
+        # check perm and role
+        if not self.request.user.has_perm('account.create_admin_user'):
+            data['role'] = 'common_user'
+
         f = forms.RegisterUserFullForm(data=data)
         if form_validate_err(request, f) is False:
-            return render(request, self.template_name)
+            return redirect('account:user_add')
         user_visitor = self.request.user
         # create user
         user = f.save(commit=False)
@@ -479,7 +486,7 @@ class UserDetailDelete(LoginRequiredMixinCustom, PermissionRequiredMixin, core_m
 
 
 class UserUpdate(LoginRequiredMixinCustom, PermissionRequiredMixin, core_mixins.UpdateViewMixin, View):
-    permission_required = ('account.change_user',)
+    permission_required = ('account.change_self_user',)
     form = forms.UpdateUserForm
 
     def get_object(self):
@@ -692,3 +699,11 @@ class PermissionGroupDelete(PermissionRequiredMixin, core_mixins.DeleteViewMixin
     def get_object(self, request, *args, **kwargs):
         group_id = kwargs.get('group_id')
         return get_object_or_404(permission_models.Group, id=group_id)
+
+
+class UserPermissionGroupSet(PermissionRequiredMixin, core_mixins.UpdateViewMixin, View):
+    permission_required = ('account.set_permission_user',)
+    form = forms.UserPermissionGroupSetForm
+
+    def get_object(self):
+        return self.request.user

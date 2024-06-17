@@ -84,6 +84,9 @@ class Building(BaseModel):
     def get_users(self):
         return User.objects.filter(receipt__building=self).distinct()
 
+    def get_all_users(self):
+        return User.objects.filter(buildingavailable__buildings__in=[self.id])
+
     def get_users_sort_by_score(self):
         users = self.get_users()
         for user in users:

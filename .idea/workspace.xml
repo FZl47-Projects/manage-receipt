@@ -6,30 +6,38 @@
   <component name="ChangeListManager">
     <list default="true" id="64521187-de3a-4ed9-8444-af6e5038dcf6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/account/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/account/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/account/templates/account/dashboard/admin/add.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/account/templates/account/dashboard/admin/detail.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/account/templates/account/dashboard/admin/list.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/account/templates/account/dashboard/components/base/nav.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/templates/account/dashboard/components/base/nav.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/account/templates/account/dashboard/main/super_admin.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/templates/account/dashboard/main/super_admin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/account/templates/account/dashboard/user/add.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/templates/account/dashboard/user/add.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/account/templates/account/dashboard/user/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/templates/account/dashboard/user/detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/account/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/account/views/dashboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/account/views/dashboard.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config/settings/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/settings/base.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/auth/decorators.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/auth/decorators.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/auth/decorators.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/mixins/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/mixins/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/models/task.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/models/task.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/media/exports/export-building-1.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/media/exports/export-building-1.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/notification/messages.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/notification/messages.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/receipt/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notification/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/notification/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notification/templates/notification/dashboard/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/notification/templates/notification/dashboard/detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notification/templates/notification/dashboard/list-user.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/notification/templates/notification/dashboard/list-user.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notification/templates/notification/dashboard/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/notification/templates/notification/dashboard/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notification/templates/notification/dashboard/personal-list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/notification/templates/notification/dashboard/personal-list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notification/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/notification/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notification/views/dashboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/notification/views/dashboard.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/receipt/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/building/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/building/detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/building/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/building/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/project/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/project/detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/project/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/project/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/task/common_admin/detail.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/task/common_admin/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/task/common_admin/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/task/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/task/detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/task/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/templates/receipt/dashboard/receipt/task/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/receipt/signals.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/signals.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/receipt/views/dashboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/receipt/views/dashboard.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/static/scripts/base.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/static/scripts/base.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/support/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/support/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/support/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/support/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/support/templates/support/dashboard/question/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/support/templates/support/dashboard/question/detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/support/templates/support/dashboard/question/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/support/templates/support/dashboard/question/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/support/templates/support/dashboard/question/user/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/support/templates/support/dashboard/question/user/detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/support/templates/support/dashboard/question/user/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/support/templates/support/dashboard/question/user/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/support/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/support/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/support/views/dashboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/support/views/dashboard.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +51,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -63,22 +72,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;F:/Project-Company/Smarten/manage_receipt&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.templateLanguages.PyTemplateLanguageModulesConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "F:/Project-Company/Smarten/manage_receipt",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.templateLanguages.PyTemplateLanguageModulesConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="F:\Project-Company\Smarten\manage_receipt\src\support" />
@@ -136,6 +146,8 @@
       <workItem from="1718305452765" duration="595000" />
       <workItem from="1718343631839" duration="1191000" />
       <workItem from="1718405912014" duration="14862000" />
+      <workItem from="1718430712271" duration="85000" />
+      <workItem from="1718567835073" duration="12640000" />
     </task>
     <servers />
   </component>

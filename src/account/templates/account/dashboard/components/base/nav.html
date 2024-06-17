@@ -39,32 +39,32 @@
             </a>
             <ul>
 
-                    <li>
-                        <a href="{% url 'receipt:project_dashboard_add' %}">
-                            افزودن پروژه
-                            <div>
-                                <i class="fa fa-plus font-size-7 m-0"></i>
-                                <i class="fa fa-project-diagram m-0"></i>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'receipt:building_dashboard_add' %}">
-                            افزودن ساختمان
-                            <div>
-                                <i class="fa fa-plus font-size-7 m-0"></i>
-                                <i class="fa fa-building m-0"></i>
-                            </div>
-                        </a>
-                    </li>
+                <li>
+                    <a href="{% url 'receipt:project_dashboard_add' %}">
+                        افزودن پروژه
+                        <div>
+                            <i class="fa fa-plus font-size-7 m-0"></i>
+                            <i class="fa fa-project-diagram m-0"></i>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'receipt:building_dashboard_add' %}">
+                        افزودن ساختمان
+                        <div>
+                            <i class="fa fa-plus font-size-7 m-0"></i>
+                            <i class="fa fa-building m-0"></i>
+                        </div>
+                    </a>
+                </li>
 
 
-                    <li>
-                        <a href="{% url 'receipt:project_dashboard_list' %}">
-                            لیست پروژه ها
-                            <i class="fa fa-project-diagram"></i>
-                        </a>
-                    </li>
+                <li>
+                    <a href="{% url 'receipt:project_dashboard_list' %}">
+                        لیست پروژه ها
+                        <i class="fa fa-project-diagram"></i>
+                    </a>
+                </li>
 
                 <li>
                     <a href="{% url 'receipt:building_dashboard_list' %}">
@@ -76,34 +76,34 @@
         </li>
 
 
-            <li>
-                <a class="has-arrow" href="#" aria-expanded="false">
-                    <div class="icon_menu">
-                        <img src="{% static 'images/dashboard/menu-icon/2.svg.xml' %}" alt>
-                    </div>
-                    <span>کاربران</span>
-                </a>
-                <ul>
-                    <li>
-                        <a href="{% url 'account:user_add' %}">
-                            افزودن کاربر
-                            <i class="fa fa-user-plus"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'account:user_list' %}">
-                            لیست کاربران
-                            <i class="fa fa-users"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'account:permission_groups_manage' %}">
-                            گروه های دسترسی
-                            <i class="fa fa-user-cog"></i>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+        <li>
+            <a class="has-arrow" href="#" aria-expanded="false">
+                <div class="icon_menu">
+                    <img src="{% static 'images/dashboard/menu-icon/2.svg.xml' %}" alt>
+                </div>
+                <span>کاربران</span>
+            </a>
+            <ul>
+                <li>
+                    <a href="{% url 'account:user_add' %}">
+                        افزودن کاربر
+                        <i class="fa fa-user-plus"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'account:user_list' %}">
+                        لیست کاربران
+                        <i class="fa fa-users"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'account:permission_groups_manage' %}">
+                        گروه های دسترسی
+                        <i class="fa fa-user-cog"></i>
+                    </a>
+                </li>
+            </ul>
+        </li>
 
 
         <li>
@@ -125,36 +125,36 @@
                 </li>
                 <li>
 
-                        <a href="{% url 'receipt:receipt_dashboard_list' %}" title="رسید های ثبت شده توسط کاربران">
-                            لیست رسید های کاربران
-                            <i class="fa fa-receipt"></i>
-                        </a>
+                    <a href="{% url 'receipt:receipt_dashboard_list' %}" title="رسید های ثبت شده توسط کاربران">
+                        لیست رسید های کاربران
+                        <i class="fa fa-receipt"></i>
+                    </a>
 
-                        <a href="{% url 'receipt:receipt_dashboard_list' %}" title="لیست رسید ها">
-                            لیست رسید ها
-                            <i class="fa fa-receipt"></i>
-                        </a>
+                    <a href="{% url 'receipt:receipt_dashboard_list' %}" title="لیست رسید ها">
+                        لیست رسید ها
+                        <i class="fa fa-receipt"></i>
+                    </a>
 
 
-                        <li>
-                            <a href="{% url 'receipt:receipt_dashboard_task_list' %}">
-                                رسید های ادمین
-                                <div>
-                                    <i class="fa fa-user m-0 font-size-7"></i>
-                                    <i class="fa fa-receipt m-0"></i>
-                                </div>
-                            </a>
-                        </li>
+                <li>
+                    <a href="{% url 'receipt:receipt_dashboard_task_list' %}">
+                        رسید های ادمین
+                        <div>
+                            <i class="fa fa-user m-0 font-size-7"></i>
+                            <i class="fa fa-receipt m-0"></i>
+                        </div>
+                    </a>
+                </li>
 
-                        <li>
-                            <a href="{% url 'receipt:receipt_dashboard_task_list' %}">
-                                رسید های مشاهده شده
-                                <div>
-                                    <i class="fa fa-user m-0 font-size-7"></i>
-                                    <i class="fa fa-receipt m-0"></i>
-                                </div>
-                            </a>
-                        </li>
+                <li>
+                    <a href="{% url 'receipt:receipt_dashboard_task_list' %}">
+                        رسید های مشاهده شده
+                        <div>
+                            <i class="fa fa-user m-0 font-size-7"></i>
+                            <i class="fa fa-receipt m-0"></i>
+                        </div>
+                    </a>
+                </li>
 
             </ul>
         </li>
@@ -175,7 +175,7 @@
                         </div>
                     </a>
                 </li>
-                {% if user.is_super_admin %}
+
                     <li>
                         <a href="{% url 'notification:notification_dashboard_add' %}">
                             ایجاد اعلان عمومی
@@ -185,8 +185,20 @@
                             </div>
                         </a>
                     </li>
-                {% endif %}
-                {% if user.is_admin %}
+
+                    <li>
+                        <a href="{% url 'notification:notification_building_dashboard_add' %}">
+                            ایجاد اعلان
+                            <br>
+                            کاربران ساختمان
+                            <div>
+                                <i class="fa fa-building m-0 font-size-7"></i>
+                                <i class="fa fa-bell m-0"></i>
+                            </div>
+                        </a>
+                    </li>
+
+
                     <li>
                         <a href="{% url 'notification:notification_dashboard_user_add' %}">
                             ایجاد اعلان برای کاربر
@@ -214,11 +226,11 @@
                             </div>
                         </a>
                     </li>
-                {% endif %}
+
             </ul>
         </li>
 
-        {% if not user.is_common_admin %}
+
             <li>
                 <a class="has-arrow" href="#" aria-expanded="false">
                     <div class="icon_menu">
@@ -228,34 +240,6 @@
                 </a>
 
                 <ul>
-                    <!-- TODO: should be completed in feature  -->
-                    <li class="d-none">
-                        <a href="{% url 'support:support_dashboard_ticket_add' %}">
-                            ایجاد تیکت
-                            <div>
-                                <i class="fa fa-plus m-0 font-size-7"></i>
-                                <i class="fa fa-ticket-alt m-0"></i>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="d-none">
-                        <a href="{% url 'support:support_dashboard_ticket_list_new' %}">
-                            تیکت های جدید
-                            <div>
-                                <i class="fa fa-reply m-0 font-size-7"></i>
-                                <i class="fa fa-ticket-alt m-0"></i>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="d-none">
-                        <a href="{% url 'support:support_dashboard_ticket_list_archive' %}">
-                            تیکت های ارشیو شده
-                            <i class="fa fa-ticket-alt"></i>
-                        </a>
-                    </li>
-                    <!-- end-feature -->
-
-                    {% if user.is_super_admin %}
                         <li>
                             <a href="{% url 'support:support_dashboard_question_add' %}">
                                 ایجاد پرسش
@@ -265,7 +249,7 @@
                                 </div>
                             </a>
                         </li>
-                    {% endif %}
+
                     <li>
                         <a href="{% url 'support:support_dashboard_question_list' %}">
                             لیست پرسش ها
@@ -277,7 +261,7 @@
                     </li>
                 </ul>
             </li>
-        {% endif %}
+
 
         <li>
             <a class="has-arrow" href="#" aria-expanded="false">

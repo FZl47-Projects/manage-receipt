@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.urls import reverse
 from core.models import BaseModel, Image
@@ -55,6 +56,9 @@ class Question(BaseModel, Image):
 
     class Meta:
         ordering = '-id',
+        permissions = (
+            ('export_data_question',_('Can export data of question')),
+        )
 
     def __str__(self):
         return self.title

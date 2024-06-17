@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth import get_user_model
@@ -39,7 +40,7 @@ class Notification(BaseModel):
         """
 
     def get_absolute_url(self):
-        return reverse('notification:notification_dashboard_detail',args=(self.id,))
+        return reverse('notification:notification_dashboard_detail', args=(self.id,))
 
 
 class NotificationUser(BaseModel):
@@ -60,6 +61,9 @@ class NotificationUser(BaseModel):
 
     class Meta:
         ordering = '-id',
+        permissions = (
+            ('create_building_notification_user', _('Can create notification for users of building')),
+        )
 
     def __str__(self):
         return f'notification for {self.to_user}'

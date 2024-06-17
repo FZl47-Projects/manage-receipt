@@ -1,4 +1,4 @@
-from django.utils.translation import  gettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 # task messages
 TASK_REJECTED = _('Your request has been rejected')
@@ -16,11 +16,10 @@ RECEIPT_PERFORMED_SUCCESSFULLY = _("""
     Your submitted receipt has been successfully accepted.
 """)
 
-RECEIPT_PERFORMED_FAILD = _("""
+RECEIPT_PERFORMED_FAILED = _("""
     Hello, 
     Mr/Mrs
     {} 
-    Your submitted receipt has been successfully accepted.
+    Your submitted receipt has been rejected.
     See the link {} for more information
 """)
-

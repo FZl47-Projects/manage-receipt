@@ -90,6 +90,9 @@ class User(AbstractUser):
         permissions = (
             ('view_full_user', _('Can view all user')),
             ('export_list_user', _('Can export data list of users')),
+            ('change_self_user', _('Can change self info')),
+            ('set_permission_user', _('Can set permission on user')),
+            ('create_admin_user', _('Can create admin user')),
         )
 
     @property

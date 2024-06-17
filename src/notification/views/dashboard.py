@@ -1,152 +1,144 @@
 from django.contrib import messages
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
-from django.shortcuts import render, redirect, get_object_or_404, Http404
-from django.views.generic import View
-from django.core.paginator import Paginator
-from core.auth.mixins import LoginRequiredMixinCustom
-from core.auth.decorators import admin_required_cbv
-from core.utils import form_validate_err
-from notification.forms import NotificationForm, NotificationUserForm, NotificationUpdateForm
-from notification.models import Notification, NotificationUser
+from django.shortcuts import get_object_or_404, Http404, redirect
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.views.generic import View, TemplateView, ListView
+
+from receipt.models import Building
+
+from core.mixins import views as core_mixins
+from notification import forms, models
 
 User = get_user_model()
 
 
-class NotificationAdd(View):
-    template_name = 'notification/dashboard/add.html'
+class NotificationBuildingAdd(PermissionRequiredMixin, TemplateView):
+    permission_required = ('notification.add_notificationuser', 'notification.create_building_notification_user')
+    template_name = 'notification/dashboard/add-building-user.html'
+    success_message = _('Notifications created successfully')
 
-    @admin_required_cbv(['super_user'])
-    def get(self, request):
-        return render(request, self.template_name)
+    def get_context_data(self, **kwargs):
+        buildings = None
+        user = self.request.user
+        if user.is_superuser or user.has_perm('receipt.view_full_building'):
+            buildings = Building.objects.filter(is_active=True)
+        elif user.has_perm('receipt.view_admin_building'):
+            buildings = user.get_available_buildings()
+        elif user.has_perm('receipt.view_user_building'):
+            buildings = models.Building.get_buildings_user(user)
+        return {
+            'buildings': buildings
+        }
 
-    @admin_required_cbv(['super_user'])
     def post(self, request):
         data = request.POST
-        f = NotificationForm(data, request.FILES)
-        if form_validate_err(request, f) is False:
-            return render(request, self.template_name)
-        f.save()
-        messages.success(request, 'اعلان با موفقیت ایجاد شد')
-        return redirect('notification:notification_dashboard_add')
+        building_id = data.get('building')
+        if not building_id:
+            raise Http404
+        building = get_object_or_404(Building, id=building_id)
+        users = building.get_all_users()
+
+        for user in users:
+            data_notification = data.copy()
+            data_notification['to_user'] = user
+            data_notification['type'] = 'CUSTOM_NOTIFICATION'
+            f = forms.NotificationUserForm(data=data_notification, files=request.FILES)
+            if not f.is_valid():
+                continue
+            f.save()
+        messages.success(request, self.success_message)
+        return redirect('notification:notification_building_dashboard_add')
 
 
-class NotificationList(View):
+class NotificationAdd(PermissionRequiredMixin, core_mixins.CreateViewMixin, TemplateView):
+    permission_required = ('notification.add_notification',)
+    template_name = 'notification/dashboard/add.html'
+    success_message = _('Notification created successfully')
+    form = forms.NotificationForm
+
+
+class NotificationList(PermissionRequiredMixin, ListView):
+    permission_required = ('notification.view_notification',)
     template_name = 'notification/dashboard/list.html'
-
-    @admin_required_cbv()
-    def get(self, request):
-        page_num = request.GET.get('page', 1)
-        notifications = Notification.objects.all()
-        pagination = Paginator(notifications, 20)
-        pagination = pagination.get_page(page_num)
-        notifications = pagination.object_list
-        context = {
-            'notifications': notifications,
-            'pagination': pagination
-        }
-        return render(request, self.template_name, context)
+    paginate_by = 20
+    queryset = models.Notification.objects.all()
 
 
-class NotificationDetail(View):
+class NotificationDetail(PermissionRequiredMixin, TemplateView):
+    permission_required = ('notification.view_notification',)
     template_name = 'notification/dashboard/detail.html'
 
-    @admin_required_cbv()
-    def get(self, request, notification_id):
-        notification = get_object_or_404(Notification, id=notification_id)
+    def get_context_data(self, **kwargs):
+        notification_id = kwargs.get('notification_id')
+        notification = get_object_or_404(models.Notification, id=notification_id)
         context = {
             'notification': notification
         }
-        return render(request, self.template_name, context)
+        return context
 
 
-class NotificationDelete(View):
+class NotificationDelete(PermissionRequiredMixin, core_mixins.DeleteViewMixin, TemplateView):
+    permission_required = ('notification.delete_notification',)
+    redirect_url = reverse_lazy('notification:notification_dashboard_list')
 
-    @admin_required_cbv(['super_user'])
-    def post(self, request, notification_id):
-        notification = get_object_or_404(Notification, id=notification_id)
-        notification.delete()
-        messages.success(request, 'اعلان با موفقیت حذف شد')
-        return redirect('notification:notification_dashboard_list')
-
-
-class NotificationUpdate(View):
-
-    @admin_required_cbv(['super_user'])
-    def post(self, request, notification_id):
-        notification = get_object_or_404(Notification, id=notification_id)
-        f = NotificationUpdateForm(request.POST, request.FILES,instance=notification)
-        if form_validate_err(request,f) is False:
-            return redirect(notification.get_absolute_url())
-        f.save()
-        messages.success(request, 'اعلان با موفقیت بروزرسانی شد')
-        return redirect(notification.get_absolute_url())
+    def get_object(self, request, *args, **kwargs):
+        notification_id = kwargs.get('notification_id')
+        notification = get_object_or_404(models.Notification, id=notification_id)
+        return notification
 
 
-class NotificationUserAdd(View):
+class NotificationUpdate(PermissionRequiredMixin, core_mixins.UpdateViewMixin, View):
+    permission_required = ('notification.change_notification',)
+    form = forms.NotificationUpdateForm
+
+    def get_object(self):
+        notification_id = self.kwargs.get('notification_id')
+        return get_object_or_404(models.Notification, id=notification_id)
+
+
+class NotificationUserAdd(PermissionRequiredMixin, core_mixins.CreateViewMixin, TemplateView):
+    permission_required = ('notification.add_notificationuser',)
     template_name = 'notification/dashboard/add-user.html'
+    success_message = _('Notification user created successfully')
+    form = forms.NotificationUserForm
 
-    @admin_required_cbv()
-    def get(self, request):
-        context = {
+    def get_context_data(self, **kwargs):
+        return {
             'users': User.objects.all()
         }
-        return render(request, self.template_name, context)
 
-    @admin_required_cbv()
-    def post(self, request):
-        data = request.POST.copy()
+    def add_additional_data(self, data, obj=None):
         data['type'] = 'CUSTOM_NOTIFICATION'
-        f = NotificationUserForm(data, request.FILES)
-        if form_validate_err(request, f) is False:
-            return render(request, self.template_name)
-        f.save()
-        messages.success(request, 'اعلان با موفقیت ایجاد شد')
-        return redirect('notification:notification_dashboard_user_add')
 
 
-class NotificationUserList(View):
+class NotificationUserList(PermissionRequiredMixin, ListView):
+    permission_required = ('notification.view_notificationuser',)
     template_name = 'notification/dashboard/list-user.html'
-
-    @admin_required_cbv()
-    def get(self, request):
-        page_num = request.GET.get('page', 1)
-        notifications = NotificationUser.objects.all()
-        pagination = Paginator(notifications, 20)
-        pagination = pagination.get_page(page_num)
-        notifications = pagination.object_list
-        context = {
-            'notifications': notifications,
-            'pagination': pagination
-        }
-        return render(request, self.template_name, context)
+    paginate_by = 20
+    queryset = models.NotificationUser.objects.all()
 
 
-class NotificationUserPersonalList(LoginRequiredMixinCustom, View):
+class NotificationUserPersonalList(ListView):
     template_name = 'notification/dashboard/personal-list.html'
+    paginate_by = 20
 
-    def get(self, request):
-        page_num = request.GET.get('page', 1)
-        notifications = request.user.get_notifications()
-        pagination = Paginator(notifications, 20)
-        pagination = pagination.get_page(page_num)
-        notifications = pagination.object_list
-        context = {
-            'notifications': notifications,
-            'pagination': pagination
-        }
-        return render(request, self.template_name, context)
+    def get_queryset(self):
+        return self.request.user.get_notifications()
 
 
-class NotificationUserDetail(LoginRequiredMixinCustom, View):
+class NotificationUserDetail(TemplateView):
     template_name = 'notification/dashboard/detail-user.html'
 
-    def get(self, request, notification_id):
-        notification = get_object_or_404(NotificationUser, id=notification_id)
-        user = request.user
+    def get_context_data(self, **kwargs):
+        notification_id = kwargs.get('notification_id')
+        notification = get_object_or_404(models.NotificationUser, id=notification_id)
+        user = self.request.user
         # only own user and admin can access
         if notification.to_user != user and user.is_admin is False:
             raise Http404
         context = {
             'notification': notification
         }
-        return render(request, self.template_name, context)
+        return context

@@ -43,20 +43,21 @@
             </div>
             <div class="container-fluid p-0 ">
                 <div id="container-index">
-                    {% if user.is_super_admin %}
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="single_element">
-                                    <div class="quick_activity">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="quick_activity_wrap d-block">
-                                                    <div class="single_quick_activity d-block d-md-flex justify-content-between align-items-center">
-                                                        <div class="count_content mb-0">
-                                                            <span class="d-block text-mute">عملیات</span>
-                                                        </div>
-                                                        <div class="text-center">
-                                                            <div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="single_element">
+                                <div class="quick_activity">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="quick_activity_wrap d-block">
+                                                <div class="single_quick_activity d-block d-md-flex justify-content-between align-items-center">
+                                                    <div class="count_content mb-0">
+                                                        <span class="d-block text-mute">عملیات</span>
+                                                    </div>
+                                                    <div class="text-center">
+                                                        <div>
+                                                            {% if perms.support.export_data_question %}
                                                                 <div class="dropdown d-inline-block">
                                                                     <a class="btn btn-outline-primary dropdown-toggle px-4"
                                                                        href="#" role="button" id="dropdownMenuLink"
@@ -72,14 +73,17 @@
                                                                         </li>
                                                                     </ul>
                                                                 </div>
+                                                            {% endif %}
 
+                                                            {% if perms.support.delete_question %}
                                                                 <button class="btn btn-w btn-outline-danger m-1"
                                                                         type="button" data-bs-toggle="modal"
                                                                         data-bs-target="#container-delete">
                                                                     حذف
                                                                     <i class="fa fa-trash"></i>
                                                                 </button>
-                                                            </div>
+
+                                                            {% endif %}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -89,7 +93,8 @@
                                 </div>
                             </div>
                         </div>
-                    {% endif %}
+                    </div>
+
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="single_element">
@@ -235,7 +240,7 @@
                                                     </a>
                                                     <span class="font-75">
                                                         <span class="text-mute font-size-12">درصد پاسخ</span>
-                                                        %{% call question 'get_answer_percentage' question.option_4   %}
+                                                        %{% call question 'get_answer_percentage' question.option_4 %}
                                                     </span>
                                                 </div>
 
@@ -266,15 +271,16 @@
                                                         <div class="payment_gatway">
                                                             <h5 class="byer_name font-s-25 f_w_600 color_theme">
                                                                 {{ forloop.counter }}#
+                                                                ( <a href="{{ answer.user.get_absolute_url }}">
+                                                                    {{ answer.user.get_full_name }}
+                                                                </a>)
                                                             </h5>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="payment_gatway">
                                                             <h5 class="byer_name color_theme">
-                                                                <a href="{{ answer.user.get_absolute_url }}">
-                                                                    {{ answer.user.get_full_name }}
-                                                                </a>
+                                                               {{ answer.answer }}
                                                             </h5>
                                                         </div>
                                                     </td>
@@ -288,7 +294,7 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                {% empty %}
+                                            {% empty %}
                                                 <tr>
                                                     <div class="container-not-found-base">
                                                         <p>پاسخی یافت نشد</p>

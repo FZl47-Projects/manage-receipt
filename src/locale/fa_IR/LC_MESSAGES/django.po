@@ -1,0 +1,371 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-06-17 10:52+0330\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: .\account\forms.py:29 .\account\forms.py:37 .\account\forms.py:58
+msgid "Email is invalid"
+msgstr "ایمیل نامعتبر است"
+
+#: .\account\forms.py:30 .\account\forms.py:38 .\account\forms.py:59
+msgid "This email is currently in use by another user"
+msgstr "در حال حاظر کاربری با این ایمیل وجود دارد"
+
+#: .\account\forms.py:69
+msgid "Phonenumber is invalid"
+msgstr "شماره همراه نامعتبر است"
+
+#: .\account\forms.py:70
+msgid "User with this number is already registered"
+msgstr "در حال حاظر کاربری با این شماره وجود دارد"
+
+#: .\account\forms.py:78 .\account\forms.py:92 .\account\forms.py:111
+msgid "Passwords are not the same"
+msgstr "رمز های عبور با یکدیگر مغایرت دارند"
+
+#: .\account\models.py:66
+msgid "Common user"
+msgstr "کاربر عادی"
+
+#: .\account\models.py:67
+msgid "Admin user"
+msgstr "ادمین عادی"
+
+#: .\account\models.py:68
+msgid "Super user"
+msgstr "ادمین ویژه"
+
+#: .\account\models.py:71 .\account\models.py:121
+msgid "No name"
+msgstr "بدون نام"
+
+#: .\account\models.py:91
+msgid "Can view all user"
+msgstr "میتواند تمام کاربر هارا ببیند"
+
+#: .\account\models.py:92
+msgid "Can export data list of users"
+msgstr "میتواند از کاربران خروجی بگیرد"
+
+#: .\account\models.py:93
+msgid "Can change self info"
+msgstr "میتواند مشخصات خودرا تغییر دهد"
+
+#: .\account\models.py:94
+msgid "Can set permission on user"
+msgstr "میتواند برای کاربر دسترسی تنظیم کند"
+
+#: .\account\models.py:95
+msgid "Can create admin user"
+msgstr "میتواند کاربر ادمین ایجاد کند"
+
+#: .\account\views\dashboard.py:38 .\account\views\dashboard.py:64
+msgid "Please enter fields correctly"
+msgstr "لطفا فیلد هارا به درستی وارد نمایید"
+
+#: .\account\views\dashboard.py:43
+msgid "User not found or account is inactive"
+msgstr "کاربر یافت نشد یا حساب غیرفعال است"
+
+#: .\account\views\dashboard.py:46
+msgid "Account is inactive"
+msgstr "حساب غیرفعال است"
+
+#: .\account\views\dashboard.py:49
+msgid "Welcome"
+msgstr "خوش امدید"
+
+#: .\account\views\dashboard.py:72 .\account\views\dashboard.py:613
+msgid "A user has already registered with this number"
+msgstr "در حال حاظر کاربری با این شماره وجود دارد"
+
+#: .\account\views\dashboard.py:88
+msgid ""
+"Your account has been successfully created and will be activated after "
+"confirming your mobile number and checking your account"
+msgstr "حساب کاربری شما با موفقیت ایجاد شد و پس از تایید شماره همراه و بررسی توسط ادمین فعال میشود."
+
+#: .\account\views\dashboard.py:138
+msgid "Reset password"
+msgstr "تنظیم مجدد گذرواژه"
+
+#: .\account\views\dashboard.py:200
+msgid "Your password changed successfully"
+msgstr "گذرواژه شما با موفقیت تغییر کرد"
+
+#: .\account\views\dashboard.py:331
+msgid "Confirm phonenumber"
+msgstr "تایید شماره همراه"
+
+#: .\account\views\dashboard.py:362 .\account\views\dashboard.py:365
+msgid "Phonenumber confirmed successfully"
+msgstr "شماره همراه با موفقیت تایید شد"
+
+#: .\account\views\dashboard.py:415
+msgid "Create an user by the admin"
+msgstr "ایجاد کاربر توسط مدیریت"
+
+#: .\account\views\dashboard.py:416
+#, python-format
+msgid "User %s created successfully"
+msgstr "کاربر s% با موفقیت ایجاد شد"
+
+#: .\account\views\dashboard.py:419
+msgid "User account successfully created"
+msgstr "حساب کاربر با موفقیت ایجاد شد"
+
+#: .\account\views\dashboard.py:477
+msgid "You cannot delete a super user"
+msgstr "شما نمیتوانید یک کاربر ویژه را حذف کنید"
+
+#: .\account\views\dashboard.py:506
+msgid "The current password is incorrect"
+msgstr "گذرواژه فعلی نامعتبر است"
+
+#: .\account\views\dashboard.py:510
+msgid "Your password has been updated successfully"
+msgstr "گذرواژه شما با موفقیت بروزرسانی شد"
+
+#: .\account\views\dashboard.py:619
+msgid "User updated successfully"
+msgstr "کاربر با موفقیت بروزرسانی شد"
+
+#: .\account\views\dashboard.py:625
+msgid "Your account has been activated"
+msgstr "حساب شما با موفقیت فعال شد"
+
+#: .\account\views\dashboard.py:643
+msgid "Setting the building for the user was done successfully"
+msgstr "تنظیم ساختمان برای کاربر با موفقیت انجام شد"
+
+#: .\config\settings\base.py:87
+msgid "Persian"
+msgstr "فارسی"
+
+#: .\config\settings\base.py:106
+msgid "Notification from farhikhtegan mes company {}"
+msgstr "اعلان از طرف سامانه فرهیختگان مس {}"
+
+#: .\core\mixins\views.py:19 .\core\mixins\views.py:214
+#: .\receipt\views\dashboard.py:377
+msgid "Operation completed successfully"
+msgstr "عملیات با موفقیت انجام شد"
+
+#: .\core\models\task.py:12 .\receipt\models.py:146 .\receipt\models.py:247
+msgid "Accepted"
+msgstr "تایید شده"
+
+#: .\core\models\task.py:13
+msgid "Need to check by supervisor"
+msgstr "نیاز به بررسی توسط ناظر"
+
+#: .\core\models\task.py:14 .\receipt\models.py:148 .\receipt\models.py:248
+msgid "Rejected"
+msgstr "رد شده"
+
+#: .\core\utils.py:125
+msgid "Incorrect Data"
+msgstr "دیتای نامعتبر"
+
+#: .\notification\messages.py:4
+msgid "Your request has been rejected"
+msgstr "درخواست شما رد شد"
+
+#: .\notification\messages.py:6
+msgid "Your request has been accepted"
+msgstr "درخواست شما تایید شد"
+
+#: .\notification\messages.py:8
+msgid "Your receipt has been accepted"
+msgstr "رسید شما تایید شد"
+
+#: .\notification\messages.py:10
+msgid "Your receipt has been rejected"
+msgstr "رسید شما رد شد"
+
+#: .\notification\messages.py:12
+msgid ""
+"\n"
+"    Hello, \n"
+"    Mr/Mrs\n"
+"    {} \n"
+"    Your submitted receipt has been successfully accepted.\n"
+msgstr "\n"
+"    با سلام, \n"
+"    اقا/خانم\n"
+"    {} \n"
+"    رسید ثبت شده شما با موفقیت تایید شد.\n"
+
+#: .\notification\messages.py:19
+msgid ""
+"\n"
+"    Hello, \n"
+"    Mr/Mrs\n"
+"    {} \n"
+"    Your submitted receipt has been rejected.\n"
+"    See the link {} for more information\n"
+msgstr "\n"
+"    با سلام, \n"
+"    اقا/خانم\n"
+"    {} \n"
+"    رسید ثبت شده شما رد شده است.\n"
+"    برای اطلاعات بیشتر به لینک مراجعه نمایید {}\n"
+
+#: .\notification\models.py:65
+msgid "Can create notification for users of building"
+msgstr "میتواند اعلان برای کاربران ساختمان ایجاد کرد "
+
+#: .\notification\views\dashboard.py:20
+msgid "Notifications created successfully"
+msgstr "اعلانات با موفقیت ایجاد شدند"
+
+#: .\notification\views\dashboard.py:58
+msgid "Notification created successfully"
+msgstr "اعلان با موفقیت ایجاد شد"
+
+#: .\notification\views\dashboard.py:104
+msgid "Notification user created successfully"
+msgstr "اعلان کاربر با موفقیت ایجاد شد"
+
+#: .\receipt\models.py:30
+msgid "Can view all projects"
+msgstr "میتواند تمام پروژه هارا ببیند"
+
+#: .\receipt\models.py:55
+msgid "Can view all buildings"
+msgstr "میتواند تمام ساختمان هارا ببیند"
+
+#: .\receipt\models.py:56
+msgid "Can view admin buildings"
+msgstr "میتواند ساختمان هارا در نقش ادمین عادی ببیند"
+
+#: .\receipt\models.py:57
+msgid "Can view user buildings"
+msgstr "میتواند ساختمان هارا در نقش کاربر عادی ببیند"
+
+#: .\receipt\models.py:58
+msgid "Can view financial part(amount,chart and ..) buildings"
+msgstr "میتوان بخش مالی(مبالغ، نمودار و ..) ساختمان هارا ببیند "
+
+#: .\receipt\models.py:59
+msgid "Can view receipts buildings"
+msgstr "میتواند رسید های ساختمان را ببیند"
+
+#: .\receipt\models.py:60
+msgid "Can view users buildings"
+msgstr "میتواند کاربران ساختمان را ببیند"
+
+#: .\receipt\models.py:61
+msgid "Can view users score buildings"
+msgstr "میتواند امتیاز کاربران ساختمان را ببیند"
+
+#: .\receipt\models.py:62
+msgid "Can export all data of buildings"
+msgstr "میتواند تمام دیتای ساختمان را خروجی بگیرد"
+
+#: .\receipt\models.py:130
+msgid "Can set available building"
+msgstr "میتواند تنظیم ساختمان انجام دهد"
+
+#: .\receipt\models.py:147
+msgid "Pending"
+msgstr "در حال بررسی"
+
+#: .\receipt\models.py:184
+msgid "User can edit all receipt"
+msgstr "کاربر میتواند تمام رسید هارا ویرایش کند"
+
+#: .\receipt\models.py:185
+msgid "Accept receipt automatically"
+msgstr "میتواند رسید هارا به صورت خودکار تایید کند"
+
+#: .\receipt\models.py:186
+msgid "User can accept receipt"
+msgstr "کاربر میتواند رسید را تایید کند"
+
+#: .\receipt\models.py:187
+msgid "User can reject receipt"
+msgstr "کاربر میتواند رسید را رد کند"
+
+#: .\receipt\models.py:188
+msgid "Can view all receipts"
+msgstr "میتواند تمام رسید هارا ببیند"
+
+#: .\receipt\models.py:189
+msgid "Can view receipts submited by (admin)"
+msgstr "میتواند رسید های ثبت شده را در نقش ادمین عادی ببیند"
+
+#: .\receipt\models.py:190
+msgid "Can view receipts submited by (user)"
+msgstr "میتواند رسید های ثبت شده را در نقش کاربر عادی ببیند"
+
+#: .\receipt\models.py:191
+msgid "Can view ratio score receipt"
+msgstr "میتواند ضریب امتیاز رسید را ببیند"
+
+#: .\receipt\models.py:192
+msgid "Can set ratio score receipt"
+msgstr "میتواند ضریب امتیاز رسید ثبت کند"
+
+#: .\receipt\models.py:238
+msgid "Accept receipt task automatically"
+msgstr "میتواند عملیات رسید را به صورت خودکار تایید کند"
+
+#: .\receipt\models.py:239
+msgid "Can view all receipts task"
+msgstr "میتواند تمام عملیات های رسید هارا ببیند"
+
+#: .\receipt\models.py:240
+msgid "Can access to receipt tasks in user detail page"
+msgstr "میتواند به عملیات های رسید ها در صفحه جزئیات کاربر ببیند"
+
+#: .\receipt\models.py:241
+msgid "Can access to receipt tasks user by admin role"
+msgstr "میتواند به عملیات های رسید در نقش ادمین عادی دسترسی داشته باشد "
+
+#: .\receipt\models.py:242
+msgid "User can accept receipt task"
+msgstr "کاربر میتواند عملیات رسید را تایید کند"
+
+#: .\receipt\models.py:243
+msgid "User can reject receipt task"
+msgstr "کاربر میتواند عملیات رسید را رد کند"
+
+#: .\receipt\views\dashboard.py:387 .\receipt\views\dashboard.py:426
+#: .\receipt\views\dashboard.py:536 .\receipt\views\dashboard.py:551
+msgid "Operation already done"
+msgstr "عملیات از قبل انجام شده است"
+
+#: .\receipt\views\dashboard.py:416
+msgid "Receipt accepted successfully"
+msgstr "رسید با موفقیت تایید شد"
+
+#: .\receipt\views\dashboard.py:447
+msgid "Receipt rejected successfully"
+msgstr "رسید با موفقیت رد شد"
+
+#: .\receipt\views\dashboard.py:541
+msgid "Receipt task accepted successfully"
+msgstr "عملیات رسید با موفقیت تایید شد"
+
+#: .\receipt\views\dashboard.py:556
+msgid "Receipt task rejected successfully"
+msgstr "عملیات رسید با موفقیت رد شد"
+
+#: .\support\models.py:60
+msgid "Can export data of question"
+msgstr "میتواند از دیتای پرسش خروجی بگیرد"

@@ -23,7 +23,8 @@ urlpatterns = [
          name='info_change_password'),
     # dashboard operations
     # --- user
-    path('dashboard/user/permissions/set', dashboard.UserUpdatePassword.as_view(), name='user_permission_set'),
+    path('dashboard/user/permission/group/set', dashboard.UserPermissionGroupSet.as_view(),
+         name='user_permission_group_set'),
     path('dashboard/user/update/password', dashboard.UserUpdatePassword.as_view(), name='user_update_password'),
     path('dashboard/user/update', dashboard.UserUpdate.as_view(), name='user_update'),
     path('dashboard/user/add', dashboard.UserAdd.as_view(), name='user_add'),
@@ -44,10 +45,6 @@ urlpatterns = [
     path('dashboard/user/permissions/group/<int:group_id>/delete', dashboard.PermissionGroupDelete.as_view(),
          name='permission_group_delete'),
 
-
-
-    # path('dashboard/user/task/add', dashboard.UserAdd.as_view(), name='user_financial_add'),
-    # path('dashboard/user/task/list', dashboard.UserList.as_view(), name='user_financial_list'),
     path('dashboard/user/<int:user_id>/detail', dashboard.UserDetail.as_view(), name='user_detail'),
     path('dashboard/user/<int:user_id>/detail/delete', dashboard.UserDetailDelete.as_view(), name='user_detail_delete'),
     path('dashboard/user/<int:user_id>/detail/update/admin', dashboard.UserDetailUpdateByAdmin.as_view(),

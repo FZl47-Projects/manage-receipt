@@ -21,3 +21,9 @@ class QuestionAddForm(forms.ModelForm):
     class Meta:
         model = models.Question
         fields = '__all__'
+
+
+class AnswerSubmitForm(forms.ModelForm):
+    class Meta:
+        model = models.AnswerQuestion
+        fields = '__all__'

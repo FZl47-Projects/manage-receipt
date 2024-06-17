@@ -1,235 +1,109 @@
-from django.contrib import messages
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import View
+from django.shortcuts import get_object_or_404
+from django.views.generic import View, TemplateView, ListView
 from django.contrib.auth import get_user_model
-from django.core.paginator import Paginator
-from core.auth.decorators import admin_required_cbv, user_role_required_cbv
-from core.auth.mixins import LoginRequiredMixinCustom
-from core.utils import form_validate_err, get_media_url
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from core.utils import get_media_url
+from core.mixins import views as core_mixins
 from receipt.models import Building
-from support.models import Ticket, Question, AnswerQuestion
-from support.forms import TicketForm, TicketFormByAdminForm, QuestionAddForm
-from support import exports
+from support import forms, models, exports
 
 User = get_user_model()
 
 
-class TicketAdd(View):
-    template_name = 'support/dashboard/ticket/add.html'
-
-    def get(self, request):
-        context = {
-            'degrees_of_importance': Ticket.DEGREE_OF_IMPORTANCE_OPTIONS,
-        }
-        return render(request, self.template_name, context)
-
-    def post(self, request):
-        user = request.user
-        data = request.POST.copy()
-        # add user for who created ticket
-        data['from_user'] = user
-        f = TicketFormByAdminForm if user.is_admin else TicketForm
-        f = f(data, request.FILES)
-        if form_validate_err(request, f) is False:
-            return render(request, self.template_name)
-        f.save()
-        messages.success(request, 'تیکت پشتیبانی با موفقیت ایجاد شد')
-        return redirect('support:support_dashboard_ticket_add')
-
-
-class TicketListNew(View):
-    template_name = 'support/dashboard/ticket/list-new.html'
-
-    def sort(self, request, objects):
-        sort_by = request.GET.get('sort_by', 'importance')
-        if sort_by and sort_by != 'importance':
-            if sort_by == 'latest':
-                objects = objects.order_by('-created_at')
-            elif sort_by == 'oldest':
-                objects = objects.order_by('created_at')
-        return objects
-
-    def get(self, request):
-        page_num = request.GET.get('page', 1)
-        user = request.user
-        # order by time created
-        sort_by = request.GET.get('sort_by', 'importance')
-        if user.is_admin:
-            tickets = Ticket.objects.filter(is_open=True)
-        else:
-            tickets = user.get_tickets()
-        tickets = self.sort(request, tickets)
-        pagination = Paginator(tickets, 20)
-        pagination = pagination.get_page(page_num)
-        tickets = pagination.object_list
-        if sort_by == 'importance':
-            # default order
-            # order tickets by importance
-            order_by = ['high', 'medium', 'low']
-            tickets = sorted(tickets, key=lambda x: order_by.index(x.degree_of_importance))
-        context = {
-            'tickets': tickets,
-            'pagination': pagination
-        }
-        return render(request, self.template_name, context)
-
-
-class TicketListArchive(View):
-    template_name = 'support/dashboard/ticket/list-archive.html'
-
-    def sort(self, request, objects):
-        sort_by = request.GET.get('sort_by', None)
-        if sort_by:
-            if sort_by == 'latest':
-                objects = objects.order_by('-created_at')
-            elif sort_by == 'oldest':
-                objects = objects.order_by('created_at')
-        return objects
-
-    def get(self, request):
-        page_num = request.GET.get('page', 1)
-        user = request.user
-        if user.is_admin:
-            tickets = Ticket.objects.filter(is_open=False)
-        else:
-            tickets = user.get_archived_tickets()
-        # order by time created
-        pagination = Paginator(tickets, 20)
-        pagination = pagination.get_page(page_num)
-        tickets = pagination.object_list
-
-        context = {
-            'tickets': tickets,
-            'pagination': pagination
-        }
-        return render(request, self.template_name, context)
-
-
-class QuestionAdd(View):
+class QuestionAdd(PermissionRequiredMixin, core_mixins.CreateViewMixin, TemplateView):
+    permission_required = ('support.add_question',)
     template_name = 'support/dashboard/question/add.html'
+    form = forms.QuestionAddForm
 
-    @admin_required_cbv(['super_user'])
-    def get(self, request):
-        context = {
-            'buildings': Building.objects.all()
+    def get_context_data(self, **kwargs):
+        return {
+            'buildings': Building.objects.filter(is_active=True)
         }
-        return render(request, self.template_name, context)
-
-    @admin_required_cbv(['super_user'])
-    def post(self, request):
-        data = request.POST
-        f = QuestionAddForm(data, request.FILES)
-        if form_validate_err(request, f) is False:
-            return redirect('support:support_dashboard_question_add')
-        f.save()
-        messages.success(request, 'پرسش با موفقیت ایجاد شد')
-        return redirect('support:support_dashboard_question_add')
 
 
-class QuestionList(LoginRequiredMixinCustom, View):
+class QuestionList(PermissionRequiredMixin, core_mixins.TemplateChooserMixin, ListView):
+    permission_required = ('support.view_question',)
+    paginate_by = 20
 
-    def get_template_by_user(self, request):
-        user = request.user
+    def get_template(self):
+        user = self.request.user
         if user.is_admin:
             return 'support/dashboard/question/list.html'
         else:
             return 'support/dashboard/question/user/list.html'
 
-    def get_context_by_role(self, request):
-        user = request.user
+    def get_queryset(self):
+        user = self.request.user
         if user.is_admin:
-            questions = Question.objects.all()
+            questions = models.Question.objects.all()
         else:
             # getting questions for the buildings intended for the user
-            questions = Question.objects.filter(building__buildingavailable__user=user)
-        page_num = request.GET.get('page', 1)
-        pagination = Paginator(questions, 20)
-        pagination = pagination.get_page(page_num)
-        questions = pagination.object_list
-        context = {
-            'questions': questions,
-            'pagination': pagination
-        }
-        return context
-
-    @user_role_required_cbv(['normal_user', 'super_user'])
-    def get(self, request):
-        context = self.get_context_by_role(request)
-        return render(request, self.get_template_by_user(request), context)
+            questions = models.Question.objects.filter(building__buildingavailable__user=user)
+        return questions
 
 
-class QuestionDetail(LoginRequiredMixinCustom, View):
+class QuestionDetail(PermissionRequiredMixin, core_mixins.TemplateChooserMixin, TemplateView):
+    permission_required = ('support.view_question',)
 
-    def get_template_by_user(self, request):
-        user = request.user
+    def get_template(self):
+        user = self.request.user
         if user.is_admin:
             return 'support/dashboard/question/detail.html'
         else:
             return 'support/dashboard/question/user/detail.html'
 
-    def get_context_by_user(self, request, question_id):
-        user = request.user
+    def get_context_data(self, **kwargs):
+        question_id = kwargs.get('question_id')
+        user = self.request.user
         context = {}
         if user.is_admin:
-            context['question'] = get_object_or_404(Question, id=question_id)
+            context['question'] = get_object_or_404(models.Question, id=question_id)
         else:
-            question = get_object_or_404(Question, id=question_id, building__buildingavailable__user=user)
+            question = get_object_or_404(models.Question, id=question_id, building__buildingavailable__user=user)
             context['answers'] = question.get_answers_by_user(user)
             context['question'] = question
         return context
 
-    @user_role_required_cbv(['normal_user', 'super_user'])
+
+class QuestionDetailExport(PermissionRequiredMixin, View):
+    permission_required = ('support.export_question_data',)
+
     def get(self, request, question_id):
-        context = self.get_context_by_user(request, question_id)
-        return render(request, self.get_template_by_user(request), context)
-
-
-class QuestionDetailExport(LoginRequiredMixinCustom, View):
-
-    @admin_required_cbv(['super_user'])
-    def get(self, request, question_id):
-        question = get_object_or_404(Question, id=question_id)
+        question = get_object_or_404(models.Question, id=question_id)
         excel_file = exports.Excel.perform_export_question(question)
         excel_file = get_media_url(excel_file)
         return HttpResponseRedirect(excel_file)
 
 
-class QuestionDelete(View):
+class QuestionDelete(PermissionRequiredMixin, core_mixins.DeleteViewMixin, View):
+    permission_required = ('support.delete_answerquestion',)
 
-    @admin_required_cbv(['super_user'])
-    def post(self, request, question_id):
-        question = get_object_or_404(Question, id=question_id)
-        question.delete()
-        messages.success(request, 'پرسش با موفقیت حذف شد')
-        return redirect('support:support_dashboard_question_list')
+    def get_object(self, request, *args, **kwargs):
+        question_id = kwargs.get('question_id')
+        return get_object_or_404(models.Question, id=question_id)
 
 
-class AnswerDetail(LoginRequiredMixinCustom, View):
+class AnswerDetail(PermissionRequiredMixin, TemplateView):
+    permission_required = ('support.view_answerquestion',)
     template_name = 'support/dashboard/answer/detail.html'
 
-    @user_role_required_cbv(['normal_user', 'super_user'])
-    def get(self, request, answer_id):
-        answer = get_object_or_404(AnswerQuestion, id=answer_id)
+    def get_context_data(self, **kwargs):
+        answer_id = kwargs.get('answer_id')
+        answer = get_object_or_404(models.AnswerQuestion, id=answer_id)
         context = {
             'answer': answer
         }
-        return render(request, self.template_name, context)
+        return context
 
 
-class AnswerSubmit(LoginRequiredMixinCustom, View):
-    template_name = 'support/dashboard/answer/detail.html'
+class AnswerSubmit(PermissionRequiredMixin, core_mixins.CreateViewMixin, View):
+    permission_required = ('support.add_answerquestion',)
+    form = forms.AnswerSubmitForm
 
-    def post(self, request, question_id):
-        question = get_object_or_404(Question, id=question_id)
-        answer = request.POST.get('answer')
-        if not answer:
-            messages.error(request, 'لطفا پاسخ سوال را به درستی وارد نمایید')
-            return redirect(question.get_absolute_url())
-        AnswerQuestion.objects.create(
-            question=question,
-            user=request.user,
-            answer=answer,
-        )
-        messages.success(request, 'پاسخ شما با موفقیت ثبت شد')
-        return redirect(question.get_absolute_url())
+    def add_additional_data(self, data, obj=None):
+        question_id = self.kwargs.get('question_id')
+        question = get_object_or_404(models.Question, id=question_id)
+        data['question'] = question
+        data['user'] = self.request.user
+

@@ -19,21 +19,19 @@ def handle_receipt(sender, instance, **kwargs):
         NotificationUser.objects.create(
             type='RECEIPT_ACCEPTED',
             to_user=instance.user,
-            title=messages.RECEIPT_ACCEPTED,
+            title=messages.RECEIPT_PERFORMED_SUCCESSFULLY,
             kwargs={
                 'link': instance.get_absolute_url(),
                 'tracking_code': instance.tracking_code
             },
-            description="""فیش شما تایید شد"""
         )
     elif instance.status == 'rejected':
         NotificationUser.objects.create(
             type='RECEIPT_REJECTED',
             to_user=instance.user,
-            title=messages.RECEIPT_REJECTED,
+            title=messages.RECEIPT_PERFORMED_FAILED,
             kwargs={
                 'link': instance.get_absolute_url(),
                 'tracking_code': instance.tracking_code
             },
-            description="""فیش شما رد شد"""
         )
