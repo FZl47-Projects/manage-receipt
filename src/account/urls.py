@@ -23,7 +23,7 @@ urlpatterns = [
          name='info_change_password'),
     # dashboard operations
     # --- user
-    path('dashboard/user/permission/group/set', dashboard.UserPermissionGroupSet.as_view(),
+    path('dashboard/user/<int:user_id>/permission/group/set', dashboard.UserPermissionGroupSet.as_view(),
          name='user_permission_group_set'),
     path('dashboard/user/update/password', dashboard.UserUpdatePassword.as_view(), name='user_update_password'),
     path('dashboard/user/update', dashboard.UserUpdate.as_view(), name='user_update'),

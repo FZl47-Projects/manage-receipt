@@ -29,8 +29,7 @@
             </a>
         </li>
 
-
-        <li>
+        <li class="section-menu-item">
             <a class="has-arrow" href="#" aria-expanded="false">
                 <div class="icon_menu">
                     <img src="{% static 'images/dashboard/menu-icon/2.svg.xml' %}" alt>
@@ -39,44 +38,51 @@
             </a>
             <ul>
 
-                <li>
-                    <a href="{% url 'receipt:project_dashboard_add' %}">
-                        افزودن پروژه
-                        <div>
-                            <i class="fa fa-plus font-size-7 m-0"></i>
-                            <i class="fa fa-project-diagram m-0"></i>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'receipt:building_dashboard_add' %}">
-                        افزودن ساختمان
-                        <div>
-                            <i class="fa fa-plus font-size-7 m-0"></i>
-                            <i class="fa fa-building m-0"></i>
-                        </div>
-                    </a>
-                </li>
+                {% if perms.receipt.add_project %}
+                    <li class="section-menu-sub-item">
+                        <a href="{% url 'receipt:project_dashboard_add' %}">
+                            افزودن پروژه
+                            <div>
+                                <i class="fa fa-plus font-size-7 m-0"></i>
+                                <i class="fa fa-project-diagram m-0"></i>
+                            </div>
+                        </a>
+                    </li>
+                {% endif %}
 
+                {% if perms.receipt.add_building %}
+                    <li class="section-menu-sub-item">
+                        <a href="{% url 'receipt:building_dashboard_add' %}">
+                            افزودن ساختمان
+                            <div>
+                                <i class="fa fa-plus font-size-7 m-0"></i>
+                                <i class="fa fa-building m-0"></i>
+                            </div>
+                        </a>
+                    </li>
+                {% endif %}
 
-                <li>
-                    <a href="{% url 'receipt:project_dashboard_list' %}">
-                        لیست پروژه ها
-                        <i class="fa fa-project-diagram"></i>
-                    </a>
-                </li>
+                {% if perms.receipt.view_project %}
+                    <li class="section-menu-sub-item">
+                        <a href="{% url 'receipt:project_dashboard_list' %}">
+                            لیست پروژه ها
+                            <i class="fa fa-project-diagram"></i>
+                        </a>
+                    </li>
+                {% endif %}
 
-                <li>
-                    <a href="{% url 'receipt:building_dashboard_list' %}">
-                        لیست ساختمان ها
-                        <i class="fa fa-building"></i>
-                    </a>
-                </li>
+                {% if perms.receipt.view_building %}
+                    <li class="section-menu-sub-item">
+                        <a href="{% url 'receipt:building_dashboard_list' %}">
+                            لیست ساختمان ها
+                            <i class="fa fa-building"></i>
+                        </a>
+                    </li>
+                {% endif %}
             </ul>
         </li>
 
-
-        <li>
+        <li class="section-menu-item">
             <a class="has-arrow" href="#" aria-expanded="false">
                 <div class="icon_menu">
                     <img src="{% static 'images/dashboard/menu-icon/2.svg.xml' %}" alt>
@@ -84,29 +90,34 @@
                 <span>کاربران</span>
             </a>
             <ul>
-                <li>
-                    <a href="{% url 'account:user_add' %}">
-                        افزودن کاربر
-                        <i class="fa fa-user-plus"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'account:user_list' %}">
-                        لیست کاربران
-                        <i class="fa fa-users"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'account:permission_groups_manage' %}">
-                        گروه های دسترسی
-                        <i class="fa fa-user-cog"></i>
-                    </a>
-                </li>
+                {% if perms.account.add_user %}
+                    <li class="section-menu-sub-item">
+                        <a href="{% url 'account:user_add' %}">
+                            افزودن کاربر
+                            <i class="fa fa-user-plus"></i>
+                        </a>
+                    </li>
+                {% endif %}
+                {% if perms.account.view_user %}
+                    <li class="section-menu-sub-item">
+                        <a href="{% url 'account:user_list' %}">
+                            لیست کاربران
+                            <i class="fa fa-users"></i>
+                        </a>
+                    </li>
+                {% endif %}
+                {% if perms.account.set_permission_user %}
+                    <li class="section-menu-sub-item">
+                        <a href="{% url 'account:permission_groups_manage' %}">
+                            گروه های دسترسی
+                            <i class="fa fa-user-cog"></i>
+                        </a>
+                    </li>
+                {% endif %}
             </ul>
         </li>
 
-
-        <li>
+        <li class="section-menu-item">
             <a class="has-arrow" href="#" aria-expanded="false">
                 <div class="icon_menu">
                     <img src="{% static 'images/dashboard/menu-icon/2.svg.xml' %}" alt>
@@ -114,52 +125,55 @@
                 <span>رسید ها</span>
             </a>
             <ul>
-                <li>
-                    <a href="{% url 'receipt:receipt_dashboard_add' %}">
-                        ثبت رسید
-                        <div>
-                            <i class="fa fa-plus m-0 font-size-7"></i>
-                            <i class="fa fa-receipt m-0"></i>
-                        </div>
-                    </a>
-                </li>
-                <li>
+                {% if perms.receipt.add_receipt %}
+                    <li class="section-menu-sub-item">
+                        <a href="{% url 'receipt:receipt_dashboard_add' %}">
+                            ثبت رسید
+                            <div>
+                                <i class="fa fa-plus m-0 font-size-7"></i>
+                                <i class="fa fa-receipt m-0"></i>
+                            </div>
+                        </a>
+                    </li>
+                {% endif %}
+                {% if perms.receipt.view_receipt %}
+                    <li class="section-menu-sub-item">
+                        <a href="{% url 'receipt:receipt_dashboard_list' %}" title="لیست رسید ها">
+                            لیست رسید ها
+                            <i class="fa fa-receipt"></i>
+                        </a>
+                    </li>
+                {% endif %}
 
-                    <a href="{% url 'receipt:receipt_dashboard_list' %}" title="رسید های ثبت شده توسط کاربران">
-                        لیست رسید های کاربران
-                        <i class="fa fa-receipt"></i>
-                    </a>
 
-                    <a href="{% url 'receipt:receipt_dashboard_list' %}" title="لیست رسید ها">
-                        لیست رسید ها
-                        <i class="fa fa-receipt"></i>
-                    </a>
-
-
-                <li>
-                    <a href="{% url 'receipt:receipt_dashboard_task_list' %}">
-                        رسید های ادمین
-                        <div>
-                            <i class="fa fa-user m-0 font-size-7"></i>
-                            <i class="fa fa-receipt m-0"></i>
-                        </div>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{% url 'receipt:receipt_dashboard_task_list' %}">
-                        رسید های مشاهده شده
-                        <div>
-                            <i class="fa fa-user m-0 font-size-7"></i>
-                            <i class="fa fa-receipt m-0"></i>
-                        </div>
-                    </a>
-                </li>
+                {% if perms.receipt.view_receipttask %}
+                    {% if user.is_common_admin %}
+                        <li class="section-menu-sub-item">
+                            <a href="{% url 'receipt:receipt_dashboard_task_list' %}">
+                                رسید های مشاهده شده
+                                <div>
+                                    <i class="fa fa-user m-0 font-size-7"></i>
+                                    <i class="fa fa-receipt m-0"></i>
+                                </div>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="section-menu-sub-item">
+                            <a href="{% url 'receipt:receipt_dashboard_task_list' %}">
+                                رسید های ادمین
+                                <div>
+                                    <i class="fa fa-user m-0 font-size-7"></i>
+                                    <i class="fa fa-receipt m-0"></i>
+                                </div>
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endif %}
 
             </ul>
         </li>
 
-        <li>
+        <li class="section-menu-item">
             <a class="has-arrow" href="#" aria-expanded="false">
                 <div class="icon_menu">
                     <img src="{% static 'images/dashboard/menu-icon/2.svg.xml' %}" alt>
@@ -167,7 +181,7 @@
                 <span>اعلانات</span>
             </a>
             <ul>
-                <li>
+                <li class="section-menu-sub-item">
                     <a href="{% url 'notification:notification_dashboard_user_personal_list' %}">
                         اعلانات شخصی
                         <div>
@@ -176,7 +190,8 @@
                     </a>
                 </li>
 
-                    <li>
+                {% if perms.notification.add_notification %}
+                    <li class="section-menu-sub-item">
                         <a href="{% url 'notification:notification_dashboard_add' %}">
                             ایجاد اعلان عمومی
                             <div>
@@ -185,8 +200,10 @@
                             </div>
                         </a>
                     </li>
+                {% endif %}
 
-                    <li>
+                {% if perms.notification.create_building_notification_user %}
+                    <li class="section-menu-sub-item">
                         <a href="{% url 'notification:notification_building_dashboard_add' %}">
                             ایجاد اعلان
                             <br>
@@ -197,9 +214,11 @@
                             </div>
                         </a>
                     </li>
+                {% endif %}
 
 
-                    <li>
+                {% if perms.notification.add_notificationuser %}
+                    <li class="section-menu-sub-item">
                         <a href="{% url 'notification:notification_dashboard_user_add' %}">
                             ایجاد اعلان برای کاربر
                             <div>
@@ -208,7 +227,10 @@
                             </div>
                         </a>
                     </li>
-                    <li>
+                {% endif %}
+
+                {% if perms.notification.view_notification %}
+                    <li class="section-menu-sub-item">
                         <a href="{% url 'notification:notification_dashboard_list' %}">
                             لیست اعلان های عمومی
                             <div>
@@ -217,7 +239,10 @@
                             </div>
                         </a>
                     </li>
-                    <li>
+                {% endif %}
+
+                {% if perms.notification.view_notificationuser %}
+                    <li class="section-menu-sub-item">
                         <a href="{% url 'notification:notification_dashboard_user_list' %}">
                             لیست اعلان های کاربران
                             <div>
@@ -226,31 +251,34 @@
                             </div>
                         </a>
                     </li>
+                {% endif %}
 
             </ul>
         </li>
 
+        <li class="section-menu-item">
+            <a class="has-arrow" href="#" aria-expanded="false">
+                <div class="icon_menu">
+                    <img src="{% static 'images/dashboard/menu-icon/2.svg.xml' %}" alt>
+                </div>
+                <span>پشتیبانی</span>
+            </a>
 
-            <li>
-                <a class="has-arrow" href="#" aria-expanded="false">
-                    <div class="icon_menu">
-                        <img src="{% static 'images/dashboard/menu-icon/2.svg.xml' %}" alt>
-                    </div>
-                    <span>پشتیبانی</span>
-                </a>
+            <ul>
+                {% if perms.support.add_question %}
+                    <li class="section-menu-sub-item">
+                        <a href="{% url 'support:support_dashboard_question_add' %}">
+                            ایجاد پرسش
+                            <div>
+                                <i class="fa fa-plus m-0 font-size-7"></i>
+                                <i class="fa fa-question m-0"></i>
+                            </div>
+                        </a>
+                    </li>
+                {% endif %}
 
-                <ul>
-                        <li>
-                            <a href="{% url 'support:support_dashboard_question_add' %}">
-                                ایجاد پرسش
-                                <div>
-                                    <i class="fa fa-plus m-0 font-size-7"></i>
-                                    <i class="fa fa-question m-0"></i>
-                                </div>
-                            </a>
-                        </li>
-
-                    <li>
+                {% if perms.support.view_question %}
+                    <li class="section-menu-sub-item">
                         <a href="{% url 'support:support_dashboard_question_list' %}">
                             لیست پرسش ها
                             <div>
@@ -259,11 +287,11 @@
                             </div>
                         </a>
                     </li>
-                </ul>
-            </li>
+                {% endif %}
+            </ul>
+        </li>
 
-
-        <li>
+        <li class="section-menu-item">
             <a class="has-arrow" href="#" aria-expanded="false">
                 <div class="icon_menu">
                     <img src="{% static 'images/dashboard/menu-icon/2.svg.xml' %}" alt>
@@ -271,23 +299,25 @@
                 <span>اطلاعات شخصی</span>
             </a>
             <ul>
-                <li>
-                    <a href="{% url 'account:info_detail' %}">
-                        مشخصات
-                        <div>
-                            <i class="fa fa-info"></i>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'account:info_change_password' %}">
-                        تغییر رمز عبور
-                        <div>
-                            <i class="fa fa-key"></i>
-                        </div>
-                    </a>
-                </li>
-                <li>
+                {% if perms.account.change_self_user %}
+                    <li class="section-menu-sub-item">
+                        <a href="{% url 'account:info_detail' %}">
+                            مشخصات
+                            <div>
+                                <i class="fa fa-info"></i>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="section-menu-sub-item">
+                        <a href="{% url 'account:info_change_password' %}">
+                            تغییر رمز عبور
+                            <div>
+                                <i class="fa fa-key"></i>
+                            </div>
+                        </a>
+                    </li>
+                {% endif %}
+                <li class="section-menu-sub-item">
                     <a href="{% url 'account:reset_password' %}">
                         <span class="font-size-12">بازیابی رمز عبور</span>
                         <div>

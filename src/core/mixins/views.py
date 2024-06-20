@@ -39,7 +39,7 @@ class BaseCUViewMixin(abc.ABC):
             try:
                 self.redirect_url += f"?next_url={obj.get_absolute_url()}"
             except (TypeError, ValueError, AttributeError):
-                log_event('There is Some issue in add next_url(object dashboard absolute url) to redirect url',
+                log_event('There is Some issue in add next_url(object absolute url) to redirect url',
                           'WARNING', exc_info=True)
         return self.redirect_url
 

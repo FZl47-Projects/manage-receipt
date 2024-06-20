@@ -677,10 +677,9 @@
                     </div>
                 </div>
                 <div class="white_card_body">
-                    <form action="{% url 'account:user_permission_group_set' %}"
+                    <form action="{% url 'account:user_permission_group_set' user_id=user_detail.id %}"
                           method="post" class="col-12">
                         <div class="card-body">
-                            <input type="hidden" name="user" value="{{ user_obj.id }}">
                             {% csrf_token %}
 
                             <div class="col-md-12">
@@ -690,10 +689,10 @@
                                         <span class="field-required">*</span>
                                     </label>
 
-                                    <select name="group" class="form-control form-select">
+                                    <select name="groups" class="form-control form-select">
                                         {% for group in permission_groups %}
                                             <option value="{{ group.id }}"
-                                                    {% if building.id in building_available %}selected{% endif %}>{{ group.name }}
+                                                    {% if group in user_detail.groups.all %}selected{% endif %}>{{ group.name }}
                                             </option>
                                         {% endfor %}
                                     </select>

@@ -138,6 +138,14 @@
             theme: '{{ message.tags }}'
         })
     {% endfor %}
+
+    // menu|hidden section
+    document.querySelectorAll('.section-menu-item').forEach(function (el){
+        if (!el.querySelector('.section-menu-sub-item')){
+            el.classList.add('d-none')
+        }
+    })
+
 </script>
 
 {% block Script %}

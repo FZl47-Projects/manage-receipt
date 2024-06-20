@@ -15,6 +15,7 @@ from django.contrib.auth import models as permission_models
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth import authenticate, login, get_user_model, logout as logout_handler
 from core.auth.mixins import LoginRequiredMixinCustom
+from core.auth.utils import get_available_permissions
 from core.utils import add_prefix_phonenum, random_num, form_validate_err, get_media_url, log_event
 from core import redis_py
 from core.mixins import views as core_mixins
@@ -413,7 +414,7 @@ class UserAdd(PermissionRequiredMixin, TemplateView):
             type='CREATE_USER_BY_ADMIN',
             to_user=request.user,
             title=_('Create an user by the manager'),
-            description=_('User %s created successfully') % user.get_raw_phonenumber(),
+            description=_('User {} created successfully').format(user.get_raw_phonenumber()),
             is_showing=False
         )
         messages.success(request, _('User account successfully created'))
@@ -670,13 +671,15 @@ class PermissionGroupsManage(PermissionRequiredMixin, ListView):
     permission_required = ('auth.view_group', 'auth.add_group')
     template_name = 'account/dashboard/permission/manage.html'
     paginate_by = 10
-    queryset = permission_models.Group.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['groups'] = self.get_queryset()
-        context['permissions'] = permission_models.Permission.objects.all()
+        context['permissions'] = get_available_permissions()
         return context
+
+    def get_queryset(self):
+        return permission_models.Group.objects.all()
 
 
 class PermissionGroupsAdd(PermissionRequiredMixin, core_mixins.CreateViewMixin, View):
@@ -685,7 +688,7 @@ class PermissionGroupsAdd(PermissionRequiredMixin, core_mixins.CreateViewMixin, 
 
 
 class PermissionGroupUpdate(PermissionRequiredMixin, core_mixins.UpdateViewMixin, View):
-    permission_required = ('auth.edit_group',)
+    permission_required = ('auth.change_group',)
     form = forms.PermissionGroupUpdateForm
 
     def get_object(self):
@@ -706,4 +709,5 @@ class UserPermissionGroupSet(PermissionRequiredMixin, core_mixins.UpdateViewMixi
     form = forms.UserPermissionGroupSetForm
 
     def get_object(self):
-        return self.request.user
+        user_id = self.kwargs.get('user_id')
+        return get_object_or_404(User, id=user_id)

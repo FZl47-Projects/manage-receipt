@@ -1,5 +1,5 @@
 """
-    using Django 4.1.3
+    using Django 4.2
 """
 
 import os
@@ -32,12 +32,13 @@ INSTALLED_APPS = [
     'receipt',
     'support',
     'notification',
-    'public'
+    'public',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -60,7 +61,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
             'libraries': {
-                'custom_tags': 'public.templatetags.custom_tags'
+                'custom_tags': 'core.templatetags.custom_tags'
             }
         },
     },
@@ -100,6 +101,8 @@ USE_I18N = True
 
 USE_TZ = False
 
+USE_L10N = False
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email
@@ -113,7 +116,6 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 AUTH_USER_MODEL = 'account.User'  # custom user model
 LOGIN_URL = '/u/login-register'
-
 
 IMAGE_FORMATS = [
     'jpg',

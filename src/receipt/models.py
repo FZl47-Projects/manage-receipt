@@ -1,3 +1,5 @@
+import hashlib
+
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.translation import gettext_lazy as _
 from django.db import models
@@ -158,12 +160,20 @@ class ReceiptAbstract(BaseModel):
     note = models.TextField(null=True, blank=True)  # by admin
     amount = models.PositiveBigIntegerField()
     picture = models.ImageField(upload_to=upload_receipt_pic_src, max_length=3000)
+    picture_hash = models.CharField(max_length=65, null=True, blank=True, unique=True)
     submited_at = models.DateTimeField(auto_now_add=True)
     ratio_score = models.FloatField(default=1, validators=[MinValueValidator(0), MaxValueValidator(4)])
 
     class Meta:
         abstract = True
         ordering = '-id',
+
+    def save(self, *args, **kwargs):
+        # Calculate hash of the image using SHA-256
+        image_data = self.picture.read()
+        picture_hash = hashlib.sha256(image_data).hexdigest()
+        self.picture_hash = picture_hash
+        super(ReceiptAbstract, self).save(*args, **kwargs)
 
     def get_deposit_datetime(self):
         return self.deposit_datetime.strftime('%Y-%m-%d %H:%M:%S')

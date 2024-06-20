@@ -2,7 +2,7 @@ import json
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.db.models import Q, Value, Case, When, Sum
+from django.db.models import Q, Value, Case, When
 from django.db.models.functions import Concat
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import PermissionDenied
@@ -226,6 +226,9 @@ class ReceiptAdd(LoginRequiredMixinCustom, PermissionRequiredMixin, core_mixins.
             'user_admin': self.request.user,
             'receipt_status': 'accepted',
         })
+        # set status accept if user has auto accept task perm
+        if user.has_perm('receipt.auto_accept_receipt_task'):
+            form_data['status'] = 'accepted'
         form_receipt_task = forms.ReceiptTaskAddForm(form_data, self.request.FILES)
         if not form_receipt_task.is_valid():
             create_form_messages(self.request, form_receipt_task)

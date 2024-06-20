@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-17 10:52+0330\n"
+"POT-Creation-Date: 2024-06-18 06:18+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -73,90 +73,95 @@ msgstr "میتواند برای کاربر دسترسی تنظیم کند"
 msgid "Can create admin user"
 msgstr "میتواند کاربر ادمین ایجاد کند"
 
-#: .\account\views\dashboard.py:38 .\account\views\dashboard.py:64
+#: .\account\views\dashboard.py:39 .\account\views\dashboard.py:65
 msgid "Please enter fields correctly"
 msgstr "لطفا فیلد هارا به درستی وارد نمایید"
 
-#: .\account\views\dashboard.py:43
+#: .\account\views\dashboard.py:44
 msgid "User not found or account is inactive"
 msgstr "کاربر یافت نشد یا حساب غیرفعال است"
 
-#: .\account\views\dashboard.py:46
+#: .\account\views\dashboard.py:47
 msgid "Account is inactive"
 msgstr "حساب غیرفعال است"
 
-#: .\account\views\dashboard.py:49
+#: .\account\views\dashboard.py:50
 msgid "Welcome"
 msgstr "خوش امدید"
 
-#: .\account\views\dashboard.py:72 .\account\views\dashboard.py:613
+#: .\account\views\dashboard.py:73 .\account\views\dashboard.py:614
 msgid "A user has already registered with this number"
 msgstr "در حال حاظر کاربری با این شماره وجود دارد"
 
-#: .\account\views\dashboard.py:88
+#: .\account\views\dashboard.py:89
 msgid ""
 "Your account has been successfully created and will be activated after "
 "confirming your mobile number and checking your account"
-msgstr "حساب کاربری شما با موفقیت ایجاد شد و پس از تایید شماره همراه و بررسی توسط ادمین فعال میشود."
+msgstr ""
+"حساب کاربری شما با موفقیت ایجاد شد و پس از تایید شماره همراه و بررسی توسط "
+"ادمین فعال میشود."
 
-#: .\account\views\dashboard.py:138
+#: .\account\views\dashboard.py:139
 msgid "Reset password"
 msgstr "تنظیم مجدد گذرواژه"
 
-#: .\account\views\dashboard.py:200
+#: .\account\views\dashboard.py:201
 msgid "Your password changed successfully"
 msgstr "گذرواژه شما با موفقیت تغییر کرد"
 
-#: .\account\views\dashboard.py:331
+#: .\account\views\dashboard.py:332
 msgid "Confirm phonenumber"
 msgstr "تایید شماره همراه"
 
-#: .\account\views\dashboard.py:362 .\account\views\dashboard.py:365
+#: .\account\views\dashboard.py:363 .\account\views\dashboard.py:366
 msgid "Phonenumber confirmed successfully"
 msgstr "شماره همراه با موفقیت تایید شد"
 
-#: .\account\views\dashboard.py:415
-msgid "Create an user by the admin"
+#: .\account\views\dashboard.py:416
+#, fuzzy
+#| msgid "Create an user by the admin"
+msgid "Create an user by the manager"
 msgstr "ایجاد کاربر توسط مدیریت"
 
-#: .\account\views\dashboard.py:416
-#, python-format
-msgid "User %s created successfully"
-msgstr "کاربر s% با موفقیت ایجاد شد"
+#: .\account\views\dashboard.py:417
+#, fuzzy, python-format
+#| msgid "User {} created successfully"
+msgid "User {} created successfully"
+msgstr "کاربر {} با موفقیت ایجاد شد"
 
-#: .\account\views\dashboard.py:419
+#: .\account\views\dashboard.py:420
 msgid "User account successfully created"
 msgstr "حساب کاربر با موفقیت ایجاد شد"
 
-#: .\account\views\dashboard.py:477
+#: .\account\views\dashboard.py:478
 msgid "You cannot delete a super user"
 msgstr "شما نمیتوانید یک کاربر ویژه را حذف کنید"
 
-#: .\account\views\dashboard.py:506
+#: .\account\views\dashboard.py:507
 msgid "The current password is incorrect"
 msgstr "گذرواژه فعلی نامعتبر است"
 
-#: .\account\views\dashboard.py:510
+#: .\account\views\dashboard.py:511
 msgid "Your password has been updated successfully"
 msgstr "گذرواژه شما با موفقیت بروزرسانی شد"
 
-#: .\account\views\dashboard.py:619
+#: .\account\views\dashboard.py:620
 msgid "User updated successfully"
 msgstr "کاربر با موفقیت بروزرسانی شد"
 
-#: .\account\views\dashboard.py:625
+#: .\account\views\dashboard.py:626
 msgid "Your account has been activated"
 msgstr "حساب شما با موفقیت فعال شد"
 
-#: .\account\views\dashboard.py:643
+#: .\account\views\dashboard.py:644
 msgid "Setting the building for the user was done successfully"
 msgstr "تنظیم ساختمان برای کاربر با موفقیت انجام شد"
 
-#: .\config\settings\base.py:87
+#: .\config\settings\base.py:88
 msgid "Persian"
 msgstr "فارسی"
 
-#: .\config\settings\base.py:106
+#: .\config\settings\base.py:109
 msgid "Notification from farhikhtegan mes company {}"
 msgstr "اعلان از طرف سامانه فرهیختگان مس {}"
 
@@ -204,7 +209,8 @@ msgid ""
 "    Mr/Mrs\n"
 "    {} \n"
 "    Your submitted receipt has been successfully accepted.\n"
-msgstr "\n"
+msgstr ""
+"\n"
 "    با سلام, \n"
 "    اقا/خانم\n"
 "    {} \n"
@@ -218,7 +224,8 @@ msgid ""
 "    {} \n"
 "    Your submitted receipt has been rejected.\n"
 "    See the link {} for more information\n"
-msgstr "\n"
+msgstr ""
+"\n"
 "    با سلام, \n"
 "    اقا/خانم\n"
 "    {} \n"
@@ -369,3 +376,144 @@ msgstr "عملیات رسید با موفقیت رد شد"
 #: .\support\models.py:60
 msgid "Can export data of question"
 msgstr "میتواند از دیتای پرسش خروجی بگیرد"
+
+# add maunal
+
+msgid "Can add user"
+msgstr "میتواند کاربر ایجاد کند"
+
+msgid "Can change user"
+msgstr "میتواند کاربر را ویرایش کند"
+
+msgid "Can delete user"
+msgstr "میتواند کاربر را حذف کند"
+
+msgid "Can view user"
+msgstr "میتواند کاربر را ببیند"
+
+msgid "Can add group"
+msgstr "میتواند گروه دسترسی ایجاد کند"
+
+msgid "Can change group"
+msgstr "میتواند گروه دسترسی را ویرایش کند"
+
+msgid "Can delete group"
+msgstr "میتواند گروه دسترسی را حذف کند"
+
+msgid "Can view group"
+msgstr "میتواند گروه دسترسی را ببیند"
+
+msgid "Can add notification"
+msgstr "میتواند اعلان عمومی ایجاد کند"
+
+msgid "Can delete notification"
+msgstr "میتواند اعلان عمومی را حذف کند"
+
+msgid "Can change notification"
+msgstr "میتواند اعلان عمومی را ویرایش کند"
+
+msgid "Can view notification"
+msgstr "میتواند اعلان عمومی را ببیند"
+
+msgid "Can view notification user"
+msgstr "میتواند اعلان کاربر را ببیند"
+
+msgid "Can add notification user"
+msgstr "میتواند اعلان کاربر ایجاد کند"
+
+msgid "Can delete notification user"
+msgstr "میتواند اعلان کاربر را حذف کند"
+
+msgid "Can change notification user"
+msgstr "میتواند اعلان کاربر را ویرایش کند"
+
+msgid "Can add building"
+msgstr "میتواند ساختمان ایجاد کند"
+
+msgid "Can delete building"
+msgstr "میتواند ساختمان را حذف کند"
+
+msgid "Can change building"
+msgstr "میتواند ساختمان را ویرایش کند"
+
+msgid "Can view building"
+msgstr "میتواند ساختمان را ببیند"
+
+msgid "Can set available buildings"
+msgstr "میتواند دسترسی به ساختمان هارا تنظیم کند"
+
+msgid "Can add building available"
+msgstr "میتواند دسترسی به ساختمان ایجاد کند"
+
+msgid "Can delete building available"
+msgstr "میتواند دسترسی به ساختمان را حذف کند"
+
+msgid "Can change building available"
+msgstr "میتواند دسترسی به ساختمان را ویرایش کند"
+
+msgid "Can view building available"
+msgstr "میتواند دسترسی به ساختمان را ببیند"
+
+msgid "Can add project"
+msgstr "میتواند پروژه ایجاد کند"
+
+msgid "Can delete project"
+msgstr "میتواند پروژه را حذف کند"
+
+msgid "Can change project"
+msgstr "میتواند پروژه را ویرایش کند"
+
+msgid "Can view project"
+msgstr "میتواند پروژه را ببیند کند"
+
+msgid "Can add receipt"
+msgstr "میتواند رسید ثبت کند"
+
+msgid "Can view receipt"
+msgstr "میتواند رسید را ببیند کند"
+
+msgid "Can delete receipt"
+msgstr "میتواند رسید را حذف کند"
+
+msgid "Can change receipt"
+msgstr "میتواند رسید را ویرایش کند"
+
+msgid "Can view receipts submited by self"
+msgstr "میتواند رسید هایی که توسط خوده کاربر ثبت شده را ببیند"
+
+msgid "Can add receipt task"
+msgstr "میتواند عملیات رسید ایجاد کند"
+
+msgid "Can delete receipt task"
+msgstr "میتواند عملیات رسید را حذف کند"
+
+msgid "Can change receipt task"
+msgstr "میتواند عملیات رسید را ویرایش کند"
+
+msgid "Can view receipt task"
+msgstr "میتواند عملیات رسید را ببیند"
+
+msgid "Can add answer question"
+msgstr "میتواند جواب برای پرسش ایجاد کند"
+
+msgid "Can change answer question"
+msgstr "میتواند جواب پرسش را ویرایش کند"
+
+msgid "Can delete answer question"
+msgstr "میتواند جواب پرسش را حذف کند"
+
+msgid "Can view answer question"
+msgstr "میتواند جواب پرسش را ببیند"
+
+msgid "Can add question"
+msgstr "میتواند پرسش ایجاد کند"
+
+msgid "Can view question"
+msgstr "میتواند پرسش را ببیند"
+
+msgid "Can change question"
+msgstr "میتواند پرسش را ویرایش کند"
+
+msgid "Can delete question"
+msgstr "میتواند پرسش را حذف کند"
+

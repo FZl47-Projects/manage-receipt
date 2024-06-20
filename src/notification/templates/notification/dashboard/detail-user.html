@@ -134,7 +134,7 @@
                                 <div class="detail col-11 col-md-10 col-lg-8 mx-auto">
                                     <div class="detail-field">
                                         <span>توضیحات</span>
-                                        <p>{{ notification.description }}</p>
+                                        <p>{{ notification.description|default:'-' }}</p>
                                     </div>
                                     <div class="detail-field">
                                         <span>تاریخ ایجاد</span>

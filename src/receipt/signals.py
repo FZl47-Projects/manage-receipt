@@ -19,7 +19,7 @@ def handle_receipt(sender, instance, **kwargs):
         NotificationUser.objects.create(
             type='RECEIPT_ACCEPTED',
             to_user=instance.user,
-            title=messages.RECEIPT_PERFORMED_SUCCESSFULLY,
+            title=messages.RECEIPT_PERFORMED_SUCCESSFULLY.format(instance.user.get_full_name()),
             kwargs={
                 'link': instance.get_absolute_url(),
                 'tracking_code': instance.tracking_code
@@ -29,7 +29,7 @@ def handle_receipt(sender, instance, **kwargs):
         NotificationUser.objects.create(
             type='RECEIPT_REJECTED',
             to_user=instance.user,
-            title=messages.RECEIPT_PERFORMED_FAILED,
+            title=messages.RECEIPT_PERFORMED_FAILED.format(instance.user.get_full_name()),
             kwargs={
                 'link': instance.get_absolute_url(),
                 'tracking_code': instance.tracking_code

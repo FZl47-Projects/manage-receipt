@@ -1,3 +1,5 @@
+import hashlib
+from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django import forms
 from . import models
@@ -41,6 +43,19 @@ class ReceiptAddForm(forms.ModelForm):
     class Meta:
         model = models.Receipt
         exclude = ('tracking_code',)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        picture = cleaned_data.get('picture')
+
+        if picture:
+            picture_data = picture.read()
+            picture_hash = hashlib.sha256(picture_data).hexdigest()
+
+            if models.Receipt.objects.filter(picture_hash=picture_hash).exists():
+                self.add_error('picture', _('A receipt with the same picture hash already exists.'))
+
+        return cleaned_data
 
 
 class ReceiptAcceptForm(forms.ModelForm):
