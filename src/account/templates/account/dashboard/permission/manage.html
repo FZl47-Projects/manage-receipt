@@ -50,30 +50,31 @@
                                         <div class="col-2">
                                             نام گروه
                                         </div>
-                                        <div class="col-8">
+                                        <div class="col-7">
                                             برخی از دسترسی ها
                                         </div>
-                                        <div class="col-2">
+                                        <div class="col-3">
                                             عملیات
                                         </div>
                                     </div>
                                     {% for object in object_list %}
                                         <div class="detail-row">
                                             <div class="col-2">
-                                                <span>{{ object.name|truncatechars:20 }}</span>
+                                                <span>{{ object.name|truncatechars:30 }}</span>
                                             </div>
-                                            <div class="col-8">
-                                                {% for permission in object.permissions.all|slice:':4' %}
+                                            <div class="col-7">
+                                                {% for permission in object.permissions.all|slice:':3' %}
                                                     <span class="badge bg-primary">{% translate permission.name %}</span>
                                                 {% empty %}
                                                     <span>دسترسی یافت نشد</span>
                                                 {% endfor %}
                                             </div>
-                                            <div class="col-2 ">
+                                            <div class="col-3">
                                                 <button class="btn btn-outline-success font-80" type="button"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#container-edit-group-perm-{{ object.id }}">
                                                     ویرایش
+                                                    و مشاهده کامل
                                                     <i class="fa fa-pen"></i>
                                                 </button>
 

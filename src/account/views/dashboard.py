@@ -233,10 +233,15 @@ class Dashboard(LoginRequiredMixinCustom, View):
             building_names.append(building.name)
             building_payments.append(building.get_payments())
 
+        if user.has_perm('account.view_full_user'):
+            users = User.objects.get_users()
+        else:
+            users = User.objects.get_users().filter(
+                buildingavailable__buildings__in=user.get_available_buildings()).distinct()
         context = {
             'buildings': buildings,
             'receipts': Receipt.objects.filter(building__in=buildings),
-            'users': User.common_user.all(),
+            'users': users,
             # chart data
             'building_names': json.dumps(building_names),
             'building_payments': json.dumps(building_payments),

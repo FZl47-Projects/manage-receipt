@@ -77,7 +77,7 @@ class QuestionDetailExport(PermissionRequiredMixin, View):
 
 
 class QuestionDelete(PermissionRequiredMixin, core_mixins.DeleteViewMixin, View):
-    permission_required = ('support.delete_answerquestion',)
+    permission_required = ('support.delete_question',)
 
     def get_object(self, request, *args, **kwargs):
         question_id = kwargs.get('question_id')
@@ -90,7 +90,11 @@ class AnswerDetail(PermissionRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         answer_id = kwargs.get('answer_id')
-        answer = get_object_or_404(models.AnswerQuestion, id=answer_id)
+        user = self.request.user
+        if user.is_admin:
+            answer = get_object_or_404(models.AnswerQuestion, id=answer_id)
+        else:
+            answer = get_object_or_404(models.AnswerQuestion, id=answer_id, user=user)
         context = {
             'answer': answer
         }
@@ -106,4 +110,3 @@ class AnswerSubmit(PermissionRequiredMixin, core_mixins.CreateViewMixin, View):
         question = get_object_or_404(models.Question, id=question_id)
         data['question'] = question
         data['user'] = self.request.user
-

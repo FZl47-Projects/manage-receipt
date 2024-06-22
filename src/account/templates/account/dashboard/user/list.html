@@ -86,8 +86,11 @@
                                         <div class="col-2">
                                             شماره همراه
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-2">
                                             ایمیل
+                                        </div>
+                                        <div class="col-1">
+                                            نوع کاربر
                                         </div>
                                         <div class="col-2">
                                             امتیاز کل
@@ -106,8 +109,11 @@
                                             <div class="col-2">
                                                 {{ user.get_raw_phonenumber }}
                                             </div>
-                                            <div class="col-3 font-80">
+                                            <div class="col-2 font-80">
                                                 {{ user.email|truncatechars:15|default:'-' }}
+                                            </div>
+                                            <div class="col-1 font-80">
+                                                {{ user.get_role_display }}
                                             </div>
                                             <div class="col-2 font-80">
                                                 {{ user.get_scores }}
