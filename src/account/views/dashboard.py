@@ -85,6 +85,12 @@ class LoginOrRegister(TemplateView):
         )
         user.set_password(password)
         user.save()
+        # add user group
+        try:
+            common_user_group = Group.objects.get(name='common_user_group_default')
+            user.groups.add(common_user_group)
+        except Group.DoesNotExist:
+            pass
         messages.success(request,
                          _('Your account has been successfully created and will be activated after confirming your mobile number and checking your account'))
         return redirect('account:confirm_phonenumber')
