@@ -553,7 +553,9 @@ class UserList(PermissionRequiredMixin, core_mixins.PermissionObjectsMixin,
         return objects.filter(lookup)
 
     def get_queryset(self):
-        return self.get_context_perm()['users']
+        users = self.get_context_perm()['users']
+        users = self.search(self.request, users)
+        return users
 
 
 class UserListExport(PermissionRequiredMixin, View):

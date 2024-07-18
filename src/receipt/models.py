@@ -168,12 +168,6 @@ class ReceiptAbstract(BaseModel):
         abstract = True
         ordering = '-id',
 
-    def save(self, *args, **kwargs):
-        # Calculate hash of the image using SHA-256
-        image_data = self.picture.read()
-        picture_hash = hashlib.sha256(image_data).hexdigest()
-        self.picture_hash = picture_hash
-        super(ReceiptAbstract, self).save(*args, **kwargs)
 
     def get_deposit_datetime(self):
         return self.deposit_datetime.strftime('%Y-%m-%d %H:%M:%S')

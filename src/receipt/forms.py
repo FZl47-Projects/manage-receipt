@@ -51,10 +51,8 @@ class ReceiptAddForm(forms.ModelForm):
         if picture:
             picture_data = picture.read()
             picture_hash = hashlib.sha256(picture_data).hexdigest()
-
             if models.Receipt.objects.filter(picture_hash=picture_hash).exists():
                 self.add_error('picture', _('A receipt with the same picture hash already exists.'))
-
         return cleaned_data
 
 
