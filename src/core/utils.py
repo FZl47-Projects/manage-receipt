@@ -2,8 +2,10 @@ import string
 import logging
 import random
 import datetime
+import jdatetime
 import requests
 import json
+from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from django.core.mail import send_mail as _send_email_django
 from django.conf import settings
@@ -107,7 +109,7 @@ def form_validate_err(request, form):
                 err = f'{field} {err}'
                 messages.error(request, err)
         else:
-            messages.error(request, 'دیتای ورودی نامعتبر است')
+            messages.error(request, _('Incorrect Data'))
         return False
     return True
 
@@ -144,3 +146,8 @@ def log_event(msg, level='info', exc_info=False, **kwargs):
         'CRITICAL': 50,
     }
     logging.log(levels[level], msg=msg, exc_info=exc_info, **kwargs)
+
+
+def gregorian_to_jalali(year, month, day):
+    g_date = jdatetime.GregorianToJalali(year, month, day)
+    return f'{g_date.jyear}-{g_date.jmonth}-{g_date.jday}'

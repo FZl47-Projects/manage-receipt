@@ -168,7 +168,6 @@ class ReceiptAbstract(BaseModel):
         abstract = True
         ordering = '-id',
 
-
     def get_deposit_datetime(self):
         return self.deposit_datetime.strftime('%Y-%m-%d %H:%M:%S')
 

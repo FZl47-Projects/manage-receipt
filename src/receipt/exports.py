@@ -1,6 +1,8 @@
 import os
 import xlsxwriter
+
 from django.conf import settings
+from core.utils import gregorian_to_jalali
 
 
 class Excel:
@@ -51,14 +53,16 @@ class Excel:
         row = 2
         # add data
         for receipt in building_obj.get_receipts():
-            #
             worksheet.write(row, 0, receipt.tracking_code)
             worksheet.write(row, 1, f"{receipt.user.get_full_name()}|{receipt.user.get_raw_phonenumber()}")
             worksheet.write(row, 2, receipt.amount)
             worksheet.write(row, 3, receipt.get_score())
             worksheet.write(row, 4, receipt.ratio_score)
-            worksheet.write(row, 5, receipt.get_created_at())
-            worksheet.write(row, 6, f"{receipt.get_deposit_datetime()}({receipt.get_deposit_timepast()})")
+            creation_time = receipt.created_at
+            deposit_time = receipt.deposit_datetime
+            worksheet.write(row, 5, gregorian_to_jalali(creation_time.year, creation_time.month, creation_time.day))
+            worksheet.write(row, 6,
+                            f"{gregorian_to_jalali(deposit_time.year, deposit_time.month, deposit_time.day)}({receipt.get_deposit_timepast()})")
             worksheet.write(row, 7, receipt.depositor_name)
             worksheet.write(row, 8, receipt.bank_name)
             worksheet.write(row, 9, receipt.description)
