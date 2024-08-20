@@ -5,8 +5,8 @@ import datetime
 import jdatetime
 import requests
 import json
+import pytz
 from django.utils.translation import gettext_lazy as _
-from django.utils import timezone
 from django.core.mail import send_mail as _send_email_django
 from django.conf import settings
 from django_q.tasks import async_task
@@ -24,10 +24,11 @@ def random_num(size=10, chars=string.digits):
 
 
 def get_time(frmt='%Y-%m-%d_%H:%M'):
-    t = timezone.now()
-    if frmt is not None:
-        t = t.strftime(frmt)
-    return t
+    tz = pytz.timezone('Asia/Tehran')
+    time = datetime.datetime.now(tz)
+    if not frmt:
+        return time
+    return time.strftime(frmt)
 
 
 def get_timesince_persian(time):
