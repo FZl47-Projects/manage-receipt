@@ -172,7 +172,7 @@ class ReceiptAbstract(BaseModel):
         return self.deposit_datetime.strftime('%Y-%m-%d %H:%M:%S')
 
     def get_deposit_timepast(self):
-        return utils.get_timesince_persian(self.deposit_datetime)
+        return utils.get_timesince_persian(self.deposit_datetime.date())
 
     def get_picture_full_url(self):
         try:
@@ -202,9 +202,9 @@ class Receipt(ReceiptAbstract):
         score = 1
         try:
             amount = self.amount
-            time_now = utils.get_time(None)
+            time_now = utils.get_time(None).date()
             amount_million = amount / 1_000_000
-            days = (time_now - self.deposit_datetime).days or 1
+            days = (time_now - self.deposit_datetime.date()).days or 1
             score = int(days * amount_million) or 1
         except ZeroDivisionError:
             pass
