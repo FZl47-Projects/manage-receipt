@@ -107,6 +107,10 @@ class User(AbstractUser):
     def is_common_admin(self):
         return True if self.is_admin and not self.is_superuser else False
 
+    @property
+    def is_super_admin(self):
+        return True if self.role in ['super_user'] else False
+
     def __str__(self):
         return f'{self.role} - {self.phonenumber}'
 

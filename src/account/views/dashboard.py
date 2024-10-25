@@ -2,6 +2,7 @@ import json
 from django.utils.translation import gettext_lazy as _
 from django.http import (JsonResponse, HttpResponseBadRequest, Http404, HttpResponse, HttpResponseRedirect)
 from django.contrib import messages
+from django.urls import reverse_lazy
 from django.conf import settings
 from django.db.models import Value, Q
 from django.db.models.functions import Concat
@@ -484,6 +485,7 @@ class UserDetail(LoginRequiredMixinCustom, PermissionRequiredMixin, core_mixins.
 
 class UserDetailDelete(LoginRequiredMixinCustom, PermissionRequiredMixin, core_mixins.DeleteViewMixin, View):
     permission_required = ('account.delete_user',)
+    redirect_url = reverse_lazy('account:user_list')
 
     def do_fail(self):
         messages.error(self.request, _('You cannot delete a super user'))
